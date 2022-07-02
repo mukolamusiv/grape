@@ -52,7 +52,7 @@ class UserEditScreen extends Screen
      */
     public function name(): ?string
     {
-        return $this->user->exists ? 'Edit User' : 'Create User';
+        return $this->user->exists ? 'Редагування користувача' : 'Створення користувача';
     }
 
     /**
@@ -109,10 +109,10 @@ class UserEditScreen extends Screen
         return [
 
             Layout::block(UserEditLayout::class)
-                ->title(__('Profile Information'))
-                ->description(__('Update your account\'s profile information and email address.'))
+                ->title(__('Інформація про користувача'))
+                ->description(__('Можна оновити дані користувача'))
                 ->commands(
-                    Button::make(__('Save'))
+                    Button::make(__('Зберегти'))
                         ->type(Color::DEFAULT())
                         ->icon('check')
                         ->canSee($this->user->exists)
@@ -120,7 +120,7 @@ class UserEditScreen extends Screen
                 ),
 
             Layout::block(UserPasswordLayout::class)
-                ->title(__('Password'))
+                ->title(__('Пароль'))
                 ->description(__('Ensure your account is using a long, random password to stay secure.'))
                 ->commands(
                     Button::make(__('Save'))
@@ -134,7 +134,7 @@ class UserEditScreen extends Screen
                 ->title(__('Roles'))
                 ->description(__('A Role defines a set of tasks a user assigned the role is allowed to perform.'))
                 ->commands(
-                    Button::make(__('Save'))
+                    Button::make(__('Оновити'))
                         ->type(Color::DEFAULT())
                         ->icon('check')
                         ->canSee($this->user->exists)
@@ -188,7 +188,7 @@ class UserEditScreen extends Screen
 
         $user->replaceRoles($request->input('user.roles'));
 
-        Toast::info(__('User was saved.'));
+        Toast::info(__('Дані оновлено.'));
 
         return redirect()->route('platform.systems.users');
     }
@@ -205,7 +205,7 @@ class UserEditScreen extends Screen
     {
         $user->delete();
 
-        Toast::info(__('User was removed'));
+        Toast::info(__('Видалено користувача'));
 
         return redirect()->route('platform.systems.users');
     }

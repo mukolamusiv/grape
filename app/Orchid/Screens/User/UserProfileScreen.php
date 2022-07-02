@@ -50,7 +50,7 @@ class UserProfileScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'Update your account details such as name, email address and password';
+        return 'Уся детальна інформація про користувача';
     }
 
     /**
@@ -70,20 +70,20 @@ class UserProfileScreen extends Screen
     {
         return [
             Layout::block(UserEditLayout::class)
-                ->title(__('Profile Information'))
-                ->description(__("Update your account's profile information and email address."))
+                ->title(__('Інформація про користувача'))
+                ->description(__("Оновлення інформації користувача."))
                 ->commands(
-                    Button::make(__('Save'))
+                    Button::make(__('Зберегти'))
                         ->type(Color::DEFAULT())
                         ->icon('check')
                         ->method('save')
                 ),
 
             Layout::block(ProfilePasswordLayout::class)
-                ->title(__('Update Password'))
-                ->description(__('Ensure your account is using a long, random password to stay secure.'))
+                ->title(__('Оновлення паролю'))
+                ->description(__('Придумайте довгий пароль зі складними символами.'))
                 ->commands(
-                    Button::make(__('Update password'))
+                    Button::make(__('Оновити пароль'))
                         ->type(Color::DEFAULT())
                         ->icon('check')
                         ->method('changePassword')
@@ -98,6 +98,7 @@ class UserProfileScreen extends Screen
     {
         $request->validate([
             'user.name'  => 'required|string',
+            'user.surname'  => 'string',
             'user.email' => [
                 'required',
                 Rule::unique(User::class, 'email')->ignore($request->user()),
@@ -108,7 +109,7 @@ class UserProfileScreen extends Screen
             ->fill($request->get('user'))
             ->save();
 
-        Toast::info(__('Profile updated.'));
+        Toast::info(__('Профіль оновлено.'));
     }
 
     /**
@@ -126,6 +127,6 @@ class UserProfileScreen extends Screen
             $user->password = Hash::make($request->get('password'));
         })->save();
 
-        Toast::info(__('Password changed.'));
+        Toast::info(__('Пароль змінено.'));
     }
 }

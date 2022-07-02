@@ -105,9 +105,8 @@ Route::screen('example', ExampleScreen::class)
             ->push('Example screen');
     });
 
-use App\Orchid\Screens\Idea;
-
-Route::screen('/idea', Idea::class)->name('platform.idea');
+Route::screen('/lesson', \App\Orchid\Screens\Lessons\LessonsListScreen::class)->name('lessons.list');
+Route::screen('/lesson/create', \App\Orchid\Screens\Lessons\LessonsListScreen::class)->name('lessons.add');
 
 
 Route::screen('example-fields', ExampleFieldsScreen::class)->name('platform.example.fields');

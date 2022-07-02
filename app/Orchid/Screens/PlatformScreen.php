@@ -37,7 +37,7 @@ class PlatformScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'Welcome to your Orchid application.';
+        return 'Головна сторінка адміністратора сайту.';
     }
 
     /**
@@ -48,16 +48,16 @@ class PlatformScreen extends Screen
     public function commandBar(): iterable
     {
         return [
-            Link::make('Website')
-                ->href('http://orchid.software')
+            Link::make('Переглянути додаток')
+                ->href('/')
                 ->icon('globe-alt'),
 
-            Link::make('Documentation')
+            Link::make('Документація')
                 ->href('https://orchid.software/en/docs')
                 ->icon('docs'),
 
-            Link::make('GitHub')
-                ->href('https://github.com/orchidsoftware/platform')
+            Link::make('GitHub репозиторій')
+                ->href('https://github.com/mukolamusiv/grape')
                 ->icon('social-github'),
         ];
     }

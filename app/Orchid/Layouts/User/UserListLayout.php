@@ -27,12 +27,19 @@ class UserListLayout extends Table
     public function columns(): array
     {
         return [
-            TD::make('name', __('Name'))
+            TD::make('name', __('Ім\'я'))
                 ->sort()
                 ->cantHide()
                 ->filter(Input::make())
                 ->render(function (User $user) {
                     return new Persona($user->presenter());
+                }),
+            TD::make('surname', __('Прізвище'))
+                ->sort()
+                ->cantHide()
+                ->filter(Input::make())
+                ->render(function (User $user) {
+                    return ModalToggle::make($user->surname);
                 }),
 
             TD::make('email', __('Email'))
@@ -49,7 +56,7 @@ class UserListLayout extends Table
                         ]);
                 }),
 
-            TD::make('updated_at', __('Last edit'))
+            TD::make('updated_at', __('Оновлено'))
                 ->sort()
                 ->render(function (User $user) {
                     return $user->updated_at->toDateTimeString();
@@ -63,11 +70,11 @@ class UserListLayout extends Table
                         ->icon('options-vertical')
                         ->list([
 
-                            Link::make(__('Edit'))
+                            Link::make(__('Редагувати'))
                                 ->route('platform.systems.users.edit', $user->id)
                                 ->icon('pencil'),
 
-                            Button::make(__('Delete'))
+                            Button::make(__('Видалити'))
                                 ->icon('trash')
                                 ->confirm(__('Once the account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.'))
                                 ->method('remove', [
