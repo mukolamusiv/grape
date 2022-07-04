@@ -2,6 +2,8 @@
 
 namespace App\Orchid\Screens\Examples;
 
+use App\Models\Lessons;
+use App\Models\User;
 use App\Orchid\Layouts\Examples\ChartBarExample;
 use App\Orchid\Layouts\Examples\ChartLineExample;
 use Illuminate\Http\Request;
@@ -65,10 +67,10 @@ class ExampleScreen extends Screen
 
             ],
             'metrics' => [
-                'sales'    => ['value' => number_format(6851), 'diff' => 10.08],
-                'visitors' => ['value' => number_format(24668), 'diff' => -30.76],
-                'orders'   => ['value' => number_format(10000), 'diff' => 0],
-                'total'    => number_format(65661),
+                'crosswords'    => ['value' => number_format(6851), 'diff' => 10.08],
+                'tests' => ['value' => number_format(24668), 'diff' => -30.76],
+                'lessons'   => ['value' => number_format(count(Lessons::all())), 'diff' => 0],
+                'users'    => number_format(count(User::all())),
             ],
         ];
     }
@@ -80,7 +82,7 @@ class ExampleScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'Example screen';
+        return 'Домашня сторінка';
     }
 
     /**
@@ -90,7 +92,7 @@ class ExampleScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'Sample Screen Components';
+        return 'Монітор сайту';
     }
 
     /**
@@ -153,10 +155,10 @@ class ExampleScreen extends Screen
     {
         return [
             Layout::metrics([
-                'Sales Today'    => 'metrics.sales',
-                'Visitors Today' => 'metrics.visitors',
-                'Pending Orders' => 'metrics.orders',
-                'Total Earnings' => 'metrics.total',
+                'Кількість кросвордів'      => 'metrics.crosswords',
+                'Кількість тестів'          => 'metrics.tests',
+                'Кількість уроків'          => 'metrics.lessons',
+                'Кількість користувачів'    => 'metrics.users',
             ]),
 
             Layout::columns([

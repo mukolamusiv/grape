@@ -39,15 +39,24 @@ class PlatformProvider extends OrchidServiceProvider
         return [
             Menu::make('Монітори')
                 ->icon('monitor')
-                ->route('platform.example')
-                ->title('Navigation')
-                ->badge(function () {
-                    return 6;
-                }),
+                ->route('platform.example'),
+
+            Menu::make('Теми')
+                ->icon('tag')
+                ->route('lessons.list')
+                ->title('Навчання'),
 
             Menu::make('Уроки')
-                ->icon('note')
+                ->icon('speech')
                 ->route('lessons.list'),
+
+            Menu::make('Тести')
+                ->icon('task')
+                ->route('question.list'),
+
+            Menu::make('Кросворди')
+                ->icon('table')
+                ->route('crossword.list'),
 
 //            Menu::make('Dropdown menu')
 //                ->icon('code')

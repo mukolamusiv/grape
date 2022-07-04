@@ -40,6 +40,12 @@ class LessonsListLayout extends Table
                 ->render(function (Lessons $lessons) {
                     return $lessons->description;
                 }),
+            TD::make('text', __('Текст уроку'))
+                ->sort()
+                ->filter(Input::make())
+                ->render(function (Lessons $lessons) {
+                    return $lessons->text;
+                }),
             TD::make('points', __('Кількість балів'))
                 ->sort()
                 ->filter(Input::make())

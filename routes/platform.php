@@ -106,7 +106,33 @@ Route::screen('example', ExampleScreen::class)
     });
 
 Route::screen('/lesson', \App\Orchid\Screens\Lessons\LessonsListScreen::class)->name('lessons.list');
-Route::screen('/lesson/create', \App\Orchid\Screens\Lessons\LessonsListScreen::class)->name('lessons.add');
+Route::screen('/lesson/create', \App\Orchid\Screens\Lessons\LessonsEditScreen::class)->name('lessons.add');
+
+
+/*
+ * Блок роутів для тестів та кросвордів
+ * */
+
+/*Запитання до тестів
+ * */
+Route::screen('/question', \App\Orchid\Screens\Question\QuestionScreen::class)->name('question.list');
+Route::screen('/question/create', \App\Orchid\Screens\Question\QuestionScreen::class)->name('question.create');
+Route::screen('/question/{id}/edit', \App\Orchid\Screens\Question\QuestionScreen::class)->name('question.edit');
+/* варіанти відповідей до тестів */
+Route::screen('/answer', \App\Orchid\Screens\Question\AnswerScreen::class)->name('answer.list');
+Route::screen('/answer/create', \App\Orchid\Screens\Question\AnswerScreen::class)->name('answer.create');
+Route::screen('/answer/{id}/edit', \App\Orchid\Screens\Question\AnswerScreen::class)->name('answer.edit');
+/*
+ * кінець роутів тестів
+ * */
+
+
+/*
+ * Блок кросворду
+ * */
+Route::screen('/crossword', \App\Orchid\Screens\Crossword\CrosswordScreen::class)->name('crossword.list');
+Route::screen('/crossword/create', \App\Orchid\Screens\Crossword\CrosswordScreen::class)->name('crossword.create');
+Route::screen('/crossword/{id}/edit', \App\Orchid\Screens\Crossword\CrosswordScreen::class)->name('crossword.edit');
 
 
 Route::screen('example-fields', ExampleFieldsScreen::class)->name('platform.example.fields');

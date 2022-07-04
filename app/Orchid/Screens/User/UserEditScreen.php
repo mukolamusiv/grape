@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Orchid\Screens\User;
 
+use App\Notifications\TaskCompleted;
 use App\Orchid\Layouts\Role\RolePermissionLayout;
 use App\Orchid\Layouts\User\UserEditLayout;
 use App\Orchid\Layouts\User\UserPasswordLayout;
@@ -11,6 +12,7 @@ use App\Orchid\Layouts\User\UserRoleLayout;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\Rule;
 use Orchid\Access\UserSwitch;
 use Orchid\Platform\Models\User;
@@ -106,6 +108,10 @@ class UserEditScreen extends Screen
      */
     public function layout(): iterable
     {
+//        $user = User::find(1);
+//        $user->notify(new TaskCompleted());
+//        //Notification::send($user, new TaskCompleted('asdasd'));
+
         return [
 
             Layout::block(UserEditLayout::class)
