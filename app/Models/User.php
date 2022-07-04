@@ -20,7 +20,10 @@ class User extends Authenticatable
         'password',
         'permissions',
         'surname',
+        'birthday',
+
     ];
+
 
     /**
      * The attributes excluded from the model's JSON form.
