@@ -18,10 +18,10 @@ class LessonsListScreen extends Screen
     {
         return [
             'lessons' => Lessons::
-                //->filters()
+                filters()
                 //->filtersApplySelection(UserFiltersLayout::class)
-                //->defaultSort('id', 'desc')
-                paginate(),
+                ->defaultSort('id', 'desc')
+                ->paginate(),
         ];
     }
 
