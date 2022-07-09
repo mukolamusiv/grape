@@ -11,3 +11,27 @@
 Для розробки фронт частини потрібно налаштувати середовище<br>
 Виконайте команду npm install<br>
 Та виконайте команду npm run watch - вочер буде слідкувати за змінами та перезбирати проект після внесення змін
+
+API URL
+
+/*
+Без авторизації
+*/
+/api/register {method:POST} - приймає 
+		{
+			name:'name',
+			surname:'surname',
+			email:'email', - унікальний
+			password:'password',
+			birthday: date,
+			address: 'string'
+		}
+/*
+Для авторизованих
+*/		
+/api/user {method:GET}- повертає список користувачів
+/api/user/id {method:GET}- повертає користувача по id
+/api/user/id {method:PUT}- редагує користувача по id
+/api/user/id {method:DELETE}- видаляє користувача по id
+
+
