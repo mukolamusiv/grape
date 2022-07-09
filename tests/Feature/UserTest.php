@@ -6,20 +6,17 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class AuthTests extends TestCase
+class UserTest extends TestCase
 {
     /**
      * A basic feature test example.
      *
      * @return void
      */
-    public function test_register()
+    public function test_example()
     {
-        $response = $this->get('/','');
-        $response->assertStatus(200);
-    }
+        $response = $this->get('/');
 
-    public function test_CRUD(){
-        $i = 1;
+        $response->assertStatus(200);
     }
 }

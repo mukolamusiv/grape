@@ -65,7 +65,8 @@ class UserController extends Controller
         if($validator->fails()){
             return response($validator->messages(),405);
         }else{
-            return response($user->fill($request->all())->save());
+            $user->fill($request->all())->save();
+            return response($user);
         }
 //return response($request->all());
         //return response('ривіт',200);
