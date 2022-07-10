@@ -75,14 +75,6 @@ class AuthTest extends TestCase
         $this->deleteJson('api/user/'.$id,$body)->assertStatus(200);
     }
 
-    public function test_update_user(){
-
-    }
-
-    public function test_destroy_user(){
-
-    }
-
     public function test_auth_user(){
         $body = [
             'email' => 'mukolamusiv@gmail.com',

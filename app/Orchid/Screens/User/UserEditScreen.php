@@ -137,7 +137,7 @@ class UserEditScreen extends Screen
                 ),
 
             Layout::block(UserRoleLayout::class)
-                ->title(__('Roles'))
+                ->title(__('Ролі'))
                 ->description(__('A Role defines a set of tasks a user assigned the role is allowed to perform.'))
                 ->commands(
                     Button::make(__('Оновити'))

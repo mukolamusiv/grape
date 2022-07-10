@@ -2,9 +2,11 @@
 
 namespace App\Orchid\Layouts\Lessons;
 
+use App\Models\Topic;
 use Orchid\Screen\Field;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Quill;
+use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Layouts\Rows;
 
 class LessonsEditLayout extends Rows
@@ -42,6 +44,16 @@ class LessonsEditLayout extends Rows
                 ->required()
                 ->title(__('Текст уроку'))
                 ->placeholder(__('Текст уроку')),
+
+            Input::make('lessons.points')
+                ->type('number')
+                ->title('Кількість балів')
+                ->placeholder(__('Максимальна кількість балів')),
+
+            Select::make('lessons.topic_id')
+                ->fromModel(Topic::class,'title')
+                ->title(__('Назва курсу'))
+                ->help('Оберіть курс для кого належить лекція')
         ];
     }
 }

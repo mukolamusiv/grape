@@ -43,7 +43,7 @@ class PlatformProvider extends OrchidServiceProvider
 
             Menu::make('Теми')
                 ->icon('tag')
-                ->route('lessons.list')
+                ->route('topic.list')
                 ->title('Навчання'),
 
             Menu::make('Уроки')

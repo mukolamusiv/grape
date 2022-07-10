@@ -68,7 +68,7 @@ class RolePermissionLayout extends Rows
                     ? $checkbox->title($title)
                     : $checkbox;
             })
-            ->chunk(4)
+            ->chunk(5)
             ->map(function (Collection $checkboxes) {
                 return Group::make($checkboxes->toArray())
                     ->alignEnd()

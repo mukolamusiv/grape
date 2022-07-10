@@ -27,8 +27,8 @@ Route::post('register','\App\Http\Controllers\API\UserController@store');
 //користувачі
 Route::get('user','\App\Http\Controllers\API\UserController@index');
 Route::get('user/{id}','\App\Http\Controllers\API\UserController@show')->middleware(['auth']);
-Route::put('user/{id}','\App\Http\Controllers\API\UserController@update');
-Route::delete('user/{id}','\App\Http\Controllers\API\UserController@destroy');
+Route::put('user/{id}','\App\Http\Controllers\API\UserController@update')->middleware(['auth']);
+Route::delete('user/{id}','\App\Http\Controllers\API\UserController@destroy')->middleware(['auth']);
 
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Topic;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -19,6 +20,8 @@ class UserController extends Controller
     public function index()
     {
         return response(User::all(),200);
+
+        //return response(Topic::with('lessons')->where('id','=','2')->get());
     }
 
     /**

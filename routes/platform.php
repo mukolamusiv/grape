@@ -135,6 +135,12 @@ Route::screen('/crossword/create', \App\Orchid\Screens\Crossword\CrosswordScreen
 Route::screen('/crossword/{id}/edit', \App\Orchid\Screens\Crossword\CrosswordScreen::class)->name('crossword.edit');
 
 
+Route::screen('/topic', \App\Orchid\Screens\Topic\TopicScreen::class)->name('topic.list');
+Route::screen('/topic/create', \App\Orchid\Screens\Topic\TopicEditScreen::class)->name('topic.create');
+Route::screen('/topic/{id}/edit', \App\Orchid\Screens\Topic\TopicEditScreen::class)->name('topic.edit');
+Route::screen('/topic/{id}', \App\Orchid\Screens\Topic\TopicShowScreen::class)->name('topic.show');
+
+
 Route::screen('example-fields', ExampleFieldsScreen::class)->name('platform.example.fields');
 Route::screen('example-layouts', ExampleLayoutsScreen::class)->name('platform.example.layouts');
 Route::screen('example-charts', ExampleChartsScreen::class)->name('platform.example.charts');
