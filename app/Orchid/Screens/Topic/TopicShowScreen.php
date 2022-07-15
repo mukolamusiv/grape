@@ -5,6 +5,8 @@ namespace App\Orchid\Screens\Topic;
 use App\Models\Topic;
 use App\Orchid\Layouts\Topic\TopicEditLayout;
 use App\Orchid\Layouts\Topic\TopicLessonsLayout;
+use Orchid\Screen\Fields\Group;
+use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Layout;
 
@@ -56,6 +58,7 @@ class TopicShowScreen extends Screen
             Layout::block(TopicEditLayout::class)
                 ->title('Інформація про курс')
                 ->description('Вся доступна інформація про курс'),
+
             Layout::block(TopicLessonsLayout::class)
                 ->title('Список усіх лекцій у цій темі')
                 ->description('Тут має бути опис')

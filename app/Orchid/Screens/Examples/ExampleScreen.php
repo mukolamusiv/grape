@@ -4,9 +4,12 @@ namespace App\Orchid\Screens\Examples;
 
 use App\Models\Lessons;
 use App\Models\User;
+use App\Models\Water;
+use App\Orchid\Layouts\Chart\WaterChart;
 use App\Orchid\Layouts\Examples\ChartBarExample;
 use App\Orchid\Layouts\Examples\ChartLineExample;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
@@ -35,6 +38,16 @@ class ExampleScreen extends Screen
      */
     public function query(): iterable
     {
+
+        $data = [];
+        foreach (User::where('id','<','10')->get() as $user){
+            $data[] = [
+                'name'   => $user->name.' '.$user->surname,
+                'values' => [$user->water,$user->lumen],
+                'labels' => ['Вода','Проміння'],
+            ];
+        }
+
         return [
             'charts'  => [
                 [
@@ -72,7 +85,10 @@ class ExampleScreen extends Screen
                 'lessons'   => ['value' => number_format(count(Lessons::all())), 'diff' => 0],
                 'users'    => number_format(count(User::all())),
             ],
+            'water' => $data
         ];
+
+
     }
 
     /**
@@ -159,11 +175,16 @@ class ExampleScreen extends Screen
                 'Кількість тестів'          => 'metrics.tests',
                 'Кількість уроків'          => 'metrics.lessons',
                 'Кількість користувачів'    => 'metrics.users',
+                'Кількість курсів'          => 'metrics.users',
             ]),
 
             Layout::columns([
                 ChartLineExample::class,
                 ChartBarExample::class,
+            ]),
+
+            Layout::columns([
+                WaterChart::class,
             ]),
 
             Layout::table('table', [

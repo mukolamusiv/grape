@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
+use App\Models\Water;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
@@ -87,5 +89,30 @@ class AuthTest extends TestCase
 
         $response = $this->getJson('/api/user/1');
         $response->assertStatus(200);
+    }
+
+    public function test_max_user(){
+        for ($i = 1; $i < 35; $i++){
+
+            $d = $i+15;
+
+            $water = new User();
+            $water->name = 'Користувач '.$i;
+            $water->surname = 'Прізвище '.$i;
+            $water->email = $i.'tessssdst@test.com';
+            $water->password = 'password';
+            $water->water = $d;
+            $water->save();
+            //User::destroy($i);
+
+        }
+//        $body = [
+//            'name'=>'Тестове ім\'я',
+//            'surname'=>'Прізdвище',
+//            'email'=>'tessssdst@test.com',
+//            'password'=>'password',
+//        ];
+//        $this->putJson('api/user/1',$body)->assertStatus(200);
+//        sleep(2);
     }
 }

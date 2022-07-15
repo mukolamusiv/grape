@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
+use Orchid\Metrics\Chartable;
 use Orchid\Platform\Models\User as Authenticatable;
 
 class User extends Authenticatable
 {
 
-    use Notifiable;
+    use Notifiable,Chartable;
     /**
      * The attributes that are mass assignable.
      *
@@ -77,5 +78,9 @@ class User extends Authenticatable
      */
     public function setPasswordAttribute($value){
         $this->attributes['password'] = bcrypt($value);
+    }
+
+    public function waters(){
+        return $this->hasMany(Water::class,'user_id','id');
     }
 }

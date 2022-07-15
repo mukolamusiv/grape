@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Topic;
 use App\Models\User;
+use App\Models\Water;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -94,7 +95,11 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+//        $water = new Water();
+//        $water->count = 100;
+//        $water->user_id = 1;
+//        $water->save();
+        return response(Water::all());
     }
 
     /**
@@ -107,6 +112,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         //
+        return response(Water::all(['user_id','count']));
     }
 
     /**

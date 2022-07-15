@@ -1,11 +1,11 @@
 //import Log from "./module/log";
-
 require('./bootstrap');
 //import Auth from '../js/module/auth';
 //window.auth = new Auth();
 //window.log = new Log();
 
-//import { createApp } from 'vue';
+
+import { createApp } from 'vue';
 // import router from './module/router/router';
 // import store from "./module/store";
 // import Vue3Transitions from "vue3-transitions";
@@ -21,11 +21,11 @@ require('./bootstrap');
 // import index from "./module/router/index";
 // import { plugin, defaultConfig } from '@formkit/vue';
 // import { FormKitSchema } from '@formkit/vue'
-// const app = createApp({
-//     //router,
-//
-//
-// });
+const app = createApp({
+    //router,
+
+
+});
 // app.use(store);
 // app.use(router);
 // app.use(sweetalert);
