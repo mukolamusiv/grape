@@ -1,8 +1,13 @@
 //import Log from "./module/log";
+
+
+import LumenCard from "./components/LumenCard";
+
 require('./bootstrap');
 //import Auth from '../js/module/auth';
 //window.auth = new Auth();
 //window.log = new Log();
+
 
 
 import { createApp } from 'vue';
@@ -10,7 +15,7 @@ import { createApp } from 'vue';
 // import store from "./module/store";
 // import Vue3Transitions from "vue3-transitions";
 // import Style from "../assets/css/style.bundle.css";
-// import Animate from "animate.css";
+import Animate from "animate.css";
 //import Jss from "../assets/js/scripts.bundle.js";
 //import JsWidgets from "../assets/js/widgets.bundle.js";
 
@@ -21,10 +26,12 @@ import { createApp } from 'vue';
 // import index from "./module/router/index";
 // import { plugin, defaultConfig } from '@formkit/vue';
 // import { FormKitSchema } from '@formkit/vue'
+import ActiveCard from "./components/ActiveCard";
+import WaterCard from "./components/WaterCard";
+import UserHeader from "./components/header/UserHeader";
+
 const app = createApp({
     //router,
-
-
 });
 // app.use(store);
 // app.use(router);
@@ -35,7 +42,11 @@ const app = createApp({
 // });
 // app.use(Vue3Transitions);
 // app.use(plugin,defaultConfig(),FormKitSchema);
-// app.use(Animate);
+ app.use(Animate);
 // app.provide('Toaster', app.config.globalProperties.$toast)
 //app.component('index',index)
-//app.mount('#app');
+app.component('water-card',WaterCard);
+app.component('user-header',UserHeader);
+app.component('active-card',ActiveCard);
+app.component('lumen-card',LumenCard)
+app.mount('#app');

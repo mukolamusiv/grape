@@ -60,16 +60,16 @@ License: For each use you must have a valid license purchased only from above li
 </head>
 <!--end::Head-->
 <!--begin::Body-->
-<body id="kt_app_body" data-kt-app-layout="light-sidebar" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-push-header="true" data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" class="app-default">
+<body  data-kt-app-layout="light-sidebar" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-push-header="true" data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" class="app-default">
 <!--Begin::Google Tag Manager (noscript) -->
 
 <!--End::Google Tag Manager (noscript) -->
 <!--begin::Root-->
-<div class="d-flex flex-column flex-root" id="kt_app_root">
+<div class="d-flex flex-column flex-root" id="app">
     <!--begin::Page-->
-    <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
+    <div class="app-page flex-column flex-column-fluid">
         <!--begin::Header-->
-        <div id="kt_app_header" class="app-header">
+        <div class="app-header">
             <!--begin::Header container-->
             <div class="app-container container-fluid d-flex align-items-stretch justify-content-between">
                 <!--begin::Mobile menu toggle-->
@@ -127,7 +127,7 @@ License: For each use you must have a valid license purchased only from above li
                                 <!--begin::Heading-->
                                 <div class="d-flex flex-column flex-center bgi-no-repeat rounded-top px-9 py-10" style="background-image:url('assets/media/misc/header-dropdown.png')">
                                     <!--begin::Title-->
-                                    <h3 class="text-white fw-bold mb-3">Quick Links</h3>
+                                    <h3 class="text-white fw-bold mb-3">Швидкі посилання</h3>
                                     <!--end::Title-->
                                     <!--begin::Status-->
                                     <span class="badge bg-primary py-2 px-3">25 pending tasks</span>
@@ -138,7 +138,7 @@ License: For each use you must have a valid license purchased only from above li
                                 <div class="row g-0">
                                     <!--begin:Item-->
                                     <div class="col-6">
-                                        <a href="apps/projects/budget.html" class="d-flex flex-column flex-center h-100 p-6 bg-hover-light border-end border-bottom">
+                                        <a href="#" class="d-flex flex-column flex-center h-100 p-6 bg-hover-light border-end border-bottom">
                                             <!--begin::Svg Icon | path: icons/duotune/finance/fin009.svg-->
                                             <span class="svg-icon svg-icon-3x svg-icon-primary mb-2">
 														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -204,7 +204,7 @@ License: For each use you must have a valid license purchased only from above li
                                 <!--end:Nav-->
                                 <!--begin::View more-->
                                 <div class="py-2 text-center border-top">
-                                    <a href="pages/user-profile/activity.html" class="btn btn-color-gray-600 btn-active-color-primary">View All
+                                    <a href="#" class="btn btn-color-gray-600 btn-active-color-primary">View All
                                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
                                         <span class="svg-icon svg-icon-5">
 												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -250,96 +250,7 @@ License: For each use you must have a valid license purchased only from above li
                         <!--end::Quick links-->
                         <!-- User -->
                         <div class="app-navbar-item ms-2 ms-ls-4">
-                            <!--begin::User-->
-                            <div class="app-sidebar-user d-flex flex-stack py-5 px-8">
-                                <!--begin::User avatar-->
-                                <div class="d-flex me-5">
-                                    <!--begin::Menu wrapper-->
-                                    <div class="me-5">
-                                        <!--begin::Symbol-->
-                                        <div class="symbol symbol-40px cursor-pointer" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" data-kt-menu-overflow="true">
-                                            <img src="assets/media/avatars/300-1.jpg" alt="" />
-                                        </div>
-                                        <!--end::Symbol-->
-                                        <!--begin::User account menu-->
-                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px" data-kt-menu="true">
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <div class="menu-content d-flex align-items-center px-3">
-                                                    <!--begin::Avatar-->
-                                                    <div class="symbol symbol-50px me-5">
-                                                        <img alt="Logo" src="assets/media/avatars/300-1.jpg" />
-                                                    </div>
-                                                    <!--end::Avatar-->
-                                                    <!--begin::Username-->
-                                                    <div class="d-flex flex-column">
-                                                        <div class="fw-bolder d-flex align-items-center fs-5">Микола Мисів
-                                                           </div>
-                                                        <a href="#" class="fw-bold text-muted text-hover-primary fs-7">demo@grape.com</a>
-                                                    </div>
-                                                    <!--end::Username-->
-                                                </div>
-                                            </div>
-                                            <!--end::Menu item-->
-                                            <!--begin::Menu separator-->
-                                            <div class="separator my-2"></div>
-                                            <!--end::Menu separator-->
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-5">
-                                                <a href="#" class="menu-link px-5">Профіль</a>
-                                            </div>
-                                            <!--end::Menu item-->
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-5">
-                                                <a href="#" class="menu-link px-5">
-                                                    <span class="menu-text">Уроки</span>
-                                                </a>
-                                            </div>
-                                            <!--end::Menu item-->
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-5">
-                                                <a href="#" class="menu-link px-5">Моє дерево</a>
-                                            </div>
-                                            <!--end::Menu item-->
-                                            <!--begin::Menu separator-->
-                                            <div class="separator my-2"></div>
-                                            <!--end::Menu separator-->
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-5">
-                                                <a href="#" class="menu-link px-5 text-danger">Вийти</a>
-                                            </div>
-                                            <!--end::Menu item-->
-                                        </div>
-                                        <!--end::User account menu-->
-                                    </div>
-                                    <!--end::Menu wrapper-->
-                                    <!--begin::Info-->
-                                    <div class="me-2">
-                                        <!--begin::Username-->
-                                        <a href="#" class="app-sidebar-username text-gray-800 text-hover-primary fs-6 fw-bold lh-0">Микола Мисів</a>
-                                        <!--end::Username-->
-                                        <!--begin::Description-->
-                                        <span class="app-sidebar-deckription text-gray-400 fw-bold d-block fs-8">Учень</span>
-                                        <!--end::Description-->
-                                    </div>
-                                    <!--end::Info-->
-                                </div>
-                                <!--end::User avatar-->
-                                <!--begin::Action-->
-                                <a href="#" class="btn btn-icon btn-active-color-danger btn-icon-custom-color me-n4">
-                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr076.svg-->
-                                    <span class="svg-icon svg-icon-2 svg-icon-gray-400">
-									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-										<rect opacity="0.3" width="12" height="2" rx="1" transform="matrix(-1 0 0 1 15.5 11)" fill="currentColor" />
-										<path d="M13.6313 11.6927L11.8756 10.2297C11.4054 9.83785 11.3732 9.12683 11.806 8.69401C12.1957 8.3043 12.8216 8.28591 13.2336 8.65206L16.1592 11.2526C16.6067 11.6504 16.6067 12.3496 16.1592 12.7474L13.2336 15.3479C12.8216 15.7141 12.1957 15.6957 11.806 15.306C11.3732 14.8732 11.4054 14.1621 11.8756 13.7703L13.6313 12.3073C13.8232 12.1474 13.8232 11.8526 13.6313 11.6927Z" fill="currentColor" />
-										<path d="M8 5V6C8 6.55228 8.44772 7 9 7C9.55228 7 10 6.55228 10 6C10 5.44772 10.4477 5 11 5H18C18.5523 5 19 5.44772 19 6V18C19 18.5523 18.5523 19 18 19H11C10.4477 19 10 18.5523 10 18C10 17.4477 9.55228 17 9 17C8.44772 17 8 17.4477 8 18V19C8 20.1046 8.89543 21 10 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3H10C8.89543 3 8 3.89543 8 5Z" fill="#C4C4C4" />
-									</svg>
-								</span>
-                                    <!--end::Svg Icon-->
-                                </a>
-                                <!--end::Action-->
-                            </div>
-                            <!--end::User-->
+                            <user-header></user-header>
                         </div>
                         <!-- UserEnd -->
                     </div>
@@ -353,7 +264,7 @@ License: For each use you must have a valid license purchased only from above li
         <!--begin::Wrapper-->
         <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
             <!--begin::sidebar-->
-            <div id="kt_app_sidebar" class="app-sidebar flex-column" data-kt-drawer="true" data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="250px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
+            <div class="app-sidebar flex-column" data-kt-drawer="true" data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="250px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
                 <!--begin::Logo-->
                 <div class="app-sidebar-logo d-none d-lg-flex flex-stack flex-shrink-0 px-8">
                     <!--begin::Logo image-->
@@ -389,163 +300,28 @@ License: For each use you must have a valid license purchased only from above li
                 <!--begin::Content wrapper-->
                 <div class="d-flex flex-column flex-column-fluid">
                     <!--begin::Content-->
-                    <div id="kt_app_content" class="app-content flex-column-fluid">
+                    <div class="app-content flex-column-fluid">
                         <!--begin::Content container-->
-                        <div id="kt_app_content_container" class="app-container container-fluid">
+                        <div class="app-container container-fluid">
                             <!--begin::Row-->
-                            <div class="row g-5 g-xxl-10">
-                                <div class="col-xl-4 mb-8">
+                            <div class="row g-5 g-xl-10">
+                                <div class="col-lg-4 mb-8">
                                     <!--begin::Col-->
-                                    <div class="col-xl-12 mb-4">
-                                        <div class="card h-lg-100">
-                                            <!--begin::Body-->
-                                            <div class="card-body d-flex justify-content-between align-items-start flex-column">
-                                                <!--begin::Icon-->
-                                                <div class="m-0">
-                                                    <i class="fonticon-sun fs-4x text-warning text-center"></i>
-                                                </div>
-                                                <!--end::Icon-->
-                                                <!--begin::Section-->
-                                                <div class="d-flex flex-column my-7">
-                                                    <!--begin::Number-->
-                                                    <span class="fw-bold fs-3x text-gray-800 lh-1 ls-n2">15</span>
-                                                    <!--end::Number-->
-                                                    <!--begin::Follower-->
-                                                    <div class="m-0">
-                                                        <span class="fw-bold fs-6 text-gray-400">Промінчиків</span>
-                                                    </div>
-                                                    <!--end::Follower-->
-                                                </div>
-                                                <!--end::Section-->
-                                                <!--begin::Badge-->
-                                                <span class="badge badge-light-success fs-base">
-													<!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
-													<span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
-														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-															<rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1" transform="rotate(90 13 6)" fill="currentColor"></rect>
-															<path d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z" fill="currentColor"></path>
-														</svg>
-													</span>
-                                                    <!--end::Svg Icon-->+10</span>
-                                                <!--end::Badge-->
-                                            </div>
-                                            <!--end::Body-->
-                                        </div>
+                                    <div class="col mb-4">
+                                        <lumen-card></lumen-card>
                                     </div>
                                     <!--end::Col-->
 
                                     <!--begin::Col-->
-                                    <div class="col-xl-12">
-                                        <div class="card h-lg-100">
-                                            <!--begin::Body-->
-                                            <div class="card-body d-flex justify-content-between align-items-start flex-column">
-                                                <!--begin::Icon-->
-                                                <div class="m-0">
-                                                    <i class="las la-tint text-primary fs-4x"></i>
-                                                </div>
-                                                <!--end::Icon-->
-                                                <!--begin::Section-->
-                                                <div class="d-flex flex-column my-7">
-                                                    <!--begin::Number-->
-                                                    <span class="fw-bold fs-3x text-gray-800 lh-1 ls-n2">85</span>
-                                                    <!--end::Number-->
-                                                    <!--begin::Follower-->
-                                                    <div class="m-0">
-                                                        <span class="fw-bold fs-6 text-gray-400">Капель</span>
-                                                    </div>
-                                                    <!--end::Follower-->
-                                                </div>
-                                                <!--end::Section-->
-                                                <!--begin::Badge-->
-                                                <span class="badge badge-light-success fs-base">
-													<!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
-													<span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
-														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-															<rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1" transform="rotate(90 13 6)" fill="currentColor"></rect>
-															<path d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z" fill="currentColor"></path>
-														</svg>
-													</span>
-                                                    <!--end::Svg Icon-->+25</span>
-                                                <!--end::Badge-->
-                                            </div>
-                                            <!--end::Body-->
-                                        </div>
+                                    <div class="col">
+                                        <water-card></water-card>
                                     </div>
                                     <!--end::Col-->
                                 </div>
 
                                 <!--begin::Col-->
-                                <div class="col-xl-8 col-xxl-8 mb-8">
-                                    <div class="card border-0 h-md-100" style="background: linear-gradient(112.14deg, #b8d935 0%, #3A7BD5 100%)">
-                                        <!--begin::Body-->
-                                        <div class="card-body">
-                                            <!--begin::Row-->
-                                            <div class="row align-items-center h-100">
-                                                <!--begin::Col-->
-                                                <div class="col-7 ps-xl-13">
-                                                    <!--begin::Title-->
-                                                    <div class="text-white mb-6 pt-6">
-                                                        <span class="fs-4 fw-bold me-2 d-block lh-1 pb-2 opacity-75">Активний курс</span>
-                                                        <span class="fs-2qx fw-bolder">Приготування до Хрещення</span>
-                                                    </div>
-                                                    <!--end::Title-->
-                                                    <!--begin::Text-->
-                                                    <span class="fw-bold text-white fs-6 mb-8 d-block opacity-75">Опис курсу про хрещення</span>
-                                                    <!--end::Text-->
-                                                    <!--begin::Items-->
-                                                    <div class="d-flex align-items-center flex-wrap d-grid gap-2 mb-10 mb-xl-20">
-                                                        <!--begin::Item-->
-                                                        <div class="d-flex align-items-center me-5 me-xl-13">
-                                                            <!--begin::Symbol-->
-                                                            <div class="symbol symbol-30px symbol-circle me-3">
-                                                                <i class="fonticon-sun fs-4x text-warning text-center"></i>
-                                                            </div>
-                                                            <!--end::Symbol-->
-                                                            <!--begin::Info-->
-                                                            <div class="text-white">
-                                                                <span class="fw-bold d-block fs-8 opacity-75">Промінчики</span>
-                                                                <span class="fw-bolder fs-7">+120</span>
-                                                            </div>
-                                                            <!--end::Info-->
-                                                        </div>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
-                                                        <div class="d-flex align-items-center">
-                                                            <!--begin::Symbol-->
-                                                            <div class="symbol symbol-30px symbol-circle me-3">
-                                                                <i class="las la-tint text-primary fs-4x"></i>
-                                                            </div>
-                                                            <!--end::Symbol-->
-                                                            <!--begin::Info-->
-                                                            <div class="text-white">
-                                                                <span class="fw-bold opacity-75 d-block fs-8">Каплі</span>
-                                                                <span class="fw-bolder fs-7">+50</span>
-                                                            </div>
-                                                            <!--end::Info-->
-                                                        </div>
-                                                        <!--end::Item-->
-                                                    </div>
-                                                    <!--end::Items-->
-                                                    <!--begin::Action-->
-                                                    <div class="d-flex flex-column flex-sm-row d-grid gap-2">
-                                                        <a href="#" class="btn btn-success flex-shrink-0 me-2">Продовжити навчання</a>
-                                                        <a href="#" class="btn btn-primary flex-shrink-0" style="background: rgba(255, 255, 255, 0.2)" >Переглянути</a>
-                                                    </div>
-                                                    <!--end::Action-->
-                                                </div>
-                                                <!--end::Col-->
-                                                <!--begin::Col-->
-                                                <div class="col-5 pt-10">
-                                                    <!--begin::Illustration-->
-                                                    <div class="bgi-no-repeat bgi-size-contain bgi-position-x-end h-225px" style="background-image:url('assets/media/svg/illustrations/easy/5.svg');"></div>
-                                                    <!--end::Illustration-->
-                                                </div>
-                                                <!--end::Col-->
-                                            </div>
-                                            <!--end::Row-->
-                                        </div>
-                                        <!--end::Body-->
-                                    </div>
+                                <div class="col-xl-8 mb-8">
+                                    <active-card></active-card>
                                 </div>
                                 <!--end::Col-->
                             </div>
@@ -846,3 +622,12 @@ License: For each use you must have a valid license purchased only from above li
 
 <!-- Mirrored from preview.keenthemes.com/good/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 13 Jul 2022 09:39:01 GMT -->
 </html>
+
+<script>
+    import ActiveCard from "../js/components/ActiveCard";
+    import LumenCard from "../js/components/LumenCard";
+    import UserHeader from "../js/components/header/UserHeader";
+    export default {
+        components: {UserHeader, LumenCard, ActiveCard}
+    }
+</script>
