@@ -29,6 +29,7 @@ import Animate from "animate.css";
 import ActiveCard from "./components/ActiveCard";
 import WaterCard from "./components/WaterCard";
 import UserHeader from "./components/header/UserHeader";
+import PlayerCard from "./components/PlayerCard";
 
 const app = createApp({
     //router,
@@ -48,5 +49,6 @@ const app = createApp({
 app.component('water-card',WaterCard);
 app.component('user-header',UserHeader);
 app.component('active-card',ActiveCard);
-app.component('lumen-card',LumenCard)
+app.component('lumen-card',LumenCard);
+app.component('player-card',PlayerCard);
 app.mount('#app');

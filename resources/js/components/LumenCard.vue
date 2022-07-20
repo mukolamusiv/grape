@@ -4,7 +4,7 @@
     enter-active-class='animate__animated animate__backInLeft' appear-active-class="animate__animated animate__backInLeft"
 
 >
-    <div class="card h-lg-100">
+    <div class="card h-lg-100" style="background-color: #f3d66dc2">
         <!--begin::Body-->
         <div class="card-body d-flex justify-content-between align-items-start flex-column">
             <!--begin::Icon-->

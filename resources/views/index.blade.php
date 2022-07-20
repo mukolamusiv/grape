@@ -138,6 +138,17 @@ License: For each use you must have a valid license purchased only from above li
                                 <div class="row g-0">
                                     <!--begin:Item-->
                                     <div class="col-6">
+{{--                                        <audio--}}
+{{--                                            ref="audio"--}}
+{{--                                            src="assets/media/SweetHome.mp3"--}}
+{{--                                            preload="auto"--}}
+{{--                                            id="audio"--}}
+{{--                                            volume="0.1"--}}
+{{--                                            muted--}}
+{{--                                            loop--}}
+{{--                                        >--}}
+{{--                                            <source :src="file" />--}}
+{{--                                        </audio>--}}
                                         <a href="#" class="d-flex flex-column flex-center h-100 p-6 bg-hover-light border-end border-bottom">
                                             <!--begin::Svg Icon | path: icons/duotune/finance/fin009.svg-->
                                             <span class="svg-icon svg-icon-3x svg-icon-primary mb-2">
@@ -305,9 +316,11 @@ License: For each use you must have a valid license purchased only from above li
                         <div class="app-container container-fluid">
                             <!--begin::Row-->
                             <div class="row g-5 g-xl-10">
+
                                 <div class="col-lg-4 mb-8">
                                     <!--begin::Col-->
                                     <div class="col mb-4">
+                                        <player-card></player-card>
                                         <lumen-card></lumen-card>
                                     </div>
                                     <!--end::Col-->
@@ -627,7 +640,8 @@ License: For each use you must have a valid license purchased only from above li
     import ActiveCard from "../js/components/ActiveCard";
     import LumenCard from "../js/components/LumenCard";
     import UserHeader from "../js/components/header/UserHeader";
+    import PlayerCard from "../js/components/PlayerCard";
     export default {
-        components: {UserHeader, LumenCard, ActiveCard}
+        components: {PlayerCard, UserHeader, LumenCard, ActiveCard}
     }
 </script>
