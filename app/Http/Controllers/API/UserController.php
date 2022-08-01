@@ -21,7 +21,6 @@ class UserController extends Controller
     public function index()
     {
         return response(User::all(),200);
-
         //return response(Topic::with('lessons')->where('id','=','2')->get());
     }
 
@@ -72,8 +71,6 @@ class UserController extends Controller
             $user->fill($request->all())->save();
             return response($user);
         }
-//return response($request->all());
-        //return response('ривіт',200);
     }
 
     /**
@@ -99,7 +96,8 @@ class UserController extends Controller
 //        $water->count = 100;
 //        $water->user_id = 1;
 //        $water->save();
-        return response(Water::all());
+
+        return response();
     }
 
     /**
@@ -111,8 +109,9 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        return response(Water::all(['user_id','count']));
+        $user = User::findOrFail($id);
+        $user->fill($request->all())->save();
+        return response($user);
     }
 
     /**

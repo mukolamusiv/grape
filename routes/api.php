@@ -26,9 +26,22 @@ Route::post('register','\App\Http\Controllers\API\UserController@store');
 
 //користувачі
 Route::get('user','\App\Http\Controllers\API\UserController@index');
-Route::get('user/{id}','\App\Http\Controllers\API\UserController@show')->middleware(['auth']);
-Route::put('user/{id}','\App\Http\Controllers\API\UserController@update');
-Route::delete('user/{id}','\App\Http\Controllers\API\UserController@destroy')->middleware(['auth']);
+Route::get('user/{id}','\App\Http\Controllers\API\UserController@show');//->middleware(['auth']);
+Route::put('user/{id}','\App\Http\Controllers\API\UserController@update');//->middleware(['auth']);
+Route::delete('user/{id}','\App\Http\Controllers\API\UserController@destroy');//->middleware(['auth']);
 
 
 
+/*
+ * Роути уроків
+ * */
+Route::get('topics','\App\Http\Controllers\API\LessonsController@topics');
+Route::get('lesson/{id}','\App\Http\Controllers\API\LessonsController@lesson');
+Route::get('topic/{id}','\App\Http\Controllers\API\LessonsController@topic');
+
+
+Route::get('check-topic/{id}','\App\Http\Controllers\API\LessonsController@check_topic');
+
+
+Route::put('start-topic/{id}','\App\Http\Controllers\API\LessonsController@start_topic');
+Route::put('start-lesson/{id}','\App\Http\Controllers\API\LessonsController@start_lesson');

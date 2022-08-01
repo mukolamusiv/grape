@@ -107,6 +107,8 @@ Route::screen('example', ExampleScreen::class)
 
 Route::screen('/lesson', \App\Orchid\Screens\Lessons\LessonsListScreen::class)->name('lessons.list');
 Route::screen('/lesson/create', \App\Orchid\Screens\Lessons\LessonsEditScreen::class)->name('lessons.add');
+Route::screen('/lesson/{id}/edit', \App\Orchid\Screens\Lessons\LessonsEditScreen::class)->name('lessons.edit');
+Route::screen('/lesson/{id}', \App\Orchid\Screens\Lessons\LessonsShowScreen::class)->name('lessons.show');
 
 
 /*

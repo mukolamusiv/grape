@@ -52,4 +52,9 @@ class Lessons extends Model
         'updated_at',
         'created_at',
     ];
+
+
+    public function topic(){
+        return $this->belongsTo(Topic::class,'id');
+    }
 }

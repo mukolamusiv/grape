@@ -26,7 +26,7 @@ class LessonsEditScreen extends Screen
     public function query(Lessons $lesson): iterable
     {
         return [
-            'lesson'=> $lesson
+            'lessons'=> $lesson
         ];
     }
 
@@ -97,10 +97,10 @@ class LessonsEditScreen extends Screen
 //            $builder->getModel()->password = Hash::make($request->input('user.password'));
 //        });
 
-        $lessons
-//            ->fill($request->collect('user')->except(['password', 'permissions', 'roles'])->toArray())
-//            ->fill(['permissions' => $permissions])
-            ->save();
+//        $lessons
+////            ->fill($request->collect('user')->except(['password', 'permissions', 'roles'])->toArray())
+////            ->fill(['permissions' => $permissions])
+//            ->save();
 
         //$lessons->replaceRoles($request->input('user.roles'));
 
