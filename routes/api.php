@@ -23,7 +23,7 @@ Route::post('test',function (){
 });
 
 
-Route::post('/login', [\App\Http\Controllers\Api\AuthController::class, 'loginUser']);
+Route::post('/login', [\App\Http\Controllers\API\AuthController::class, 'loginUser']);
 
 /*РЕЄСТРАЦІЯ КОРИСТУВАЧА
  * */
