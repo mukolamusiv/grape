@@ -12,13 +12,19 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-    return view('demo');
-});
-
-Route::get('/app/{vue_capture?}', function () {
-    return view('index');
-})->where('vue_capture', '[\/\w\.-]*');
+//Route::get('/', function () {
+//    return view('demo');
+//});
+Route::get('/{any}', function () {
+    return view('test');})->where('any', '.*');
+//Route::get('/app/{vue_capture?}', function () {
+//    return view('test');
+//
+//
+//})->where('vue_capture', '[\/\w\.-]*');
+//Route::get('/app/login', function () {
+//    return view('test');
+//})->where('vue_capture', '[\/\w\.-]*');
 
 //Route::get('/', function () {
 //    return view('demo');

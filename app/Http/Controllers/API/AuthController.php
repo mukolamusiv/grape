@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Egulias\EmailValidator\EmailValidator;
 
 class AuthController extends Controller
 {
@@ -86,7 +87,7 @@ class AuthController extends Controller
                 ], 401);
             }
 
-            $user = User::where('email', $request->email)->first();
+            $user = User::where('email', $request->input('email'))->first();
 
             return response()->json([
                 'status' => true,
