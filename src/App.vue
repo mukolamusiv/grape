@@ -1,23 +1,34 @@
 <template>
-  <div v-if="store.ui.loding" class="loding-progress"></div>
-  <header-bar v-if="router.currentRoute.value.name!=='Login'"/>
-  <router-view/>
+  <div class="page-wrap">
+   <header-bar v-show="router.currentRoute.value.name!=='Login' && router.currentRoute.value.name!=='SignUp'"/>
+   <router-view/>
+  </div>
+ <nav-bar/>
 </template>
 
 <style lang="scss">
   @import '@/assets/styles/bootstrap-reboot.css';
   @import '@/assets/styles/main-style.scss';
+  #app{
+    display: flex;
+    max-width: 100vw;
+    max-height: 100vh;
+    overflow: hidden;
+}
+  .page-wrap{
+    flex-grow: 1;
+  }
 </style>
 
 <script setup>
 import HeaderBar from '@/components/HeaderBar.vue'
+import NavBar from '@/components/NavBar.vue'
 import { watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from '@/store'
 import axios from 'axios'
 
 const route = useRoute()
-
 const router = useRouter()
 const { store } = useStore()
 store.router = router

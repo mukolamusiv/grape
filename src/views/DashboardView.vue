@@ -2,7 +2,7 @@
   <main>
     <section class="current-course">
       <div class="section-title">
-        <h4>Активна тема</h4>
+        <h2 class="cl-2">Активні</h2>
       </div>
       <div class="cuerse-card">
         <div class="course-logo">
@@ -16,7 +16,6 @@
             </div>
             <div class="progress-liner-wrap">
               <div class="progress-liner" :style="{ 'width': data.progress}"></div>
-              <span class="material-icons pointer">where_to_vote</span>
             </div>
           </div>
           <div class="get">
@@ -33,8 +32,19 @@
                 <span>15</span>
             </div>
           </div>
+          <div class="grape-btn-wrap">
+            <div class="grape-btn">
+              <a href="#">Продовжити</a>
+            </div>
+          </div>
         </div>
       </div>
+    </section>
+    <section>
+      <div class="section-title">
+        <h2>Пройдені</h2>
+      </div>
+
     </section>
   </main>
 </template>
@@ -43,7 +53,7 @@
 import { reactive } from 'vue'
 
 const data = reactive({
-  progress: '80%'
+  progress: '20%'
 })
 
 
@@ -54,35 +64,44 @@ store.ui.primeTitle = 'Дошка'
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/styles/color-style.scss';
+.section-title{
+  width: 100%;
+  color: #192736;
+  font-weight: 500;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  h2{
+    display: inline;
+    font-size: 1.4rem;
+    padding-left: 4px;
+    padding-right: 4px;
+    border-bottom: 1px solid #d6b84ebf;
+  }
+}
 .current-course{
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
-  .section-title{
-    h4{
-      width: 100%;
-      margin: 16px 0 32px 0;
-      color: #c86eff;
-      font-weight: bold;
-      border-bottom: 3px solid;
-    }
-  }
 }
 .cuerse-card{
+  outline: 1px solid #dddcdc;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   width: 100%;
   background: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0px 2px 2px 0px rgba(148,148,148,0.35);
+  border-radius: 5px;
 }
 .course-logo{
+  padding: 16px;
   img{
     width: 320px;
-    border-radius: 16px;
+    max-height: 198px;
+    max-width: 352px;
+    border-radius: 5px;
   }
 }
 .course-about{
@@ -90,7 +109,7 @@ store.ui.primeTitle = 'Дошка'
   flex-grow: 1;
 }
 .title{
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 600;
   color: #6f40fe;
   margin-bottom: 24px;
@@ -111,33 +130,24 @@ store.ui.primeTitle = 'Дошка'
   .progress-liner-wrap{
     width: 100%;
     display: flex;
-    background: gray;
+    background: #80808021;
     height: 16px;
-    box-shadow: 0px 0px 4px 0px rgba(148,148,148,1);
-    .pointer{
-      font-size: 16px;
-      color: white;
-      margin-left: -8px;
-    }
     .progress-liner{
-      background: linear-gradient(90deg, #FFEF62 0.66%, #45D800 100%);
+      background: #45D800;
       text-align: center;
       height: 16px;
     }
   }
 }
-.get{
+.grape-btn-wrap{
   display: flex;
-  padding: 16px;
-  justify-content: center;
-  .get-items{
-    border-radius: 7px;
-    flex-wrap: wrap;
-    flex-direction: column;
-    box-shadow: 0px 0px 4px 0px rgba(148,148,148,1);
-    span{
-      display: block;
-    }
+  justify-content: flex-end;
+  align-items: flex-end;
+  .grape-btn{
+    padding: 8px 16px;
+    background: $background-2;
+    max-width: fit-content;
+
   }
 }
 @media (min-width: 1200px) {
