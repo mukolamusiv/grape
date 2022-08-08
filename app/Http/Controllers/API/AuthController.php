@@ -92,7 +92,8 @@ class AuthController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'User Logged In Successfully',
-                'token' => $user->createToken("API TOKEN")->plainTextToken
+                'token' => $user->createToken("API TOKEN")->plainTextToken,
+                'test'=> $user->currentAccessToken()
             ], 200);
 
         } catch (\Throwable $th) {
@@ -101,5 +102,18 @@ class AuthController extends Controller
                 'message' => $th->getMessage()
             ], 500);
         }
+    }
+
+    public function logout(Request $request){
+        return response($request->user()->currentAccessToken());
+        //return response(\auth()->user());
+//        if($request->user()->currentAccessToken()->delete()){
+//            return response([
+//                'status' => true,
+//                'message' => 'User Logout In Successfully',
+//            ]);
+//        }else{
+//            return response('Помилка');
+//        }
     }
 }

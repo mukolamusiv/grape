@@ -18,12 +18,15 @@ use Illuminate\Support\Facades\Route;
 //Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //    return $request->user();
 //});
+Auth::routes();
+
 Route::post('test',function (){
    return response('Привіт світ', 200);
 });
 
 
-Route::post('/login', [\App\Http\Controllers\API\AuthController::class, 'loginUser']);
+//Route::post('/login', [\App\Http\Controllers\API\AuthController::class, 'loginUser']);
+//Route::post('/logout', [\App\Http\Controllers\API\AuthController::class, 'logout']);
 
 /*РЕЄСТРАЦІЯ КОРИСТУВАЧА
  * */
