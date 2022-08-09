@@ -32,6 +32,8 @@ Route::post('test',function (){
  * */
 Route::post('register','\App\Http\Controllers\API\UserController@store');
 
+Route::get('mail','\App\Http\Controllers\API\UserController@test_email');
+
 //користувачі
 Route::get('user','\App\Http\Controllers\API\UserController@index');
 Route::get('user/{id}','\App\Http\Controllers\API\UserController@show');//->middleware(['auth']);

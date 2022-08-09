@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Mail\SendEmail;
 use App\Models\Topic;
 use App\Models\User;
 use App\Models\Water;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -123,5 +125,10 @@ class UserController extends Controller
     public function destroy($id)
     {
         return response(User::destroy($id));
+    }
+
+
+    public function test_email(){
+        Mail::to('mykolamysiv@ucu.edu.ua')->send(new SendEmail('test1'));
     }
 }
