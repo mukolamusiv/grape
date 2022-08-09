@@ -3,21 +3,12 @@
    <header-bar v-show="router.currentRoute.value.name!=='Login' && router.currentRoute.value.name!=='SignUp'"/>
    <router-view/>
   </div>
- <nav-bar/>
+ <nav-bar v-if="router.currentRoute.value.name!=='Login' && router.currentRoute.value.name!=='SignUp'"/>
 </template>
 
 <style lang="scss">
   @import '@/assets/styles/bootstrap-reboot.css';
   @import '@/assets/styles/main-style.scss';
-  #app{
-    display: flex;
-    max-width: 100vw;
-    max-height: 100vh;
-    overflow: hidden;
-}
-  .page-wrap{
-    flex-grow: 1;
-  }
 </style>
 
 <script setup>

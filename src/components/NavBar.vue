@@ -1,5 +1,5 @@
 <template>
-  <nav @click="tick" v-show="store.ui.navOpen" class="menu animate__animated1 animate__slideInRight1">
+  <nav @click="tick" v-show="store.ui.navOpen" class="menu animate__animated animate__slideInRight">
     <div class="avatar-block c-pointer">
       <div class="avatar-img">
         <span class="img">
@@ -26,6 +26,68 @@
           <span>15</span>
       </div>
     </div>
+    <hr>
+    <h4>Навігація</h4>
+    <div class="grape-links-wrap">
+      <div class="grape-link">
+        <router-link to="#passed-courses"><span class="material-icons">home</span><span>Головна</span></router-link>
+      </div>
+      <div class="grape-link">
+        <router-link to="#passed-courses"><span class="material-icons cl-green">electric_bolt</span>Активні теми</router-link>
+      </div>
+      <div class="grape-link">
+        <router-link to="#passed-courses"><span class="material-icons cl-gray">done_outline</span>Пройдені теми</router-link>
+      </div>
+      <div class="grape-link">
+        <router-link to="#passed-courses"><span class="material-icons cl-blue">search</span>Доступні теми</router-link>
+      </div>
+    </div>
+    <h4>Навігація</h4>
+    <div class="grape-links-wrap">
+      <div class="grape-link">
+        <router-link to="#passed-courses"><span class="material-icons">home</span><span>Головна</span></router-link>
+      </div>
+      <div class="grape-link">
+        <router-link to="#passed-courses"><span class="material-icons cl-green">electric_bolt</span>Активні теми</router-link>
+      </div>
+      <div class="grape-link">
+        <router-link to="#passed-courses"><span class="material-icons cl-gray">done_outline</span>Пройдені теми</router-link>
+      </div>
+      <div class="grape-link">
+        <router-link to="#passed-courses"><span class="material-icons cl-blue">search</span>Доступні теми</router-link>
+      </div>
+    </div>
+    <h4>Навігація</h4>
+    <div class="grape-links-wrap">
+      <div class="grape-link">
+        <router-link to="#passed-courses"><span class="material-icons">home</span><span>Головна</span></router-link>
+      </div>
+      <div class="grape-link">
+        <router-link to="#passed-courses"><span class="material-icons cl-green">electric_bolt</span>Активні теми</router-link>
+      </div>
+      <div class="grape-link">
+        <router-link to="#passed-courses"><span class="material-icons cl-gray">done_outline</span>Пройдені теми</router-link>
+      </div>
+      <div class="grape-link">
+        <router-link to="#passed-courses"><span class="material-icons cl-blue">search</span>Доступні теми</router-link>
+      </div>
+    </div>
+    <h4>Нагороди</h4>
+    <div class="grape-links-wrap">
+      <div class="grape-link">
+        <router-link to="#passed-courses"><span class="material-icons">home</span><span>Головна</span></router-link>
+      </div>
+      <div class="grape-link">
+        <router-link to="#passed-courses"><span class="material-icons cl-green">electric_bolt</span>Активні теми</router-link>
+      </div>
+      <div class="grape-link">
+        <router-link to="#passed-courses"><span class="material-icons cl-gray">done_outline</span>Пройдені теми</router-link>
+      </div>
+      <div class="grape-link">
+        <router-link to="#passed-courses"><span class="material-icons cl-blue">search</span>Доступні1</router-link>
+      </div>
+    </div>
+    <hr>
   </nav>
 </template>
 
@@ -50,11 +112,19 @@ hr{
   background-color: #ffffff!important;
 }
 nav{
+  position: fixed;
+  min-width: 280px;
+  max-width: 100%;
+  height: calc(100vh - 60px);
+  overflow-y: scroll;
+  top: 60px;
+  right: 0;
+  margin: 0;
   overflow-y: scroll;
   max-width: auto!important;
   background: $background-1;
-  outline: 1px solid #80808038;
   padding: 16px;
+  color: #ffffff;
   .avatar-block{
     display: flex;
     flex-direction: column;
@@ -101,39 +171,34 @@ nav{
       }
     }
   }
+  .grape-link{
+    padding: 8px 16px;
+    margin-bottom: 8px;
+    a{
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      color: #cfcfcf;
+      .material-icons{
+        display: block;
+        font-size: inherit;
+        margin-right: 16px;
+        }
+    }
+  }
+  .grape-link:hover{
+    background: #21344861;
+  }
+  h4{
+    opacity: 0.6;
+    text-align: center;
+  }
 }
 @media (min-width: 1200px) {
-  nav {
 
-  }
 }
 
-.animate__animated1 {
-  // position: fixed;
-  // position: absolute;
-  margin: 0;
-  top: 61px;
-  right: 16px;
+.animate__animated {
   animation-duration: 0.5s;
-
-  animation-duration: var(--animate-duration);
-
-  animation-fill-mode: both;
-}
-@keyframes slideInRight {
-  from {
-
-    transform: translate3d(100%, 0, 0);
-    visibility: visible;
-  }
-
-  to {
-
-    transform: translate3d(0, 0, 0);
-    visibility: visible;
-  }
-}
-.animate__slideInRight1 {
-  animation-name: slideInRight;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="logo-item">
-        <img src="@/assets/img/logo.png" alt="Grape">
+        <img src="@/assets/img/logo2.png" alt="Grape">
         <span class="text d-1200-flex d-none">«Я виноградина, ви – гілки. Хто перебуває в мені, а я в ньому, – той плід приносить щедро…» Йоана, 15,5</span>
     </div>
     <div class="nav-btn c-pointer toggle-btn">
@@ -31,9 +31,10 @@ const { store } = useStore()
 <style scoped lang="scss">
 @import '@/assets/styles/color-style.scss';
 header{
+  position: fixed;
   display: flex;
   align-items: center;
-  max-width: 100%;
+  width: 100%;
   height: 60px;
   padding: 16px;
   background: $background-1;
