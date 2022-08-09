@@ -350,7 +350,7 @@ store.ui.primeTitle = 'Дошка'
     font-size: 1.9rem;
     padding-left: 4px;
     padding-right: 4px;
-    border-bottom: 4px solid;
+    border-bottom: 3px solid;
   }
 }
 .current-courses{
@@ -369,7 +369,7 @@ store.ui.primeTitle = 'Дошка'
     width: 100%;
     background: #ffffff;
     border-radius: 5px;
-    outline: 2px solid #dddcdc;
+    outline: 1px solid #dddcdc;
   }
   .course-logo{
     display: flex;
