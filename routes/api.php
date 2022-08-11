@@ -18,11 +18,20 @@ use Illuminate\Support\Facades\Route;
 //Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //    return $request->user();
 //});
+
+
+//////////////////////////////////////////////
+Route::post('register-user','\App\Http\Controllers\API\AuthController@register');
+Route::post('login-user','\App\Http\Controllers\API\AuthController@login');
+Route::post('logout-user','\App\Http\Controllers\API\AuthController@logout')->middleware(['auth']);
+
+
+/// /////////////////////////////////
 Auth::routes();
 
-Route::post('test',function (){
-   return response('Привіт світ', 200);
-});
+//Route::post('test',function (){
+//   return response('Привіт світ', 200);
+//});
 
 
 //Route::post('/login', [\App\Http\Controllers\API\AuthController::class, 'loginUser']);
@@ -30,7 +39,7 @@ Route::post('test',function (){
 
 /*РЕЄСТРАЦІЯ КОРИСТУВАЧА
  * */
-Route::post('register','\App\Http\Controllers\API\UserController@store');
+//Route::post('register','\App\Http\Controllers\API\UserController@store');
 
 Route::get('mail','\App\Http\Controllers\API\UserController@test_email');
 
