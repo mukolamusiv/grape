@@ -1,5 +1,6 @@
 <?php
 
+$origin = 'grape.chasoslov.info';
 return [
 
     /*
@@ -17,21 +18,23 @@ return [
 
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
-    'allowed_methods' => ['*'],
+//    'allowed_methods' => ['*'],
+//
+//    'allowed_origins' => ['*'],
+//
+//    'allowed_origins_patterns' => [],
+//
+//    'allowed_headers' => ['*'],
+//
+//    'exposed_headers' => [],
 
-    'allowed_origins' => ['*'],
-
-    'allowed_origins_patterns' => [],
-
-    'allowed_headers' => ['*'],
-
-    'exposed_headers' => [],
+    'allowedOrigins' => [$origin, 'http://localhost:8000'],
+    'allowedHeaders' => ['Content-Type', 'Accept', 'Authorization', 'X-Requested-With', 'Application'],
+    'allowedMethods' => ['POST', 'GET', 'OPTIONS', 'PUT', 'DELETE'],
+    'exposedHeaders' => ['Authorization'],
 
     'max_age' => 0,
 
-    //'supports_credentials' => false,
     'supports_credentials' => true,
-//    header('Access-Control-Allow-Origin: *');
-//header('Access-Control-Allow-Methods: *');
-//header('Access-Control-Allow-Headers: *');
+
 ];
