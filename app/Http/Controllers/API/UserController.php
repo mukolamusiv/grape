@@ -8,6 +8,7 @@ use App\Models\Topic;
 use App\Models\User;
 use App\Models\Water;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -15,6 +16,13 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
+
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -130,5 +138,9 @@ class UserController extends Controller
 
     public function test_email(){
         Mail::to('mykolamysiv@ucu.edu.ua')->send(new SendEmail('test1'));
+    }
+
+    public function get_user(){
+        return response(Auth::user());
     }
 }
