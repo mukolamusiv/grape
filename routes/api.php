@@ -43,7 +43,7 @@ Auth::routes();
 
 Route::get('mail','\App\Http\Controllers\API\UserController@test_email');
 
-Route::get('get-user','\App\Http\Controllers\API\UserController@get_user');
+Route::get('get-user','\App\Http\Controllers\API\UserController@get_user')->middleware(['auth']);
 
 //користувачі
 Route::get('user','\App\Http\Controllers\API\UserController@index')->middleware(['auth']);
