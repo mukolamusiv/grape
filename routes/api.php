@@ -34,11 +34,13 @@ Route::post('register','\App\Http\Controllers\API\UserController@store');
 
 Route::get('mail','\App\Http\Controllers\API\UserController@test_email');
 
+Route::get('get-user','\App\Http\Controllers\API\UserController@get_user');//->middleware(['auth']);
+
 //користувачі
-Route::get('user','\App\Http\Controllers\API\UserController@index');
-Route::get('user/{id}','\App\Http\Controllers\API\UserController@show');//->middleware(['auth']);
-Route::put('user/{id}','\App\Http\Controllers\API\UserController@update');//->middleware(['auth']);
-Route::delete('user/{id}','\App\Http\Controllers\API\UserController@destroy');//->middleware(['auth']);
+Route::get('user','\App\Http\Controllers\API\UserController@index')->middleware(['auth']);
+Route::get('user/{id}','\App\Http\Controllers\API\UserController@show')->middleware(['auth']);
+Route::put('user/{id}','\App\Http\Controllers\API\UserController@update')->middleware(['auth']);
+Route::delete('user/{id}','\App\Http\Controllers\API\UserController@destroy')->middleware(['auth']);
 
 
 
