@@ -28,7 +28,7 @@ return [
 //
 //    'exposed_headers' => [],
 
-    'allowedOrigins' => [$origin, 'http://localhost:8000'],
+    'allowedOrigins' => [$origin, 'http://127.0.0.1:8000'],
     'allowedHeaders' => ['Content-Type', 'Accept', 'Authorization', 'X-Requested-With', 'Application'],
     'allowedMethods' => ['POST', 'GET', 'OPTIONS', 'PUT', 'DELETE'],
     'exposedHeaders' => ['Authorization'],
