@@ -20,7 +20,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    //'allowed_origins' => ['*'],
+    'allowed_origins' => ['*'],
 
     'allowed_origins_patterns' => [],
 
@@ -28,13 +28,13 @@ return [
 
     'exposed_headers' => [],
 
-    'allowedOrigins' => [$origin, 'http://127.0.0.1:8000','https://grape.chasoslov.info'],
+    //'allowedOrigins' => [$origin, 'http://127.0.0.1:8000','https://grape.chasoslov.info'],
 //    'allowedHeaders' => ['Content-Type', 'Accept', 'Authorization', 'X-Requested-With', 'Application'],
 //    'allowedMethods' => ['POST', 'GET', 'OPTIONS', 'PUT', 'DELETE'],
 //    'exposedHeaders' => ['Authorization'],
 
     'max_age' => 0,
 
-    'supports_credentials' => true,
+    'supports_credentials' => false,
 
 ];
