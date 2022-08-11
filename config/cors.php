@@ -30,5 +30,7 @@ return [
     'max_age' => 0,
 
     'supports_credentials' => false,
-
+//    header('Access-Control-Allow-Origin: *');
+//header('Access-Control-Allow-Methods: *');
+//header('Access-Control-Allow-Headers: *');
 ];
