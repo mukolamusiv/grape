@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 //////////////////////////////////////////////
 Route::post('register-user','\App\Http\Controllers\API\AuthController@register');
 Route::post('login-user','\App\Http\Controllers\API\AuthController@login');
-Route::post('logout-user','\App\Http\Controllers\API\AuthController@logout')->middleware(['auth','cors']);
+Route::post('logout-user','\App\Http\Controllers\API\AuthController@logout')->middleware(['auth']);
 
 
 /// /////////////////////////////////
@@ -43,13 +43,13 @@ Auth::routes();
 
 Route::get('mail','\App\Http\Controllers\API\UserController@test_email');
 
-Route::get('get-user','\App\Http\Controllers\API\UserController@get_user')->middleware(['auth','cors']);
+Route::get('get-user','\App\Http\Controllers\API\UserController@get_user')->middleware(['auth']);
 
 //користувачі
-Route::get('user','\App\Http\Controllers\API\UserController@index')->middleware(['auth','cors']);
-Route::get('user/{id}','\App\Http\Controllers\API\UserController@show')->middleware(['auth','cors']);
-Route::put('user/{id}','\App\Http\Controllers\API\UserController@update')->middleware(['auth','cors']);
-Route::delete('user/{id}','\App\Http\Controllers\API\UserController@destroy')->middleware(['auth','cors']);
+Route::get('user','\App\Http\Controllers\API\UserController@index')->middleware(['auth']);
+Route::get('user/{id}','\App\Http\Controllers\API\UserController@show')->middleware(['auth']);
+Route::put('user/{id}','\App\Http\Controllers\API\UserController@update')->middleware(['auth']);
+Route::delete('user/{id}','\App\Http\Controllers\API\UserController@destroy')->middleware(['auth']);
 
 
 
