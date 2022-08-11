@@ -8,6 +8,9 @@
           <h3 v-if="router.currentRoute.value.name =='SignUp'">Реєстрація</h3>
         </div>
         <div class="form-sign" v-if="router.currentRoute.value.name =='Login'">
+          <div class="form-item login-btn c-pointer" @click="getUser()">
+            Отримати
+          </div>
           <div class="form-item">
             <label>
               <span class="material-icons">person</span>
@@ -76,10 +79,10 @@
 import { reactive } from 'vue'
 import { useRouter} from 'vue-router'
 import axios from 'axios'
-// import { useStore } from '@/store'
+import { useStore } from '@/store'
 
 const router = useRouter()
-// const { store } = useStore()
+const { store } = useStore()
 
 const data = reactive({
   error: false,
@@ -99,82 +102,36 @@ const changeInputType = function(){
   }
 }
 const login = function (){
-   axios({
-    method: 'GET',
-    url: '/sanctum/csrf-cookie',
+  axios({
+    method: 'POST',
+    url: '/api/login-user',
     data: {
       email: data.email,
       password: data.password,
    }
   }).then(function (response) {
-    console.log(response.data)
-     axios({
-      method: 'POST',
-      url: '/api/login',
-      data: {
-        email: data.email,
-        password: data.password,
-     }
-    }).then(function (response) {
-      console.log(response.data)
-    })
+    // console.log(response.config.headers)
+    // console.log(response.data)
+    store.token = response.data.access_token
+      axios.defaults.headers.common['Authorization'] = `Bearer ${store.token}`
+        console.log(axios.defaults.headers)
+
   })
- // //  axios({
- // //   method: 'POST',
- // //   url: '/login',
- // //   data: {
- // //     email: data.email,
- // //     password: data.password,
- // //  }
- // // }).then(function (response) {
- // //   console.log(response.data)
- // // })
- // axios.get('/sanctum/csrf-cookie').then(function (response) {
- //   console.log(response.data)
- // })
-
- //  axios({
- //   method: 'GET',
- //   url: '/sanctum/csrf-cookie',
- //   data: {
- //     email: data.email,
- //     password: data.password,
- //  }
- // }).then(function (response) {
- //   console.log(response.data)
- // })
 }
-
-
-// const login2 = function () {
-//   axios.get('/sanctum/csrf-cookie').then(response => {
-//                 //console.log(response);
-//                 axios.post('/login', {email: data.emain ,password: data.password})
-//                     .then( response => {
-//                         //auth.login(response.config.headers['X-XSRF-TOKEN'], response.user);
-//                         localStorage.setItem('x-xsrf-token',response.config.headers['X-XSRF-TOKEN'])
-//                         axios.get('/api/get-user')
-//                             .then(({data}) => {
-//                                 //this.user = data;
-//                                 Auth.login(response.config.headers['X-XSRF-TOKEN'], data)
-//                                 window.localStorage.setItem('user', JSON.stringify(data))
-//                                 //localStorage.setItem('user',data)
-//
-//                             })
-//                         //console.log(response);
-//                         //localStorage.setItem('user',response)
-//                         //Auth.login(response.config.headers['X-XSRF-TOKEN']), response.data)
-//                         location.reload('/')
-//                     })
-//                     .catch(res => {
-//                         // console.log('asdasdasdasdasd');
-//                          console.log(res);
-//                         this.$toast.error('Авторизація не відбулась, перевірте логін та пароль');
-//                         //alert(response.data.message);
-//                         //this.$toastr.e(response.data.message, "Помилка")
-//                     });
-//             });
-// }
+const getUser = function (){
+  axios.get('https://grape.chasoslov.info/api/get-user', { 'headers': { 'Authorization': `Bearer ${store.token}` } })
+  .then(function (response) {
+    console.log(response.data)
+  })
+  // axios({
+  //   method: 'GET',
+  //   url: '/api/get-user',
+  //   data: {}
+  // }).then(function (response) {
+  //   console.log(response.config.headers)
+  //
+  // })
+}
 </script>
 
 <style lang="scss" scoped>

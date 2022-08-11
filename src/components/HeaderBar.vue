@@ -8,23 +8,15 @@
         <span class="material-icons toggle-btn" v-if="!store.ui.navOpen" @click="store.ui.navOpen = !store.ui.navOpen">menu</span>
         <span class="material-icons" v-if="store.ui.navOpen" >menu_open</span>
     </div>
-    <nav-bar />
   </header>
 </template>
 
 <script setup>
-// import { onUnmounted } from 'vue'
 import { useStore } from '@/store'
+// import axios from 'axios'
 const { store } = useStore()
 
 
-// function menuCloseClickOutside(e) {
-//     if(!e.target.matches('.menu, .menu *, .toggle-btn')) {
-//         store.ui.navOpen = false
-//     }
-// }
-// document.addEventListener('click', menuCloseClickOutside);
-// onUnmounted(() => {document.removeEventListener('click', menuCloseClickOutside)})
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

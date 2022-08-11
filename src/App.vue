@@ -1,6 +1,6 @@
 <template>
   <div class="page-wrap">
-   <header-bar v-show="router.currentRoute.value.name!=='Login' && router.currentRoute.value.name!=='SignUp'"/>
+   <header-bar v-if="router.currentRoute.value.name!=='Login' && router.currentRoute.value.name!=='SignUp'"/>
    <router-view/>
   </div>
  <nav-bar v-if="router.currentRoute.value.name!=='Login' && router.currentRoute.value.name!=='SignUp'"/>
@@ -23,7 +23,7 @@ const route = useRoute()
 const router = useRouter()
 const { store } = useStore()
 store.router = router
-store.lodlocal()
+// store.lodlocal()
 axios.defaults.baseURL = store.homeUrl
 
 // router.beforeEach(async (to) => {
@@ -38,6 +38,6 @@ axios.defaults.baseURL = store.homeUrl
 // })
 
 watch(route, () => {
-  store.ui.collapseSidebar = true
+  store.ui.navOpen = false
 })
 </script>
