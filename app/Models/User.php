@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Orchid\Metrics\Chartable;
@@ -10,7 +11,7 @@ use Orchid\Platform\Models\User as Authenticatable;
 class User extends Authenticatable
 {
 
-    use Notifiable,Chartable,\Laravel\Sanctum\HasApiTokens, HasApiTokens;
+    use Notifiable,Chartable,\Laravel\Sanctum\HasApiTokens, HasApiTokens, CanResetPassword;
     /**
      * The attributes that are mass assignable.
      *

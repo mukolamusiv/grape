@@ -15,7 +15,9 @@ use Illuminate\Support\Facades\Route;
 //Route::get('/', function () {
 //    return view('demo');
 //});
-
+//Route::prefix('admins')->group(function (){
+//    Auth::routes();
+//});
 
 Route::get('/{any}', function () {
     return view('test');})->where('any', '.*');

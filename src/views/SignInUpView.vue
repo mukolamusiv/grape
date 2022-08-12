@@ -119,7 +119,23 @@ const login = function (){
   })
 }
 const getUser = function (){
-  axios.get('https://grape.chasoslov.info/api/get-user', { 'headers': { 'Authorization': `Bearer ${store.token}` } })
+
+    var settings = {
+        //"url": "https://grape.chasoslov.info/api/get-user",
+        "method": "GET",
+        "timeout": 0,
+        "headers": {
+            "Authorization": `Bearer ${store.token}`,
+        },
+    };
+
+    // $.ajax(settings).done(function (response) {
+    //     console.log(response);
+    // });
+
+
+
+  axios.get('/api/get-user', settings)
   .then(function (response) {
     console.log(response.data)
   })

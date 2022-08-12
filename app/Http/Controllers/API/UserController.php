@@ -20,7 +20,7 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+       // $this->middleware('auth');
     }
 
     /**
@@ -141,6 +141,6 @@ class UserController extends Controller
     }
 
     public function get_user(){
-        return response(Auth::user());
+        return response(User::find(1));
     }
 }
