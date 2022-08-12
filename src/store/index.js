@@ -9,15 +9,23 @@ const store = reactive({
     navOpen: false,
     loding: false
   },
-  user: {
-    id: null,
-    type: null,
-    name: null
+  user: null,
+  getUser: function (){
+    axios({
+      method: 'GET',
+      url: '/api/get-user',
+      data: {}
+    }).then(function (response) {
+      store.user = response.data
+      store.router.push(`/`)
+      console.log(store.user)
+    })
   },
   lodlocal: function () {
     if (localStorage.token) {
       store.token = localStorage.token
-      axios.defaults.headers.common['Authorization'] = store.token
+      axios.defaults.headers.common['Authorization'] = `Bearer ${store.token}`
+      store.getUser()
     }
   },
   logout: function () {

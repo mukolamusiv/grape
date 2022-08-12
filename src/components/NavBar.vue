@@ -1,5 +1,5 @@
 <template>
-  <nav @click="tick" v-show="store.ui.navOpen" class="menu animate__animated animate__slideInRight">
+  <nav @click="tick" v-show="store.ui.navOpen" class="menu animate__animated animate__slideInRight" v-if="store.user">
     <div class="avatar-block c-pointer">
       <div class="avatar-img">
         <span class="img">
@@ -7,7 +7,7 @@
         </span>
       </div>
       <div class="name-role-block">
-        <div class="user-name">Микола Мисів</div>
+        <div class="user-name">{{store.user.name}} {{store.user.surname}}</div>
         <div  class="role">учень</div>
       </div>
     </div>
@@ -15,19 +15,20 @@
     <div class="get">
       <div class="get-items sun">
           <span class="material-icons">brightness_5</span>
-          <span>15</span>
+          <span>{{store.user.lumen}}</span>
       </div>
       <div class="get-items water">
           <span class="material-icons">water_drop</span>
-          <span>15</span>
+          <span>{{store.user.water}}</span>
       </div>
       <div class="get-items energy">
           <span class="material-icons">electric_bolt</span>
-          <span>15</span>
+          <span>{{store.user.energy}}</span>
       </div>
     </div>
     <hr>
     <h4>Навігація</h4>
+    <hr>
     <div class="grape-links-wrap">
       <div class="grape-link">
         <router-link to="#passed-courses"><span class="material-icons">home</span><span>Головна</span></router-link>
@@ -41,52 +42,15 @@
       <div class="grape-link">
         <router-link to="#passed-courses"><span class="material-icons cl-blue">search</span>Доступні теми</router-link>
       </div>
-    </div>
-    <h4>Навігація</h4>
-    <div class="grape-links-wrap">
-      <div class="grape-link">
-        <router-link to="#passed-courses"><span class="material-icons">home</span><span>Головна</span></router-link>
-      </div>
-      <div class="grape-link">
-        <router-link to="#passed-courses"><span class="material-icons cl-green">electric_bolt</span>Активні теми</router-link>
-      </div>
-      <div class="grape-link">
-        <router-link to="#passed-courses"><span class="material-icons cl-gray">done_outline</span>Пройдені теми</router-link>
-      </div>
-      <div class="grape-link">
-        <router-link to="#passed-courses"><span class="material-icons cl-blue">search</span>Доступні теми</router-link>
+      <div class="grape-link" @click="store.logout()">
+        <a href="#">
+          <span class="material-icons cl-blue">exit_to_app</span>
+          Вихід
+        </a>
       </div>
     </div>
-    <h4>Навігація</h4>
-    <div class="grape-links-wrap">
-      <div class="grape-link">
-        <router-link to="#passed-courses"><span class="material-icons">home</span><span>Головна</span></router-link>
-      </div>
-      <div class="grape-link">
-        <router-link to="#passed-courses"><span class="material-icons cl-green">electric_bolt</span>Активні теми</router-link>
-      </div>
-      <div class="grape-link">
-        <router-link to="#passed-courses"><span class="material-icons cl-gray">done_outline</span>Пройдені теми</router-link>
-      </div>
-      <div class="grape-link">
-        <router-link to="#passed-courses"><span class="material-icons cl-blue">search</span>Доступні теми</router-link>
-      </div>
-    </div>
+    <hr>
     <h4>Нагороди</h4>
-    <div class="grape-links-wrap">
-      <div class="grape-link">
-        <router-link to="#passed-courses"><span class="material-icons">home</span><span>Головна</span></router-link>
-      </div>
-      <div class="grape-link">
-        <router-link to="#passed-courses"><span class="material-icons cl-green">electric_bolt</span>Активні теми</router-link>
-      </div>
-      <div class="grape-link">
-        <router-link to="#passed-courses"><span class="material-icons cl-gray">done_outline</span>Пройдені теми</router-link>
-      </div>
-      <div class="grape-link">
-        <router-link to="#passed-courses"><span class="material-icons cl-blue">search</span>Доступні1</router-link>
-      </div>
-    </div>
     <hr>
   </nav>
 </template>

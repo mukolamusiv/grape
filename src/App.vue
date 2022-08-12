@@ -22,20 +22,23 @@ import axios from 'axios'
 const route = useRoute()
 const router = useRouter()
 const { store } = useStore()
-store.router = router
-// store.lodlocal()
-axios.defaults.baseURL = store.homeUrl
 
-// router.beforeEach(async (to) => {
-//   if (to.matched.some(record => record.meta.forAuthorized)) {
-//     if (!store.token) {
-//       return '/login'
-//     }
-//   }
-//   if (to.name === 'Login' && store.token) {
-//     return '/'
-//   }
-// })
+store.router = router
+axios.defaults.baseURL = store.homeUrl
+store.lodlocal()
+
+
+
+router.beforeEach(async (to) => {
+  if (to.matched.some(record => record.meta.forAuthorized)) {
+    if (!store.token) {
+      return '/login'
+    }
+  }
+  if (to.name === 'Login' && store.token) {
+    return '/'
+  }
+})
 
 watch(route, () => {
   store.ui.navOpen = false

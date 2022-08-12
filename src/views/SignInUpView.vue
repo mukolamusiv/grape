@@ -7,10 +7,8 @@
           <h3 v-if="router.currentRoute.value.name =='Login'">Вхід</h3>
           <h3 v-if="router.currentRoute.value.name =='SignUp'">Реєстрація</h3>
         </div>
+<!-- Форма авторизації -->
         <div class="form-sign" v-if="router.currentRoute.value.name =='Login'">
-          <div class="form-item login-btn c-pointer" @click="getUser()">
-            Отримати
-          </div>
           <div class="form-item">
             <label>
               <span class="material-icons">person</span>
@@ -24,49 +22,50 @@
               <span class="material-icons show" @click="changeInputType">{{data.inputIcon}}</span>
             </label>
           </div>
-          <div class="login-error" v-if="data.error">
-            Невірний логін, або пароль!
+          <div class="login-error" v-if="data.errorMessage">
+            {{data.errorMessage}}
           </div>
           <div class="form-item login-btn c-pointer" @click="login()">
             Увійти
           </div>
         </div>
+<!-- Форма реєстрації -->
         <div class="form-sign" v-if="router.currentRoute.value.name =='SignUp'">
           <div class="form-item">
             <label>
               <span class="input-name">Ім'я</span>
-              <input type="name">
+              <input type="text" v-model="data.name">
             </label>
           </div>
           <div class="form-item">
             <label>
               <span class="input-name">Прізвище</span>
-              <input type="text">
+              <input type="text" v-model="data.surname">
             </label>
           </div>
           <div class="form-item">
             <label>
               <span class="material-icons">alternate_email</span>
-              <input type="email" placeholder="email">
+              <input type="email" placeholder="email" v-model="data.email">
             </label>
           </div>
           <div class="form-item">
             <label>
               <span class="material-icons">lock</span>
-              <input placeholder="password" :type="data.inputType">
+              <input placeholder="password" :type="data.inputType" v-model="data.password">
               <span class="material-icons show" @click="changeInputType">{{data.inputIcon}}</span>
             </label>
           </div>
           <div class="form-item">
             <label>
               <span class="material-icons">lock</span>
-              <input placeholder="confirm password" :type="data.inputType">
+              <input placeholder="confirm password" :type="data.inputType" v-model="data.passwordComfirm">
             </label>
           </div>
-          <div class="login-error" v-if="data.error">
-            Невірний логін, або пароль!
+          <div class="login-error" v-if="data.errorMessage">
+            {{data.errorMessage}}
           </div>
-          <div class="form-item login-btn c-pointer" @click="data.error = !data.error">
+          <div class="form-item login-btn c-pointer" @click="signUp()">
             Зареєструватись
           </div>
         </div>
@@ -86,12 +85,16 @@ const { store } = useStore()
 
 const data = reactive({
   error: false,
+  errorMessage: null,
   inputType: 'password',
   inputIcon: 'visibility',
   email: null,
-  password: null
+  password: null,
+  passwordComfirm: null,
+  name: null,
+  surname: null
 })
-const changeInputType = function(){
+const changeInputType = function () {
   if(data.inputType == 'password') {
     data.inputType = 'text'
     data.inputIcon = 'visibility_off'
@@ -101,52 +104,55 @@ const changeInputType = function(){
     data.inputIcon = 'visibility'
   }
 }
-const login = function (){
-  axios({
-    method: 'POST',
-    url: '/api/login-user',
-    data: {
-      email: data.email,
-      password: data.password,
-   }
-  }).then(function (response) {
-    // console.log(response.config.headers)
-    // console.log(response.data)
-    store.token = response.data.access_token
+const login = function () {
+  if(data.email !=null && data.password !=null){
+    axios({
+      method: 'POST',
+      url: '/api/login-user',
+      data: {
+        email: data.email,
+        password: data.password,
+     }
+    }).then(function (response) {
+      store.token = response.data.access_token
+      localStorage.token = store.token
       axios.defaults.headers.common['Authorization'] = `Bearer ${store.token}`
-        console.log(axios.defaults.headers)
+      store.getUser()
+      }).catch(function () {
+        data.errorMessage = 'невырний email або пароль!'
+        });
 
-  })
+  }
+  else{
+    data.errorMessage = 'необхідно увести email та пароль!'
+  }
 }
-const getUser = function (){
+const signUp = function () {
+  if (`${data.password}` != `${data.passwordConfirm}`){
+    data.errorMessage = 'паролі співпадають!'
+  }
+  else {
+    if(data.email !=null && data.password !=null && data.name !=null && data.surname !=null){
+     axios({
+       method: 'POST',
+       url: '/api/register-user',
+       data: {
+         name: data.name,
+         surname: data.surname,
+         email: data.email,
+         password: data.password,
+      }
+     }).then(function () {
+       router.push(`/login`)
+       }).catch(function () {
+         data.errorMessage = 'Упс.. щось зламалось.'
+         });
 
-    var settings = {
-        //"url": "https://grape.chasoslov.info/api/get-user",
-        "method": "GET",
-        "timeout": 0,
-        "headers": {
-            "Authorization": `Bearer ${store.token}`,
-        },
-    };
-
-    // $.ajax(settings).done(function (response) {
-    //     console.log(response);
-    // });
-
-
-
-  axios.get('/api/get-user', settings)
-  .then(function (response) {
-    console.log(response.data)
-  })
-  // axios({
-  //   method: 'GET',
-  //   url: '/api/get-user',
-  //   data: {}
-  // }).then(function (response) {
-  //   console.log(response.config.headers)
-  //
-  // })
+   }
+   else{
+     data.errorMessage = 'необхідно заповнити всі поля форми!'
+   }
+  }
 }
 </script>
 
@@ -234,6 +240,7 @@ const getUser = function (){
     }
   }
   .login-btn{
+    border: 0;
     margin-top: 32px;
     margin-bottom: 16px;
     display: block;

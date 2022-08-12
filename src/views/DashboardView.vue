@@ -1,8 +1,8 @@
 <template>
-  <main>
+  <main class="form animate__animated animate__lightSpeedInLeft">
     <section class="current-courses" id="current-courses">
       <div class="section-title">
-        <h2 class="cl-yellow">Активні</h2>
+        <h2>Активні</h2>
       </div>
       <div class="cuerse-wrap">
         <div class="cuerse">
@@ -441,17 +441,26 @@ store.ui.primeTitle = 'Дошка'
 
 #current-courses{
   .cuerse{
-    outline-color: #e8b604;
+    outline-color: #45d800;
+  }
+  .section-title h2{
+    color: #45d800;
   }
 }
 #passed-courses{
   .cuerse{
     outline-color: gray;
   }
+  .section-title h2{
+    color: gray;
+  }
 }
 #available-courses{
   .cuerse{
     outline-color: #5186ff;
+  }
+  .section-title h2{
+    color: #5186ff;
   }
 }
 @media (min-width: 768px) {
