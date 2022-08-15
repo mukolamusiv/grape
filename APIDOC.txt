@@ -82,7 +82,7 @@ PUT api/user/{id}  -auth
 
 
 
-method:PUT api/user-photo/{user_id}
+method:POST api/user-photo/{user_id}
 {
     photo : file.jpg
 }
