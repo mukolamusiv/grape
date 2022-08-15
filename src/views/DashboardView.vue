@@ -1,24 +1,17 @@
 <template>
-  <main class="form animate__animated animate__lightSpeedInLeft">
-    <section class="current-courses" id="current-courses">
+  <main>
+    <section class="current-courses" id="topics-active" v-if="data.topicsActive">
       <div class="section-title">
-        <h2>Активні</h2>
+        <h2>Активні {{data.topicsActive.length}}</h2>
       </div>
-      <div class="cuerse-wrap">
-        <div class="cuerse">
+      <div class="cuerse-wrap" v-for="(topic) in data.topicsActive" v-bind:key="topic.id">
+        <div class="cuerse fit-content">
           <div class="course-logo">
             <img src="@/assets/img/default-course-logo.png" alt="">
           </div>
           <div class="course-about">
-            <div class="title">Приготування на Таїнства Покаяння</div>
-            <div class="progress">
-              <div class="progress-header">
-                <div>Пройдено</div> <span class="progress-value">{{data.progress}}</span>
-              </div>
-              <div class="progress-liner-wrap">
-                <div class="progress-liner" :style="{ 'width': data.progress}"></div>
-              </div>
-            </div>
+            <div class="title">{{topic.title}}</div>
+            <div class="description">{{topic.description}}</div>
             <div class="get">
               <div class="get-items sun">
                   <span class="material-icons">brightness_5</span>
@@ -28,113 +21,28 @@
                   <span class="material-icons">water_drop</span>
                   <span>15</span>
               </div>
-              <div class="get-items energy">
-                  <span class="material-icons">electric_bolt</span>
-                  <span>15</span>
-              </div>
             </div>
             <div class="grape-btn-wrap">
               <div class="grape-btn">
-                <a href="#">Продовжити</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="cuerse-wrap">
-        <div class="cuerse">
-          <div class="course-logo">
-            <img src="@/assets/img/default-course-logo.png" alt="">
-          </div>
-          <div class="course-about">
-            <div class="title">Приготування на Таїнства Покаяння</div>
-            <div class="progress">
-              <div class="progress-header">
-                <div>Пройдено</div> <span class="progress-value">{{data.progress}}</span>
-              </div>
-              <div class="progress-liner-wrap">
-                <div class="progress-liner" :style="{ 'width': data.progress}"></div>
-              </div>
-            </div>
-            <div class="get">
-              <div class="get-items sun">
-                  <span class="material-icons">brightness_5</span>
-                  <span>15</span>
-              </div>
-              <div class="get-items water">
-                  <span class="material-icons">water_drop</span>
-                  <span>15</span>
-              </div>
-              <div class="get-items energy">
-                  <span class="material-icons">electric_bolt</span>
-                  <span>15</span>
-              </div>
-            </div>
-            <div class="grape-btn-wrap">
-              <div class="grape-btn">
-                <a href="#">Продовжити</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="cuerse-wrap">
-        <div class="cuerse">
-          <div class="course-logo">
-            <img src="@/assets/img/default-course-logo.png" alt="">
-          </div>
-          <div class="course-about">
-            <div class="title">Приготування на Таїнства Покаяння</div>
-            <div class="progress">
-              <div class="progress-header">
-                <div>Пройдено</div> <span class="progress-value">{{data.progress}}</span>
-              </div>
-              <div class="progress-liner-wrap">
-                <div class="progress-liner" :style="{ 'width': data.progress}"></div>
-              </div>
-            </div>
-            <div class="get">
-              <div class="get-items sun">
-                  <span class="material-icons">brightness_5</span>
-                  <span>15</span>
-              </div>
-              <div class="get-items water">
-                  <span class="material-icons">water_drop</span>
-                  <span>15</span>
-              </div>
-              <div class="get-items energy">
-                  <span class="material-icons">electric_bolt</span>
-                  <span>15</span>
-              </div>
-            </div>
-            <div class="grape-btn-wrap">
-              <div class="grape-btn">
-                <a href="#">Продовжити</a>
+                <a href="#">Розпочати</a>
               </div>
             </div>
           </div>
         </div>
       </div>
     </section>
-    <section id="passed-courses">
+    <section id="topics-done" v-if="data.topicsDone">
       <div class="section-title">
-        <h2 class="cl-gray">Пройдені</h2>
+        <h2 class="cl-gray">Пройдені {{data.topicsDone.length}}</h2>
       </div>
-      <div class="cuerse-wrap">
+      <div class="cuerse-wrap" v-for="(topic) in data.topicsDone" v-bind:key="topic.id">
         <div class="cuerse fit-content">
           <div class="course-logo">
             <img src="@/assets/img/default-course-logo.png" alt="">
           </div>
           <div class="course-about">
-            <div class="title">Приготування на Таїнства Покаяння</div>
-            <div class="progress">
-              <div class="progress-header">
-                <div>Пройдено</div> <span class="progress-value">{{data.progress100}}</span>
-              </div>
-              <div class="progress-liner-wrap">
-                <div class="progress-liner" :style="{ 'width': data.progress100}"></div>
-              </div>
-            </div>
+            <div class="title">{{topic.title}}</div>
+            <div class="description">{{topic.description}}</div>
             <div class="get">
               <div class="get-items sun">
                   <span class="material-icons">brightness_5</span>
@@ -144,68 +52,28 @@
                   <span class="material-icons">water_drop</span>
                   <span>15</span>
               </div>
-              <div class="get-items energy">
-                  <span class="material-icons">electric_bolt</span>
-                  <span>15</span>
-              </div>
             </div>
             <div class="grape-btn-wrap">
               <div class="grape-btn">
-                <a href="#">Переглянути</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="cuerse-wrap">
-        <div class="cuerse fit-content">
-          <div class="course-logo">
-            <img src="@/assets/img/default-course-logo.png" alt="">
-          </div>
-          <div class="course-about">
-            <div class="title">Приготування на Таїнства Покаяння</div>
-            <div class="progress">
-              <div class="progress-header">
-                <div>Пройдено</div> <span class="progress-value">{{data.progress100}}</span>
-              </div>
-              <div class="progress-liner-wrap">
-                <div class="progress-liner" :style="{ 'width': data.progress100}"></div>
-              </div>
-            </div>
-            <div class="get">
-              <div class="get-items sun">
-                  <span class="material-icons">brightness_5</span>
-                  <span>15</span>
-              </div>
-              <div class="get-items water">
-                  <span class="material-icons">water_drop</span>
-                  <span>15</span>
-              </div>
-              <div class="get-items energy">
-                  <span class="material-icons">electric_bolt</span>
-                  <span>15</span>
-              </div>
-            </div>
-            <div class="grape-btn-wrap">
-              <div class="grape-btn">
-                <a href="#">Переглянути</a>
+                <a href="#">Розпочати</a>
               </div>
             </div>
           </div>
         </div>
       </div>
     </section>
-    <section id="available-courses">
+    <section id="topics" v-if="data.topics">
       <div class="section-title">
-        <h2 class="cl-blue">Доступні теми</h2>
+        <h2 class="cl-blue">Доступні теми {{data.topics.length}}</h2>
       </div>
-      <div class="cuerse-wrap">
+      <div class="cuerse-wrap" v-for="(topic) in data.topics" v-bind:key="topic.id">
         <div class="cuerse fit-content">
           <div class="course-logo">
             <img src="@/assets/img/default-course-logo.png" alt="">
           </div>
           <div class="course-about">
-            <div class="title">Приготування на Таїнства Покаяння</div>
+            <div class="title">{{topic.title}}</div>
+            <div class="description">{{topic.description}}</div>
             <div class="get">
               <div class="get-items sun">
                   <span class="material-icons">brightness_5</span>
@@ -213,97 +81,6 @@
               </div>
               <div class="get-items water">
                   <span class="material-icons">water_drop</span>
-                  <span>15</span>
-              </div>
-              <div class="get-items energy">
-                  <span class="material-icons">electric_bolt</span>
-                  <span>15</span>
-              </div>
-            </div>
-            <div class="grape-btn-wrap">
-              <div class="grape-btn">
-                <a href="#">Розпочати</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="cuerse-wrap">
-        <div class="cuerse fit-content">
-          <div class="course-logo">
-            <img src="@/assets/img/default-course-logo.png" alt="">
-          </div>
-          <div class="course-about">
-            <div class="title">Приготування на Таїнства Покаяння</div>
-            <div class="get">
-              <div class="get-items sun">
-                  <span class="material-icons">brightness_5</span>
-                  <span>15</span>
-              </div>
-              <div class="get-items water">
-                  <span class="material-icons">water_drop</span>
-                  <span>15</span>
-              </div>
-              <div class="get-items energy">
-                  <span class="material-icons">electric_bolt</span>
-                  <span>15</span>
-              </div>
-            </div>
-            <div class="grape-btn-wrap">
-              <div class="grape-btn">
-                <a href="#">Розпочати</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="cuerse-wrap">
-        <div class="cuerse fit-content">
-          <div class="course-logo">
-            <img src="@/assets/img/default-course-logo.png" alt="">
-          </div>
-          <div class="course-about">
-            <div class="title">Приготування на Таїнства Покаяння</div>
-            <div class="get">
-              <div class="get-items sun">
-                  <span class="material-icons">brightness_5</span>
-                  <span>15</span>
-              </div>
-              <div class="get-items water">
-                  <span class="material-icons">water_drop</span>
-                  <span>15</span>
-              </div>
-              <div class="get-items energy">
-                  <span class="material-icons">electric_bolt</span>
-                  <span>15</span>
-              </div>
-            </div>
-            <div class="grape-btn-wrap">
-              <div class="grape-btn">
-                <a href="#">Розпочати</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="cuerse-wrap">
-        <div class="cuerse fit-content">
-          <div class="course-logo">
-            <img src="@/assets/img/default-course-logo.png" alt="">
-          </div>
-          <div class="course-about">
-            <div class="title">Приготування на Таїнства Покаяння</div>
-            <div class="get">
-              <div class="get-items sun">
-                  <span class="material-icons">brightness_5</span>
-                  <span>15</span>
-              </div>
-              <div class="get-items water">
-                  <span class="material-icons">water_drop</span>
-                  <span>15</span>
-              </div>
-              <div class="get-items energy">
-                  <span class="material-icons">electric_bolt</span>
                   <span>15</span>
               </div>
             </div>
@@ -321,24 +98,55 @@
 
 <script setup>
 import { reactive } from 'vue'
+import { useStore } from '@/store'
+import axios from 'axios'
 
 const data = reactive({
+  topicsActive: null,
+  topicsDone: null,
+  topics: null,
   progress: '20%',
   progress100: '100%'
 })
-
-
-import { useStore } from '@/store'
 const { store } = useStore()
 store.ui.primeTitle = 'Дошка'
-
+const getTopicsActive = function () {
+  axios({
+    method: 'GET',
+    url: '/api/topics-active',
+    data: {}
+ }).then(function (response) {
+   console.log(response.data)
+   data.topicsActive = response.data
+ })
+}
+const getTopicsDone = function () {
+  axios({
+    method: 'GET',
+    url: '/api/topics-done',
+    data: {}
+ }).then(function (response) {
+   console.log(response.data)
+   data.topicsDone = response.data
+ })
+}
+const getTopics = function () {
+  axios({
+    method: 'GET',
+    url: '/api/topics',
+    data: {}
+ }).then(function (response) {
+   console.log(response.data)
+   data.topics = response.data
+ })
+}
+getTopicsActive()
+getTopicsDone()
+getTopics()
 </script>
 
 <style lang="scss" scoped>
 @import '@/assets/styles/color-style.scss';
-// .fit-content{
-//   width: fit-content;
-// }
 .section-title{
   width: 100%;
   color: #192736;
@@ -385,10 +193,22 @@ store.ui.primeTitle = 'Дошка'
     flex-direction: column;
   }
   .title{
-    font-size: 1.2rem;
+    text-align: center;
+    font-size: 1.4rem;
+    line-height: 1.4rem;
     font-weight: 600;
     color: #6f40fe;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
+  }
+  .description{
+    background: #7a4ffe;
+    padding: 8px;
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 1rem;
+  }
+  .get{
+    margin-top: 26px;
   }
   .progress{
     width: 100%;
@@ -424,8 +244,8 @@ store.ui.primeTitle = 'Дошка'
     .grape-btn{
       padding: 8px 16px;
       border-radius: 25px;
-      outline: 1px solid #5186FF;
-      max-width: fit-content;
+      outline: 2px solid #5186FF;
+      text-align: center;
       a{
         color: #5186FF!important;
         font-weight: bold;
@@ -439,7 +259,7 @@ store.ui.primeTitle = 'Дошка'
 
 
 
-#current-courses{
+#topics-active{
   .cuerse{
     outline-color: #45d800;
   }
@@ -447,7 +267,7 @@ store.ui.primeTitle = 'Дошка'
     color: #45d800;
   }
 }
-#passed-courses{
+#topics-done{
   .cuerse{
     outline-color: gray;
   }
@@ -455,7 +275,7 @@ store.ui.primeTitle = 'Дошка'
     color: gray;
   }
 }
-#available-courses{
+#topics{
   .cuerse{
     outline-color: #5186ff;
   }

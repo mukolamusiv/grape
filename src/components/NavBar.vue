@@ -2,9 +2,10 @@
   <nav @click="tick" v-show="store.ui.navOpen" class="menu animate__animated animate__slideInRight" v-if="store.user">
     <div class="avatar-block c-pointer">
       <div class="avatar-img">
-        <span class="img">
-          <img src="@/assets/img/avatar.svg" alt="">
+        <span class="img" v-if="!store.user.photo">
+          <img src="@/assets/img/avatar.svg" alt="avatar">
         </span>
+        <span class="img" v-if="store.user.photo" :style="{ 'background-image': `url(${store.homeUrl+store.user.photo})`}"></span>
       </div>
       <div class="name-role-block">
         <div class="user-name">{{store.user.name}} {{store.user.surname}}</div>
@@ -31,16 +32,16 @@
     <hr>
     <div class="grape-links-wrap">
       <div class="grape-link">
-        <router-link to="#passed-courses"><span class="material-icons">home</span><span>Головна</span></router-link>
+        <router-link to="/"><span class="material-icons">home</span><span>Головна</span></router-link>
       </div>
       <div class="grape-link">
-        <router-link to="#passed-courses"><span class="material-icons cl-green">electric_bolt</span>Активні теми</router-link>
+        <router-link to="#topics-active"><span class="material-icons cl-green">electric_bolt</span>Активні теми</router-link>
       </div>
       <div class="grape-link">
-        <router-link to="#passed-courses"><span class="material-icons cl-gray">done_outline</span>Пройдені теми</router-link>
+        <router-link to="#topics-done"><span class="material-icons cl-gray">done_outline</span>Пройдені теми</router-link>
       </div>
       <div class="grape-link">
-        <router-link to="#passed-courses"><span class="material-icons cl-blue">search</span>Доступні теми</router-link>
+        <router-link to="#topics"><span class="material-icons cl-blue">search</span>Доступні теми</router-link>
       </div>
       <div class="grape-link" @click="store.logout()">
         <a href="#">
@@ -99,6 +100,7 @@ nav{
     .avatar-img{
       display: flex;
       align-items: center;
+      margin-bottom: 24px;
       .material-icons{
         padding: 3px;
       }
@@ -114,6 +116,8 @@ nav{
         color: inhetir;
         border-radius: 150px;
         outline: 2px solid;
+        background-position: center;
+        background-size: cover;
         img{
           height: 150px;
           width: 100px;
@@ -125,8 +129,7 @@ nav{
       flex-direction: column;
       justify-content: center;
       .user-name{
-        color: inhetit;
-        font-size: 1.2rem
+        font-size: 1.3rem
       }
       .role{
         color: inherit;
@@ -139,9 +142,10 @@ nav{
     padding: 8px 16px;
     margin-bottom: 8px;
     a{
-      font-size: 1rem;
+      font-size: 1.1rem;
       display: flex;
       align-items: center;
+      // justify-content: center;
       color: #cfcfcf;
       .material-icons{
         display: block;
@@ -154,8 +158,9 @@ nav{
     background: #21344861;
   }
   h4{
-    opacity: 0.6;
+    opacity: 0.4;
     text-align: center;
+    font-size: 1.2rem;
   }
 }
 @media (min-width: 1200px) {
