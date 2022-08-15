@@ -132,6 +132,7 @@ class UserController extends Controller
                 'required',
             ],
         ]);
+        return response($request);
         $user = User::findOrFail($id);
         $photo = $request->file('photo');
         //return response($request);
