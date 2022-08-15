@@ -194,6 +194,10 @@ class UserEditScreen extends Screen
 
         $user->replaceRoles($request->input('user.roles'));
 
+//        $user->attachment()->syncWithoutDetaching(
+//            $request->input('user.photo', [])
+//        );
+
         Toast::info(__('Дані оновлено.'));
 
         return redirect()->route('platform.systems.users');

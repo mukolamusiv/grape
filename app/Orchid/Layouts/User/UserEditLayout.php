@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Orchid\Layouts\User;
 
 use Orchid\Screen\Field;
+use Orchid\Screen\Fields\Cropper;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Layouts\Rows;
 
@@ -18,6 +19,12 @@ class UserEditLayout extends Rows
     public function fields(): array
     {
         return [
+            Cropper::make('user.photo')
+                ->targetRelativeUrl()
+                ->title('Звантажте фото профілю')
+                ->width(1000)
+                ->height(1000),
+
             Input::make('user.name')
                 ->type('text')
                 ->max(255)
@@ -36,6 +43,7 @@ class UserEditLayout extends Rows
                 ->required()
                 ->title(__('Email'))
                 ->placeholder(__('Email')),
+
         ];
     }
 }

@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class UserTopic extends Model
 {
     use HasFactory;
+
+
+    public function topic(){
+        return $this->hasMany(Topic::class,'id','topic_id');
+    }
 }

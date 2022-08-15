@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Lessons;
 use App\Models\Topic;
+use App\Models\User;
 use App\Models\UserLessons;
 use App\Models\UserTopic;
 use Illuminate\Http\Request;
@@ -18,6 +19,16 @@ class LessonsController extends Controller
 
     public function topics(){
         return response(Topic::all());
+    }
+
+    public function topics_active(){
+        $topic = User::find(1);
+        return response($topic->topic_active);
+    }
+
+    public function topics_done(){
+        $topic = User::find(1);
+        return response($topic->topic_done);
     }
 
     public function topic($id){

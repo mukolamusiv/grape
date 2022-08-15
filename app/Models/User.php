@@ -5,13 +5,15 @@ namespace App\Models;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Orchid\Attachment\Attachable;
 use Orchid\Metrics\Chartable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Orchid\Platform\Models\User as Authenticatable;
 
 class User extends Authenticatable
 {
 
-    use Notifiable,Chartable,\Laravel\Sanctum\HasApiTokens, HasApiTokens, CanResetPassword;
+    use Notifiable,Chartable,\Laravel\Sanctum\HasApiTokens, HasApiTokens, CanResetPassword, Attachable;
     /**
      * The attributes that are mass assignable.
      *
@@ -24,6 +26,7 @@ class User extends Authenticatable
         'permissions',
         'surname',
         'birthday',
+        'photo'
     ];
 
 
@@ -84,5 +87,25 @@ class User extends Authenticatable
 
     public function waters(){
         return $this->hasMany(Water::class,'user_id','id');
+    }
+
+    public function topic(){
+        return $this->hasMany(UserTopic::class,'user_id','id');
+    }
+
+    public function topic_active(){
+        return $this->hasMany(UserTopic::class,'user_id','id')->with('topic')->where('complete','=',false);
+    }
+
+    public function topic_done(){
+        return $this->hasMany(UserTopic::class,'user_id','id')->with('topic')->where('complete','=',true);
+    }
+
+    protected function photo(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value)=> $value,
+                set: fn($value)=> '/storage/'.$value
+        );
     }
 }

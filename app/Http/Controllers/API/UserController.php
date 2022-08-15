@@ -120,7 +120,24 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
+        $request->file();
         $user->fill($request->all())->save();
+        return response($user);
+    }
+
+    public function photo(Request $request, $id)
+    {
+        $request->validate([
+            'photo' => [
+                'required',
+            ],
+        ]);
+        $user = User::findOrFail($id);
+        $photo = $request->file('photo');
+        //return response($request);
+        $user->photo = $photo->store(date('Y'.'/'.'m'.'/'.'d'),'public');
+        //$user->fill($request->all())->save();
+        $user->save();
         return response($user);
     }
 
@@ -142,5 +159,11 @@ class UserController extends Controller
 
     public function get_user(){
         return response(User::find(1));
+    }
+
+    public function check(Request $request){
+        $request->validate([
+            'email'=>'required|unique:users,email'
+        ]);
     }
 }

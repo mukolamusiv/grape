@@ -49,14 +49,18 @@ Route::get('get-user','\App\Http\Controllers\API\UserController@get_user');//->m
 Route::get('user','\App\Http\Controllers\API\UserController@index');//->middleware(['auth']);
 Route::get('user/{id}','\App\Http\Controllers\API\UserController@show');//->middleware(['auth']);
 Route::put('user/{id}','\App\Http\Controllers\API\UserController@update');//->middleware(['auth']);
+Route::post('user-photo/{id}','\App\Http\Controllers\API\UserController@photo');//->middleware(['auth']);
 Route::delete('user/{id}','\App\Http\Controllers\API\UserController@destroy');//->middleware(['auth']);
 
+Route::post('check-email','\App\Http\Controllers\API\UserController@check');
 
 
 /*
  * Роути уроків
  * */
+Route::get('topics-active','\App\Http\Controllers\API\LessonsController@topics_active');
 Route::get('topics','\App\Http\Controllers\API\LessonsController@topics');
+Route::get('topics-done','\App\Http\Controllers\API\LessonsController@topics_done');
 Route::get('lesson/{id}','\App\Http\Controllers\API\LessonsController@lesson');
 Route::get('topic/{id}','\App\Http\Controllers\API\LessonsController@topic');
 

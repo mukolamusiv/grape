@@ -12,6 +12,7 @@ use Illuminate\Validation\Rule;
 use Orchid\Platform\Models\User;
 use Orchid\Screen\Action;
 use Orchid\Screen\Actions\Button;
+use Orchid\Screen\Fields\Cropper;
 use Orchid\Screen\Screen;
 use Orchid\Support\Color;
 use Orchid\Support\Facades\Layout;
@@ -78,6 +79,10 @@ class UserProfileScreen extends Screen
                         ->icon('check')
                         ->method('save')
                 ),
+
+            Layout::rows([
+
+            ]),
 
             Layout::block(ProfilePasswordLayout::class)
                 ->title(__('Оновлення паролю'))
