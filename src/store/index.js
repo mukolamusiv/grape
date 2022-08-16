@@ -17,8 +17,6 @@ const store = reactive({
       data: {}
     }).then(function (response) {
       store.user = response.data
-      store.router.push(`/`)
-      console.log(store.user)
     })
   },
   lodlocal: function () {

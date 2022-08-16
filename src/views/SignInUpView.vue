@@ -118,6 +118,7 @@ const login = function () {
       localStorage.token = store.token
       axios.defaults.headers.common['Authorization'] = `Bearer ${store.token}`
       store.getUser()
+      router.push(`/`)
       }).catch(function () {
         data.errorMessage = 'невырний email або пароль!'
         });

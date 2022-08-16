@@ -1,17 +1,20 @@
 <template>
   <nav @click="tick" v-show="store.ui.navOpen" class="menu animate__animated animate__slideInRight" v-if="store.user">
-    <div class="avatar-block c-pointer">
+    <router-link to="/profile" class="avatar-block c-pointer">
       <div class="avatar-img">
         <span class="img" v-if="!store.user.photo">
           <img src="@/assets/img/avatar.svg" alt="avatar">
         </span>
-        <span class="img" v-if="store.user.photo" :style="{ 'background-image': `url(${store.homeUrl+store.user.photo})`}"></span>
+        <span class="img" v-if="store.user.photo" :style="{ 'background-image': `url(${store.homeUrl+store.user.photo})` }"></span>
       </div>
       <div class="name-role-block">
-        <div class="user-name">{{store.user.name}} {{store.user.surname}}</div>
-        <div  class="role">учень</div>
+        <div class="user-name">
+          {{store.user.name}} {{store.user.surname}}
+
+        </div>
+        <div  class="role">учень <span class="material-icons">manage_accounts</span></div>
       </div>
-    </div>
+    </router-link>
     <hr>
     <div class="get">
       <div class="get-items sun">
@@ -35,13 +38,13 @@
         <router-link to="/"><span class="material-icons">home</span><span>Головна</span></router-link>
       </div>
       <div class="grape-link">
-        <router-link to="#topics-active"><span class="material-icons cl-green">electric_bolt</span>Активні теми</router-link>
+        <router-link to="/#topics-active"><span class="material-icons cl-green">electric_bolt</span>Активні теми</router-link>
       </div>
       <div class="grape-link">
-        <router-link to="#topics-done"><span class="material-icons cl-gray">done_outline</span>Пройдені теми</router-link>
+        <router-link to="/#topics-done"><span class="material-icons cl-gray">done_outline</span>Пройдені теми</router-link>
       </div>
       <div class="grape-link">
-        <router-link to="#topics"><span class="material-icons cl-blue">search</span>Доступні теми</router-link>
+        <router-link to="/#topics"><span class="material-icons cl-blue">search</span>Доступні теми</router-link>
       </div>
       <div class="grape-link" @click="store.logout()">
         <a href="#">
@@ -129,13 +132,30 @@ nav{
       flex-direction: column;
       justify-content: center;
       .user-name{
-        font-size: 1.3rem
+        font-size: 1.3rem;
       }
       .role{
-        color: inherit;
-        opacity: 0.6;
+        color: #747d86;
+        // opacity: 0.6;
         font-size:1rem;
+        display: flex;
+        span{
+          margin-left: 8px;
+          color: #ffad00;
+          display: flex;
+          opacity: 0.6;
+        }
+        .material-icons{
+          display: flex;
+          align-items: center;
+          font-size: 1.5rem;
+        }
       }
+    }
+  }
+  .avatar-block:hover{
+    .role span{
+      opacity: 1;
     }
   }
   .grape-link{

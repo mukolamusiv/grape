@@ -10,6 +10,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/DashboardView.vue')
   },
   {
+    path: '/profile',
+    name: 'Profile',
+    meta: {
+      forAuthorized: true,
+    },
+    component: () => import(/* webpackChunkName: "about" */ '../views/ProfileView.vue')
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import(/* webpackChunkName: "about" */ '../views/SignInUpView.vue')
