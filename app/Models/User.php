@@ -90,7 +90,7 @@ class User extends Authenticatable
     }
 
     public function topic(){
-        return $this->hasMany(UserTopic::class,'user_id','id');
+        return $this->hasMany(UserTopic::class,'user_id','id')->with('topic');
     }
 
     public function topic_active(){

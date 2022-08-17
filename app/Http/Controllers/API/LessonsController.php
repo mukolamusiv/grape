@@ -18,7 +18,14 @@ class LessonsController extends Controller
     }
 
     public function topics(){
-        return response(Topic::all());
+        $user = User::find(1);
+        $topics = $user->topic;
+        $array = [];
+        foreach ($topics as $topic){
+            $array[] = $topic->topic_id;
+        }
+        $topics = Topic::whereNotIn('id',$array)->get();
+        return response($topics);
     }
 
     public function topics_active(){
