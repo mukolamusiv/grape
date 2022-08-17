@@ -122,6 +122,9 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $request->file();
         $user->fill($request->all())->save();
+        if($request->file('photo')){
+            $this->photo_update($request,$user)->save();
+        }
         return response($user);
     }
 
@@ -140,6 +143,12 @@ class UserController extends Controller
         //$user->fill($request->all())->save();
         $user->save();
         return response($user);
+    }
+
+    private function photo_update(Request $request, User $user){
+        $photo = $request->file('photo');
+        $user->photo = $photo->store(date('Y'.'/'.'m'.'/'.'d'),'public');
+        return $user;
     }
 
     /**
