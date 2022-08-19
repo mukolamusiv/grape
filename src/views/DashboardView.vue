@@ -2,7 +2,7 @@
   <main>
     <section class="current-courses" id="topics-active" v-if="data.topicsActive">
       <div class="section-title">
-        <h2>Активні {{data.topicsActive.length}}</h2>
+        <h2>Активні: {{data.topicsActive.length}}</h2>
       </div>
       <div class="cuerse-wrap" v-for="(topic) in data.topicsActive" v-bind:key="topic.id">
         <div class="cuerse fit-content">
@@ -33,7 +33,7 @@
     </section>
     <section id="topics-done" v-if="data.topicsDone">
       <div class="section-title">
-        <h2 class="cl-gray">Пройдені {{data.topicsDone.length}}</h2>
+        <h2 class="cl-gray">Пройдені: {{data.topicsDone.length}}</h2>
       </div>
       <div class="cuerse-wrap" v-for="(topic) in data.topicsDone" v-bind:key="topic.id">
         <div class="cuerse fit-content">
@@ -64,7 +64,7 @@
     </section>
     <section id="topics" v-if="data.topics">
       <div class="section-title">
-        <h2 class="cl-blue">Доступні теми {{data.topics.length}}</h2>
+        <h2 class="cl-blue">Доступні: {{data.topics.length}}</h2>
       </div>
       <div class="cuerse-wrap" v-for="(topic) in data.topics" v-bind:key="topic.id">
         <div class="cuerse fit-content">
@@ -116,7 +116,7 @@ const getTopicsActive = function () {
     url: '/api/topics-active',
     data: {}
  }).then(function (response) {
-   console.log(response.data)
+   // console.log(response.data)
    data.topicsActive = response.data
  })
 }
@@ -126,7 +126,7 @@ const getTopicsDone = function () {
     url: '/api/topics-done',
     data: {}
  }).then(function (response) {
-   console.log(response.data)
+   // console.log(response.data)
    data.topicsDone = response.data
  })
 }
@@ -151,14 +151,14 @@ getTopics()
   width: 100%;
   color: #192736;
   font-weight: 500;
-  padding-top: 24px;
-  padding-bottom: 8px;
+  margin: 16px 0;
   h2{
     display: inline;
     font-size: 1.9rem;
-    padding-left: 4px;
-    padding-right: 4px;
+    padding-left: 32px;
+    padding-right: 32px;
     border-bottom: 3px solid;
+    border-radius: 5px 5px 0 0;
   }
 }
 .current-courses{
@@ -260,28 +260,37 @@ getTopics()
 
 
 #topics-active{
-  .cuerse{
-    outline-color: #45d800;
-  }
+  // .cuerse{
+  //   outline-color: #45d800;
+  // }
   .section-title h2{
-    color: #45d800;
+    // color: #45d800;
+    background-color: #45d800;
+    color: white;
   }
+  background: #45d80014;
 }
 #topics-done{
-  .cuerse{
-    outline-color: gray;
-  }
+  // .cuerse{
+  //   outline-color: gray;
+  // }
   .section-title h2{
-    color: gray;
+    // color: gray;
+    background-color: gray;
+    color: white;
   }
+  background: #00000014;
 }
 #topics{
-  .cuerse{
-    outline-color: #5186ff;
-  }
+  // .cuerse{
+  //   outline-color: #5186ff;
+  // }
   .section-title h2{
-    color: #5186ff;
+    // color: #5186ff;
+    background-color: #5186ff;
+    color: white;
   }
+  background: #5186ff1a;
 }
 @media (min-width: 768px) {
   .cuerse-wrap{

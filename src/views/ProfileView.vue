@@ -3,10 +3,28 @@
     <section class="Profile" v-if="store.user">
       <div class="avatar-block">
         <div class="avatar-img">
-          <span class="img" v-if="!store.user.photo">
+        <div class="img" v-if="!store.user.photo">
             <img src="@/assets/img/avatar.svg" alt="avatar">
+          </div>
+          <span class="img" v-if="store.user.photo && !data.img" :style="{ 'background-image': `url(${store.homeUrl+store.user.photo})` }"></span>
+          <span class="img" v-if="data.img" :style="{ 'background-image': `url(${data.img})` }"></span>
+        </div>
+        <div class="avatar-uploade">
+          <label>
+            <span class="uploade-btn" v-if="!data.file">
+              <span class="material-icons">cloud_upload</span>
+              Змінити аватар
+            </span>
+            <input @change="previewFiles" type="file" class="d-none">
+          </label>
+          <span class="uploade-btn c-pointer accept" @click="updateAvatar()" v-if="data.file">
+            <span class="material-icons">check</span>
+            Зберегти
           </span>
-          <img :src="store.homeUrl+store.user.photo" alt="">
+          <span class="uploade-btn c-pointer cancel" @click="data.file = null, data.img = null" v-if="data.file">
+            <span class="material-icons">backspace</span>
+            Відмінити
+          </span>
         </div>
       </div>
       <div class="user-about">
@@ -36,20 +54,7 @@
         </div>
         <hr>
         <div class="profile-edit">
-          <div class="avatar-uploade">
-            <label>
-              <span class="uploade-btn">
-                <span class="material-icons">cloud_upload</span>
-                Завантажити аватар
-              </span>
-              <input @change="previewFiles" type="file" class="d-none">
-              <span class="form-control" v-if="data.fileName">{{data.fileName}}</span>
-            </label>
-            <span class="uploade-btn c-pointer" @click="updateAvatar()" v-if="data.fileName">
-              <span class="material-icons">check</span>
-              Зберегти
-            </span>
-          </div>
+
         </div>
       </div>
     </section>
@@ -64,13 +69,17 @@ import axios from 'axios'
 const { store } = useStore()
 
 const data = reactive({
-  fileName: null,
-  file: null
+  edit: {
+    name: false,
+    birthday: false
+  },
+  file: null,
+  img: null
 })
 
 const previewFiles = function (event) {
-  data.fileName = event.target.files[0].name
   data.file = event.target.files[0]
+  data.img = URL.createObjectURL(data.file)
 }
 const updateAvatar = function () {
   const formData = new FormData()
@@ -85,7 +94,8 @@ const updateAvatar = function () {
     }
     }).then(function () {
       store.getUser()
- })
+      data.file = null
+    })
 }
 </script>
 
@@ -96,34 +106,47 @@ hr{
 }
 .Profile{
   width: 100%;
-  margin-top: 16px;
+  display: flex;
+  justify-content: center;
   padding: 16px;
   border-radius: 5px;
-  outline: 1px solid #dddcdc;
+  // outline: 1px solid #dddcdc;
 }
 .user-about{
   flex-grow: 1;
 }
 .avatar-block{
-  max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 16px;
   .avatar-img{
     display: flex;
     justify-content: center;
-    background: #e5e5e5;
-    height: 360px;
-    width: 640px;
-    max-width: 100%;
+    align-items: center;
     border-radius: 5px;
     overflow: hidden;
-    img{
-      height: 100%;
-      width: auto;
-      max-height: 100%;
+    .img{
+      display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    height: 300px;
+    font-size: 18px;
+    padding: 4px 8px;
+    color: inhetir;
+    // border-radius: 150px;
+    background-position: center;
+    background-size: cover;
     }
   }
 }
 .user-about{
   padding: 0 16px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   .name{
     h2 {
       font-size: 2rem;
@@ -139,13 +162,22 @@ hr{
   }
 }
 .avatar-uploade{
-  width: 100%;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  border-radius: 25px;
+  margin-top: 16px;
   label{
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     .form-control{
       margin: 0 16px;
       padding: 8px;
+      max-width: 250px;
+      overflow: hidden;
+      max-height: 40px;
       border-bottom: 1px solid gray;
     }
   }
@@ -154,12 +186,22 @@ hr{
   display: flex;
   padding: 8px 16px;
   border-radius: 25px;
+  color: #5186FF;
   outline: 2px solid #5186FF;
   text-align: center;
+  margin: 0 4px;
   .material-icons{
     display: flex;
     align-items: center;
     margin-right: 8px;
   }
+}
+.accept{
+  outline-color: #20c997;
+  color: #20c997;
+}
+.cancel{
+  outline-color: #c62f2f;
+  color: #c62f2f;
 }
 </style>
