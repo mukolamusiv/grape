@@ -126,7 +126,7 @@ const getTopicsDone = function () {
     url: '/api/topics-done',
     data: {}
  }).then(function (response) {
-   // console.log(response.data)
+   console.log(response.data)
    data.topicsDone = response.data
  })
 }
@@ -136,7 +136,7 @@ const getTopics = function () {
     url: '/api/topics',
     data: {}
  }).then(function (response) {
-   console.log(response.data)
+   // console.log(response.data)
    data.topics = response.data
  })
 }

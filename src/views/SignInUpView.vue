@@ -32,14 +32,14 @@
 <!-- Форма реєстрації -->
         <div class="form-sign" v-if="router.currentRoute.value.name =='SignUp'">
           <div class="form-item">
+            <span class="input-name">Ім'я</span>
             <label>
-              <span class="input-name">Ім'я</span>
               <input type="text" v-model="data.name">
             </label>
           </div>
           <div class="form-item">
+            <span class="input-name">Прізвище</span>
             <label>
-              <span class="input-name">Прізвище</span>
               <input type="text" v-model="data.surname">
             </label>
           </div>
@@ -158,6 +158,9 @@ const signUp = function () {
 </script>
 
 <style lang="scss" scoped>
+h3{
+  font-size: 2rem;
+}
 .bg-page{
   display: flex;
    flex-wrap: nowrap;
@@ -201,45 +204,6 @@ const signUp = function () {
       width: 100%;
     }
   }
-  .form-item{
-    padding: 16px 0;
-    width: 100%;
-    display: flex;
-    label{
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      outline: 1px solid #92919c69;
-      border-radius: 8px;
-      .material-icons{
-        display: block;
-        margin: -1px 0 -1px -1px;
-        padding: 7px;
-        border-radius: 8px 0 0 8px;
-        color: #ffffff;
-        font-size: 28px;
-        background-color: #111111;
-      }
-      input{
-        flex-grow: 1;
-        width: inherit;
-        padding: 8px;
-        border: none;
-        outline: none;
-        display: block;
-        line-height: 1.5rem;
-        font-size: 1rem;
-        color: #111111;
-        background-color: #ffffff;
-      }
-      .show{
-        margin: 0!important;
-        background: none!important;
-        color: #c3c3c3!important;
-      }
-    }
-  }
   .login-btn{
     border: 0;
     margin-top: 32px;
@@ -261,13 +225,6 @@ const signUp = function () {
     margin-top: -16px;
     position: absolute;
     color: red;
-  }
-  .input-name{
-    position: absolute;
-    margin-left: 6px;
-    margin-top: -44px;
-    color: #757575;
-    background: white;
   }
 }
 </style>

@@ -11,31 +11,36 @@
         </div>
         <div class="avatar-uploade">
           <label>
-            <span class="uploade-btn" v-if="!data.file">
+            <span class="btn " v-if="!data.file">
               <span class="material-icons">cloud_upload</span>
               Змінити аватар
             </span>
             <input @change="previewFiles" type="file" class="d-none">
           </label>
-          <span class="uploade-btn c-pointer accept" @click="updateAvatar()" v-if="data.file">
-            <span class="material-icons">check</span>
-            Зберегти
-          </span>
-          <span class="uploade-btn c-pointer cancel" @click="data.file = null, data.img = null" v-if="data.file">
-            <span class="material-icons">backspace</span>
-            Відмінити
-          </span>
+          <div class="submit-panel">
+            <span class="btn  accept" @click="updateAvatar()" v-if="data.file">
+              <span class="material-icons">check</span>
+              Зберегти
+            </span>
+            <span class="btn  cancel" @click="data.file = null, data.img = null" v-if="data.file">
+              <span class="material-icons">backspace</span>
+              Відмінити
+            </span>
+          </div>
         </div>
       </div>
-      <div class="user-about">
+      <div class="user-about" v-if="!data.edit">
         <div class="name">
-        <h2>{{store.user.name}} {{store.user.surname}}</h2>
+        <h2>
+          {{store.user.name}} {{store.user.surname}}
+          <span class="material-icons c-pointer" @click="startEdit()">settings</span>
+        </h2>
         </div>
         <div class="role">
           учень
         </div>
         <div class="birthday">
-        08.08.2021
+          {{store.user.birthday.split('-').reverse().join('.')}}
         </div>
         <hr>
         <div class="get">
@@ -53,10 +58,39 @@
           </div>
         </div>
         <hr>
-        <div class="profile-edit">
-
-        </div>
       </div>
+      <form class="edit-profile" v-if="data.edit" @submit.prevent="updateProfile()">
+        <div class="form-item">
+          <span class="input-name">Ім'я</span>
+          <label>
+            <input type="text" v-model="data.updateProfile.name" required>
+          </label>
+        </div>
+        <div class="form-item">
+          <span class="input-name">Прізвище</span>
+          <label>
+            <input type="text" v-model="data.updateProfile.surname" required>
+          </label>
+        </div>
+        <div class="form-item">
+          <span class="input-name">Дата народження</span>
+          <label>
+            <input type="date" v-model="data.updateProfile.birthday" required>
+          </label>
+        </div>
+        <div class="submit-panel">
+          <button type="submit">
+            <span class="btn  accept">
+              <span class="material-icons">check</span>
+              Зберегти
+            </span>
+          </button>
+          <span class="btn  cancel" @click="data.edit = false">
+            <span class="material-icons">backspace</span>
+            Відмінити
+          </span>
+        </div>
+      </form>
     </section>
   </main>
 </template>
@@ -69,14 +103,21 @@ import axios from 'axios'
 const { store } = useStore()
 
 const data = reactive({
-  edit: {
-    name: false,
-    birthday: false
-  },
+  edit: false,
   file: null,
-  img: null
+  img: null,
+  updateProfile: {
+    name: null,
+    surname: null,
+    birthday: null
+  }
 })
-
+const startEdit = function () {
+  data.edit = true
+  data.updateProfile.name = store.user.name
+  data.updateProfile.surname = store.user.surname
+  data.updateProfile.birthday = store.user.birthday
+}
 const previewFiles = function (event) {
   data.file = event.target.files[0]
   data.img = URL.createObjectURL(data.file)
@@ -97,6 +138,20 @@ const updateAvatar = function () {
       data.file = null
     })
 }
+const updateProfile = function () {
+  axios({
+    method: 'PUT',
+    url: `api/user/${store.user.id}`,
+    data: {
+      name: data.updateProfile.name,
+      surname: data.updateProfile.surname,
+      birthday: data.updateProfile.birthday,
+    }
+    }).then(function () {
+      store.getUser()
+      data.edit = false
+    })
+}
 </script>
 
 <style lang="scss" scoped>
@@ -108,18 +163,14 @@ hr{
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 16px;
   border-radius: 5px;
-  // outline: 1px solid #dddcdc;
-}
-.user-about{
-  flex-grow: 1;
 }
 .avatar-block{
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
   align-items: center;
+  padding: 16px;
   margin-bottom: 16px;
   .avatar-img{
     display: flex;
@@ -142,8 +193,9 @@ hr{
     }
   }
 }
-.user-about{
-  padding: 0 16px 16px 16px;
+.user-about, .edit-profile{
+  flex-grow: 1;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -151,6 +203,14 @@ hr{
     h2 {
       font-size: 2rem;
       font-weight: bold;
+      .material-icons{
+        position: relative;
+        top: -10px;
+        color: #5186FF;
+      }
+      .material-icons:hover{
+        opacity: 0.8;
+      }
     }
   }
   .role{
@@ -158,6 +218,10 @@ hr{
   }
   .birthday{
     font-size: 1.3rem;
+    font-weight: bold;
+  }
+  .form-item-label{
+    font-size: 1.5rem;
     font-weight: bold;
   }
 }
@@ -182,26 +246,7 @@ hr{
     }
   }
 }
-.uploade-btn{
-  display: flex;
-  padding: 8px 16px;
-  border-radius: 25px;
-  color: #5186FF;
-  outline: 2px solid #5186FF;
-  text-align: center;
-  margin: 0 4px;
-  .material-icons{
-    display: flex;
-    align-items: center;
-    margin-right: 8px;
-  }
-}
-.accept{
-  outline-color: #20c997;
-  color: #20c997;
-}
-.cancel{
-  outline-color: #c62f2f;
-  color: #c62f2f;
+.form-item{
+  font-size: 1.2rem;
 }
 </style>
