@@ -7,7 +7,7 @@
       <div class="cuerse-wrap" v-for="(topic) in data.topicsActive" v-bind:key="topic.id">
         <div class="cuerse fit-content">
           <div class="course-logo">
-            <img src="@/assets/img/default-course-logo.png" alt="">
+            <img :src="topic.photo" alt="">
           </div>
           <div class="course-about">
             <div class="title">{{topic.title}}</div>
@@ -38,7 +38,7 @@
       <div class="cuerse-wrap" v-for="(topic) in data.topicsDone" v-bind:key="topic.id">
         <div class="cuerse fit-content">
           <div class="course-logo">
-            <img src="@/assets/img/default-course-logo.png" alt="">
+            <img :src="topic.photo" alt="">
           </div>
           <div class="course-about">
             <div class="title">{{topic.title}}</div>
@@ -69,7 +69,7 @@
       <div class="cuerse-wrap" v-for="(topic) in data.topics" v-bind:key="topic.id">
         <div class="cuerse fit-content">
           <div class="course-logo">
-            <img src="@/assets/img/default-course-logo.png" alt="">
+            <img :src="topic.photo" alt="">
           </div>
           <div class="course-about">
             <div class="title">{{topic.title}}</div>
