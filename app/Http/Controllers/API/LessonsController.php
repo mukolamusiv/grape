@@ -77,18 +77,23 @@ class LessonsController extends Controller
             }
 
             $to = Carbon::createFromFormat('Y-m-d H:s:i', date('Y-m-d H:s:i'));
-            $from = Carbon::createFromFormat('Y-m-d H:s:i', $topics->first()->topic->updated_at);
+            $from = Carbon::createFromFormat('Y-m-d H:s:i', $topic->updated_at);
             $diff = $to->diffInDays($from);
 
-            if($count_complete < 1 and $diff > 1){
-                foreach ($topic->lessons as $lesson){
-                   UserLessons::destroy($lesson->id);
-                }
-                UserTopic::destroy($topic->id);
+            if($count_complete < 1){
+                $status = 0;
+            }else{
+                $status = $count_complete*100/$count_lessons;
+            }
+            if($count_complete === 0 and $diff > 2){
+//                foreach ($topic->lessons as $lesson){
+//                   UserLessons::destroy($lesson->id);
+//                }
+//                UserTopic::destroy($topic->id);
             }else{
                 $data->put('id',$topic->id);
                 $data->put('topic_id',$topic->topic_id);
-                $data->put('status',$count_complete*100/$count_lessons);
+                $data->put('status', $status);
                 $data->put('water',$topic->water);
                 $data->put('lumen',$topic->lumen);
                 $data->put('title',$topic->topic->title);
