@@ -10,6 +10,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/DashboardView.vue')
   },
   {
+    path: '/topic/:id',
+    name: 'Topic',
+    meta: {
+      forAuthorized: true,
+    },
+    component: () => import(/* webpackChunkName: "about" */ '../views/TopicView.vue')
+  },
+  {
     path: '/profile',
     name: 'Profile',
     meta: {
@@ -27,7 +35,7 @@ const routes = [
     name: 'SignUp',
     component: () => import(/* webpackChunkName: "about" */ '../views/SignInUpView.vue')
   },
-  { path: '/:pathMatch(.*)*', component: () => import(/* webpackChunkName: "about" */ '../views/DashboardView.vue') }
+  { path: '/:pathMatch(.*)*', component: () => import(/* webpackChunkName: "about" */ '../views/404View.vue') }
 ]
 
 const scrollBehavior = (to, from, savedPosition) => {

@@ -7,25 +7,37 @@
       <div class="cuerse-wrap" v-for="(topic) in data.topicsActive" v-bind:key="topic.id">
         <div class="cuerse fit-content">
           <div class="course-logo">
-            <img :src="topic.photo" alt="">
+            <img src="@/assets/img/default-course-logo.png" alt="">
           </div>
           <div class="course-about">
             <div class="title">{{topic.title}}</div>
-            <div class="description">{{topic.description}}</div>
+            <div class="description">
+              {{topic.description.substring(0, 255)}}
+            </div>
+            <div class="progress">
+              <div class="progress-header">
+                <div>Пройдено</div> <span class="progress-value">{{topic.status}}%</span>
+              </div>
+              <div class="progress-liner-wrap">
+                <div class="progress-liner" :style="{ 'width': `${topic.status}%`}"></div>
+              </div>
+            </div>
             <div class="get">
               <div class="get-items sun">
                   <span class="material-icons">brightness_5</span>
-                  <span>15</span>
+                  <span>{{topic.lumen}}</span>
               </div>
               <div class="get-items water">
                   <span class="material-icons">water_drop</span>
-                  <span>15</span>
+                  <span>{{topic.water}}</span>
               </div>
             </div>
             <div class="grape-btn-wrap">
-              <div class="grape-btn">
-                <a href="#">Розпочати</a>
-              </div>
+              <router-link :to="{ path: `/topic/${topic.topic_id}`}">
+                <div class="grape-btn">
+                  Продовжити
+                </div>
+              </router-link>
             </div>
           </div>
         </div>
@@ -38,25 +50,17 @@
       <div class="cuerse-wrap" v-for="(topic) in data.topicsDone" v-bind:key="topic.id">
         <div class="cuerse fit-content">
           <div class="course-logo">
-            <img :src="topic.photo" alt="">
+            <img src="@/assets/img/default-course-logo.png" alt="">
           </div>
           <div class="course-about">
             <div class="title">{{topic.title}}</div>
             <div class="description">{{topic.description}}</div>
-            <div class="get">
-              <div class="get-items sun">
-                  <span class="material-icons">brightness_5</span>
-                  <span>15</span>
-              </div>
-              <div class="get-items water">
-                  <span class="material-icons">water_drop</span>
-                  <span>15</span>
-              </div>
-            </div>
             <div class="grape-btn-wrap">
-              <div class="grape-btn">
-                <a href="#">Розпочати</a>
-              </div>
+              <router-link :to="{ path: `/topic/${topic.id}`}">
+                <div class="grape-btn">
+                  Переглянути
+                </div>
+              </router-link>
             </div>
           </div>
         </div>
@@ -69,7 +73,7 @@
       <div class="cuerse-wrap" v-for="(topic) in data.topics" v-bind:key="topic.id">
         <div class="cuerse fit-content">
           <div class="course-logo">
-            <img :src="topic.photo" alt="">
+            <img src="@/assets/img/default-course-logo.png" alt="">
           </div>
           <div class="course-about">
             <div class="title">{{topic.title}}</div>
@@ -77,17 +81,19 @@
             <div class="get">
               <div class="get-items sun">
                   <span class="material-icons">brightness_5</span>
-                  <span>15</span>
+                  <span>{{topic.lumen}}</span>
               </div>
               <div class="get-items water">
                   <span class="material-icons">water_drop</span>
-                  <span>15</span>
+                <span>{{topic.water}}</span>
               </div>
             </div>
             <div class="grape-btn-wrap">
-              <div class="grape-btn">
-                <a href="#">Розпочати</a>
-              </div>
+              <router-link :to="{ path: `/topic/${topic.id}`}">
+                <div class="grape-btn">
+                  Розпочати
+                </div>
+              </router-link>
             </div>
           </div>
         </div>
@@ -98,25 +104,22 @@
 
 <script setup>
 import { reactive } from 'vue'
-import { useStore } from '@/store'
 import axios from 'axios'
 
 const data = reactive({
   topicsActive: null,
   topicsDone: null,
   topics: null,
-  progress: '20%',
+    progress: '20%',
   progress100: '100%'
 })
-const { store } = useStore()
-store.ui.primeTitle = 'Дошка'
 const getTopicsActive = function () {
   axios({
     method: 'GET',
     url: '/api/topics-active',
     data: {}
  }).then(function (response) {
-   // console.log(response.data)
+   console.log(response.data)
    data.topicsActive = response.data
  })
 }
@@ -126,7 +129,7 @@ const getTopicsDone = function () {
     url: '/api/topics-done',
     data: {}
  }).then(function (response) {
-   console.log(response.data)
+    // console.log(response.data)
    data.topicsDone = response.data
  })
 }
@@ -161,18 +164,13 @@ getTopics()
     border-radius: 5px 5px 0 0;
   }
 }
-.current-courses{
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  flex-wrap: wrap;
-}
 .cuerse-wrap{
   padding: 16px;
   width: 100%;
   .cuerse{
+    height: 100%;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     justify-content: center;
     width: 100%;
     background: #ffffff;
@@ -206,16 +204,18 @@ getTopics()
     border-radius: 5px;
     color: #ffffff;
     font-size: 1rem;
+    margin-bottom: 16px;
   }
   .get{
     margin-top: 26px;
   }
   .progress{
     width: 100%;
+    flex-grow: 1;
     .progress-header{
       display: flex;
       color: #017605;
-      font-size: 0.8rem;
+      font-size: 1rem;
       div{
         flex-grow: 1
       }
@@ -304,28 +304,31 @@ getTopics()
     padding: 16px;
   }
 }
-@media (min-width: 1920px) {
-  .current-courses{
-    .cuerse-wrap{
-      width: 100%;
-      padding: 16px;
-      .get{
-        justify-content: flex-start;
-      }
-    }
-  }
-  .cuerse-wrap{
-    width: 25%;
-    padding: 16px;
-    .course-logo{
-      display: flex;
-      align-items: center;
-      img{
-      max-width: 100%;
-      width: auto;
-      height: 247px;
-      }
-    }
-  }
-}
+// @media (min-width: 1920px) {
+//   .current-courses{
+//     .cuerse-wrap{
+//       width: 100%;
+//       padding: 16px;
+//       .cuerse{
+//         flex-direction: row;
+//       }
+//       .get{
+//         justify-content: flex-start;
+//       }
+//     }
+//   }
+//   .cuerse-wrap{
+//     width: 25%;
+//     padding: 16px;
+//     .course-logo{
+//       display: flex;
+//       align-items: center;
+//       img{
+//       max-width: 100%;
+//       width: auto;
+//       height: 247px;
+//       }
+//     }
+//   }
+// }
 </style>

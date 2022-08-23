@@ -29,6 +29,7 @@ const store = reactive({
   logout: function () {
     localStorage.clear()
     store.token = null
+    store.user = null
     store.router.push('/login')
   }
 })
