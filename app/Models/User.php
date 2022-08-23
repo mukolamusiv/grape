@@ -94,11 +94,11 @@ class User extends Authenticatable
     }
 
     public function topic_active(){
-        return $this->hasMany(UserTopic::class,'user_id','id')->with('topic')->where('complete','=',false);
+        return $this->hasMany(UserTopic::class,'user_id','id')->with('topic','lessons')->where('complete','=',false);
     }
 
     public function topic_done(){
-        return $this->hasMany(UserTopic::class,'user_id','id')->with('topic')->where('complete','=',true);
+        return $this->hasMany(UserTopic::class,'user_id','id')->with('topic','lessons')->where('complete','=',true);
     }
 
     protected function photo(): Attribute

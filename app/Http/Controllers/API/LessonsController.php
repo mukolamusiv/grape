@@ -62,8 +62,33 @@ class LessonsController extends Controller
     }
 
     public function topics_active(){
-        $topic = User::find(1);
-        return response($topic->topic_active);
+        $topics = User::find(1)->topic_active;
+        $return = collect();
+        foreach ($topics as $topic){
+            $data = collect();
+            $count_lessons = $topic->lessons->count();
+            $count_complete = 0;
+            foreach ($topic->lessons as $lesson){
+                if($lesson->complete){
+                    $count_complete++;
+                }
+            }
+            if($count_complete < 1 and ){
+
+            }
+            $data->put('id',$topic->id);
+            $data->put('topic_id',$topic->topic_id);
+            $data->put('status',$count_complete*100/$count_lessons);
+            $data->put('water',$topic->water);
+            $data->put('lumen',$topic->lumen);
+            $data->put('title',$topic->topic->title);
+            $data->put('description',$topic->topic->description);
+            $data->put('photo',$topic->topic->photo);
+            $data->put('lessons',$topic->topic->lessons);
+            $return->push($data);
+        }
+
+        return response($return);
     }
 
     public function topics_done(){
