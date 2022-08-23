@@ -78,7 +78,17 @@ class TopicEditScreen extends Screen
         ]);
 
         $topic->fill($request->get('topic'))->save();
+        $topic->photo = $request->input('topic.photo');
+//        if($request->file('topic.photo')){
+//
+//        }
+        //$photo = $request->file('topic.photo');
+        //dd($request);
+        //$topic->photo = $photo->store(date('Y'.'/'.'m'.'/'.'d'),'public');
+        $topic->save();
+        //Toast::success(__('Фото додано!'));
         Toast::success(__('Тему створено!'));
+
         return redirect()->route('topic.list');
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Orchid\Layouts\Topic;
 
 use Orchid\Screen\Field;
+use Orchid\Screen\Fields\Cropper;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Quill;
 use Orchid\Screen\Layouts\Rows;
@@ -36,6 +37,13 @@ class TopicEditLayout extends Rows
                 ->max(255)
                 ->title(__('Опис теми'))
                 ->placeholder(__('Опис теми')),
+
+
+            Cropper::make('topic.photo')
+                ->targetRelativeUrl()
+                ->title('Звантажте фото теми')
+                ->width(1000)
+                ->height(1000),
 
         ];
     }
