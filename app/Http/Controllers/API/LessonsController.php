@@ -154,6 +154,15 @@ class LessonsController extends Controller
         }
     }
 
+    public function stop_topic($topic_id){
+        $topic = UserTopic::where(['user_id'=>1,'topic_id'=>$topic_id])->get();
+        if($topic->isNotEmpty()){
+            return response(UserTopic::destroy($topic->first()->id));
+        }else{
+            return response('Ця тема не активна');
+        }
+    }
+
     public function start_lesson($lesson_id){
 
         if(UserLessons::where(['user_id'=>1,'lesson_id'=>$lesson_id])->get()->isEmpty()){
