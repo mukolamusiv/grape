@@ -144,10 +144,12 @@ class LessonsController extends Controller
 
     public function start_topic($topic_id){
         if(UserTopic::where(['user_id'=>1,'topic_id'=>$topic_id])->get()->isEmpty()){
-            $UserTopic = new UserTopic();
-            $UserTopic->user_id = 1;//Auth::id();
-            $UserTopic->topic_id = $topic_id;
-            $UserTopic->save();
+            if(Topic::findOrFail($topic_id)){
+                $UserTopic = new UserTopic();
+                $UserTopic->user_id = 1;//Auth::id();
+                $UserTopic->topic_id = $topic_id;
+                $UserTopic->save();
+            }
             return response($UserTopic);
         }else{
             return response('Тема уже активна');
