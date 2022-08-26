@@ -91,7 +91,7 @@ class LessonsController extends Controller
 //                }
 //                UserTopic::destroy($topic->id);
             }else{
-                $data->put('id',$topic->id);
+                //$data->put('id',$topic->id);
                 $data->put('topic_id',$topic->topic_id);
                 $data->put('status', $status);
                 $data->put('water',$topic->water);
@@ -99,6 +99,7 @@ class LessonsController extends Controller
                 $data->put('title',$topic->topic->title);
                 $data->put('description',$topic->topic->description);
                 $data->put('photo',$topic->topic->photo);
+                $data->put('complete',$topic->topic->complete);
                 $data->put('lessons',$topic->topic->lessons);
                 $return->push($data);
             }
@@ -108,11 +109,42 @@ class LessonsController extends Controller
 
     public function topics_done(){
         $topic = User::find(1);
-        return response($topic->topic_done);
+        //$data = collect($topic->topic_done);
+
+        $return = collect();
+        foreach ($topic->topic_done as $topic){
+            $data = collect();
+            $data->put('topic_id',$topic->topic_id);
+            $data->put('status', 100);
+            $data->put('water',$topic->water);
+            $data->put('lumen',$topic->lumen);
+            $data->put('title',$topic->topic->title);
+            $data->put('description',$topic->topic->description);
+            $data->put('photo',$topic->topic->photo);
+            $data->put('complete',$topic->topic->complete);
+            $data->put('lessons',$topic->topic->lessons);
+            $return->push($data);
+
+        }
+        return response($return);
     }
 
     public function topic($id){
-        return response(Topic::with('lessons')->where(['id'=>$id])->get()->first());
+        $request = collect(UserTopic::with('topic')->where(['topic_id'=>$id,'user_id'=>1])->get());
+        if($request->isNotEmpty()){
+            $data = collect();
+            $data->push($request->first()->topic);
+//            $data->put('status',$request->first()->);
+//            $data->put('complete',$request->first()->);
+        }else{
+            return response(Topic::with('lessons')->where(['id'=>$id])->get()->first());
+        }
+
+
+//        if(){
+//
+//        }
+        //return response(Topic::with('lessons')->where(['id'=>$id])->get()->first());
     }
 
 
