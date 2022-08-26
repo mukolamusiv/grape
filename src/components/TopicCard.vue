@@ -68,6 +68,7 @@ defineProps({
     align-items: center;
     img{
     max-width: 100%;
+    border-radius: 5px;
     }
   }
   .course-about{
