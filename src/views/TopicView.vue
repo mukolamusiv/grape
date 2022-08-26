@@ -119,12 +119,11 @@ getTopic()
   }
   .description{
     width: 100%;
-    flex-grow: 1;
     background: #7a4ffe;
     padding: 8px;
     border-radius: 5px;
     color: #ffffff;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
   .progress{
     width: 100%;

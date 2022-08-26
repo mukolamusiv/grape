@@ -9,14 +9,6 @@
         <div class="description">
           {{topic.description.substring(0, 255)}}
         </div>
-        <div class="progress" v-if="topic.status != undefined">
-          <div class="progress-header">
-            <div>Пройдено</div> <span class="progress-value">{{topic.status}}%</span>
-          </div>
-          <div class="progress-liner-wrap">
-            <div class="progress-liner" :style="{ 'width': `${topic.status}%`}"></div>
-          </div>
-        </div>
         <div class="get">
           <div class="get-items sun">
               <span class="material-icons">brightness_5</span>
@@ -25,6 +17,14 @@
           <div class="get-items water">
               <span class="material-icons">water_drop</span>
               <span>{{topic.water}}</span>
+          </div>
+        </div>
+        <div class="progress" v-if="topic.status != undefined">
+          <div class="progress-header">
+            <div>Пройдено</div> <span class="progress-value">{{topic.status}}%</span>
+          </div>
+          <div class="progress-liner-wrap">
+            <div class="progress-liner" :style="{ 'width': `${topic.status}%`}"></div>
           </div>
         </div>
         <div class="grape-btn-wrap">
@@ -94,7 +94,7 @@ defineProps({
     margin-bottom: 16px;
   }
   .get{
-    margin-top: 26px;
+    margin-top: 0;
   }
   .progress{
     width: 100%;
