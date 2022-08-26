@@ -4,105 +4,25 @@
       <div class="section-title">
         <h2>Активні: {{data.topicsActive.length}}</h2>
       </div>
-      <div class="cuerse-wrap" v-for="(topic) in data.topicsActive" v-bind:key="topic.id">
-        <div class="cuerse fit-content">
-          <div class="course-logo">
-            <img src="@/assets/img/default-course-logo.png" alt="">
-          </div>
-          <div class="course-about">
-            <div class="title">{{topic.title}}</div>
-            <div class="description">
-              {{topic.description.substring(0, 255)}}
-            </div>
-            <div class="progress">
-              <div class="progress-header">
-                <div>Пройдено</div> <span class="progress-value">{{topic.status}}%</span>
-              </div>
-              <div class="progress-liner-wrap">
-                <div class="progress-liner" :style="{ 'width': `${topic.status}%`}"></div>
-              </div>
-            </div>
-            <div class="get">
-              <div class="get-items sun">
-                  <span class="material-icons">brightness_5</span>
-                  <span>{{topic.lumen}}</span>
-              </div>
-              <div class="get-items water">
-                  <span class="material-icons">water_drop</span>
-                  <span>{{topic.water}}</span>
-              </div>
-            </div>
-            <div class="grape-btn-wrap">
-              <router-link :to="{ path: `/topic/${topic.topic_id}`}">
-                <div class="grape-btn">
-                  Продовжити
-                </div>
-              </router-link>
-            </div>
-          </div>
-        </div>
-      </div>
+      <topic-card :topics="data.topicsActive"/>
     </section>
     <section id="topics-done" v-if="data.topicsDone">
       <div class="section-title">
         <h2 class="cl-gray">Пройдені: {{data.topicsDone.length}}</h2>
       </div>
-      <div class="cuerse-wrap" v-for="(topic) in data.topicsDone" v-bind:key="topic.id">
-        <div class="cuerse fit-content">
-          <div class="course-logo">
-            <img src="@/assets/img/default-course-logo.png" alt="">
-          </div>
-          <div class="course-about">
-            <div class="title">{{topic.title}}</div>
-            <div class="description">{{topic.description}}</div>
-            <div class="grape-btn-wrap">
-              <router-link :to="{ path: `/topic/${topic.id}`}">
-                <div class="grape-btn">
-                  Переглянути
-                </div>
-              </router-link>
-            </div>
-          </div>
-        </div>
-      </div>
+      <topic-card :topics="data.topicsDone"/>
     </section>
     <section id="topics" v-if="data.topics">
       <div class="section-title">
         <h2 class="cl-blue">Доступні: {{data.topics.length}}</h2>
       </div>
-      <div class="cuerse-wrap" v-for="(topic) in data.topics" v-bind:key="topic.id">
-        <div class="cuerse fit-content">
-          <div class="course-logo">
-            <img src="@/assets/img/default-course-logo.png" alt="">
-          </div>
-          <div class="course-about">
-            <div class="title">{{topic.title}}</div>
-            <div class="description">{{topic.description}}</div>
-            <div class="get">
-              <div class="get-items sun">
-                  <span class="material-icons">brightness_5</span>
-                  <span>{{topic.lumen}}</span>
-              </div>
-              <div class="get-items water">
-                  <span class="material-icons">water_drop</span>
-                <span>{{topic.water}}</span>
-              </div>
-            </div>
-            <div class="grape-btn-wrap">
-              <router-link :to="{ path: `/topic/${topic.id}`}">
-                <div class="grape-btn">
-                  Розпочати
-                </div>
-              </router-link>
-            </div>
-          </div>
-        </div>
-      </div>
+      <topic-card :topics="data.topics"/>
     </section>
   </main>
 </template>
 
 <script setup>
+import TopicCard from '@/components/TopicCard.vue'
 import { reactive } from 'vue'
 import axios from 'axios'
 
@@ -113,39 +33,20 @@ const data = reactive({
     progress: '20%',
   progress100: '100%'
 })
-const getTopicsActive = function () {
+
+const getTopics = function (url, saveTo) {
   axios({
     method: 'GET',
-    url: '/api/topics-active',
+    url: `/api/${url}`,
     data: {}
  }).then(function (response) {
-   console.log(response.data)
-   data.topicsActive = response.data
+   console.log(saveTo, response.data)
+   data[saveTo] = response.data
  })
 }
-const getTopicsDone = function () {
-  axios({
-    method: 'GET',
-    url: '/api/topics-done',
-    data: {}
- }).then(function (response) {
-    // console.log(response.data)
-   data.topicsDone = response.data
- })
-}
-const getTopics = function () {
-  axios({
-    method: 'GET',
-    url: '/api/topics',
-    data: {}
- }).then(function (response) {
-   // console.log(response.data)
-   data.topics = response.data
- })
-}
-getTopicsActive()
-getTopicsDone()
-getTopics()
+getTopics('topics-active', 'topicsActive')
+getTopics('topics-done', 'topicsDone')
+getTopics('topics', 'topics')
 </script>
 
 <style lang="scss" scoped>
@@ -291,18 +192,6 @@ getTopics()
     color: white;
   }
   background: #5186ff1a;
-}
-@media (min-width: 768px) {
-  .cuerse-wrap{
-    width: 50%;
-    padding: 16px;
-  }
- }
-@media (min-width: 1200px) {
-  .cuerse-wrap{
-    width: 25%;
-    padding: 16px;
-  }
 }
 // @media (min-width: 1920px) {
 //   .current-courses{

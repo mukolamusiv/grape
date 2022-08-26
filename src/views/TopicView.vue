@@ -3,7 +3,7 @@
     <section class="header-topic">
       <div class="cuerse">
         <div class="course-logo">
-            <img src="@/assets/img/default-course-logo.png" alt="">
+            <img :src="`${store.homeUrl + data.topic.photo}`" alt="">
           <div class="get">
             <div class="get-items sun">
                 <span class="material-icons">brightness_5</span>
@@ -18,16 +18,15 @@
         <div class="course-about">
             <div class="title">Тема: "{{data.topic.title}}"</div>
           <div class="description">
-            <!-- {{data.topic.description.substring(0, 255)}} -->
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,
+            {{data.topic.description.substring(0, 255)}}
           </div>
-          <div class="progress">
-            <div class="progress-header">
-              <div>Пройдено</div> <span class="progress-value">{{data.topic.status}}%</span>
-            </div>
-            <div class="progress-liner-wrap">
-              <div class="progress-liner" :style="{ 'width': `${data.topic.status}%`}"></div>
-            </div>
+        </div>
+        <div class="progress">
+          <div class="progress-header">
+            <div>Пройдено</div> <span class="progress-value">{{data.topic.status}}%</span>
+          </div>
+          <div class="progress-liner-wrap">
+            <div class="progress-liner" :style="{ 'width': `${data.topic.status}%`}"></div>
           </div>
         </div>
       </div>
@@ -44,8 +43,11 @@
 import { reactive } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
+import { useStore } from '@/store'
+const { store } = useStore()
 
 const route = useRoute()
+
 
 const data = reactive({
   topic: null,
@@ -57,14 +59,14 @@ const getTopic = function () {
     data: {}
  }).then(function (response) {
    data.topic = response.data
-   console.log(response.data)
+   console.log(data.topic.status)
 
   })
 }
 const startTopic = function () {
   axios({
     method: 'PUT',
-    url: `/api/start-topic/${100}`,
+    url: `/api/start-topic/${route.params.id}`,
   }).then(function (response) {
    data.topic = response.data
    console.log(response.data)
@@ -97,12 +99,11 @@ getTopic()
     flex-direction: column;
     align-items: flex-end;
     padding: 16px;
-    margin-bottom: 8px;
     img, .img{
       display: block;
       // max-width: 100%;
-      width: 377px;
-      height: 212px;
+      width: 400px;
+      height: 200px;
       background-position: center;
       background-size: cover;
     }
@@ -113,19 +114,21 @@ getTopic()
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 
   }
   .description{
-    max-width: 640px;
+    width: 100%;
+    flex-grow: 1;
     background: #7a4ffe;
     padding: 8px;
     border-radius: 5px;
     color: #ffffff;
-    font-size: 1rem;
-    margin-bottom: 16px;
+    font-size: 1.3rem;
   }
   .progress{
     width: 100%;
+    padding: 16px;
     .progress-header{
       display: flex;
       color: #017605;
@@ -162,7 +165,14 @@ getTopic()
     font-size: 1.5rem;
     }
 }
-
-
-
+@media (min-width: 992px) {
+  .header-topic .description{
+    width: calc(100vw - 510px);
+  }
+}
+@media (min-width: 1400px) {
+  .header-topic .description{
+    width: calc(100vw - 780px);
+  }
+}
 </style>
