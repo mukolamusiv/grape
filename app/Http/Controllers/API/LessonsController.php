@@ -150,7 +150,7 @@ class LessonsController extends Controller
                 $UserTopic->topic_id = $topic_id;
                 $UserTopic->save();
             }
-            return response($UserTopic);
+            return response($UserTopic->topic);
         }else{
             return response('Тема уже активна');
         }

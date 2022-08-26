@@ -43,7 +43,7 @@ class TopicEditLayout extends Rows
                 ->targetRelativeUrl()
                 ->title('Звантажте фото теми')
                 ->width(1000)
-                ->height(1000),
+                ->height(500),
 
         ];
     }
