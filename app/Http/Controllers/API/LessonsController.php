@@ -30,6 +30,7 @@ class LessonsController extends Controller
         $topics = Topic::with('lessons')->whereNotIn('id',$array)->get();
 
         $user_done = count(User::find(1)->topic_done);
+
         $data = collect();
         foreach ($topics as $topic){
             if(empty($user_done)){
@@ -39,12 +40,14 @@ class LessonsController extends Controller
                 $lumen = 40*(count($topic->lessons)/$user_done);
                 $water = 60*(count($topic->lessons)/$user_done);
             }
-            $topic = collect($topic);
-            $topic->put('water',round($water));
-            $topic->put('lumen',round($lumen));
+            $return = collect($topic);
+            $return->forget('id');
+            $return->put('topic_id',$topic->id);
+            $return->put('water',round($water));
+            $return->put('lumen',round($lumen));
 
             //$topic->put('prise',100);
-           $data->push($topic);
+           $data->push($return);
         }
         //$to = Carbon::createFromFormat('Y-m-d H:s:i', date('Y-m-d H:s:i'));
         //$from = Carbon::createFromFormat('Y-m-d H:s:i', User::find(1)->updated_at);
