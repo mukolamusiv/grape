@@ -27,10 +27,10 @@
             <div class="progress-liner" :style="{ 'width': `${topic.status}%`}"></div>
           </div>
         </div>
-        <div class="grape-btn-wrap">
+        <div class="grape-btn-wrap" v-if="linkTitle">
           <router-link :to="{ path: `/topic/${topic.topic_id}`}">
             <div class="grape-btn">
-              Продовжити
+              {{linkTitle}}
             </div>
           </router-link>
         </div>
@@ -44,7 +44,8 @@ import { defineProps } from 'vue'
 import { useStore } from '@/store'
 const { store } = useStore()
 defineProps({
-  topics: null
+  topics: null,
+  linkTitle: null
 })
 </script>
 

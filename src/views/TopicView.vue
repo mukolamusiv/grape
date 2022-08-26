@@ -32,7 +32,7 @@
       </div>
     </section>
     <section class="start-panel">
-      <span class="btn accept" @click="startTopic()">
+      <span class="btn" @click="startTopic()">
         Розпочати тему
       </span>
     </section>

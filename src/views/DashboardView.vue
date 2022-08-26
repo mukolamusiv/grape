@@ -4,19 +4,19 @@
       <div class="section-title">
         <h2>Активні: {{data.topicsActive.length}}</h2>
       </div>
-      <topic-card :topics="data.topicsActive"/>
+      <topic-card :topics="data.topicsActive" :linkTitle="`Продовжити`"/>
     </section>
     <section id="topics-done" v-if="data.topicsDone">
       <div class="section-title">
         <h2 class="cl-gray">Пройдені: {{data.topicsDone.length}}</h2>
       </div>
-      <topic-card :topics="data.topicsDone"/>
+      <topic-card :topics="data.topicsDone" :linkTitle="`Переглянути`"/>
     </section>
     <section id="topics" v-if="data.topics">
       <div class="section-title">
         <h2 class="cl-blue">Доступні: {{data.topics.length}}</h2>
       </div>
-      <topic-card :topics="data.topics"/>
+      <topic-card :topics="data.topics" :linkTitle="`Розпочати`"/>
     </section>
   </main>
 </template>
@@ -30,7 +30,7 @@ const data = reactive({
   topicsActive: null,
   topicsDone: null,
   topics: null,
-    progress: '20%',
+  progress: '20%',
   progress100: '100%'
 })
 
@@ -65,101 +65,6 @@ getTopics('topics', 'topics')
     border-radius: 5px 5px 0 0;
   }
 }
-.cuerse-wrap{
-  padding: 16px;
-  width: 100%;
-  .cuerse{
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
-    background: #ffffff;
-    border-radius: 5px;
-    outline: 1px solid #dddcdc;
-  }
-  .course-logo{
-    display: flex;
-    align-items: center;
-    img{
-    max-width: 100%;
-    }
-  }
-  .course-about{
-    flex-grow: 1;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-  }
-  .title{
-    text-align: center;
-    font-size: 1.4rem;
-    line-height: 1.4rem;
-    font-weight: 600;
-    color: #6f40fe;
-    margin-bottom: 16px;
-  }
-  .description{
-    background: #7a4ffe;
-    padding: 8px;
-    border-radius: 5px;
-    color: #ffffff;
-    font-size: 1rem;
-    margin-bottom: 16px;
-  }
-  .get{
-    margin-top: 26px;
-  }
-  .progress{
-    width: 100%;
-    flex-grow: 1;
-    .progress-header{
-      display: flex;
-      color: #017605;
-      font-size: 1rem;
-      div{
-        flex-grow: 1
-      }
-      .progress-value{
-        font-weight: bold;
-      }
-    }
-    .progress-liner-wrap{
-      width: 100%;
-      display: flex;
-      background: #80808021;
-      height: 16px;
-      .progress-liner{
-        background: #45D800;
-        text-align: center;
-        height: 16px;
-      }
-    }
-  }
-  .grape-btn-wrap{
-    margin-top: 16px;
-    flex-grow: 1;
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-    .grape-btn{
-      padding: 8px 16px;
-      border-radius: 25px;
-      outline: 2px solid #5186FF;
-      text-align: center;
-      a{
-        color: #5186FF!important;
-        font-weight: bold;
-      }
-    }
-  }
-  .get{
-    margin-bottom: 8px;
-  }
-}
-
-
-
 #topics-active{
   // .cuerse{
   //   outline-color: #45d800;
