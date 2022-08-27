@@ -139,6 +139,8 @@ class LessonsController extends Controller
             $data->push($request->first()->topic);
 //            $data->put('status',$request->first()->);
 //            $data->put('complete',$request->first()->);
+            //$data->put('topic_id',$data->id);
+            return response($data);
         }else{
             return response(Topic::with('lessons')->where(['id'=>$id])->get()->first());
         }
