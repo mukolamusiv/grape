@@ -139,7 +139,7 @@ class LessonsController extends Controller
             $data->forget('id');
             //$data = collect();
            // $data->push($request->first()->topic);
-//            $data->put('status',$request->first()->);
+            $data->put('status',50);
 //            $data->put('complete',$request->first()->);
             //$data->put('topic_id',$data->id);
             return response($data);
