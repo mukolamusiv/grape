@@ -33,21 +33,7 @@ class LessonsController extends Controller
 
         $data = collect();
         foreach ($topics as $topic){
-            if(empty($user_done)){
-                $water = 200;
-                $lumen = 150;
-            }else{
-                $lumen = 40*(count($topic->lessons)/$user_done);
-                $water = 60*(count($topic->lessons)/$user_done);
-            }
-            $return = collect($topic);
-            $return->forget('id');
-            $return->put('topic_id',$topic->id);
-            $return->put('water',round($water));
-            $return->put('lumen',round($lumen));
-
-            //$topic->put('prise',100);
-           $data->push($return);
+           $data->push($this->data_topic_available($topic));
         }
         //$to = Carbon::createFromFormat('Y-m-d H:s:i', date('Y-m-d H:s:i'));
         //$from = Carbon::createFromFormat('Y-m-d H:s:i', User::find(1)->updated_at);
@@ -268,7 +254,7 @@ class LessonsController extends Controller
         $topics = Topic::with('lessons')->whereNotIn('id',$array)->get();
 
         foreach ($topics as $topic){
-            $data->push( $this->data_topic_available($topic));
+            $data->push( $this->data_topic($topic));
         }
         return response($data);
     }
