@@ -233,14 +233,7 @@ class LessonsController extends Controller
     public function topics_active(){
         $topics = User::find(1)->topic_active;
         $data = collect();
-        $user = User::find(1);
-        $topics = $user->topic;
-        $array = [];
-        foreach ($topics as $topic){
-            $array[] = $topic->topic_id;
-        }
-        $topics = Topic::with('lessons')->whereNotIn('id',$array)->get();
-
+      
         foreach ($topics as $topic){
             $data->push( $this->data_topic($topic));
         }
