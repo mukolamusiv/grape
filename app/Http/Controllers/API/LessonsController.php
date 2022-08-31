@@ -64,7 +64,9 @@ class LessonsController extends Controller
         return response($data);
     }
 
-    public function topics_active(){
+
+
+    private function active(){
         $topics = User::find(1)->topic_active;
         $return = collect();
 
@@ -93,6 +95,7 @@ class LessonsController extends Controller
 //                   UserLessons::destroy($lesson->id);
 //                }
 //                UserTopic::destroy($topic->id);
+                return response('asd');
             }else{
                 //$data->put('id',$topic->id);
                 $data->put('topic_id',$topic->topic_id);
@@ -108,6 +111,166 @@ class LessonsController extends Controller
             }
         }
         return response($return);
+    }
+
+
+    private function data_water($topic){
+        if(isset($topic->water)){
+            return $topic->water;
+        }else{
+            $user_done = count(User::find(1)->topic_done);
+            if(empty($user_done)){
+                return 200;
+            }else{
+                return 60*(count($topic->lessons)/$user_done);
+            }
+        }
+    }
+
+    private function data_lumen($topic){
+        if(isset($topic->water)){
+            return $topic->water;
+        }else{
+            $user_done = count(User::find(1)->topic_done);
+            if(empty($user_done)){
+                return 200;
+            }else{
+                return 40*(count($topic->lessons)/$user_done);
+            }
+        }
+    }
+    /**
+     * @param $topic
+     * @return \Illuminate\Support\Collection
+     */
+    private function data_topic($topic){
+        //формуємо обєкт теми
+        $data = collect();
+        $data->put('topic_id',$topic->topic_id);
+        $data->put('title',$topic->topic->title);
+        $data->put('description',$topic->topic->description);
+        $data->put('photo',$topic->topic->photo);
+        $data->put('water',$topic->water);
+        $data->put('lumen',$topic->lumen);
+        $data->put('status', $this->status_topic($topic));
+        //$data->put('complete',$topic->topic->complete);
+        $data->put('lessons',$this->data_lessons($topic->topic->lessons));
+       return $data;
+    }
+
+
+    private function data_topic_available($topic){
+        //формуємо обєкт доступної теми
+        $data = collect();
+        $data->put('topic_id',$topic->id);
+        $data->put('title',$topic->title);
+        $data->put('description',$topic->description);
+        $data->put('photo',$topic->photo);
+        $data->put('water',$this->data_water($topic));
+        $data->put('lumen',$this->data_lumen($topic));
+        $data->put('status',0);
+        //$data->put('complete',$topic->topic->complete);
+        $data->put('lessons',$this->data_lessons($topic->lessons));
+        return $data;
+    }
+
+    /**
+     * @param $lessons
+     * @return \Illuminate\Support\Collection
+     */
+    private function data_lessons($lessons){
+        //формуємо обєкт уроків
+        $data = collect();
+        foreach ($lessons as $lesson){
+            $data->push($this->data_lesson($lesson));
+        }
+        return $data;
+    }
+
+    /**
+     * @param $lesson
+     * @return \Illuminate\Support\Collection
+     */
+    private function data_lesson($lesson){
+        //формуємо обєкт уроку
+        $data = collect();
+        $data->put('lesson_id',$lesson->id);
+        $data->put('title',$lesson->title);
+        $data->put('description',$lesson->description);
+        $data->put('text',$lesson->text);
+        $data->put('points',$lesson->points);
+        $data->put('level',$lesson->level);
+        $data->put('record_audio',$lesson->record_audio);
+        return $data;
+    }
+
+
+    /**
+     * @param $topic
+     * @return float|int
+     */
+    private function status_topic($topic){
+        //Дані про всі уроки та пройдені
+        $count_lessons = $topic->topic->lessons->count();
+        $count_complete = $topic->topic->complete->count();
+
+        //перевірка часу активності теми
+        $to = Carbon::createFromFormat('Y-m-d H:s:i', date('Y-m-d H:s:i'));
+        $from = Carbon::createFromFormat('Y-m-d H:s:i', $topic->updated_at);
+        $diff = $to->diffInDays($from);
+
+        //видалення якщо не пройдено жодного уроку за добу
+        if($count_complete === 0 and $diff > 1){
+            foreach ($topic->lessons as $lesson){
+                UserLessons::destroy($lesson->id);
+            }
+            UserTopic::destroy($topic->id);
+        }
+
+        //розрахунок відсотків пройденості теми
+        if($count_complete < 1){
+            return 0;
+        }else{
+            return $count_complete*100/$count_lessons;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function topics_active(){
+        $topics = User::find(1)->topic_active;
+        $data = collect();
+        $user = User::find(1);
+        $topics = $user->topic;
+        $array = [];
+        foreach ($topics as $topic){
+            $array[] = $topic->topic_id;
+        }
+        $topics = Topic::with('lessons')->whereNotIn('id',$array)->get();
+
+        foreach ($topics as $topic){
+            $data->push( $this->data_topic_available($topic));
+        }
+        return response($data);
     }
 
     public function topics_done(){
@@ -168,14 +331,14 @@ class LessonsController extends Controller
 
     }
 
-    public function check_topic($id){
-        $topic = UserTopic::where(['user_id'=>1,'topic_id'=>$id])->get()->first();
-        if($topic->complete){
-            return response($topic->complete);
-        }else{
-            return response($topic->complete);
-        }
-    }
+//    public function check_topic($id){
+//        $topic = UserTopic::where(['user_id'=>1,'topic_id'=>$id])->get()->first();
+//        if($topic->complete){
+//            return response($topic->complete);
+//        }else{
+//            return response($topic->complete);
+//        }
+//    }
 
     public function check_lesson($id){
 
