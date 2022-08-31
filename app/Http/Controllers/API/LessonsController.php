@@ -35,18 +35,6 @@ class LessonsController extends Controller
         foreach ($topics as $topic){
            $data->push($this->data_topic_available($topic));
         }
-        //$to = Carbon::createFromFormat('Y-m-d H:s:i', date('Y-m-d H:s:i'));
-        //$from = Carbon::createFromFormat('Y-m-d H:s:i', User::find(1)->updated_at);
-
-        //$diff_in_minutes = $to->diffInMinutes($from);
-        //print_r($diff_in_minutes); // Output: 20
-        //return response($diff_in_minutes);
-//        $db = DB::table('personal_access_tokens')->where('tokenable_id','=','1')->orderByDesc('updated_at')->limit(1)->get();
-//
-//        $minutes = Carbon::createFromFormat('Y-m-d H:s:i', date('Y-m-d H:s:i'))->diffInMinutes(Carbon::createFromFormat('Y-m-d H:s:i', $db->first()->updated_at));
-//        $user = User::find(1);
-//        $user->energy = $user->energy + ($minutes/10);
-//        $user->save();
         return response($data);
     }
 
