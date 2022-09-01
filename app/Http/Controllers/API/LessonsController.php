@@ -233,7 +233,7 @@ class LessonsController extends Controller
     public function topics_active(){
         $topics = User::find(1)->topic_active;
         $data = collect();
-      
+
         foreach ($topics as $topic){
             $data->push( $this->data_topic($topic));
         }
@@ -277,11 +277,6 @@ class LessonsController extends Controller
             return response(Topic::with('lessons')->where(['id'=>$id])->get()->first());
         }
 
-
-//        if(){
-//
-//        }
-        //return response(Topic::with('lessons')->where(['id'=>$id])->get()->first());
     }
 
 
@@ -315,7 +310,7 @@ class LessonsController extends Controller
         if(UserTopic::where(['user_id'=>1,'topic_id'=>$topic_id])->get()->isEmpty()){
             if(Topic::findOrFail($topic_id)){
                 $UserTopic = new UserTopic();
-                $UserTopic->user_id = 1;//Auth::id();
+                $UserTopic->user_id = 1;
                 $UserTopic->topic_id = $topic_id;
                 $UserTopic->save();
             }
@@ -342,6 +337,15 @@ class LessonsController extends Controller
             $UserLesson->lesson_id = $lesson_id;
             $UserLesson->save();
             return response($UserLesson);
+        }else{
+            return response('Цей урок вже активний');
+        }
+    }
+
+    public function stop_lesson($user_lesson_id){
+        $UserLesson = UserLessons::with('lessons')->find($user_lesson_id);
+        if($UserLesson->isNotEmpty()){
+            return response($UserLesson->destroy());
         }else{
             return response('Цей урок вже активний');
         }

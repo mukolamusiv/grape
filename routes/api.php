@@ -71,4 +71,5 @@ Route::get('check-topic/{id}','\App\Http\Controllers\API\LessonsController@check
 Route::put('start-topic/{id}','\App\Http\Controllers\API\LessonsController@start_topic');
 Route::put('stop-topic/{id}','\App\Http\Controllers\API\LessonsController@stop_topic');
 Route::put('start-lesson/{id}','\App\Http\Controllers\API\LessonsController@start_lesson');
+Route::put('start-lesson/{id}','\App\Http\Controllers\API\LessonsController@stop_lesson');
 //Auth::routes();
