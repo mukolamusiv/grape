@@ -312,9 +312,11 @@ class LessonsController extends Controller
                 $UserTopic = new UserTopic();
                 $UserTopic->user_id = 1;
                 $UserTopic->topic_id = $topic_id;
+                $UserTopic->water = 70;
+                $UserTopic->lumen = 70;
                 $UserTopic->save();
             }
-            return response($UserTopic->topic);
+            return response($this->data_topic_available($UserTopic->topic));
         }else{
             return response('Тема уже активна');
         }
