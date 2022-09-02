@@ -263,18 +263,17 @@ class LessonsController extends Controller
     public function topic($id){
         $request = collect(UserTopic::with('topic')->where(['topic_id'=>$id,'user_id'=>1])->get());
         if($request->isNotEmpty()){
-            $data = collect(UserTopic::with('topic')->find($request->first()->id));
-            $data->forget('id');
+            //$data = collect(UserTopic::with('topic')->find($request->first()->id));
+            //$data->forget('id');
             //$data = collect();
            // $data->push($request->first()->topic);
-            $data->put('status',50);
+            //$data->put('status',50);
 //            $data->put('complete',$request->first()->);
             //$data->put('topic_id',$data->id);
-            return response($data);
+            return response($this->data_topic(UserTopic::with('topic')->find($request->first()->id)));
         }else{
-            return response(Topic::with('lessons')->where(['id'=>$id])->get()->first());
+            return response($this->data_topic_available(Topic::with('lessons')->findOrFail($id)));
         }
-
     }
 
 
