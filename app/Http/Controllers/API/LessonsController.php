@@ -233,7 +233,6 @@ class LessonsController extends Controller
     public function topics_active(){
         $topics = User::find(1)->topic_active;
         $data = collect();
-
         foreach ($topics as $topic){
             $data->push( $this->data_topic($topic));
         }
@@ -246,18 +245,17 @@ class LessonsController extends Controller
 
         $return = collect();
         foreach ($topic->topic_done as $topic){
-            $data = collect();
-            $data->put('topic_id',$topic->topic_id);
-            $data->put('status', 100);
-            $data->put('water',$topic->water);
-            $data->put('lumen',$topic->lumen);
-            $data->put('title',$topic->topic->title);
-            $data->put('description',$topic->topic->description);
-            $data->put('photo',$topic->topic->photo);
-            $data->put('complete',$topic->topic->complete);
-            $data->put('lessons',$topic->topic->lessons);
-            $return->push($data);
-
+//            $data = collect();
+//            $data->put('topic_id',$topic->topic_id);
+//            $data->put('status', 100);
+//            $data->put('water',$topic->water);
+//            $data->put('lumen',$topic->lumen);
+//            $data->put('title',$topic->topic->title);
+//            $data->put('description',$topic->topic->description);
+//            $data->put('photo',$topic->topic->photo);
+//            $data->put('complete',$topic->topic->complete);
+//            $data->put('lessons',$topic->topic->lessons);
+            $return->push($this->data_topic($topic));
         }
         return response($return);
     }
