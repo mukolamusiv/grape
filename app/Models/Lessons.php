@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Orchid\Attachment\Attachable;
 use Orchid\Filters\Filterable;
 use Orchid\Screen\AsSource;
 
 class Lessons extends Model
 {
-    use HasFactory,AsSource,Filterable;
+    use HasFactory,AsSource,Filterable,Attachable;
 
     protected $fillable = [
         'title',
@@ -57,4 +58,9 @@ class Lessons extends Model
     public function topic(){
         return $this->belongsTo(Topic::class,'id');
     }
+
+//    public function audio()
+//    {
+//        return $this->hasOne(Attachment::class, 'id', 'record_audio')->withDefault();
+//    }
 }

@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\DB;
 class LessonsController extends Controller
 {
     public function lesson($id){
-        return response(Lessons::with('topic')->find($id));
+        return response(Lessons::with('topic','attachment')->find($id));
     }
 
     public function topics(){
@@ -36,55 +36,6 @@ class LessonsController extends Controller
            $data->push($this->data_topic_available($topic));
         }
         return response($data);
-    }
-
-
-
-    private function active(){
-        $topics = User::find(1)->topic_active;
-        $return = collect();
-
-        foreach ($topics as $topic){
-            $data = collect();
-            $count_lessons = $topic->lessons->count();
-            $count_complete = 0;
-
-            foreach ($topic->lessons as $lesson){
-                if($lesson->complete){
-                    $count_complete++;
-                }
-            }
-
-            $to = Carbon::createFromFormat('Y-m-d H:s:i', date('Y-m-d H:s:i'));
-            $from = Carbon::createFromFormat('Y-m-d H:s:i', $topic->updated_at);
-            $diff = $to->diffInDays($from);
-
-            if($count_complete < 1){
-                $status = 0;
-            }else{
-                $status = $count_complete*100/$count_lessons;
-            }
-            if($count_complete === 0 and $diff > 2){
-//                foreach ($topic->lessons as $lesson){
-//                   UserLessons::destroy($lesson->id);
-//                }
-//                UserTopic::destroy($topic->id);
-                return response('asd');
-            }else{
-                //$data->put('id',$topic->id);
-                $data->put('topic_id',$topic->topic_id);
-                $data->put('status', $status);
-                $data->put('water',$topic->water);
-                $data->put('lumen',$topic->lumen);
-                $data->put('title',$topic->topic->title);
-                $data->put('description',$topic->topic->description);
-                $data->put('photo',$topic->topic->photo);
-                $data->put('complete',$topic->topic->complete);
-                $data->put('lessons',$topic->topic->lessons);
-                $return->push($data);
-            }
-        }
-        return response($return);
     }
 
 
@@ -341,12 +292,16 @@ class LessonsController extends Controller
         }
     }
 
+    public function lesson_complete($lesson_id){
+
+    }
+
     public function stop_lesson($user_lesson_id){
         $UserLesson = UserLessons::with('lessons')->find($user_lesson_id);
         if($UserLesson->isNotEmpty()){
             return response($UserLesson->destroy());
         }else{
-            return response('Цей урок вже активний');
+            return response('Цей урок не активний');
         }
     }
 }

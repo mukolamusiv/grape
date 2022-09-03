@@ -3,10 +3,12 @@
 namespace App\Orchid\Layouts\Lessons;
 
 use App\Models\Topic;
+use Orchid\Attachment\File;
 use Orchid\Screen\Field;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Quill;
 use Orchid\Screen\Fields\Select;
+use Orchid\Screen\Fields\Upload;
 use Orchid\Screen\Layouts\Rows;
 
 class LessonsEditLayout extends Rows
@@ -44,6 +46,11 @@ class LessonsEditLayout extends Rows
                 ->required()
                 ->title(__('Текст уроку'))
                 ->placeholder(__('Текст уроку')),
+
+            Upload::make('lessons.attachment')
+                ->maxFiles(1)
+                //->targetRelativeUrl()
+                ->title('Аудіо супровід'),
 
             Input::make('lessons.points')
                 ->type('number')

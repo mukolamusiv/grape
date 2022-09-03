@@ -32,6 +32,7 @@ class AuthController extends Controller
             'surname' => 'required|string|max:255',
             'email' => 'required|email|unique:users|max:255',
             'password' => 'required|min:10',
+            'birthday'=> 'max:50',
         ]);
         // Return errors if validation error occur.
         if ($validator->fails()) {
@@ -43,10 +44,11 @@ class AuthController extends Controller
         // Check if validation pass then create user and auth token. Return the auth token
         if ($validator->passes()) {
             $user = User::create([
-                'name' => $request->name,
-                'surname' => $request->surname,
-                'email' => $request->email,
-                'password' => Hash::make($request->password)
+                'name'     => $request->name,
+                'surname'  => $request->surname,
+                'email'    => $request->email,
+                'password' => Hash::make($request->password),
+                'birthday' => $request->birthday
             ]);
             $token = $user->createToken('auth_token')->plainTextToken;
 

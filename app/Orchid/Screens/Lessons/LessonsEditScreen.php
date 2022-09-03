@@ -25,6 +25,7 @@ class LessonsEditScreen extends Screen
      */
     public function query(Lessons $lesson): iterable
     {
+        $lesson->load('attachment');
         return [
             'lessons'=> $lesson
         ];
@@ -83,9 +84,20 @@ class LessonsEditScreen extends Screen
 
 //        dd($request);
 //        exit();
-        $lessons
-            ->fill($request->get('lessons'))
-            ->save();
+
+        $date = Lessons::updateOrCreate(['id'=>$lessons->id],$request->get('lessons'));
+        //$lessons
+        //$lessons->fill($request->get('lessons'))->save();
+        //$lessons->title = $request->input('lessons.title');
+        //$lessons->text = $request->input('lessons.text');
+        $date->attachment()->syncWithoutDetaching(
+            $request->input('lessons.attachment', [])
+        );
+        //$lessons->record_audio = $request->get('lessons.record_audio');
+//        foreach ($request->input('lessons.record_audio') as $file){
+//            $lessons->record_audio = $file;
+//        }
+        //$lessons->save();
 //        $permissions = collect($request->get('permissions'))
 //            ->map(function ($value, $key) {
 //                return [base64_decode($key) => $value];
