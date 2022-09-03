@@ -1,6 +1,6 @@
 <template>
   <div class="cuerse-wrap" v-for="(topic) in topics" v-bind:key="topic.id">
-    <div class="cuerse fit-content">
+    <div class="cuerse">
       <div class="course-logo">
         <img :src="`${store.homeUrl + topic.photo}`" alt="">
       </div>

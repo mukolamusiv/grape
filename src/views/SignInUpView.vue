@@ -8,7 +8,7 @@
           <h3 v-if="router.currentRoute.value.name =='SignUp'">Реєстрація</h3>
         </div>
 <!-- Форма авторизації -->
-        <div class="form-sign" v-if="router.currentRoute.value.name =='Login'">
+        <form class="form-sign" v-if="router.currentRoute.value.name =='Login'" @submit.prevent="login()">
           <div class="form-item">
             <label>
               <span class="material-icons">person</span>
@@ -25,12 +25,13 @@
           <div class="login-error" v-if="data.errorMessage">
             {{data.errorMessage}}
           </div>
-          <div class="form-item login-btn c-pointer" @click="login()">
+          <button type="submit" class="form-item login-btn c-pointer">
             Увійти
-          </div>
-        </div>
-<!-- Форма реєстрації -->
-        <div class="form-sign" v-if="router.currentRoute.value.name =='SignUp'">
+          </button>
+          <router-link class="signup-link" to="/signup">Зареєструватись</router-link>
+        </form>
+        <!-- Форма реєстрації -->
+        <form class="form-sign" v-if="router.currentRoute.value.name =='SignUp'" @submit.prevent="signUp()">
           <div class="form-item">
             <span class="input-name">Ім'я</span>
             <label>
@@ -52,23 +53,17 @@
           <div class="form-item">
             <label>
               <span class="material-icons">lock</span>
-              <input placeholder="password" :type="data.inputType" v-model="data.password">
-              <span class="material-icons show" @click="changeInputType">{{data.inputIcon}}</span>
-            </label>
-          </div>
-          <div class="form-item">
-            <label>
-              <span class="material-icons">lock</span>
-              <input placeholder="confirm password" :type="data.inputType" v-model="data.passwordComfirm">
+              <input placeholder="password" type="text" v-model="data.password">
             </label>
           </div>
           <div class="login-error" v-if="data.errorMessage">
             {{data.errorMessage}}
           </div>
-          <div class="form-item login-btn c-pointer" @click="signUp()">
+          <button type="submit" class="form-item login-btn">
             Зареєструватись
-          </div>
-        </div>
+          </button>
+          <router-link class="signup-link" to="/login">В мене вже є аккаунт</router-link>
+        </form>
       </div>
     </div>
   </div>
@@ -90,7 +85,6 @@ const data = reactive({
   inputIcon: 'visibility',
   email: null,
   password: null,
-  passwordComfirm: null,
   name: null,
   surname: null
 })
@@ -120,7 +114,7 @@ const login = function () {
       store.getUser()
       router.push(`/`)
       }).catch(function () {
-        data.errorMessage = 'невырний email або пароль!'
+        data.errorMessage = 'невірний email або пароль!'
         });
 
   }
@@ -129,31 +123,26 @@ const login = function () {
   }
 }
 const signUp = function () {
-  if (`${data.password}` != `${data.passwordConfirm}`){
-    data.errorMessage = 'паролі співпадають!'
-  }
-  else {
-    if(data.email !=null && data.password !=null && data.name !=null && data.surname !=null){
-     axios({
-       method: 'POST',
-       url: '/api/register-user',
-       data: {
-         name: data.name,
-         surname: data.surname,
-         email: data.email,
-         password: data.password,
-      }
-     }).then(function () {
-       router.push(`/login`)
-       }).catch(function () {
-         data.errorMessage = 'Упс.. щось зламалось.'
-         });
+  if(data.email !==null && data.password !==null && data.name !==null && data.surname !==null && data.birthday !==null){
+   axios({
+     method: 'POST',
+     url: '/api/register-user',
+     data: {
+       name: data.name,
+       surname: data.surname,
+       email: data.email,
+       password: data.password,
+    }
+   }).then(function () {
+     router.push(`/login`)
+     }).catch(function () {
+       data.errorMessage = 'Упс.. щось зламалось.'
+       });
 
-   }
-   else{
-     data.errorMessage = 'необхідно заповнити всі поля форми!'
-   }
-  }
+ }
+ else{
+   data.errorMessage = 'необхідно заповнити всі поля форми!'
+ }
 }
 </script>
 
@@ -163,10 +152,11 @@ h3{
 }
 .bg-page{
   display: flex;
-   flex-wrap: nowrap;
-   justify-content: center;
-   height: 100vh;
-   width: 100%;
+  flex-wrap: nowrap;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  overflow: scroll;
   // background: linear-gradient(#ffdc76, #c58b67);
   background: linear-gradient(#7e78ff, #c17e55);
   background-image: url(@/assets/img/login-bg.jpg);
@@ -205,6 +195,8 @@ h3{
     }
   }
   .login-btn{
+    display: flex;
+    align-items: center;
     border: 0;
     margin-top: 32px;
     margin-bottom: 16px;
@@ -213,11 +205,11 @@ h3{
     padding: 8px 15px;
     border-radius: 8px;
     font-weight: bold;
-    background-color: #111111;
+    background-color: #111;
     color: #acecd9;
   }
   .login-btn:hover{
-    background-color: #1e1e1e;
+    background-color: #0e161f;
   }
   .login-error{
     font-size: 0.8rem;
@@ -226,5 +218,45 @@ h3{
     position: absolute;
     color: red;
   }
+}
+label{
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  outline: 1px solid #92919c69;
+  border-radius: 8px;
+  .material-icons{
+    display: block;
+    margin: -1px 0 -1px -1px;
+    padding: 7px;
+    border-radius: 8px 0 0 8px;
+    color: #ffffff;
+    font-size: 28px;
+    background-color: #111;
+  }
+  input{
+    flex-grow: 1;
+    width: inherit;
+    padding: 8px;
+    font-size: inherit;
+    border: none;
+    outline: none;
+    display: block;
+    line-height: 1.5rem;
+    color: #111111;
+    background-color: #ffffff;
+  }
+  .show{
+    margin: 0!important;
+    background: none!important;
+    color: #c3c3c3!important;
+  }
+}
+.signup-link{
+  display: block;
+  text-align: center;
+  font-size: 1rem;
 }
 </style>

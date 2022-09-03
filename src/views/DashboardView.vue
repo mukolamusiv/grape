@@ -4,25 +4,25 @@
       <div class="section-title">
         <h2>Активні: {{data.topicsActive.length}}</h2>
       </div>
-      <topic-card :topics="data.topicsActive" :linkTitle="`Продовжити`"/>
+      <topic-cards :topics="data.topicsActive" :linkTitle="`Продовжити`"/>
     </section>
     <section id="topics-done" v-if="data.topicsDone">
       <div class="section-title">
         <h2 class="cl-gray">Пройдені: {{data.topicsDone.length}}</h2>
       </div>
-      <topic-card :topics="data.topicsDone" :linkTitle="`Переглянути`"/>
+      <topic-cards :topics="data.topicsDone" :linkTitle="`Переглянути`"/>
     </section>
     <section id="topics" v-if="data.topics">
       <div class="section-title">
         <h2 class="cl-blue">Доступні: {{data.topics.length}}</h2>
       </div>
-      <topic-card :topics="data.topics" :linkTitle="`Розпочати`"/>
+      <topic-cards :topics="data.topics" :linkTitle="`Розпочати`"/>
     </section>
   </main>
 </template>
 
 <script setup>
-import TopicCard from '@/components/TopicCard.vue'
+import TopicCards from '@/components/TopicCards.vue'
 import { reactive } from 'vue'
 import axios from 'axios'
 
@@ -98,31 +98,4 @@ getTopics('topics', 'topics')
   }
   background: #5186ff1a;
 }
-// @media (min-width: 1920px) {
-//   .current-courses{
-//     .cuerse-wrap{
-//       width: 100%;
-//       padding: 16px;
-//       .cuerse{
-//         flex-direction: row;
-//       }
-//       .get{
-//         justify-content: flex-start;
-//       }
-//     }
-//   }
-//   .cuerse-wrap{
-//     width: 25%;
-//     padding: 16px;
-//     .course-logo{
-//       display: flex;
-//       align-items: center;
-//       img{
-//       max-width: 100%;
-//       width: auto;
-//       height: 247px;
-//       }
-//     }
-//   }
-// }
 </style>

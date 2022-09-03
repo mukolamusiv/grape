@@ -36,6 +36,17 @@
         Розпочати тему
       </span>
     </section>
+    <section class="lessons-wrap">
+      <div class="lessons-title">
+        Зміст теми:
+      </div>
+      <div class="lesson-card" v-for="(lesson, index) in data.topic.lessons" v-bind:key="lesson.lesson_id">
+        <div class="lesson-title">
+          <span class="material-icons">play_lesson</span>
+          <span>{{index+1}}. {{lesson.title}}</span>
+        </div>
+      </div>
+    </section>
   </main>
 </template>
 
@@ -59,7 +70,7 @@ const getTopic = function () {
     data: {}
  }).then(function (response) {
    data.topic = response.data
-   console.log(data.topic.status)
+   console.log(response.data)
 
   })
 }
@@ -68,8 +79,7 @@ const startTopic = function () {
     method: 'PUT',
     url: `/api/start-topic/${route.params.id}`,
   }).then(function (response) {
-   data.topic = response.data
-   console.log(response.data)
+   console.log(response.data, 'Розпочато')
 
   })
 }
@@ -101,7 +111,7 @@ getTopic()
     padding: 16px;
     img, .img{
       display: block;
-      // max-width: 100%;
+      border-radius: 5px;
       width: 400px;
       height: 200px;
       background-position: center;
@@ -143,6 +153,7 @@ getTopic()
       width: 100%;
       display: flex;
       background: #80808021;
+      // background: #1927361f;
       height: 16px;
       .progress-liner{
         background: #45D800;
@@ -159,10 +170,44 @@ getTopic()
   }
 }
 .start-panel{
+  display: none;
   justify-content: center;
   .btn{
     font-size: 1.5rem;
     }
+}
+.lessons-wrap{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 16px;
+  padding-top: 0;
+  .lessons-title{
+    padding: 0 16px;
+    margin-bottom: 8px;
+    font-size: 2rem;
+    line-height: 2rem;
+    font-weight: bold;
+    color: #192736;
+  }
+  .lesson-card{
+    margin: 8px 16px;
+    margin-left: 32px;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    color: #192736;
+    background: #1927361f;
+    border-radius: 5px;
+    .lesson-title{
+      display: flex;
+      align-items: center;
+      font-size: 1.1rem;
+      .material-icons{
+        margin-right: 8px;
+      }
+    }
+  }
 }
 @media (min-width: 992px) {
   .header-topic .description{
@@ -173,5 +218,31 @@ getTopic()
   .header-topic .description{
     width: calc(100vw - 780px);
   }
+}
+@media (max-width: 575.98px) {
+  .header-topic{
+    padding-top: 0;
+    padding-bottom: 0;
+    .course-logo{
+      padding-top: 0;
+    }
+    .title{
+      font-size: 1.8rem;
+      padding-top: 16px;
+    }
+    .description{
+      font-size: 1.1rem;
+    }
+  }
+  .lessons-wrap{
+    // padding: 0;
+    .lessons-title{
+      font-size: 1.5rem;
+    }
+  }
+}
+.lesson-done{
+  background: #45d800!important;
+  color: #ffffff!important;
 }
 </style>

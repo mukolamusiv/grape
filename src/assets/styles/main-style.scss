@@ -128,15 +128,6 @@ button{
     justify-content: flex-start;
     outline: 1px solid #92919c69;
     border-radius: 8px;
-    .material-icons{
-      display: block;
-      margin: -1px 0 -1px -1px;
-      padding: 7px;
-      border-radius: 8px 0 0 8px;
-      color: #ffffff;
-      font-size: 28px;
-      background-color: #111111;
-    }
     input{
       flex-grow: 1;
       width: inherit;
@@ -148,11 +139,6 @@ button{
       line-height: 1.5rem;
       color: #111111;
       background-color: #ffffff;
-    }
-    .show{
-      margin: 0!important;
-      background: none!important;
-      color: #c3c3c3!important;
     }
   }
 }
