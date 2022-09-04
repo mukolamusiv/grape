@@ -120,18 +120,19 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'photo' => [
-                'required',
-            ],
+//            'photo' => [
+//                'required',
+//            ],
             'name'=>'required',
             'surname'=>'required',
+            'birthday'=>'min:5'
         ]);
         $user = User::findOrFail($id);
         $request->file();
         $user->fill($request->all())->save();
-        if($request->file('photo')){
-            $this->photo_update($request,$user)->save();
-        }
+//        if($request->file('photo')){
+//            $this->photo_update($request,$user)->save();
+//        }
         return response($user);
     }
 
