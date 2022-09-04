@@ -1,4 +1,4 @@
 <?php
-//exec('git pull');
-echo __DIR__;
+exec('git pull');
+echo 'Успіх';
 ?>
