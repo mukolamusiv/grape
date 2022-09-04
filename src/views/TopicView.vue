@@ -21,7 +21,7 @@
             {{data.topic.description.substring(0, 255)}}
           </div>
         </div>
-        <div class="progress">
+        <div class="progress" v-if="data.topic.status">
           <div class="progress-header">
             <div>Пройдено</div> <span class="progress-value">{{data.topic.status}}%</span>
           </div>
@@ -31,7 +31,7 @@
         </div>
       </div>
     </section>
-    <section class="start-panel">
+    <section class="start-panel" v-if="data.topic.status == undefined"> {{data.topic.status}}
       <span class="btn" @click="startTopic()">
         Розпочати тему
       </span>
@@ -79,7 +79,8 @@ const startTopic = function () {
     method: 'PUT',
     url: `/api/start-topic/${route.params.id}`,
   }).then(function (response) {
-   console.log(response.data, 'Розпочато')
+   console.log(response.data)
+   getTopic()
 
   })
 }
@@ -170,7 +171,6 @@ getTopic()
   }
 }
 .start-panel{
-  display: none;
   justify-content: center;
   .btn{
     font-size: 1.5rem;
