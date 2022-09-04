@@ -77,7 +77,7 @@ class LessonsController extends Controller
         $data->put('photo',$topic->topic->photo);
         $data->put('water',$topic->water);
         $data->put('lumen',$topic->lumen);
-        $data->put('status', $this->status_topic($topic));
+        $data->put('status', round($this->status_topic($topic)));
         //$data->put('complete',$topic->topic->complete);
         $data->put('lessons',$this->data_lessons($topic->topic->lessons));
        return $data;
@@ -223,7 +223,9 @@ class LessonsController extends Controller
             //$data->put('topic_id',$data->id);
             return response($this->data_topic(UserTopic::with('topic')->find($request->first()->id)));
         }else{
-            return response($this->data_topic_available(Topic::with('lessons')->findOrFail($id)));
+            $data = $this->data_topic_available(Topic::with('lessons')->findOrFail($id));
+            $data->forget('status');
+            return response($data);
         }
     }
 
