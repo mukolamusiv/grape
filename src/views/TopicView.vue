@@ -7,11 +7,11 @@
           <div class="get">
             <div class="get-items sun">
                 <span class="material-icons">brightness_5</span>
-                <span>15</span>
+                <span>{{data.topic.lumen}}</span>
             </div>
             <div class="get-items water">
                 <span class="material-icons">water_drop</span>
-                <span>15</span>
+                <span>{{data.topic.water}}</span>
             </div>
           </div>
         </div>
@@ -21,7 +21,7 @@
             {{data.topic.description.substring(0, 255)}}
           </div>
         </div>
-        <div class="progress" v-if="data.topic.status">
+        <div class="progress" v-if="data.topic.status !== undefined">
           <div class="progress-header">
             <div>Пройдено</div> <span class="progress-value">{{data.topic.status}}%</span>
           </div>
@@ -31,20 +31,30 @@
         </div>
       </div>
     </section>
-    <section class="start-panel" v-if="data.topic.status == undefined"> {{data.topic.status}}
+    <section class="start-panel" v-if="data.topic.status == undefined">
       <span class="btn" @click="startTopic()">
         Розпочати тему
       </span>
     </section>
-    <section class="lessons-wrap">
+    <section class="lessons-wrap" :class="{ opacity: data.topic.status == undefined }">
       <div class="lessons-title">
         Зміст теми:
       </div>
-      <div class="lesson-card" v-for="(lesson, index) in data.topic.lessons" v-bind:key="lesson.lesson_id">
-        <div class="lesson-title">
-          <span class="material-icons">play_lesson</span>
-          <span>{{index+1}}. {{lesson.title}}</span>
+      <div class="wrap-lesson-card" v-if="data.topic.status == undefined">
+        <div class="lesson-card" v-for="(lesson, index) in data.topic.lessons" v-bind:key="lesson.lesson_id">
+          <div class="lesson-title">
+            <span class="material-icons">play_lesson</span>
+            <span>{{index+1}}. {{lesson.title}}</span>
+          </div>
         </div>
+      </div>
+      <div class="wrap-lesson-card" v-if="data.topic.status !== undefined">
+        <router-link class="lesson-card" :to="{ path: `/lesson/${lesson.lesson_id}`}" v-for="(lesson, index) in data.topic.lessons" v-bind:key="lesson.lesson_id">
+          <div class="lesson-title">
+            <span class="material-icons">play_lesson</span>
+            <span>{{index+1}}. {{lesson.title}}</span>
+          </div>
+        </router-link>
       </div>
     </section>
   </main>
@@ -90,6 +100,9 @@ getTopic()
 
 <style lang="scss" scoped>
 @import '@/assets/styles/color-style.scss';
+.opacity{
+  opacity: 0.6;
+}
 .header-topic{
   .title{
     text-align: center;

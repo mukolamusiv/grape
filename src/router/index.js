@@ -18,6 +18,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/TopicView.vue')
   },
   {
+    path: '/lesson/:id',
+    name: 'Lesson',
+    meta: {
+      forAuthorized: true,
+    },
+    component: () => import(/* webpackChunkName: "about" */ '../views/LessonView.vue')
+  },
+  {
     path: '/profile',
     name: 'Profile',
     meta: {
