@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 class LessonsController extends Controller
 {
     public function lesson($id){
+//        $lesson = Lessons::with('topic','attachment')->find($id);
         return response(Lessons::with('topic','attachment')->find($id));
     }
 
