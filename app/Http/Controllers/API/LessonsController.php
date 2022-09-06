@@ -21,6 +21,10 @@ class LessonsController extends Controller
         return response(Lessons::with('topic','attachment')->find($id));
     }
 
+    public function next_lesson($id,$serial){
+
+    }
+
     public function topics(){
         $user = User::find(1);
         $topics = $user->topic;
