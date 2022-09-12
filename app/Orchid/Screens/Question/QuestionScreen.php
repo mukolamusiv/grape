@@ -2,7 +2,11 @@
 
 namespace App\Orchid\Screens\Question;
 
+use App\Models\Question;
+use App\Orchid\Layouts\Question\QuestionTableLayout;
+use Orchid\Screen\Layout;
 use Orchid\Screen\Screen;
+use function Termwind\ValueObjects\block;
 
 class QuestionScreen extends Screen
 {
@@ -13,7 +17,9 @@ class QuestionScreen extends Screen
      */
     public function query(): iterable
     {
-        return [];
+        return [
+            'questions'=>Question::all()
+        ];
     }
 
     /**
@@ -43,6 +49,13 @@ class QuestionScreen extends Screen
      */
     public function layout(): iterable
     {
-        return [];
+        return [
+            \Orchid\Support\Facades\Layout::block(QuestionTableLayout::class)
+                ->title('Зпитання')
+            ->description('запитання до уроку'),
+            \Orchid\Support\Facades\Layout::block(QuestionTableLayout::class)
+                ->title('Відповіді')
+                ->description('Усі відповіді до запитань'),
+        ];
     }
 }

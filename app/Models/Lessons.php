@@ -59,6 +59,10 @@ class Lessons extends Model
         return $this->belongsTo(Topic::class,'topic_id');
     }
 
+    public function question(){
+        return $this->hasMany(Question::class,'lesson_id')->with('answer');
+    }
+
 //    public function audio()
 //    {
 //        return $this->hasOne(Attachment::class, 'id', 'record_audio')->withDefault();
