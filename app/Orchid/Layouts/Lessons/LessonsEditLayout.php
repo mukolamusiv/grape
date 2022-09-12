@@ -48,7 +48,7 @@ class LessonsEditLayout extends Rows
                 ->placeholder(__('Текст уроку')),
 
             Upload::make('lessons.attachment')
-                ->maxFiles(1)
+                ->maxFiles(2)
                 //->targetRelativeUrl()
                 ->title('Аудіо супровід'),
 
