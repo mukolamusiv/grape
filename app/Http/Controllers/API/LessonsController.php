@@ -18,7 +18,13 @@ class LessonsController extends Controller
 {
     public function lesson($id){
 //        $lesson = Lessons::with('topic','attachment')->find($id);
-        return response(Lessons::with('topic','attachment','question')->find($id));
+        $data = Lessons::with('topic','attachment','question')->find($id);
+//        $question = $data->question;
+//        $data_question =
+//        foreach (){
+//
+//        }
+        return response($data);
     }
 
     public function next_lesson($id,$serial){
