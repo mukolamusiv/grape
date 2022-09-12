@@ -10,25 +10,33 @@
       </div>
       <div class="lesson-about">
         <div class="title">
-          Урок: "{{data.lesson.title}}""
+          Урок: "{{data.lesson.title}}"
         </div>
-        <div class="description">
-          {{data.lesson.description}}
+        <div class="lesson-structure">
+          <div class="lesson-structure-title">
+            Зміст уроку:
+          </div>
+          <a class="lesson-structure-items active-tab" href="#">Відео-лекція</a>
+          <a class="lesson-structure-items" href="#">Тестування</a>
+          <a class="lesson-structure-items" href="#">Кросворд</a>
+          <a class="lesson-structure-items" href="#">Розмальовка</a>
         </div>
       </div>
     </section>
     <section class="lesson-content">
       <div class="player">
-        <audio
+        <video v-if="data.lesson.attachment[1]"
           controls
           preload="auto"
           controlsList="nodownload"
-          :src="data.lesson.attachment[0].url">
+          :src="data.lesson.attachment[1].url">
               Your browser does not support the
               <code>audio</code> element.
-        </audio>
+        </video>
       </div>
-      <div class="lesson-content-text" v-html="data.lesson.text"></div>
+      <div class="description">
+        {{data.lesson.description}}
+      </div>
     </section>
   </main>
 </template>
@@ -84,31 +92,58 @@ getLesson()
 }
 .lesson-about{
   display: flex;
-  align-items: center;
   justify-content: center;
   flex-wrap: wrap;
   width: 100%;
   .title{
+    width: 100%;
     text-align: center;
     font-size: 2.5rem;
     font-weight: 600;
     color: #6f40fe;
     margin-bottom: 16px;
   }
-  .description{
-    background: #7a4ffe;
-    padding: 8px;
-    border-radius: 5px;
-    color: #ffffff;
+}
+.description{
+  padding: 16px 24px;
+  border-radius: 5px;
+  background: #e8b6041c;
+  color: #192736;
+  font-size: 1.2rem;
+  font-style: italic;
+  width: 100%;
+  margin: 0 32px;
+}
+.lesson-structure{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 12px;
+  border-radius: 5px;
+  // outline: 1px solid #7a4ffe;
+  background: #efefef;
+  .lesson-structure-title{
     font-size: 1.2rem;
-    width: 100%;
-    margin: 0 32px;
+    font-weight: bold;
+    color: #808080;
+    padding: 4px 16px;
   }
+  .lesson-structure-items{
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 0px 4px;
+    margin: 0 8px;
+    color: #556efe;
+  }
+
 }
 .lesson-content{
   display: flex;
   justify-content: center;
   padding-top: 0;
+  flex-wrap: wrap;
   .lesson-content-text{
     max-width: 100%;
     font-size: 1.2rem;
@@ -116,32 +151,70 @@ getLesson()
 }
 .player{
   width: 100%;
-  margin-bottom: 32px;
   padding: 0 32px;
   audio{
     width: 100%;
   }
+  video{
+    width: 100%;
+    margin-bottom: -7px;
+  }
+}
+.active-tab{
+  border-bottom: 2px solid #6f43fe;
+  margin-bottom: 0;
+  color: #6f43fe!important;
 }
 @media (min-width: 1200px) {
   .lesson-about{
-    .description{
-      width: 100%;
+    .lesson-structure{
+      border-radius: 5px;
+      margin: 0 24px 0 32px;
     }
+  }
+  .lesson-content{
+    flex-wrap: nowrap;
+    padding: 0 40px 0 48px;
+  }
+  .description{
+    max-width: 40%;
+    flex-grow: 1;
+    border-radius: 5px 0 0 5px;
+    margin: 0;
+  }
+  .player{
+    flex-grow: 1;
+    height: auto;
+    padding: 0 32px 0 0;
   }
 }
 @media (max-width: 575.98px) {
-  .lesson-about .title{
-    font-size: 1.8rem;
-  }
-  .description{
-    font-size: 1.1rem!important;
-    margin: 0!important;
-  }
   .bread-crumbs{
     margin-left: -32px;
     a{
       font-size: 1.2rem;
     }
+  }
+  .lesson-about .title{
+    font-size: 1.8rem;
+  }
+  .lesson-structure{
+    margin: 0;
+    // flex-direction: column;
+    justify-content: center;
+    .lesson-structure-title{
+      display: none;
+    }
+    .lesson-structure-items{
+      width: calc(50% - 8px) ;
+      padding: 4px;
+      margin: 4px;
+      text-align: center;
+    }
+  }
+  .description{
+    font-size: 1.1rem!important;
+    margin: 0!important;
   }
   .lesson-content{
     .lesson-content-text{
@@ -149,7 +222,8 @@ getLesson()
     }
   }
   .player{
-    padding: 0
+    padding: 0;
+    margin-bottom: 32px;
   }
 }
 </style>
