@@ -24,7 +24,25 @@ class LessonsController extends Controller
 //        foreach (){
 //
 //        }
-        return response($data);
+
+        $return = collect();
+        $return->put('lesson_id',$data->id);
+        $return->put('title',$data->title);
+        $return->put('description',$data->description);
+        $return->put('text',$data->text);
+        $return->put('created_at',$data->created_at);
+        $return->put('updated_at',$data->updated_at);
+        $return->put('topic_id',$data->topic_id);
+        $return->put('topic',$data->topic);
+        $return->put('attachment',$data->attachment);
+
+        $test = collect();
+        $test->put('question',$data->question);
+//        $test->put('attachment',$data->question);
+
+
+        $return->put('tests',$test);
+        return response($return);
     }
 
     public function next_lesson($id,$serial){
