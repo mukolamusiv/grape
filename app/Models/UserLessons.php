@@ -9,7 +9,7 @@ class UserLessons extends Model
 {
     use HasFactory;
 
-    public function lesson(){
+    public function lessons(){
         return $this->hasOne(Lessons::class,'id','lesson_id')->with('topic', 'attachment', 'question');
     }
 
