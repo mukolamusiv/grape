@@ -18,32 +18,66 @@ class LessonsController extends Controller
 {
     public function lesson($id){
 //        $lesson = Lessons::with('topic','attachment')->find($id);
-        $data = Lessons::with('topic','attachment','question')->find($id);
-//        $question = $data->question;
-//        $data_question =
-//        foreach (){
-//
-//        }
+        $lesson = UserLessons::with('lesson')->where('lesson_id','=',$id)->get();
+        if($lesson->isNotEmpty()){
+            $lesson = $lesson->first();
+            $return = collect();
+            $return->put('lesson_id', $lesson->lesson->id);
+            $return->put('title', $lesson->lesson->title);
+            $return->put('description', $lesson->lesson->description);
+            $return->put('text', $lesson->lesson->text);
+            $return->put('check_video',$lesson->check_video);
+            $return->put('created_at', $lesson->created_at);
+            $return->put('updated_at', $lesson->updated_at);
+            $return->put('topic_id', $lesson->topic_id);
+            if($lesson->complete){
+                $return->put('status', 'done');
+            }else{
+                $return->put('status', 'active');
+            }
+            //$return->put('active',$lesson->topic_active);
+            //$return->put('count_lessons',$lesson->topic_active->lessons->count());
+            $return->put('water',$lesson->water);
+            $return->put('lumen',$lesson->lumen);
+            $return->put('topic', $lesson->topic);
+            $return->put('attachment', $lesson->lesson->attachment);
+            $test = collect();
+            $test->put('question', $lesson->lesson->question);
 
-        $return = collect();
-        $return->put('lesson_id',$data->id);
-        $return->put('title',$data->title);
-        $return->put('description',$data->description);
-        $return->put('text',$data->text);
-        $return->put('created_at',$data->created_at);
-        $return->put('updated_at',$data->updated_at);
-        $return->put('topic_id',$data->topic_id);
-        $return->put('topic',$data->topic);
-        $return->put('attachment',$data->attachment);
+            $return->put('tests', $test);
 
-        $test = collect();
-        $test->put('question',$data->question);
+            return response($return);
+        }else {
+
+            $data = Lessons::with('topic', 'attachment', 'question')->find($id);
+
+            $return = collect();
+            $return->put('lesson_id', $data->id);
+            $return->put('title', $data->title);
+            $return->put('description', $data->description);
+            $return->put('text', $data->text);
+            $return->put('created_at', $data->created_at);
+            $return->put('updated_at', $data->updated_at);
+            $return->put('topic_id', $data->topic_id);
+            $return->put('topic', $data->topic);
+            $return->put('attachment', $data->attachment);
+            $return->put('status', 'view');
+            //$return->put('check_video',$data->check_video);
+
+            $test = collect();
+            $test->put('question', $data->question);
 //        $test->put('attachment',$data->question);
 
-
-        $return->put('tests',$test);
-        return response($return);
+            $return->put('tests', $test);
+            return response($return);
+        }
     }
+
+
+//
+//    private function lesson_data($lesson){
+//
+//    }
 
     public function next_lesson($id,$serial){
 
@@ -311,11 +345,16 @@ class LessonsController extends Controller
     }
 
     public function start_lesson($lesson_id){
-
+        $lesson = Lessons::find($lesson_id);
         if(UserLessons::where(['user_id'=>1,'lesson_id'=>$lesson_id])->get()->isEmpty()){
+            $UserTopic  = UserTopic::where(['user_id'=>1,'topic_id'=>$lesson->topic_id])->get();
+            $UserTopic = $UserTopic->first();
             $UserLesson = new UserLessons();
             $UserLesson->user_id = 1;//Auth::id();
             $UserLesson->lesson_id = $lesson_id;
+            $UserLesson->topic_active_id = $UserTopic->id;
+            $UserLesson->water = 15;
+            $UserLesson->lumen = 20;
             $UserLesson->save();
             return response($UserLesson);
         }else{
@@ -337,8 +376,12 @@ class LessonsController extends Controller
     }
 
 
-
     public function audit_answer(Request $request, $question_id){
         return response(true);
+    }
+
+    public function check_video($lesson_id){
+         $lesson = UserLessons::where('lesson_id','=',$lesson_id)->get()->first();
+         return response($lesson);
     }
 }
