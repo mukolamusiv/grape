@@ -19,11 +19,12 @@ return new class extends Migration
             $table->string('title');
             $table->string('description');
             $table->string('image');
-            $table->unsignedBigInteger('pair')->nullable();
+            $table->string('text');
+            $table->unsignedBigInteger('pair_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('find_a_pair')->references('id')->on('find_a__pairs');
-            $table->foreign('pair')->references('id')->on('find_a__pair__data');
+            $table->foreign('find_a_pair')->references('id')->on('find_a__pairs')->cascadeOnDelete();
+            $table->foreign('pair_id')->references('id')->on('find_a__pair__data')->cascadeOnDelete();
         });
     }
 
