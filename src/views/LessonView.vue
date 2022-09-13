@@ -1,6 +1,6 @@
 <template>
-  <main v-if="data.lesson">
-    <section class="lesson-header">
+  <main v-if="data.lesson" class="main" :class="{blackout: store.ui.lessonTab === 'test' }">
+    <section class="lesson-header" v-if="store.ui.lessonTab === 'video'">
       <div class="bread-crumbs">
         <router-link :to="{ path: `/topic/${data.lesson.topic_id}`}">
           <span class="material-icons">reply</span>
@@ -17,15 +17,15 @@
             Зміст уроку:
           </div>
           <a class="lesson-structure-items active-tab" href="#">Відео-лекція</a>
-          <a class="lesson-structure-items" href="#">Тестування</a>
+          <a class="lesson-structure-items" href="#" @click="store.ui.lessonTab = 'test'">Тестування</a>
           <a class="lesson-structure-items" href="#">Кросворд</a>
           <a class="lesson-structure-items" href="#">Розмальовка</a>
         </div>
       </div>
     </section>
-    <section class="lesson-content">
-      <div class="player">
-        <video v-if="data.lesson.attachment[1]"
+    <section class="lesson-content" v-if="store.ui.lessonTab === 'video'">
+      <div class="player timeline-hidden" v-if="data.lesson.attachment[1]">
+        <video
           controls
           preload="auto"
           controlsList="nodownload"
@@ -38,20 +38,24 @@
         {{data.lesson.description}}
       </div>
     </section>
+    <test v-if="store.ui.lessonTab === 'test'" />
   </main>
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { reactive} from 'vue'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
+import Test from '@/components/Test.vue'
+import { useStore } from '@/store'
+const { store } = useStore()
 
 const route = useRoute()
 
 const data = reactive({
-  lesson: null
+  lesson: null,
 })
-
+store.ui.lessonTab = 'video'
 const getLesson = function () {
   axios({
     method: 'GET',
@@ -61,6 +65,7 @@ const getLesson = function () {
    data.lesson = response.data
    console.log(response.data)
 
+
   })
 }
 getLesson()
@@ -68,6 +73,14 @@ getLesson()
 
 <style lang="scss" scoped>
 @import '@/assets/styles/color-style.scss';
+.blackout{
+ background: #192736b8;
+}
+.timeline-hidden{
+  video::-webkit-media-controls-timeline{
+    display: none!important;
+  }
+}
 .lesson-header{
   margin-bottom: 16px;
 }
@@ -152,6 +165,7 @@ getLesson()
 .player{
   width: 100%;
   padding: 0 32px;
+  overflow: hidden;
   audio{
     width: 100%;
   }
@@ -165,6 +179,7 @@ getLesson()
   margin-bottom: 0;
   color: #6f43fe!important;
 }
+
 @media (min-width: 1200px) {
   .lesson-about{
     .lesson-structure{
