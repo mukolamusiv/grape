@@ -18,14 +18,14 @@ class LessonsController extends Controller
 {
     public function lesson($id){
 //        $lesson = Lessons::with('topic','attachment')->find($id);
-        $lesson = UserLessons::with('lesson')->where('lesson_id','=',$id)->get();
+        $lesson = UserLessons::with('lessons')->where('lesson_id','=',$id)->get();
         if($lesson->isNotEmpty()){
             $lesson = $lesson->first();
             $return = collect();
-            $return->put('lesson_id', $lesson->lesson->id);
-            $return->put('title', $lesson->lesson->title);
-            $return->put('description', $lesson->lesson->description);
-            $return->put('text', $lesson->lesson->text);
+            $return->put('lesson_id', $lesson->lessons->id);
+            $return->put('title', $lesson->lessons->title);
+            $return->put('description', $lesson->lessons->description);
+            $return->put('text', $lesson->lessons->text);
             $return->put('check_video',$lesson->check_video);
             $return->put('created_at', $lesson->created_at);
             $return->put('updated_at', $lesson->updated_at);
@@ -40,9 +40,9 @@ class LessonsController extends Controller
             $return->put('water',$lesson->water);
             $return->put('lumen',$lesson->lumen);
             $return->put('topic', $lesson->topic);
-            $return->put('attachment', $lesson->lesson->attachment);
+            $return->put('attachment', $lesson->lessons->attachment);
             $test = collect();
-            $test->put('question', $lesson->lesson->question);
+            $test->put('question', $lesson->lessons->question);
 
             $return->put('tests', $test);
 
