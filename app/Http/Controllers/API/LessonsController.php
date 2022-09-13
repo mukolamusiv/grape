@@ -335,4 +335,10 @@ class LessonsController extends Controller
             return response('Цей урок не активний');
         }
     }
+
+
+
+    public function audit_answer(Request $request, $question_id){
+        return response(true);
+    }
 }

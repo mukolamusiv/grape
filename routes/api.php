@@ -72,4 +72,12 @@ Route::put('start-topic/{id}','\App\Http\Controllers\API\LessonsController@start
 Route::put('stop-topic/{id}','\App\Http\Controllers\API\LessonsController@stop_topic');
 Route::put('start-lesson/{id}','\App\Http\Controllers\API\LessonsController@start_lesson');
 Route::put('start-lesson/{id}','\App\Http\Controllers\API\LessonsController@stop_lesson');
+
+
+
+Route::put('audit_answer/{question_id}','\App\Http\Controllers\API\LessonsController@audit_answer');
+
+
+
+
 //Auth::routes();
