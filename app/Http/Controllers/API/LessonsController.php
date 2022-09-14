@@ -382,6 +382,7 @@ class LessonsController extends Controller
 
     public function check_video($lesson_id){
          $lesson = UserLessons::where('lesson_id','=',$lesson_id)->get()->first();
-         return response($lesson);
+         $lesson->check_video = true;
+         return response(['water'=>5,'lumen'=>6]);
     }
 }
