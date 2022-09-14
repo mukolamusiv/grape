@@ -12,14 +12,27 @@
         <div class="title">
           Урок: "{{data.lesson.title}}"
         </div>
-        <div class="lesson-structure">
-          <div class="lesson-structure-title">
-            Зміст уроку:
+        <div class="lesson-structure" v-if="data.lesson.check_video">
+          <a class="lesson-structure-item cl-done" href="#">
+            <span class="material-icons lecture">movie</span>
+            Відео-лекція
+          </a>
+          <a class="lesson-structure-item" href="#" @click="store.ui.lessonTab = 'test'">
+            <span class="material-icons test">quiz</span>
+            Тестування</a>
+          <a class="lesson-structure-item" href="#">
+            <span class="material-icons crossword">hive</span>
+            Кросворд
+          </a>
+          <a class="lesson-structure-item" href="#">
+            <span class="material-icons coloring">palette</span>
+            Розмальовка
+          </a>
+        </div>
+        <div class="lesson-structure" v-if="!data.lesson.check_video">
+          <div class="lesson-message">
+          Переглянь відео-лекцію, щоб розблокувати інші завдання уроку!
           </div>
-          <a class="lesson-structure-items active-tab" href="#">Відео-лекція</a>
-          <a class="lesson-structure-items" href="#" @click="store.ui.lessonTab = 'test'">Тестування</a>
-          <a class="lesson-structure-items" href="#">Кросворд</a>
-          <a class="lesson-structure-items" href="#">Розмальовка</a>
         </div>
       </div>
     </section>
@@ -38,7 +51,7 @@
         {{data.lesson.description}}
       </div>
     </section>
-    <test v-if="store.ui.lessonTab === 'test'" />
+    <test v-if="store.ui.lessonTab === 'test'" :questions="data.lesson.tests.question" />
   </main>
 </template>
 
@@ -122,7 +135,7 @@ getLesson()
   border-radius: 5px;
   background: #e8b6041c;
   color: #192736;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-style: italic;
   width: 100%;
   margin: 0 32px;
@@ -137,18 +150,26 @@ getLesson()
   border-radius: 5px;
   // outline: 1px solid #7a4ffe;
   background: #efefef;
-  .lesson-structure-title{
-    font-size: 1.2rem;
+  .lesson-message{
+    text-align: center;
+    width: 100%;
+    font-size: 1.1rem;
     font-weight: bold;
     color: #808080;
     padding: 4px 16px;
   }
-  .lesson-structure-items{
+  .lesson-structure-item{
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
     font-size: 1.1rem;
     font-weight: bold;
     padding: 0px 4px;
     margin: 0 8px;
     color: #556efe;
+    .material-icons{
+      margin-right: 8px;
+    }
   }
 
 }
@@ -174,10 +195,17 @@ getLesson()
     margin-bottom: -7px;
   }
 }
-.active-tab{
-  border-bottom: 2px solid #6f43fe;
-  margin-bottom: 0;
-  color: #6f43fe!important;
+.crossword{
+  color: #212529;
+}
+.coloring{
+  color: #e95222;
+}
+.lecture{
+  color: #355373;
+}
+.test{
+  color: #198754;
 }
 
 @media (min-width: 1200px) {
@@ -217,11 +245,8 @@ getLesson()
     margin: 0;
     // flex-direction: column;
     justify-content: center;
-    .lesson-structure-title{
-      display: none;
-    }
-    .lesson-structure-items{
-      width: calc(50% - 8px) ;
+    .lesson-structure-item{
+      width: calc(100% - 8px) ;
       padding: 4px;
       margin: 4px;
       text-align: center;

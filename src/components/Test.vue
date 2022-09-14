@@ -2,28 +2,23 @@
   <section class="wrap">
     <div class="test">
       <div class="close">
+        <span class="test-number" @click="data.questionNamber++">
+          Питання {{data.questionNamber + 1}} / 10
+        </span>
         <span class="material-icons c-pointer cancel" @click="store.ui.lessonTab = 'video'">disabled_by_default</span>
       </div>
       <div class="question">
         Скільки є Святих Тайнств?
       </div>
-      <form>
-        <label>
-          <input type="radio" name="answer" value="9">
-          <span>7</span>
-        </label>
-        <label>
-          <input type="radio" name="answer" value="7">
-          <span>9</span>
-        </label>
-        <label>
-          <input type="radio" name="answer" value="12">
-          <span>12</span>
+      <form v-if="data.question">
+        <label v-for="(answer) in data.question.answer" v-bind:key="answer.id">
+          <input type="radio" name="answer" :value="answer.id" v-model="data.answerID">
+          <span>{{answer.text}}</span>
         </label>
         <div class="submit-panel">
           <button type="submit" class="btn">
             <span class="material-icons">check</span>
-            Прийняти відповідь
+            Надіслати відповідь
           </button>
         </div>
       </form>
@@ -32,12 +27,20 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
+import { reactive, watch, defineProps } from 'vue'
 import { useStore } from '@/store'
 const { store } = useStore()
-defineProps({
-  topics: null,
-  linkTitle: null
+const props = defineProps({
+  questions: null
+})
+const data = reactive({
+  questionNamber: 0,
+  question: props.questions[0],
+  answerID: null
+})
+
+watch( () => data.questionNamber, () => {
+    data.question = props.questions[data.questionNamber]
 })
 </script>
 
@@ -60,11 +63,17 @@ defineProps({
   .close{
     display: flex;
     justify-content: flex-end;
+    align-items: center;
     width: 100%;
+    .test-number{
+      flex-grow: 1;
+      padding: 0 8px;
+    color: gray;
+    }
     .material-icons{
       font-size: 36px;
-      margin-top: -5px;
-      margin-right: -5px;
+      margin-top: -4px;
+      margin-right: -4px;
     }
   }
   .question{
@@ -80,7 +89,6 @@ form{
   display: flex;
   flex-direction: column;
   padding: 0 16px 16px 16px;
-  input
   input[type="radio"] {
     transform: scale(1.2);
     margin: 0 8px;
@@ -89,10 +97,13 @@ form{
     display: flex;
     align-items: center;
     outline: 2px solid #e6e6e6;
-    margin-bottom: 16px;
+    margin-bottom: 32px;
     padding: 8px;
     border-radius: 5px;
     font-size: 1.2rem;
+  }
+  label:hover{
+    outline-color: #5186FF;
   }
   .submit-panel{
     justify-content: flex-end;
@@ -101,6 +112,9 @@ form{
 @media (max-width: 575.98px) {
   .btn{
     width: 100%;
+  }
+  form label{
+    font-size: 1rem;
   }
 }
 </style>
