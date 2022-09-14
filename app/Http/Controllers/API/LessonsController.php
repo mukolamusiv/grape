@@ -390,6 +390,6 @@ class LessonsController extends Controller
          $user->water = $user->water+5;
          $user->lumen = $user->lumen+6;
          $user->save();
-         return response(['water'=>5,'lumen'=>6]);
+         return response($lesson);
     }
 }
