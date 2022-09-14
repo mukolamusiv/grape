@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Lessons;
+use App\Models\Question;
 use App\Models\Topic;
 use App\Models\User;
 use App\Models\UserLessons;
@@ -377,12 +378,17 @@ class LessonsController extends Controller
 
 
     public function audit_answer(Request $request, $question_id){
+        $question = Question::find($question_id);
         return response(true);
     }
 
     public function check_video($lesson_id){
-         $lesson = UserLessons::where('lesson_id','=',$lesson_id)->get()->first();
+         $lesson = UserLessons::where(['lesson_id'=>$lesson_id,'user_id'=>1])->get()->first();
          $lesson->check_video = true;
+         $user = User::find(1);
+         $user->water = $user->water+5;
+         $user->lumen = $user->lumen+6;
+         $user->save();
          return response(['water'=>5,'lumen'=>6]);
     }
 }
