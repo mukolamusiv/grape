@@ -384,12 +384,26 @@ class LessonsController extends Controller
 
     public function check_video($lesson_id){
          $lesson = UserLessons::where(['lesson_id'=>$lesson_id,'user_id'=>1])->get();
-//         $lesson = $lesson->first();
-//         $lesson->check_video = true;
-//         $user = User::find(1);
-//         $user->water = $user->water+5;
-//         $user->lumen = $user->lumen+6;
-//         $user->save();
+         if($lesson->isEmpty()){
+             $data_lesson = Lessons::find($lesson_id);
+             $lesson = new UserLessons();
+             $lesson->lesson_id = $lesson_id;
+             $lesson->topic_id = $data_lesson->topic_id;
+             $lesson->user_id = 1;
+             $lesson->check_video = true;
+             $lesson->save();
+             $user = User::find(1);
+             $user->water = $user->water+5;
+             $user->lumen = $user->lumen+6;
+             $user->save();
+         }else{
+             $lesson = $lesson->first();
+             $lesson->check_video = true;
+             $user = User::find(1);
+             $user->water = $user->water+5;
+             $user->lumen = $user->lumen+6;
+             $user->save();
+         }
          return response($lesson);
     }
 }
