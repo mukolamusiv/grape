@@ -406,4 +406,30 @@ class LessonsController extends Controller
          }
          return response(['water'=>10,'lumen'=>15]);
     }
+
+
+    public function check_video_false($lesson_id){
+        $lesson = UserLessons::where(['lesson_id'=>$lesson_id,'user_id'=>1])->get();
+        if($lesson->isEmpty()){
+            $data_lesson = Lessons::find($lesson_id);
+            $lesson = new UserLessons();
+            $lesson->lesson_id = $lesson_id;
+            $lesson->topic_id = $data_lesson->topic_id;
+            $lesson->user_id = 1;
+            $lesson->check_video = false;
+            $lesson->save();
+            //$user = User::find(1);
+            //$user->water = $user->water+5;
+            //$user->lumen = $user->lumen+6;
+            //$user->save();
+        }else{
+            $lesson = $lesson->first();
+            $lesson->check_video = false;
+            $user = User::find(1);
+            $user->water = $user->water+5;
+            $user->lumen = $user->lumen+6;
+            $user->save();
+        }
+        return response(['water'=>10,'lumen'=>15]);
+    }
 }

@@ -78,6 +78,7 @@ Route::put('start-lesson/{id}','\App\Http\Controllers\API\LessonsController@stop
 Route::put('audit_answer/{question_id}','\App\Http\Controllers\API\LessonsController@audit_answer');
 Route::put('audit_pair/{pair_id}','\App\Http\Controllers\API\LessonsController@audit_answer');
 Route::put('check_video/{lesson_id}','\App\Http\Controllers\API\LessonsController@check_video');
+Route::put('check_video_false/{lesson_id}','\App\Http\Controllers\API\LessonsController@check_video_false');
 
 
 
