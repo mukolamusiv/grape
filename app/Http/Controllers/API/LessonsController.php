@@ -428,6 +428,7 @@ class LessonsController extends Controller
         }else{
             $lesson = $lesson->first();
             $lesson->check_video = false;
+            $lesson->save();
             $user = User::find(1);
             $user->water = $user->water+5;
             $user->lumen = $user->lumen+6;
