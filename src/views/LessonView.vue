@@ -37,8 +37,9 @@
       </div>
     </section>
     <section class="lesson-content" v-if="store.ui.lessonTab === 'video'">
-      <div class="player timeline-hidden" v-if="data.lesson.attachment[1]">
+      <div class="player" v-if="data.lesson.attachment[1]" :class="{'timeline-hidden' : !data.lesson.check_video}">
         <video
+          @ended="videoViewed()"
           controls
           preload="auto"
           controlsList="nodownload"
@@ -80,6 +81,21 @@ const getLesson = function () {
 
 
   })
+}
+const videoViewedSet = function () {
+  axios({
+    method: 'PUT',
+    url: `/api/check_video/${route.params.id}`,
+  }).then(function (response) {
+    console.log(response.data)
+    getLesson()
+  })
+}
+const videoViewed = function () {
+  if(!data.lesson.check_video){
+    videoViewedSet()
+    console.log('end')
+  }
 }
 getLesson()
 </script>

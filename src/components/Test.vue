@@ -3,7 +3,7 @@
     <div class="test">
       <div class="close">
         <span class="test-number" @click="data.questionNamber++">
-          Питання {{data.questionNamber + 1}} / 10
+          Питання {{data.questionNamber + 1}} / {{data.countQuestions}}
         </span>
         <span class="material-icons c-pointer cancel" @click="store.ui.lessonTab = 'video'">disabled_by_default</span>
       </div>
@@ -11,7 +11,7 @@
         Скільки є Святих Тайнств?
       </div>
       <form v-if="data.question">
-        <label v-for="(answer) in data.question.answer" v-bind:key="answer.id">
+        <label v-for="(answer) in data.question.answer" v-bind:key="answer.id" :class="{ selected: answer.id ===  data.answerID}">
           <input type="radio" name="answer" :value="answer.id" v-model="data.answerID">
           <span>{{answer.text}}</span>
         </label>
@@ -34,6 +34,7 @@ const props = defineProps({
   questions: null
 })
 const data = reactive({
+  countQuestions: props.questions.length,
   questionNamber: 0,
   question: props.questions[0],
   answerID: null
@@ -90,10 +91,12 @@ form{
   flex-direction: column;
   padding: 0 16px 16px 16px;
   input[type="radio"] {
+    display: none;
     transform: scale(1.2);
     margin: 0 8px;
   }
   label{
+    cursor: pointer;
     display: flex;
     align-items: center;
     outline: 2px solid #e6e6e6;
@@ -102,12 +105,12 @@ form{
     border-radius: 5px;
     font-size: 1.2rem;
   }
-  label:hover{
-    outline-color: #5186FF;
-  }
   .submit-panel{
     justify-content: flex-end;
   }
+}
+.selected{
+  outline-color: #5186FF;
 }
 @media (max-width: 575.98px) {
   .btn{
