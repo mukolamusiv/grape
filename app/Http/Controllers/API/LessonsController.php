@@ -31,6 +31,7 @@ class LessonsController extends Controller
             $return->put('created_at', $lesson->created_at);
             $return->put('updated_at', $lesson->updated_at);
             $return->put('topic_id', $lesson->topic_id);
+            $return->put('data',$lesson);
             if($lesson->complete){
                 $return->put('status', 'done');
             }else{
@@ -57,6 +58,7 @@ class LessonsController extends Controller
             $return->put('title', $data->title);
             $return->put('description', $data->description);
             $return->put('text', $data->text);
+            $return->put('data',$lesson);
             $return->put('created_at', $data->created_at);
             $return->put('updated_at', $data->updated_at);
             $return->put('topic_id', $data->topic_id);
@@ -405,7 +407,7 @@ class LessonsController extends Controller
              $user->lumen = $user->lumen+6;
              $user->save();
          }
-         return response(['water'=>10,'lumen'=>15,'lesson'=>$lesson]);
+         return response(['water'=>10,'lumen'=>15]);
     }
 
 
@@ -432,6 +434,6 @@ class LessonsController extends Controller
             $user->lumen = $user->lumen+6;
             $user->save();
         }
-        return response(['water'=>10,'lumen'=>15,'lesson'=>$lesson]);
+        return response(['water'=>10,'lumen'=>15]);
     }
 }
