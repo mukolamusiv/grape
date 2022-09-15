@@ -398,8 +398,6 @@ class LessonsController extends Controller
              $user->save();
          }else{
              $lesson = $lesson->first();
-//             $data = UserLessons::find($lesson->id);
-//             $data->check_video = true;
              $lesson->check_video = true;
              $lesson->save();
              $user = User::find(1);
@@ -407,7 +405,7 @@ class LessonsController extends Controller
              $user->lumen = $user->lumen+6;
              $user->save();
          }
-         return response(['water'=>10,'lumen'=>15]);
+         return response(['water'=>10,'lumen'=>15,'lesson'=>$lesson]);
     }
 
 
@@ -434,6 +432,6 @@ class LessonsController extends Controller
             $user->lumen = $user->lumen+6;
             $user->save();
         }
-        return response(['water'=>10,'lumen'=>15]);
+        return response(['water'=>10,'lumen'=>15,'lesson'=>$lesson]);
     }
 }
