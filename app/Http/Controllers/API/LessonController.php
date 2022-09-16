@@ -56,6 +56,9 @@ class LessonController extends Controller
     }
 
     public function list_tests($lesson_id){
-
+        $lesson = Lessons::find($lesson_id);
+        $data = collect();
+        $data->put('question',$lesson->question->count());
+        return response($data);
     }
 }
