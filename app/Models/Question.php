@@ -12,4 +12,8 @@ class Question extends Model
     public function answer(){
         return $this->hasMany(Answer::class,'question_id');
     }
+
+    public function lesson(){
+        return $this->hasOne(Lessons::class,'id','lesson_id')->with('question');
+    }
 }

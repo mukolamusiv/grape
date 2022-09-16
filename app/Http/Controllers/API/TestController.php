@@ -8,6 +8,8 @@ use App\Http\Requests\Test\QuestionRequest;
 use App\Models\Answer;
 use App\Models\Question;
 use App\Models\QuestionLessonsAnswer;
+use App\Models\User;
+use App\Models\UserLessons;
 use Illuminate\Http\Request;
 
 class TestController extends Controller
@@ -22,17 +24,22 @@ class TestController extends Controller
             $data->answer_id = $questionRequest->input('answer_id');
             $data->reply = true;
             $data->save();
-            return response('true');
+            $count = $question->lesson->question->count();
+            $water = UserLessons::where(['lesson_id'=>$question->lesson->id,'user_id'=>1])->get()->first()->water/2;
+            $water = $water/$count;
+            $user = User::find(1);
+            $user->water = $user->water+$water;
+            $user->save();
+            return response(['water'=>$water]);
         }else{
             $data = new QuestionLessonsAnswer();
             $data->question_id = $question_id;
             $data->user_id = 1;
             $data->answer_id = $questionRequest->input('answer_id');
-            $data->reply = true;
+            $data->reply = false;
             $data->save();
             return response('not true');
         }
-        return response($answer);
     }
 
     public function pair(PairRequest $pairRequest){
