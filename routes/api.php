@@ -61,7 +61,7 @@ Route::post('check-email','\App\Http\Controllers\API\UserController@check');
 Route::get('topics-active','\App\Http\Controllers\API\LessonsController@topics_active');
 Route::get('topics','\App\Http\Controllers\API\LessonsController@topics');
 Route::get('topics-done','\App\Http\Controllers\API\LessonsController@topics_done');
-Route::get('lesson/{id}','\App\Http\Controllers\API\LessonsController@lesson');
+//Route::get('lesson/{id}','\App\Http\Controllers\API\LessonsController@lesson');
 Route::get('topic/{id}','\App\Http\Controllers\API\LessonsController@topic');
 
 
@@ -82,5 +82,11 @@ Route::put('check_video_false/{lesson_id}','\App\Http\Controllers\API\LessonsCon
 
 
 
+
+////////////////////////////////////////////////////////////////////////////////////
+///
+
+Route::get('lesson/{lesson_id}','\App\Http\Controllers\API\LessonController@lesson');
+Route::get('lesson-video/{lesson_id}','\App\Http\Controllers\API\LessonController@video');
 
 //Auth::routes();
