@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Find_a_Pair;
 use App\Models\Lessons;
+use App\Models\Question;
 use App\Models\UserLessons;
 use Illuminate\Http\Request;
 
@@ -31,7 +33,21 @@ class LessonController extends Controller
         return response($lesson->attachment->first());
     }
 
-    public function tests($lesson_id){
+    public function question($lesson_id){
+        $question = Question::with('answer')->where(['lesson_id'=>$lesson_id])->get();
+        return response($question);
+    }
+
+    /**
+     * @param $lesson_id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
+    public function pair($lesson_id){
+        $pair = Find_a_Pair::with('data')->where(['lesson_id'=>$lesson_id])->get();
+        return response($pair);
+    }
+
+    public function crossword($lesson_id){
 
     }
 

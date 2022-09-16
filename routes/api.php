@@ -88,5 +88,13 @@ Route::put('check_video_false/{lesson_id}','\App\Http\Controllers\API\LessonsCon
 
 Route::get('lesson/{lesson_id}','\App\Http\Controllers\API\LessonController@lesson');
 Route::get('lesson-video/{lesson_id}','\App\Http\Controllers\API\LessonController@video');
+Route::get('lesson-question/{lesson_id}','\App\Http\Controllers\API\LessonController@question');
+Route::get('lesson-pair/{lesson_id}','\App\Http\Controllers\API\LessonController@pair');
+Route::get('lesson-crossword/{lesson_id}','\App\Http\Controllers\API\LessonController@crossword');
+Route::get('lesson-tests/{lesson_id}','\App\Http\Controllers\API\LessonController@list_tests');
+Route::get('lesson-check-video/{lesson_id}','\App\Http\Controllers\API\LessonController@check_video');
 
+
+Route::post('test-question/{question_id}','\App\Http\Controllers\API\TestController@question');
+Route::post('test-pair/{pair_id}','\App\Http\Controllers\API\TestController@pair');
 //Auth::routes();

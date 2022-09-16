@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginUserRequest;
+use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -24,25 +26,25 @@ class AuthController extends Controller
      * @param Request $request
      * @return User
      */
-    public function register(Request $request)
+    public function register(UserRequest $request)
     {
-        // Validate request data
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'surname' => 'required|string|max:255',
-            'email' => 'required|email|unique:users|max:255',
-            'password' => 'required|min:10',
-            'birthday'=> 'max:50',
-        ]);
-        // Return errors if validation error occur.
-        if ($validator->fails()) {
-            $errors = $validator->errors();
-            return response()->json([
-                'error' => $errors
-            ], 400);
-        }
+//        // Validate request data
+//        $validator = Validator::make($request->all(), [
+//            'name' => 'required|string|max:255',
+//            'surname' => 'required|string|max:255',
+//            'email' => 'required|email|unique:users|max:255',
+//            'password' => 'required|min:10',
+//            'birthday'=> 'max:50',
+//        ]);
+//        // Return errors if validation error occur.
+//        if ($validator->fails()) {
+//            $errors = $validator->errors();
+//            return response()->json([
+//                'error' => $errors
+//            ], 400);
+//        }
         // Check if validation pass then create user and auth token. Return the auth token
-        if ($validator->passes()) {
+//        if ($request->passes()) {
             $user = User::create([
                 'name'     => $request->name,
                 'surname'  => $request->surname,
@@ -56,7 +58,7 @@ class AuthController extends Controller
                 'access_token' => $token,
                 'token_type' => 'Bearer',
             ]);
-        }
+//        }
     }
 
 
@@ -64,7 +66,7 @@ class AuthController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login(Request $request)
+    public function login(LoginUserRequest $request)
     {
         if (!Auth::attempt($request->only('email', 'password'))) {
             return response()->json([
