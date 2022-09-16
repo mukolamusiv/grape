@@ -309,14 +309,14 @@ class LessonsController extends Controller
 
     }
 
-//    public function check_topic($id){
-//        $topic = UserTopic::where(['user_id'=>1,'topic_id'=>$id])->get()->first();
-//        if($topic->complete){
-//            return response($topic->complete);
-//        }else{
-//            return response($topic->complete);
-//        }
-//    }
+    public function check_topic($id){
+        $topic = UserTopic::where(['user_id'=>1,'topic_id'=>$id])->get()->first();
+        if($topic->complete){
+            return response($topic->complete);
+        }else{
+            return response($topic->complete);
+        }
+    }
 
     public function check_lesson($id){
 
