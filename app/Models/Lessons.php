@@ -63,6 +63,9 @@ class Lessons extends Model
         return $this->hasMany(Question::class,'lesson_id')->with('answer');
     }
 
+    public function find_to_pair(){
+        return $this->hasMany(Find_a_Pair::class, 'lesson_id')->with('data');
+    }
 //    public function audio()
 //    {
 //        return $this->hasOne(Attachment::class, 'id', 'record_audio')->withDefault();

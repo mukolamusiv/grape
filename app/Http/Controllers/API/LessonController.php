@@ -59,6 +59,7 @@ class LessonController extends Controller
         $lesson = Lessons::find($lesson_id);
         $data = collect();
         $data->put('question',$lesson->question->count());
+        $data->put('find_to_pair',$lesson->find_to_pair->count());
         return response($data);
     }
 }
