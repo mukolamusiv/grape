@@ -9,7 +9,6 @@ class Question extends Model
 {
     use HasFactory;
 
-
     public function answer(){
         return $this->hasMany(Answer::class,'question_id');
     }

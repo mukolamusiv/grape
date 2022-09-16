@@ -18,8 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('find_a_pair');
             $table->string('title');
             $table->string('description');
-            $table->string('image');
-            $table->string('text');
+            $table->string('image')->nullable();
+            $table->string('text')->nullable();
             $table->unsignedBigInteger('pair_id')->nullable();
             $table->timestamps();
 
