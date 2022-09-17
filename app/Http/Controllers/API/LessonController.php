@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Find_a_Pair;
 use App\Models\Lessons;
 use App\Models\Question;
+use App\Models\User;
 use App\Models\UserLessons;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,9 @@ class LessonController extends Controller
 {
     public function lesson($lesson_id){
         $lesson = Lessons::findOrFail($lesson_id);
+        $topic = $lesson->topic;
         $lesson = collect($lesson);
+        $lesson->put('topic', $topic);
         $lessonUser = UserLessons::with('lessons')->where(['lesson_id'=>$lesson_id,'user_id'=>1])->get();
         if($lessonUser->isNotEmpty()){
             $lessonUser = $lessonUser->first();
@@ -52,7 +55,29 @@ class LessonController extends Controller
     }
 
     public function check_video($lesson_id){
-
+        $lesson = UserLessons::where(['lesson_id'=>$lesson_id,'user_id'=>1])->get();
+        if($lesson->isEmpty()){
+            $data_lesson = Lessons::find($lesson_id);
+            $lesson = new UserLessons();
+            $lesson->lesson_id = $lesson_id;
+            $lesson->topic_id = $data_lesson->topic_id;
+            $lesson->user_id = 1;
+            $lesson->check_video = true;
+            $lesson->save();
+            $user = User::find(1);
+            $user->water = $user->water+5;
+            $user->lumen = $user->lumen+6;
+            $user->save();
+        }else{
+            $lesson = $lesson->first();
+            $lesson->check_video = true;
+            $lesson->save();
+            $user = User::find(1);
+            $user->water = $user->water+5;
+            $user->lumen = $user->lumen+6;
+            $user->save();
+        }
+        return response(['water'=>10,'lumen'=>15]);
     }
 
     public function list_tests($lesson_id){
