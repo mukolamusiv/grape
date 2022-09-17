@@ -16,7 +16,7 @@ class LessonController extends Controller
         $lesson = Lessons::findOrFail($lesson_id);
         $topic = $lesson->topic;
         $lesson = collect($lesson);
-        $lesson->put('topic', $topic);
+        $lesson->put('topic_title', $topic->title);
         $lessonUser = UserLessons::with('lessons')->where(['lesson_id'=>$lesson_id,'user_id'=>1])->get();
         if($lessonUser->isNotEmpty()){
             $lessonUser = $lessonUser->first();
@@ -29,8 +29,8 @@ class LessonController extends Controller
         }else{
             $lesson->put('complete','view');
         }
-
         $lesson->forget('video');
+        $lesson->forget('serial');
         $lesson->forget('record_audio');
         return response($lesson);
     }
