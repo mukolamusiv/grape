@@ -88,7 +88,11 @@ class LessonController extends Controller
             return response('Ще не переглядали');
         }
         $lesson = $lesson->first();
-        return response($lesson->check_video);
+        if($lesson->check_video){
+            return response($lesson->check_video);
+        }else{
+            return response('Ще не переглядали');
+        }
     }
 
     public function list_tests($lesson_id){
