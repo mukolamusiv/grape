@@ -82,6 +82,15 @@ class LessonController extends Controller
         return response(['water'=>10,'lumen'=>15]);
     }
 
+    public function status_video($lesson_id){
+        $lesson = UserLessons::where(['lesson_id'=>$lesson_id,'user_id'=>1])->get();
+        if($lesson->isEmpty()){
+            return response('Ще не переглядали');
+        }
+        $lesson = $lesson->first();
+        return response($lesson->check_video);
+    }
+
     public function list_tests($lesson_id){
         $lesson = Lessons::find($lesson_id);
         $data = collect();
