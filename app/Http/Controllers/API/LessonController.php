@@ -22,11 +22,11 @@ class LessonController extends Controller
         if($lessonUser->isNotEmpty()){
             $lessonUser = $lessonUser->first();
             if($lessonUser->complete){
-                $lesson->put('complete','done');
+                $lesson->put('lesson_complete','done');
             }else{
-                $lesson->put('complete','active');
+                $lesson->put('lesson_complete','active');
             }
-            $lesson->put('video_view',$lessonUser->check_video);
+            $lesson->put('video_complete',$lessonUser->check_video);
         }else{
             $lesson->put('complete','view');
         }
