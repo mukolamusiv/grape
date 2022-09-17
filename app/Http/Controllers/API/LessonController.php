@@ -33,6 +33,7 @@ class LessonController extends Controller
 
         $lesson->put('video_url',$video_url);
         $lesson->forget('video');
+        $lesson->forget('attachment');
         $lesson->forget('topic');
         $lesson->forget('serial');
         $lesson->forget('record_audio');
