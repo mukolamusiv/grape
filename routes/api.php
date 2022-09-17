@@ -87,7 +87,7 @@ Route::put('stop-topic/{id}','\App\Http\Controllers\API\LessonsController@stop_t
 ///
 
 Route::get('lesson/{lesson_id}','\App\Http\Controllers\API\LessonController@lesson');
-Route::get('lesson-video/{lesson_id}','\App\Http\Controllers\API\LessonController@video');
+//Route::get('lesson-video/{lesson_id}','\App\Http\Controllers\API\LessonController@video');
 Route::get('lesson-question/{lesson_id}','\App\Http\Controllers\API\LessonController@question');
 Route::get('lesson-pair/{lesson_id}','\App\Http\Controllers\API\LessonController@pair');
 Route::get('lesson-crossword/{lesson_id}','\App\Http\Controllers\API\LessonController@crossword');
