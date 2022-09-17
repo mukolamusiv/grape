@@ -70,15 +70,15 @@ Route::get('check-topic/{id}','\App\Http\Controllers\API\LessonsController@check
 
 Route::put('start-topic/{id}','\App\Http\Controllers\API\LessonsController@start_topic');
 Route::put('stop-topic/{id}','\App\Http\Controllers\API\LessonsController@stop_topic');
-Route::put('start-lesson/{id}','\App\Http\Controllers\API\LessonsController@start_lesson');
-Route::put('start-lesson/{id}','\App\Http\Controllers\API\LessonsController@stop_lesson');
+//Route::put('start-lesson/{id}','\App\Http\Controllers\API\LessonsController@start_lesson');
+//Route::put('start-lesson/{id}','\App\Http\Controllers\API\LessonsController@stop_lesson');
 
 
 
-Route::put('audit_answer/{question_id}','\App\Http\Controllers\API\LessonsController@audit_answer');
-Route::put('audit_pair/{pair_id}','\App\Http\Controllers\API\LessonsController@audit_answer');
-Route::put('check_video/{lesson_id}','\App\Http\Controllers\API\LessonsController@check_video');
-Route::put('check_video_false/{lesson_id}','\App\Http\Controllers\API\LessonsController@check_video_false');
+//Route::put('audit_answer/{question_id}','\App\Http\Controllers\API\LessonsController@audit_answer');
+//Route::put('audit_pair/{pair_id}','\App\Http\Controllers\API\LessonsController@audit_answer');
+//Route::put('check_video/{lesson_id}','\App\Http\Controllers\API\LessonsController@check_video');
+//Route::put('check_video_false/{lesson_id}','\App\Http\Controllers\API\LessonsController@check_video_false');
 
 
 
