@@ -15,6 +15,7 @@ class LessonController extends Controller
     public function lesson($lesson_id){
         $lesson = Lessons::findOrFail($lesson_id);
         $topic = $lesson->topic;
+        $video_url = $lesson->attachment->first()->url;
         $lesson = collect($lesson);
         $lesson->put('topic_title', $topic->title);
         $lessonUser = UserLessons::with('lessons')->where(['lesson_id'=>$lesson_id,'user_id'=>1])->get();
@@ -30,7 +31,7 @@ class LessonController extends Controller
             $lesson->put('complete','view');
         }
 
-        $lesson->put('video_url',$lesson->attachment->first()->url);
+        $lesson->put('video_url',$video_url);
         $lesson->forget('video');
         $lesson->forget('topic');
         $lesson->forget('serial');
