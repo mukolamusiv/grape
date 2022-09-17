@@ -28,6 +28,8 @@ class LessonController extends Controller
         }else{
             $lesson->put('status','view');
         }
+        $lesson->forget('video');
+        $lesson->forget('record_audio');
         return response($lesson);
     }
 
