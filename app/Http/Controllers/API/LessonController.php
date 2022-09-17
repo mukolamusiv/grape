@@ -21,13 +21,15 @@ class LessonController extends Controller
         if($lessonUser->isNotEmpty()){
             $lessonUser = $lessonUser->first();
             if($lessonUser->complete){
-                $lesson->put('status','done');
+                $lesson->put('complete','done');
             }else{
-                $lesson->put('status','active');
+                $lesson->put('complete','active');
             }
+            $lesson->put('video_view',$lessonUser->check_video);
         }else{
-            $lesson->put('status','view');
+            $lesson->put('complete','view');
         }
+
         $lesson->forget('video');
         $lesson->forget('record_audio');
         return response($lesson);
