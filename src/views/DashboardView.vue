@@ -66,33 +66,21 @@ getTopics('topics', 'topics')
   }
 }
 #topics-active{
-  // .cuerse{
-  //   outline-color: #45d800;
-  // }
   .section-title h2{
-    // color: #45d800;
     background-color: #45d800;
     color: white;
   }
   background: #45d80014;
 }
 #topics-done{
-  // .cuerse{
-  //   outline-color: gray;
-  // }
   .section-title h2{
-    // color: gray;
     background-color: gray;
     color: white;
   }
   background: #00000014;
 }
 #topics{
-  // .cuerse{
-  //   outline-color: #5186ff;
-  // }
   .section-title h2{
-    // color: #5186ff;
     background-color: #5186ff;
     color: white;
   }

@@ -4,46 +4,51 @@
       <div class="bread-crumbs">
         <router-link :to="{ path: `/topic/${data.lesson.topic_id}`}">
           <span class="material-icons">reply</span>
-          <span>Тема: "{{data.lesson.topic.title.substring(0, 20)}}<span v-if="data.lesson.topic.title.length>20">..</span>"</span>
-
+          <span>Тема: "{{data.lesson.topic_title.substring(0, 20)}}<span v-if="data.lesson.topic_title.length>20">..</span>"</span>
         </router-link>
       </div>
       <div class="lesson-about">
         <div class="title">
           Урок: "{{data.lesson.title}}"
         </div>
-        <div class="lesson-structure" v-if="data.lesson.check_video">
+        <div class="lesson-structure" v-if="!data.lesson.video_complete">
           <a class="lesson-structure-item cl-done" href="#">
             <span class="material-icons lecture">movie</span>
             Відео-лекція
+            <span class="material-icons accept">task_alt</span>
           </a>
           <a class="lesson-structure-item" href="#" @click="store.ui.lessonTab = 'test'">
             <span class="material-icons test">quiz</span>
-            Тестування</a>
+            Тестування
+            <span class="material-icons accept">task_alt</span>
+          </a>
           <a class="lesson-structure-item" href="#">
             <span class="material-icons crossword">hive</span>
             Кросворд
+            <span class="material-icons accept">task_alt</span>
           </a>
           <a class="lesson-structure-item" href="#">
             <span class="material-icons coloring">palette</span>
             Розмальовка
+            <span class="material-icons accept">task_alt</span>
           </a>
         </div>
-        <div class="lesson-structure" v-if="!data.lesson.check_video">
+        <!-- <div class="lesson-structure" v-if="!data.lesson.check_video">
           <div class="lesson-message">
           Переглянь відео-лекцію, щоб розблокувати інші завдання уроку!
           </div>
-        </div>
+        </div> -->
       </div>
     </section>
     <section class="lesson-content" v-if="store.ui.lessonTab === 'video'">
-      <div class="player" v-if="data.lesson.attachment[1]" :class="{'timeline-hidden' : !data.lesson.check_video}">
+      <!-- <div class="player" v-if="data.video.url" :class="{'timeline-hidden' : !data.lesson.check_video}"> -->
+      <div class="player" v-if="data.lesson.video_url">
         <video
           @ended="videoViewed()"
           controls
           preload="auto"
           controlsList="nodownload"
-          :src="data.lesson.attachment[1].url">
+          :src="data.lesson.video_url">
               Your browser does not support the
               <code>audio</code> element.
         </video>
@@ -52,7 +57,7 @@
         {{data.lesson.description}}
       </div>
     </section>
-    <test v-if="store.ui.lessonTab === 'test'" :questions="data.lesson.tests.question" />
+    <test v-if="store.ui.lessonTab === 'test'"/>
   </main>
 </template>
 
@@ -62,8 +67,8 @@ import { useRoute } from 'vue-router'
 import axios from 'axios'
 import Test from '@/components/Test.vue'
 import { useStore } from '@/store'
-const { store } = useStore()
 
+const { store } = useStore()
 const route = useRoute()
 
 const data = reactive({
@@ -78,22 +83,19 @@ const getLesson = function () {
  }).then(function (response) {
    data.lesson = response.data
    console.log(response.data)
-
-
-  })
-}
-const videoViewedSet = function () {
-  axios({
-    method: 'PUT',
-    url: `/api/check_video/${route.params.id}`,
-  }).then(function (response) {
-    console.log(response.data)
-    getLesson()
-  })
+ })
 }
 const videoViewed = function () {
-  if(!data.lesson.check_video){
-    videoViewedSet()
+  if(!data.lesson.video_complete){
+    axios({
+      method: 'PUT',
+      url: `/api/check_video/${route.params.id}}`,
+      data: {}
+    }).then(function (response) {
+     data.lesson = response.data
+     console.log(response.data)
+   })
+
     console.log('end')
   }
 }
@@ -102,6 +104,10 @@ getLesson()
 
 <style lang="scss" scoped>
 @import '@/assets/styles/color-style.scss';
+.accept{
+  margin-left: 8px;
+  margin-right: 0!important;
+}
 .blackout{
  background: #192736b8;
 }
@@ -181,7 +187,7 @@ getLesson()
     font-size: 1.1rem;
     font-weight: bold;
     padding: 0px 4px;
-    margin: 0 8px;
+    margin: 8px;
     color: #556efe;
     .material-icons{
       margin-right: 8px;
@@ -280,6 +286,10 @@ getLesson()
   .player{
     padding: 0;
     margin-bottom: 32px;
+  }
+  .accept {
+    margin-left: auto;
+    margin-right: 0!important;
   }
 }
 </style>

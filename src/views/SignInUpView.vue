@@ -157,7 +157,6 @@ h3{
   height: 100vh;
   width: 100%;
   overflow: scroll;
-  // background: linear-gradient(#ffdc76, #c58b67);
   background: linear-gradient(#7e78ff, #c17e55);
   background-image: url(@/assets/img/login-bg.jpg);
 }

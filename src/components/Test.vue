@@ -1,5 +1,5 @@
 <template>
-  <section class="wrap">
+  <section class="wrap" v-if="data.questions">
     <div class="test">
       <div class="close">
         <span class="test-number" @click="data.questionNamber++">
@@ -10,7 +10,7 @@
       <div class="question">
         Скільки є Святих Тайнств?
       </div>
-      <form v-if="data.question">
+      <form v-if="data.question" @submit.prevent="sendAnswer()">
         <label v-for="(answer) in data.question.answer" v-bind:key="answer.id" :class="{ selected: answer.id ===  data.answerID}">
           <input type="radio" name="answer" :value="answer.id" v-model="data.answerID">
           <span>{{answer.text}}</span>
@@ -27,22 +27,49 @@
 </template>
 
 <script setup>
-import { reactive, watch, defineProps } from 'vue'
+import { reactive, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import axios from 'axios'
 import { useStore } from '@/store'
+
 const { store } = useStore()
-const props = defineProps({
-  questions: null
-})
+const route = useRoute()
+
 const data = reactive({
-  countQuestions: props.questions.length,
+  countQuestions: null,
   questionNamber: 0,
-  question: props.questions[0],
+  questions: null,
+  question: null,
   answerID: null
 })
+const getQuestion = function () {
+  axios({
+    method: 'GET',
+    url: `/api/lesson-question/${route.params.id}}`,
+    data: {}
+ }).then(function (response) {
+   data.questions = response.data
+   data.countQuestions = data.questions.length
+   data.question = data.questions[data.questionNamber]
+   console.log(response.data)
+ })
+}
+const sendAnswer = function () {
+  axios({
+    method: 'POST',
+    url: `api/test-question/${data.question.id}}`,
+    data: {answer_id: data.answerID}
+ }).then(function (response) {
 
+   console.log(response.data)
+ })
+}
 watch( () => data.questionNamber, () => {
-    data.question = props.questions[data.questionNamber]
+    if(data.questions)
+    data.question = data.questions[data.questionNamber]
 })
+
+getQuestion()
 </script>
 
 <style scoped lang="scss">
