@@ -32,6 +32,7 @@ class LessonController extends Controller
         }
 
         $lesson->put('video_url',$video_url);
+        $lesson->put('test_complete',false);
         $lesson->forget('video');
         $lesson->forget('attachment');
         $lesson->forget('topic');
