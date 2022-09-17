@@ -30,6 +30,7 @@ class LessonController extends Controller
             $lesson->put('complete','view');
         }
         $lesson->forget('video');
+        $lesson->forget('topic');
         $lesson->forget('serial');
         $lesson->forget('record_audio');
         return response($lesson);
