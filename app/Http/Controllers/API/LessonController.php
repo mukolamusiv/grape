@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Find_a_Pair;
 use App\Models\Lessons;
 use App\Models\Question;
+use App\Models\QuestionLessonsAnswer;
 use App\Models\User;
 use App\Models\UserLessons;
 use Illuminate\Http\Request;
@@ -15,6 +16,7 @@ class LessonController extends Controller
     public function lesson($lesson_id){
         $lesson = Lessons::findOrFail($lesson_id);
         $topic = $lesson->topic;
+        $question = $lesson->question;
         $video_url = $lesson->attachment->first()->url;
         $lesson = collect($lesson);
         $lesson->put('topic_title', $topic->title);
@@ -27,6 +29,18 @@ class LessonController extends Controller
                 $lesson->put('lesson_complete','active');
             }
             $lesson->put('video_complete',$lessonUser->check_video);
+            $lesson->put('question_complete',$this->question_check($question));
+
+
+
+
+            $lesson->forget('video');
+            $lesson->forget('attachment');
+            $lesson->forget('topic');
+            $lesson->forget('serial');
+            $lesson->forget('record_audio');
+            $lesson->forget('question');
+
         }else{
             $lesson->put('lesson_complete','view');
             $lesson->put('video_complete',false);
@@ -43,6 +57,7 @@ class LessonController extends Controller
             $lesson->forget('topic');
             $lesson->forget('serial');
             $lesson->forget('record_audio');
+            $lesson->forget('question');
         }
         return response($lesson);
     }
@@ -117,5 +132,18 @@ class LessonController extends Controller
         $data->put('question',$lesson->question->count());
         $data->put('find_to_pair',$lesson->find_to_pair->count());
         return response($data);
+    }
+
+
+    private function question_check($question){
+        //$lesson_id = $question;
+        foreach ($question as $qu){
+            $answer = collect(QuestionLessonsAnswer::where(['question_id'=>$qu->id,'user_id'=>1,'reply'=>true])->get());
+            if($answer->count() < $question->count()){
+                return false;
+            }
+        }
+        //$count_tests = $question->answer->count();
+        return true;
     }
 }
