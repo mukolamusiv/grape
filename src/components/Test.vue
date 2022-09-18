@@ -43,9 +43,10 @@ const data = reactive({
   answerID: null
 })
 const getQuestion = function () {
+  console.log(route.params.id)
   axios({
     method: 'GET',
-    url: `/api/lesson-question/${route.params.id}}`,
+    url: `/api/lesson-question/${route.params.id}`,
     data: {}
  }).then(function (response) {
    data.questions = response.data
@@ -57,7 +58,7 @@ const getQuestion = function () {
 const sendAnswer = function () {
   axios({
     method: 'POST',
-    url: `api/test-question/${data.question.id}}`,
+    url: `api/test-question/${data.question.id}`,
     data: {answer_id: data.answerID}
  }).then(function (response) {
 

@@ -11,7 +11,7 @@
         <div class="title">
           Урок: "{{data.lesson.title}}"
         </div>
-        <div class="lesson-structure" v-if="!data.lesson.video_complete">
+        <div class="lesson-structure" v-if="data.lesson.video_complete">
           <a class="lesson-structure-item cl-done" href="#">
             <span class="material-icons lecture">movie</span>
             Відео-лекція
@@ -42,7 +42,7 @@
     </section>
     <section class="lesson-content" v-if="store.ui.lessonTab === 'video'">
       <!-- <div class="player" v-if="data.video.url" :class="{'timeline-hidden' : !data.lesson.check_video}"> -->
-      <div class="player" v-if="data.lesson.video_url">
+      <div class="player" v-if="data.lesson.video_url" :class="{'timeline-hidden' : data.lesson.video_complete}">
         <video
           @ended="videoViewed()"
           controls
@@ -78,7 +78,7 @@ store.ui.lessonTab = 'video'
 const getLesson = function () {
   axios({
     method: 'GET',
-    url: `/api/lesson/${route.params.id}}`,
+    url: `/api/lesson/${route.params.id}`,
     data: {}
  }).then(function (response) {
    data.lesson = response.data
@@ -89,15 +89,12 @@ const videoViewed = function () {
   if(!data.lesson.video_complete){
     axios({
       method: 'PUT',
-      url: `/api/check_video/${route.params.id}}`,
+      url: `/api/lesson-check-video/${route.params.id}`,
       data: {}
-    }).then(function (response) {
-     data.lesson = response.data
-     console.log(response.data)
-   })
-
-    console.log('end')
-  }
+    }).then(function () {
+      getLesson()
+    })
+ }
 }
 getLesson()
 </script>
