@@ -19,7 +19,7 @@ class TestController extends Controller
         $answer = Answer::findOrFail($questionRequest->input('answer_id'));
         $data = QuestionLessonsAnswer::where(['answer_id'=>$questionRequest->input('answer_id'),'user_id'=>1,'question_id'=>$question_id])->get();
         if($data->isNotEmpty()){
-            $data = $data->first();
+            $data = $data->last();
             if($data->reply){
                 return response('Ви вже відповідали на це запитання');
             }
