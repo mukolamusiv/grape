@@ -30,15 +30,20 @@ class LessonController extends Controller
         }else{
             $lesson->put('lesson_complete','view');
             $lesson->put('video_complete',false);
-        }
-        $lesson->put('video_url',$video_url);
-        $lesson->put('test_complete',false);
 
-        $lesson->forget('video');
-        $lesson->forget('attachment');
-        $lesson->forget('topic');
-        $lesson->forget('serial');
-        $lesson->forget('record_audio');
+
+            $lesson->put('video_url',$video_url);
+            $lesson->put('question_complete',false);
+            $lesson->put('crossword_complete',false);
+            $lesson->put('coloring_page_complete',false);
+            $lesson->put('find_to_pair_complete',false);
+
+            $lesson->forget('video');
+            $lesson->forget('attachment');
+            $lesson->forget('topic');
+            $lesson->forget('serial');
+            $lesson->forget('record_audio');
+        }
         return response($lesson);
     }
 
@@ -74,6 +79,8 @@ class LessonController extends Controller
             $lesson->topic_id = $data_lesson->topic_id;
             $lesson->user_id = 1;
             $lesson->check_video = true;
+            $lesson->water = 50;
+            $lesson->lumen = 70;
             $lesson->save();
             $user = User::find(1);
             $user->water = $user->water+5;
