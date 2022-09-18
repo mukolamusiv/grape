@@ -42,7 +42,7 @@
     </section>
     <section class="lesson-content" v-if="store.ui.lessonTab === 'video'">
       <!-- <div class="player" v-if="data.video.url" :class="{'timeline-hidden' : !data.lesson.check_video}"> -->
-      <div class="player" v-if="data.lesson.video_url" :class="{'timeline-hidden' : data.lesson.video_complete}">
+      <div class="player" v-if="data.lesson.video_url" :class="{'timeline-hidden' : !data.lesson.video_complete}">
         <video
           @ended="videoViewed()"
           controls
