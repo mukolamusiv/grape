@@ -28,9 +28,12 @@ class LessonController extends Controller
             }else{
                 $lesson->put('lesson_complete','active');
             }
+            $lesson->put('video_url',$video_url);
             $lesson->put('video_complete',$lessonUser->check_video);
             $lesson->put('question_complete',$this->question_check($question));
-
+            $lesson->put('crossword_complete', false);
+            $lesson->put('coloring_page_complete',false);
+            $lesson->put('find_to_pair_complete',false);
 
 
 
