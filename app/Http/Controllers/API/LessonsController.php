@@ -192,6 +192,7 @@ class LessonsController extends Controller
         $data->put('points',$lesson->points);
         $data->put('level',$lesson->level);
         $data->put('record_audio',$lesson->record_audio);
+        $data->put('completed',rand('0','1'));
         return $data;
     }
 
