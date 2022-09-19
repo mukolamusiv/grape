@@ -8,7 +8,7 @@
         <span class="material-icons c-pointer cancel" @click="store.ui.lessonTab = 'video'">disabled_by_default</span>
       </div>
       <div class="question">
-        Скільки є Святих Тайнств?
+        {{data.question.description}}
       </div>
       <form v-if="data.question">
         <label v-for="(answer) in data.question.answer" v-bind:key="answer.id" :class="{ selected: answer.id ===  data.answerID}">
