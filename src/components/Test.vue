@@ -10,16 +10,16 @@
       <div class="question">
         Скільки є Святих Тайнств?
       </div>
-      <form v-if="data.question" @submit.prevent="sendAnswer()">
+      <form v-if="data.question">
         <label v-for="(answer) in data.question.answer" v-bind:key="answer.id" :class="{ selected: answer.id ===  data.answerID}">
           <input type="radio" name="answer" :value="answer.id" v-model="data.answerID">
           <span>{{answer.text}}</span>
         </label>
-        <div class="submit-panel" v-if="!data.ui.wrongAnswer">
-          <button type="submit" class="btn">
+        <div class="submit-panel" v-if="!data.ui.wrongAnswer && data.answerID">
+          <div type="submit" class="btn" @click="sendAnswer()">
             <span class="material-icons">check</span>
             Надіслати відповідь
-          </button>
+          </div>
         </div>
       </form>
     </div>
@@ -73,7 +73,6 @@ const sendAnswer = function () {
      if(response.data === 'not true'){
        data.ui.wrongAnswer = true
      }
-     data.answerID = null
      console.log(response.data)
    })
   }
