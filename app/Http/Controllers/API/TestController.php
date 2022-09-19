@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\DTO\LessonDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Test\PairRequest;
 use App\Http\Requests\Test\QuestionRequest;
@@ -49,11 +50,23 @@ class TestController extends Controller
         }
     }
 
+
+
+    public function question_result($lesson_id){
+        $answers = QuestionLessonsAnswer::where(['user_id'=>1,'question_id'=>$lesson_id])->get();
+        $i = 0;
+        foreach ($answers as $answer){
+            if(!$answer->reply){
+                $i++;
+            }
+        }
+        return response(['all'=>$answers->count(),'true'=>$i]);
+    }
+
     public function pair(PairRequest $pairRequest){
 
     }
 
     public function crossword(){
-
     }
 }

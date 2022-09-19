@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\DTO\LessonDTO;
 use App\Http\Controllers\Controller;
 use App\Models\Find_a_Pair;
 use App\Models\Lessons;
@@ -14,55 +15,56 @@ use Illuminate\Http\Request;
 class LessonController extends Controller
 {
     public function lesson($lesson_id){
-        $lesson = Lessons::findOrFail($lesson_id);
-        $topic = $lesson->topic;
-        $question = $lesson->question;
-        $video_url = $lesson->attachment->first()->url;
-        $lesson = collect($lesson);
-        $lesson->put('topic_title', $topic->title);
-        $lessonUser = UserLessons::with('lessons')->where(['lesson_id'=>$lesson_id,'user_id'=>1])->get();
-        if($lessonUser->isNotEmpty()){
-            $lessonUser = $lessonUser->first();
-            if($lessonUser->complete){
-                $lesson->put('lesson_complete',true);
-            }else{
-                $lesson->put('lesson_complete','active');
-            }
-            $lesson->put('video_url',$video_url);
-            $lesson->put('video_complete',$lessonUser->check_video);
-            $lesson->put('question_complete',$this->question_check($question));
-            $lesson->put('crossword_complete', false);
-            $lesson->put('coloring_page_complete',false);
-            $lesson->put('find_to_pair_complete',false);
-
-
-
-            $lesson->forget('video');
-            $lesson->forget('attachment');
-            $lesson->forget('topic');
-            $lesson->forget('serial');
-            $lesson->forget('record_audio');
-            $lesson->forget('question');
-
-        }else{
-            $lesson->put('lesson_complete','view');
-            $lesson->put('video_complete',false);
-
-
-            $lesson->put('video_url',$video_url);
-            $lesson->put('question_complete',false);
-            $lesson->put('crossword_complete',false);
-            $lesson->put('coloring_page_complete',false);
-            $lesson->put('find_to_pair_complete',false);
-
-            $lesson->forget('video');
-            $lesson->forget('attachment');
-            $lesson->forget('topic');
-            $lesson->forget('serial');
-            $lesson->forget('record_audio');
-            $lesson->forget('question');
-        }
-        return response($lesson);
+//        $lesson = Lessons::findOrFail($lesson_id);
+//        $topic = $lesson->topic;
+//        $question = $lesson->question;
+//        $video_url = $lesson->attachment->first()->url;
+//        $lesson = collect($lesson);
+//        $lesson->put('topic_title', $topic->title);
+//        $lessonUser = UserLessons::with('lessons')->where(['lesson_id'=>$lesson_id,'user_id'=>1])->get();
+//        if($lessonUser->isNotEmpty()){
+//            $lessonUser = $lessonUser->first();
+//            if($lessonUser->complete){
+//                $lesson->put('lesson_complete',true);
+//            }else{
+//                $lesson->put('lesson_complete','active');
+//            }
+//            $lesson->put('video_url',$video_url);
+//            $lesson->put('video_complete',$lessonUser->check_video);
+//            $lesson->put('question_complete',$this->question_check($question));
+//            $lesson->put('crossword_complete', false);
+//            $lesson->put('coloring_page_complete',false);
+//            $lesson->put('find_to_pair_complete',false);
+//
+//
+//
+//            $lesson->forget('video');
+//            $lesson->forget('attachment');
+//            $lesson->forget('topic');
+//            $lesson->forget('serial');
+//            $lesson->forget('record_audio');
+//            $lesson->forget('question');
+//
+//        }else{
+//            $lesson->put('lesson_complete','view');
+//            $lesson->put('video_complete',false);
+//
+//
+//            $lesson->put('video_url',$video_url);
+//            $lesson->put('question_complete',false);
+//            $lesson->put('crossword_complete',false);
+//            $lesson->put('coloring_page_complete',false);
+//            $lesson->put('find_to_pair_complete',false);
+//
+//            $lesson->forget('video');
+//            $lesson->forget('attachment');
+//            $lesson->forget('topic');
+//            $lesson->forget('serial');
+//            $lesson->forget('record_audio');
+//            $lesson->forget('question');
+//        }
+        $lesson = new LessonDTO($lesson_id);
+        return response($lesson->getLesson());
     }
 
     public function video($lesson_id){
@@ -85,7 +87,8 @@ class LessonController extends Controller
     }
 
     public function crossword($lesson_id){
-
+        $data = new LessonDTO($lesson_id);
+        return response($data->getLesson());
     }
 
     public function check_video($lesson_id){
