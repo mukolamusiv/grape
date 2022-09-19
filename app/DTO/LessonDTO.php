@@ -65,7 +65,7 @@ class LessonDTO
         $this->topic_title = $this->lesson->topic->title;
         $this->lesson_completed = $this->active_lesson->complete;
         $this->video_url = $this->lesson->attachment->first()->url;
-        $this->video_complete = $this->active_lesson->check_video;
+        $this->video_completed = $this->active_lesson->check_video;
     }
 
     /**
