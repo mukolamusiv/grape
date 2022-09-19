@@ -22,7 +22,7 @@ class LessonDTO
     public bool $question_complete = false;
     public bool $crossword_complete = false;
     public bool $coloring_page_complete = false;
-    public bool $find_to_pair_complete = false;
+    public bool $find_couple = false;
     ///////////////////////////////////////////
 
     /**
