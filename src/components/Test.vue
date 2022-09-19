@@ -1,6 +1,6 @@
 <template>
-  <section class="wrap" v-if="data.questions">
-    <div class="test">
+  <section class="wrap" v-if="data.questions" @click="data.ui.wrongAnswer = false">
+    <div class="test animate__animated animate__zoomIn" :class="{'opacity' : data.ui.wrongAnswer}">
       <div class="close">
         <span class="test-number" @click="data.questionNamber++">
           Питання {{data.questionNamber + 1}} / {{data.countQuestions}}
@@ -15,13 +15,18 @@
           <input type="radio" name="answer" :value="answer.id" v-model="data.answerID">
           <span>{{answer.text}}</span>
         </label>
-        <div class="submit-panel">
+        <div class="submit-panel" v-if="!data.ui.wrongAnswer">
           <button type="submit" class="btn">
             <span class="material-icons">check</span>
             Надіслати відповідь
           </button>
         </div>
       </form>
+    </div>
+    <div class="wrong-answer animate__animated animate__bounceIn" v-if="data.ui.wrongAnswer">
+      <!-- <span class="material-icons">mood_bad</span> -->
+      <div class="message-wrong">:( Нажаль відповідь невірна!</div>
+      <img src="@/assets/img/sad.png" alt="Grape">
     </div>
   </section>
 </template>
@@ -40,7 +45,10 @@ const data = reactive({
   questionNamber: 0,
   questions: null,
   question: null,
-  answerID: null
+  answerID: null,
+  ui: {
+    wrongAnswer: false
+  }
 })
 const getQuestion = function () {
   console.log(route.params.id)
@@ -56,14 +64,19 @@ const getQuestion = function () {
  })
 }
 const sendAnswer = function () {
-  axios({
-    method: 'POST',
-    url: `api/test-question/${data.question.id}`,
-    data: {answer_id: data.answerID}
- }).then(function (response) {
-
-   console.log(response.data)
- })
+  if (data.answerID){
+    axios({
+      method: 'POST',
+      url: `api/test-question/${data.question.id}`,
+      data: {answer_id: data.answerID}
+   }).then(function (response) {
+     if(response.data === 'not true'){
+       data.ui.wrongAnswer = true
+     }
+     data.answerID = null
+     console.log(response.data)
+   })
+  }
 }
 watch( () => data.questionNamber, () => {
     if(data.questions)
@@ -75,6 +88,9 @@ getQuestion()
 
 <style scoped lang="scss">
 @import '@/assets/styles/color-style.scss';
+.opacity {
+  opacity: 0.5;
+}
 .main{
   background: #19273678!important;
 }
@@ -140,12 +156,46 @@ form{
 .selected{
   outline-color: #5186FF;
 }
+.wrong-answer{
+  bottom: 20px;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  .material-icons{
+    font-size: 200px;
+    color: red;
+    height: fit-content;
+  }
+  img{
+    max-height: 100%;
+  }
+  .message-wrong{
+    text-align: center;
+    color: white;
+    font-size: 2rem;
+    background: #ae012f;
+    border-radius: 7px;
+    padding: 4px 8px;
+    margin-bottom: 24px;
+  }
+}
 @media (max-width: 575.98px) {
   .btn{
     width: 100%;
   }
   form label{
     font-size: 1rem;
+  }
+  .wrong-answer{
+    .message-wrong {
+      font-size: 1.8rem;
+    }
+    img{
+      max-height: 40vh;
+    }
   }
 }
 </style>

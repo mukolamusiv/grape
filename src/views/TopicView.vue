@@ -40,7 +40,7 @@
       <div class="lessons-title">
         Зміст теми:
       </div>
-      <div class="wrap-lesson-card" v-if="data.topic.status == undefined">
+      <div class="wrap-lesson-card" v-if="data.topic.status === undefined">
         <div class="lesson-card" v-for="(lesson, index) in data.topic.lessons" v-bind:key="lesson.lesson_id">
           <div class="lesson-title">
             <span class="material-icons">play_lesson</span>
@@ -49,7 +49,7 @@
         </div>
       </div>
       <div class="wrap-lesson-card" v-if="data.topic.status !== undefined">
-        <router-link class="lesson-card" :to="{ path: `/lesson/${lesson.lesson_id}`}" v-for="(lesson, index) in data.topic.lessons" v-bind:key="lesson.lesson_id">
+        <router-link class="lesson-card" :class="{'lesson-completed' : lesson.completed}"  :to="{ path: `/lesson/${lesson.lesson_id}`}" v-for="(lesson, index) in data.topic.lessons" v-bind:key="lesson.lesson_id">
           <div class="lesson-title">
             <span class="material-icons">play_lesson</span>
             <span>{{index+1}}. {{lesson.title}}</span>
@@ -100,6 +100,9 @@ getTopic()
 
 <style lang="scss" scoped>
 @import '@/assets/styles/color-style.scss';
+.lesson-completed{
+  background: #45D800!important;
+}
 .opacity{
   opacity: 0.6;
 }

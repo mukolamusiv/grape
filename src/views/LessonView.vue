@@ -11,26 +11,30 @@
         <div class="title">
           Урок: "{{data.lesson.title}}"
         </div>
-        <div class="lesson-structure" v-if="data.lesson.video_complete">
+        <div class="lesson-structure" v-if="data.lesson.video_completed">
           <a class="lesson-structure-item cl-done" href="#">
             <span class="material-icons lecture">movie</span>
             Відео-лекція
-            <span class="material-icons accept">task_alt</span>
+            <span class="material-icons accept" v-if="data.lesson.video_completed">task_alt</span>
           </a>
           <a class="lesson-structure-item" href="#" @click="store.ui.lessonTab = 'test'">
             <span class="material-icons test">quiz</span>
             Тестування
-            <span class="material-icons accept">task_alt</span>
+            <span class="material-icons accept"  v-if="data.lesson.question_completed">task_alt</span>
           </a>
           <a class="lesson-structure-item" href="#">
-            <span class="material-icons crossword">hive</span>
-            Кросворд
-            <span class="material-icons accept">task_alt</span>
+            <span class="material-icons find-couple">gesture</span>
+            Підбери пару
+            <span class="material-icons accept"  v-if="data.lesson.find_couple_completed">task_alt</span>
+          </a>
+          <a class="lesson-structure-item" href="#">
+            <span class="material-icons crossword">border_all</span>Кросворд
+            <span class="material-icons accept"  v-if="data.lesson.crossword_completed">task_alt</span>
           </a>
           <a class="lesson-structure-item" href="#">
             <span class="material-icons coloring">palette</span>
             Розмальовка
-            <span class="material-icons accept">task_alt</span>
+            <span class="material-icons accept"  v-if="data.lesson.coloring_page_completed">task_alt</span>
           </a>
         </div>
         <!-- <div class="lesson-structure" v-if="!data.lesson.check_video">
@@ -42,7 +46,7 @@
     </section>
     <section class="lesson-content" v-if="store.ui.lessonTab === 'video'">
       <!-- <div class="player" v-if="data.video.url" :class="{'timeline-hidden' : !data.lesson.check_video}"> -->
-      <div class="player" v-if="data.lesson.video_url" :class="{'timeline-hidden' : !data.lesson.video_complete}">
+      <div class="player" v-if="data.lesson.video_url" :class="{'timeline-hidden' : !data.lesson.video_completed}">
         <video
           @ended="videoViewed()"
           controls
@@ -86,7 +90,7 @@ const getLesson = function () {
  })
 }
 const videoViewed = function () {
-  if(!data.lesson.video_complete){
+  if(!data.lesson.video_completed){
     axios({
       method: 'PUT',
       url: `/api/lesson-check-video/${route.params.id}`,
@@ -181,6 +185,7 @@ getLesson()
     flex-grow: 1;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     font-size: 1.1rem;
     font-weight: bold;
     padding: 0px 4px;
@@ -188,6 +193,7 @@ getLesson()
     color: #556efe;
     .material-icons{
       margin-right: 8px;
+      width: 24px;
     }
   }
 
@@ -222,6 +228,9 @@ getLesson()
 }
 .lecture{
   color: #355373;
+}
+.find-couple{
+  color: #fb00dd;
 }
 .test{
   color: #198754;
