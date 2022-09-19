@@ -18,11 +18,11 @@ class LessonDTO
     public string $topic_title;
     public bool $lesson_completed;
     public string $video_url;
-    public bool $video_complete = false;
-    public bool $question_complete = false;
-    public bool $crossword_complete = false;
-    public bool $coloring_page_complete = false;
-    public bool $find_couple = false;
+    public bool $video_completed = false;
+    public bool $question_completed = false;
+    public bool $crossword_completed = false;
+    public bool $coloring_page_completed = false;
+    public bool $find_couple_completed = false;
     ///////////////////////////////////////////
 
     /**
@@ -65,6 +65,7 @@ class LessonDTO
         $this->topic_title = $this->lesson->topic->title;
         $this->lesson_completed = $this->active_lesson->complete;
         $this->video_url = $this->lesson->attachment->first()->url;
+        $this->video_complete = $this->active_lesson->check_video;
     }
 
     /**
