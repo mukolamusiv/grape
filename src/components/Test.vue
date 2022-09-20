@@ -1,6 +1,6 @@
 <template>
   <section class="wrap" v-if="data.questions && !data.questionsEnd" @click="data.ui.stateAnswer = false">
-    <div class="test animate__animated animate__zoomIn" :class="{'opacity' : data.ui.wrongAnswer}">
+    <div class="test animate__animated animate__zoomIn" :class="{'opacity' : data.ui.stateAnswer === 'wrong'}">
       <div class="close">
         <span class="test-number" @click="data.questionNamber++">
           Питання {{data.questionNamber + 1}} / {{data.questionsCount}}
