@@ -1,32 +1,45 @@
 <template>
-  <section class="wrap" v-if="data.questions" @click="data.ui.wrongAnswer = false">
+  <section class="wrap" v-if="data.questions && !data.questionsEnd" @click="data.ui.stateAnswer = false">
     <div class="test animate__animated animate__zoomIn" :class="{'opacity' : data.ui.wrongAnswer}">
       <div class="close">
         <span class="test-number" @click="data.questionNamber++">
-          Питання {{data.questionNamber + 1}} / {{data.countQuestions}}
+          Питання {{data.questionNamber + 1}} / {{data.questionsCount}}
         </span>
         <span class="material-icons c-pointer cancel" @click="store.ui.lessonTab = 'video'">disabled_by_default</span>
       </div>
       <div class="question">
         {{data.question.description}}
       </div>
-      <form v-if="data.question">
+      <form v-if="data.question" @submit.prevent="sendAnswer()">
         <label v-for="(answer) in data.question.answer" v-bind:key="answer.id" :class="{ selected: answer.id ===  data.answerID}">
           <input type="radio" name="answer" :value="answer.id" v-model="data.answerID">
           <span>{{answer.text}}</span>
         </label>
-        <div class="submit-panel" v-if="!data.ui.wrongAnswer && data.answerID">
-          <div type="submit" class="btn" @click="sendAnswer()">
+        <div class="submit-panel" v-if="!data.ui.stateAnswer && data.answerID">
+          <button type="submit" class="btn">
             <span class="material-icons">check</span>
             Надіслати відповідь
-          </div>
+          </button>
         </div>
       </form>
     </div>
-    <div class="wrong-answer animate__animated animate__bounceIn" v-if="data.ui.wrongAnswer">
-      <!-- <span class="material-icons">mood_bad</span> -->
-      <div class="message-wrong">:( Нажаль відповідь невірна!</div>
+    <div class="wrong-answer animate__animated animate__bounceIn" v-if="data.ui.stateAnswer">
+      <div class="message">:( Нажаль відповідь невірна!</div>
       <img src="@/assets/img/sad.png" alt="Grape">
+    </div>
+    <!-- <div class="wrong-answer animate__animated animate__bounceIn" v-if="data.ui.successfulAnswer">
+      <div class="message">Вірно!</div>
+      <img src="@/assets/img/sad.png" alt="Grape">
+    </div> -->
+  </section>
+  <section class="wrap" v-if="data.questionsEnd">
+    <div class="test questions-end">
+      <div class="close">
+        <span class="material-icons c-pointer cancel" @click="store.ui.lessonTab = 'video'">disabled_by_default</span>
+      </div>
+      <div class="message">
+        Вітаємо! Тест завершено.
+      </div>
     </div>
   </section>
 </template>
@@ -41,45 +54,61 @@ const { store } = useStore()
 const route = useRoute()
 
 const data = reactive({
-  countQuestions: null,
   questionNamber: 0,
+  questionsCount: 0,
   questions: null,
   question: null,
   answerID: null,
+  questionsEnd: false,
   ui: {
-    wrongAnswer: false
+    stateAnswer: false
   }
 })
 const getQuestion = function () {
-  console.log(route.params.id)
   axios({
     method: 'GET',
     url: `/api/lesson-question/${route.params.id}`,
     data: {}
  }).then(function (response) {
    data.questions = response.data
-   data.countQuestions = data.questions.length
+   data.questionsCount = data.questions.length
    data.question = data.questions[data.questionNamber]
-   console.log(response.data)
+  console.log(response.data)
  })
 }
 const sendAnswer = function () {
-  if (data.answerID){
+  if(data.answerID){
     axios({
       method: 'POST',
       url: `api/test-question/${data.question.id}`,
       data: {answer_id: data.answerID}
    }).then(function (response) {
-     if(response.data === 'not true'){
-       data.ui.wrongAnswer = true
+     if(response.data === 'Ви вже відповідали на це запитання'){
+       store.ui.lessonTab = 'video'
      }
-     console.log(response.data)
+     else if(response.data === 'not true'){
+       data.ui.stateAnswer = 'wrong'
+        data.ui.successfulAnswer
+     }
+     else if (response.data === 'true'){
+       console.log(response.data)
+     }
    })
   }
 }
 watch( () => data.questionNamber, () => {
-    if(data.questions)
-    data.question = data.questions[data.questionNamber]
+    if(data.questions) {
+      data.question = data.questions[data.questionNamber]
+    }
+})
+watch( () => data.ui.stateAnswer, () => {
+    if(data.ui.stateAnswer === false && data.questionNamber < (data.questionsCount -1 ) ) {
+      data.questionNamber = data.questionNamber +1
+      console.log(data.questionNamber)
+    }
+    else if(data.ui.stateAnswer === false) {
+      data.questionsEnd = true
+    }
 })
 
 getQuestion()
@@ -97,6 +126,8 @@ getQuestion()
   display: flex;
   justify-content: center;
   padding: 28px;
+  height: 100%;
+  align-items: flex-start;
 }
 .test{
   border: 4px solid rgba(0,84,169,.149);
@@ -171,14 +202,23 @@ form{
   img{
     max-height: 100%;
   }
-  .message-wrong{
-    text-align: center;
-    color: white;
-    font-size: 2rem;
+  .message{
     background: #ae012f;
-    border-radius: 7px;
-    padding: 4px 8px;
-    margin-bottom: 24px;
+  }
+}
+.message{
+  text-align: center;
+  color: white;
+  font-size: 2rem;
+  background: #ae012f;
+  border-radius: 7px;
+  padding: 4px 8px;
+  margin-bottom: 24px;
+}
+.questions-end{
+  .message{
+    background: none;
+    color: #45d800;
   }
 }
 @media (max-width: 575.98px) {
@@ -189,7 +229,7 @@ form{
     font-size: 1rem;
   }
   .wrong-answer{
-    .message-wrong {
+    .message {
       font-size: 1.8rem;
     }
     img{

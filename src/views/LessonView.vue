@@ -66,7 +66,7 @@
 </template>
 
 <script setup>
-import { reactive} from 'vue'
+import { reactive, watch} from 'vue'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
 import Test from '@/components/Test.vue'
@@ -100,7 +100,14 @@ const videoViewed = function () {
     })
  }
 }
+
 getLesson()
+
+watch( () => store.ui.lessonTab, () => {
+    if(store.ui.lessonTab === 'video') {
+      getLesson()
+    }
+})
 </script>
 
 <style lang="scss" scoped>
