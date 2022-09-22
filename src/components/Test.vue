@@ -1,6 +1,6 @@
 <template>
-  <section class="wrap" v-if="data.questions && !data.questionsEnd" @click="data.ui.stateAnswer = false">
-    <div class="test animate__animated animate__zoomIn" :class="{'opacity' : data.ui.stateAnswer === 'wrong'}">
+  <section class="wrap" v-if="data.questions && !data.questionsEnd" @click="data.stateAnswer = false">
+    <div class="test animate__animated animate__zoomIn" :class="{'opacity' : data.stateAnswer !== false}">
       <div class="close">
         <span class="test-number" @click="data.questionNamber++">
           Питання {{data.questionNamber + 1}} / {{data.questionsCount}}
@@ -15,7 +15,7 @@
           <input type="radio" name="answer" :value="answer.id" v-model="data.answerID">
           <span>{{answer.text}}</span>
         </label>
-        <div class="submit-panel" v-if="!data.ui.stateAnswer && data.answerID">
+        <div class="submit-panel" v-if="!data.stateAnswer && data.answerID">
           <button type="submit" class="btn">
             <span class="material-icons">check</span>
             Надіслати відповідь
@@ -23,14 +23,14 @@
         </div>
       </form>
     </div>
-    <div class="wrong-answer animate__animated animate__bounceIn" v-if="data.ui.stateAnswer">
+    <div class="message-answer wrong-answer animate__animated animate__bounceIn" v-if="data.stateAnswer === 'wrong'">
       <div class="message">:( Нажаль відповідь невірна!</div>
       <img src="@/assets/img/sad.png" alt="Grape">
     </div>
-    <!-- <div class="wrong-answer animate__animated animate__bounceIn" v-if="data.ui.successfulAnswer">
-      <div class="message">Вірно!</div>
-      <img src="@/assets/img/sad.png" alt="Grape">
-    </div> -->
+    <div class="message-answer right-answer animate__animated animate__bounceIn" v-if="data.stateAnswer === 'right'">
+      <div class="message">:) Молодець, відповідь вірна!</div>
+      <img src="@/assets/img/right.png" alt="Grape">
+    </div>
   </section>
   <section class="wrap" v-if="data.questionsEnd">
     <div class="test questions-end">
@@ -38,7 +38,8 @@
         <span class="material-icons c-pointer cancel" @click="store.ui.lessonTab = 'video'">disabled_by_default</span>
       </div>
       <div class="message">
-        Вітаємо! Тест завершено.
+        Тест завершено!<br>
+        <span>Вірних відповідей: {{data.rightCount}} з {{data.questionsCount}} питань</span>
       </div>
     </div>
   </section>
@@ -54,15 +55,14 @@ const { store } = useStore()
 const route = useRoute()
 
 const data = reactive({
-  questionNamber: 0,
-  questionsCount: 0,
   questions: null,
   question: null,
+  questionNamber: 0,
+  questionsCount: 0,
   answerID: null,
   questionsEnd: false,
-  ui: {
-    stateAnswer: false
-  }
+  stateAnswer: false,
+  rightCount: 0
 })
 const getQuestion = function () {
   axios({
@@ -70,11 +70,10 @@ const getQuestion = function () {
     url: `/api/lesson-question/${route.params.id}`,
     data: {}
  }).then(function (response) {
-   data.questions = response.data
+   data.questions = response.data.questionsDTO
    data.questionsCount = data.questions.length
    data.question = data.questions[data.questionNamber]
-  console.log(response.data)
- })
+  })
 }
 const sendAnswer = function () {
   if(data.answerID){
@@ -84,14 +83,16 @@ const sendAnswer = function () {
       data: {answer_id: data.answerID}
    }).then(function (response) {
      if(response.data === 'Ви вже відповідали на це запитання'){
-       store.ui.lessonTab = 'video'
+       // store.ui.lessonTab = 'video'
+       data.stateAnswer = 'right'
+       data.rightCount = data.rightCount +1
      }
      else if(response.data === 'not true'){
-       data.ui.stateAnswer = 'wrong'
-        data.ui.successfulAnswer
-     }
+       data.stateAnswer = 'wrong'
+    }
      else if (response.data === 'true'){
-       console.log(response.data)
+       data.stateAnswer = 'right'
+       data.rightCount = data.rightCount +1
      }
    })
   }
@@ -101,12 +102,12 @@ watch( () => data.questionNamber, () => {
       data.question = data.questions[data.questionNamber]
     }
 })
-watch( () => data.ui.stateAnswer, () => {
-    if(data.ui.stateAnswer === false && data.questionNamber < (data.questionsCount -1 ) ) {
+watch( () => data.stateAnswer, () => {
+    if(data.stateAnswer === false && data.questionNamber < (data.questionsCount -1 ) ) {
       data.questionNamber = data.questionNamber +1
       console.log(data.questionNamber)
     }
-    else if(data.ui.stateAnswer === false) {
+    else if(data.stateAnswer === false) {
       data.questionsEnd = true
     }
 })
@@ -186,7 +187,7 @@ form{
 .selected{
   outline-color: #5186FF;
 }
-.wrong-answer{
+.message-answer{
   bottom: 20px;
   position: fixed;
   display: flex;
@@ -202,8 +203,15 @@ form{
   img{
     max-height: 100%;
   }
+}
+.wrong-answer{
   .message{
     background: #ae012f;
+  }
+}
+.right-answer{
+  .message{
+    background: green;
   }
 }
 .message{
@@ -219,6 +227,10 @@ form{
   .message{
     background: none;
     color: #45d800;
+    span{
+      color: gray;
+      font-size: 1.2rem;
+    }
   }
 }
 @media (max-width: 575.98px) {
@@ -228,9 +240,10 @@ form{
   form label{
     font-size: 1rem;
   }
-  .wrong-answer{
+  .message-answer{
     .message {
       font-size: 1.8rem;
+      border-radius: 0;
     }
     img{
       max-height: 40vh;
