@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\DTO\LessonDTO;
+use App\DTO\TestsDTO\QuestionsDTO;
 use App\Http\Controllers\Controller;
 use App\Models\Find_a_Pair;
 use App\Models\Lessons;
@@ -73,8 +74,8 @@ class LessonController extends Controller
     }
 
     public function question($lesson_id){
-        $question = Question::with('answer')->where(['lesson_id'=>$lesson_id])->get();
-        return response($question);
+        $data = new QuestionsDTO($lesson_id);
+        return response($data->test());
     }
 
     /**

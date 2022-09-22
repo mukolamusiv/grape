@@ -58,14 +58,14 @@ class LessonDTO
      *
      */
     private function setVars(){
-        $this->id = $this->lesson->id;
-        $this->title = $this->lesson->title;
-        $this->description = $this->lesson->description;
-        $this->topic_id = $this->lesson->topic_id;
-        $this->topic_title = $this->lesson->topic->title;
+        $this->id               = $this->lesson->id;
+        $this->title            = $this->lesson->title;
+        $this->description      = $this->lesson->description;
+        $this->topic_id         = $this->lesson->topic_id;
+        $this->topic_title      = $this->lesson->topic->title;
         $this->lesson_completed = $this->active_lesson->complete;
-        $this->video_url = $this->lesson->attachment->first()->url;
-        $this->video_completed = $this->active_lesson->check_video;
+        $this->video_url        = $this->lesson->attachment->first()->url;
+        $this->video_completed  = $this->active_lesson->check_video;
     }
 
     /**
