@@ -4,6 +4,7 @@
 namespace App\DTO;
 
 
+use App\DTO\TestsDTO\QuestionsDTO;
 use App\Models\Lessons;
 use App\Models\UserLessons;
 
@@ -88,5 +89,10 @@ class LessonDTO
         }else{
             return $data->last();
         }
+    }
+
+    private function setQuestions(){
+        $data = new QuestionsDTO($this->id);
+        $this->question_completed = $data->completed;
     }
 }
