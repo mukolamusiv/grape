@@ -43,6 +43,7 @@ class LessonDTO
         $this->lesson = Lessons::find($lesson_id);
         $this->active_lesson = $this->setActiveLesson($lesson_id);
         $this->setVars();
+        $this->setQuestions();
     }
 
     /**
