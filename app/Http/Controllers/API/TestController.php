@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\DTO\LessonDTO;
+use App\DTO\TestsDTO\QuestionDTO;
 use App\DTO\TestsDTO\QuestionsDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Test\PairRequest;
@@ -17,38 +18,49 @@ use Illuminate\Http\Request;
 class TestController extends Controller
 {
     public function question(QuestionRequest $questionRequest, $question_id){
-        $question = Question::findOrFail($question_id);
-        $answer = Answer::findOrFail($questionRequest->input('answer_id'));
-        $data = QuestionLessonsAnswer::where(['answer_id'=>$questionRequest->input('answer_id'),'user_id'=>1,'question_id'=>$question_id])->get();
-        if($data->isNotEmpty()){
-            $data = $data->last();
-            if($data->reply){
-                return response('Ви вже відповідали на це запитання');
-            }
-        }
-        if($answer->correct){
-            $data = new QuestionLessonsAnswer();
-            $data->question_id = $question_id;
-            $data->user_id = 1;
-            $data->answer_id = $questionRequest->input('answer_id');
-            $data->reply = true;
-            $data->save();
-            $count = $question->lesson->question->count();
-            $water = UserLessons::where(['lesson_id'=>$question->lesson->id,'user_id'=>1])->get()->first()->water/2;
-            $water = $water/$count;
-            $user = User::find(1);
-            $user->water = $user->water+$water;
-            $user->save();
-            return response(['water'=>$water]);
+        $DTO = Question::find($question_id);
+        $DTO->answer;
+        $DTO =  new QuestionDTO($DTO);
+        if($DTO->audit_answer($questionRequest->input('answer_id'))){
+            $this->add_question_answer($questionRequest->input('answer_id'),$question_id,true);
+            return response(['water'=>5,'reply'=>true]);
         }else{
-            $data = new QuestionLessonsAnswer();
-            $data->question_id = $question_id;
-            $data->user_id = 1;
-            $data->answer_id = $questionRequest->input('answer_id');
-            $data->reply = false;
-            $data->save();
-            return response('not true');
+            $this->add_question_answer($questionRequest->input('answer_id'),$question_id);
+            return response(['water'=>0,'reply'=>false]);
         }
+//        return response($DTO->object());
+//        $question = Question::findOrFail($question_id);
+//        $answer = Answer::findOrFail($questionRequest->input('answer_id'));
+//        $data = QuestionLessonsAnswer::where(['answer_id'=>$questionRequest->input('answer_id'),'user_id'=>1,'question_id'=>$question_id])->get();
+//        if($data->isNotEmpty()){
+//            $data = $data->last();
+//            if($data->reply){
+//                return response('Ви вже відповідали на це запитання');
+//            }
+//        }
+//        if($answer->correct){
+//            $data = new QuestionLessonsAnswer();
+//            $data->question_id = $question_id;
+//            $data->user_id = 1;
+//            $data->answer_id = $questionRequest->input('answer_id');
+//            $data->reply = true;
+//            $data->save();
+//            $count = $question->lesson->question->count();
+//            $water = UserLessons::where(['lesson_id'=>$question->lesson->id,'user_id'=>1])->get()->first()->water/2;
+//            $water = $water/$count;
+//            $user = User::find(1);
+//            $user->water = $user->water+$water;
+//            $user->save();
+//            return response(['water'=>$water]);
+//        }else{
+//            $data = new QuestionLessonsAnswer();
+//            $data->question_id = $question_id;
+//            $data->user_id = 1;
+//            $data->answer_id = $questionRequest->input('answer_id');
+//            $data->reply = false;
+//            $data->save();
+//            return response('not true');
+//        }
     }
 
 
@@ -71,5 +83,17 @@ class TestController extends Controller
     public function crossword(){
         $data = new QuestionsDTO(13);
         return response($data->test());
+    }
+
+
+
+
+    private function add_question_answer($answer_id,$question_id,$reply = false){
+        $data = new QuestionLessonsAnswer();
+        $data->question_id = $question_id;
+        $data->user_id = 1;
+        $data->answer_id = $answer_id;
+        $data->reply = true;
+        return $data->save();
     }
 }

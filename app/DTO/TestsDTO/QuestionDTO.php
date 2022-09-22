@@ -4,6 +4,7 @@
 namespace App\DTO\TestsDTO;
 
 
+use App\Models\Answer;
 use App\Models\Lessons;
 use App\Models\Question;
 use App\Models\QuestionLessonsAnswer;
@@ -68,6 +69,11 @@ class QuestionDTO
         }
     }
 
+    public function audit_answer($answer_id){
+       $data = Answer::find($answer_id);
+       return $data->correct;
+    }
+
     private function setAnswer($answer){
 //        $data = collect($answer);
 //        $this->answer = $data;
@@ -86,4 +92,6 @@ class QuestionDTO
     public function object(){
         return get_object_vars($this);
     }
+
+
 }
