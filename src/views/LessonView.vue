@@ -32,7 +32,7 @@
             Підбери пару
             <span class="material-icons accept"  v-if="data.lesson.find_couple_completed">task_alt</span>
           </a>
-          <a class="lesson-structure-item" href="#">
+          <a class="lesson-structure-item" href="#" @click="store.ui.lessonTab = 'crossWord'">
             <span class="material-icons crossword">border_all</span>Кросворд
             <span class="material-icons accept"  v-if="data.lesson.crossword_completed">task_alt</span>
           </a>
@@ -67,6 +67,7 @@
     </section>
     <test v-if="store.ui.lessonTab === 'test'"/>
     <one-word v-if="store.ui.lessonTab === 'oneWord'"/>
+    <cross-word v-if="store.ui.lessonTab === 'crossWord'"/>
   </main>
 </template>
 
@@ -77,6 +78,7 @@ import axios from 'axios'
 import { useStore } from '@/store'
 import Test from '@/components/Test.vue'
 import OneWord from '@/components/OneWord.vue'
+import CrossWord from '@/components/CrossWord.vue'
 
 const { store } = useStore()
 const route = useRoute()
