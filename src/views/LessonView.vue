@@ -1,5 +1,5 @@
 <template>
-  <main v-if="data.lesson" class="main" :class="{blackout: store.ui.lessonTab === 'test' }">
+  <main v-if="data.lesson" class="main" :class="{blackout: store.ui.lessonTab !== 'video' }">
     <section class="lesson-header" v-if="store.ui.lessonTab === 'video'">
       <div class="bread-crumbs">
         <router-link :to="{ path: `/topic/${data.lesson.topic_id}`}">
@@ -19,7 +19,12 @@
           </a>
           <a class="lesson-structure-item" href="#" @click="store.ui.lessonTab = 'test'">
             <span class="material-icons test">quiz</span>
-            Тестування
+            Тест
+            <span class="material-icons accept"  v-if="data.lesson.question_completed">task_alt</span>
+          </a>
+          <a class="lesson-structure-item" href="#" @click="store.ui.lessonTab = 'oneWord'">
+            <span class="material-icons test">history_edu</span>
+            Одне слово
             <span class="material-icons accept"  v-if="data.lesson.question_completed">task_alt</span>
           </a>
           <a class="lesson-structure-item" href="#">
@@ -37,31 +42,31 @@
             <span class="material-icons accept"  v-if="data.lesson.coloring_page_completed">task_alt</span>
           </a>
         </div>
-        <!-- <div class="lesson-structure" v-if="!data.lesson.check_video">
+        <div class="lesson-structure" v-if="!data.lesson.video_completed">
           <div class="lesson-message">
           Переглянь відео-лекцію, щоб розблокувати інші завдання уроку!
           </div>
-        </div> -->
+        </div>
       </div>
     </section>
     <section class="lesson-content" v-if="store.ui.lessonTab === 'video'">
-      <!-- <div class="player" v-if="data.video.url" :class="{'timeline-hidden' : !data.lesson.check_video}"> -->
       <div class="player" v-if="data.lesson.video_url" :class="{'timeline-hidden' : !data.lesson.video_completed}">
-        <video
-          @ended="videoViewed()"
-          controls
-          preload="auto"
-          controlsList="nodownload"
-          :src="data.lesson.video_url">
-              Your browser does not support the
-              <code>audio</code> element.
-        </video>
-      </div>
+          <video
+            @ended="videoViewed()"
+            controls
+            preload="auto"
+            controlsList="nodownload"
+            :src="data.lesson.video_url">
+                Your browser does not support the
+                <code>audio</code> element.
+          </video>
+        </div>
       <div class="description">
         {{data.lesson.description}}
       </div>
     </section>
     <test v-if="store.ui.lessonTab === 'test'"/>
+    <one-word v-if="store.ui.lessonTab === 'oneWord'"/>
   </main>
 </template>
 
@@ -69,8 +74,9 @@
 import { reactive, watch} from 'vue'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
-import Test from '@/components/Test.vue'
 import { useStore } from '@/store'
+import Test from '@/components/Test.vue'
+import OneWord from '@/components/OneWord.vue'
 
 const { store } = useStore()
 const route = useRoute()

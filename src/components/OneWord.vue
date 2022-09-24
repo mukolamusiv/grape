@@ -1,5 +1,5 @@
 <template>
-  <section class="wrap" v-if="data.questions && !data.questionsEnd" @click="data.stateAnswer = false">
+  <section class="wrap" v-if="data.question && !data.questionsEnd" @click="data.stateAnswer = false">
     <div class="test animate__animated animate__zoomIn" :class="{'opacity' : data.stateAnswer !== false}">
       <div class="close">
         <span class="test-number" @click="data.questionNamber++">
@@ -10,12 +10,17 @@
       <div class="question">
         {{data.question.description}}
       </div>
+      <div class="img">
+        <img :src="data.question.image_src" >
+      </div>
       <form v-if="data.question" @submit.prevent="sendAnswer()">
-        <label v-for="(answer) in data.question.answer" v-bind:key="answer.id" :class="{ selected: answer.id ===  data.answerID}">
-          <input type="radio" name="answer" :value="answer.id" v-model="data.answerID">
-          <span>{{answer.text}}</span>
-        </label>
-        <div class="submit-panel" v-if="!data.stateAnswer && data.answerID">
+        <div class="form-item">
+          <span class="input-name"></span>
+          <label>
+            <input type="text" v-model="data.answer" required size="10">
+          </label>
+        </div>
+        <div class="submit-panel">
           <button type="submit" class="btn">
             <span class="material-icons">check</span>
             Надіслати відповідь
@@ -32,88 +37,40 @@
       <img src="@/assets/img/right.png" alt="Grape">
     </div>
   </section>
-  <section class="wrap" v-if="data.questionsEnd">
-    <div class="test questions-end">
-      <div class="close">
-        <span class="material-icons c-pointer cancel" @click="store.ui.lessonTab = 'video'">disabled_by_default</span>
-      </div>
-      <div class="message">
-        Тест завершено!<br>
-        <span>Вірних відповідей: {{data.rightCount}} з {{data.questionsCount}} питань</span>
-      </div>
-    </div>
-  </section>
 </template>
 
 <script setup>
-import { reactive, watch } from 'vue'
-import { useRoute } from 'vue-router'
-import axios from 'axios'
+import { reactive } from 'vue'
+// import { useRoute } from 'vue-router'
+// import axios from 'axios'
 import { useStore } from '@/store'
 
 const { store } = useStore()
-const route = useRoute()
+// const route = useRoute()
 
 const data = reactive({
+  answer: null,
   questions: null,
-  question: null,
-  questionNamber: 0,
-  questionsCount: 0,
-  answerID: null,
-  questionsEnd: false,
+  question: {
+    id: 7,
+    description: "Яка емоція на зображенні?",
+    image_src: "https://ukrpublic.com/images/2021/06/15/s-96493e3985154d4ea607201fb550e5_large.jpg",
+  },
   stateAnswer: false,
-  rightCount: 0
-})
-const getQuestion = function () {
-  axios({
-    method: 'GET',
-    url: `/api/lesson-question/${route.params.id}`,
-    data: {}
- }).then(function (response) {
-   console.log(response.data)
-   data.questions = response.data.questionsDTO
-   data.questionsCount = data.questions.length
-   data.question = data.questions[data.questionNamber]
-  })
-}
-const sendAnswer = function () {
-  if(data.answerID){
-    axios({
-      method: 'POST',
-      url: `api/test-question/${data.question.id}`,
-      data: {answer_id: data.answerID}
-   }).then(function (response) {
-     console.log(response.data)
-     if(response.data.reply === true){
-       data.stateAnswer = 'right'
-       data.rightCount = data.rightCount +1
-     }
-     else {
-       data.stateAnswer = 'wrong'
-    }
-     // else if (response.data === 'true'){
-     //   data.stateAnswer = 'right'
-     //   data.rightCount = data.rightCount +1
-     // }
-   })
-  }
-}
-watch( () => data.questionNamber, () => {
-    if(data.questions) {
-      data.question = data.questions[data.questionNamber]
-    }
-})
-watch( () => data.stateAnswer, () => {
-    if(data.stateAnswer === false && data.questionNamber < (data.questionsCount -1 ) ) {
-      data.questionNamber = data.questionNamber +1
-      console.log(data.questionNamber)
-    }
-    else if(data.stateAnswer === false) {
-      data.questionsEnd = true
-    }
 })
 
-getQuestion()
+const sendAnswer = function () {
+
+  if(data.answer){
+    console.log(
+      {
+        question: data.question.id,
+        ansver: data.answer
+      }
+
+    )
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -161,29 +118,32 @@ getQuestion()
     color: #6f40fe;
     margin: 32px 0;
   }
-}
-form{
-  display: flex;
-  flex-direction: column;
-  padding: 0 16px 16px 16px;
-  input[type="radio"] {
-    display: none;
-    transform: scale(1.2);
-    margin: 0 8px;
+  form{
+    padding: 0 16px 16px 16px;
+    .form-item{
+      margin-bottom: 32px;
+      padding-bottom: 0;
+      flex-direction: row;
+      justify-content: center;
+      label{
+        max-width: 420px!important;
+      }
+      input{
+        text-align: center;
+      }
+    }
   }
-  label{
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    outline: 2px solid #e6e6e6;
+  .img{
     margin-bottom: 32px;
-    padding: 8px;
-    border-radius: 5px;
-    font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
+    img{
+        width: 620px!important;
+    }
   }
-  .submit-panel{
-    justify-content: flex-end;
-  }
+}
+.submit-panel{
+  justify-content: flex-end;
 }
 .selected{
   outline-color: #5186FF;
