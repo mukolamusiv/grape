@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\DTO\LessonDTO;
 use App\DTO\TestsDTO\QuestionsDTO;
 use App\Http\Controllers\Controller;
+use App\Models\Crossword;
 use App\Models\Find_a_Pair;
 use App\Models\Lessons;
 use App\Models\Question;
@@ -88,8 +89,10 @@ class LessonController extends Controller
     }
 
     public function crossword($lesson_id){
-        $data = new LessonDTO($lesson_id);
-        return response($data->getLesson());
+        //$data = new LessonDTO($lesson_id);
+        $data = Crossword::find(1);
+        $data->word;
+        return response($data);
     }
 
     public function check_video($lesson_id){

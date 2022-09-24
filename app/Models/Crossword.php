@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Crossword extends Model
 {
     use HasFactory;
+
+    public function word(){
+        return $this->hasMany(Word::class,'crossword_id','id');
+    }
 }
