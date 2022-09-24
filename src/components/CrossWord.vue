@@ -9,8 +9,8 @@
       </div>
       <div class="cross-word">
         <table>
-          <tr v-for="(question, indexTR ) in data.crossWord.questions" v-bind:key="question.id" :class="{'selected' : data.selectedIndex == indexTR}" @click="selectTR(indexTR)">
-            <div class="input-answer-form" v-if="question">
+          <tr v-for="(question, indexTR ) in data.crossWord.questions" v-bind:key="question.id" :class="{'selected' : data.selectedIndex == indexTR}">
+            <div class="input-answer-form" v-if="question" @click="selectTR(indexTR)">
               <input type="text" v-model="data.crossWord.questions[indexTR]['answer']" :maxlength="question.characters">
             </div>
             <td v-for="(n, indexTD ) in data.crossWord.max_characters" v-bind:key="n" :class="{ 'boreder-none': indexTD < question.shift || indexTD > (question.shift + question.characters -1)}">
@@ -87,9 +87,11 @@ const selectTR = function (index) {
 }
 const deleteAnswer = function (index){
   data.crossWord.questions[index]['answer'] = ''
+  data.selectedIndex = null
 }
 const sendAnswer = function (answer) {
-  console.log(answer)
+  data.selectedIndex = null
+  console.log(answer, data.selectedIndex)
 }
 </script>
 
