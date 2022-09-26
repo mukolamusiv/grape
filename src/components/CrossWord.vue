@@ -9,15 +9,16 @@
       </div>
       <div class="cross-word">
         <table>
-          <tr v-for="(question, indexTR ) in data.crossWord.questions" v-bind:key="question.id" :class="{'selected' : data.selectedIndex == indexTR, 'right' : data.crossWord.questions[indexTR]['reply']}">
+          <tr v-for="(question, indexTR ) in data.crossWord.questions" v-bind:key="question.id" :class="{'right' : data.crossWord.questions[indexTR]['reply']}">
+            <input type="text"
+              v-if="!data.crossWord.questions[indexTR]['reply']"
+              v-model="data.crossWord.questions[indexTR]['answer']"
+              :maxlength="question.characters"
+              v-on:keyup.enter="sendAnswer(data.crossWord.questions[indexTR]['id'], data.crossWord.questions[indexTR]['answer'], indexTR)"
+              @click="selectTR(indexTR)"
+            >
             <div class="input-answer-form" v-if="question">
-              <input type="text"
-                v-if="!data.crossWord.questions[indexTR]['reply']"
-                v-model="data.crossWord.questions[indexTR]['answer']"
-                :maxlength="question.characters"
-                v-on:keyup.enter="sendAnswer(data.crossWord.questions[indexTR]['id'], data.crossWord.questions[indexTR]['answer'], indexTR)"
-                @click="selectTR(indexTR)"
-              >
+
             </div>
             <td v-for="(n, indexTD ) in data.crossWord.max_characters" v-bind:key="n" :class="{ 'boreder-none': indexTD < question.shift || indexTD > (question.shift + question.characters -1), 'main-word-bg': indexTD === data.crossWord.main_word_shift}">
               <span class="question-number" v-if="indexTD === question.shift">{{indexTR+1}}</span>
@@ -115,6 +116,9 @@ getCrossWord()
 
 <style scoped lang="scss">
 @import '@/assets/styles/color-style.scss';
+input:focus ~   td{
+    border-color: #5186FF!important;
+}
 .btn{
   padding: 0;
   margin: 0;
