@@ -25,7 +25,7 @@ class LoginUserRequest extends FormRequest
     {
         return [
             'email'=>'required|email|string',
-            'password'=>'required|min:10|string'
+            'password'=>'required|min:8|string'
         ];
     }
 }
