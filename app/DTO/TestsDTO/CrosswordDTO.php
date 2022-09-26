@@ -13,6 +13,11 @@ use App\Models\QuestionLessonsAnswer;
 class CrosswordDTO
 {
     public int $id;
+
+    /**
+     * @var int
+     */
+    public int $lesson_id;
     /**
      * @var string
      */
@@ -24,23 +29,24 @@ class CrosswordDTO
     /**
      * @var int
      */
-    public int $lesson_id;
-    /**
-     * @var int
-     */
     public int $max_characters;
     /**
      * @var bool
      */
     //public bool $completed = false;
     /**
-     * @var int
+     * @var object
      */
-    public int $questions;
+    public object $questions;
 
     //public int $count_completed_question;
 
+    /**
+     * @var object
+     */
     private object $data;
+
+    private object $words;
 
     private object $correct;
 
@@ -50,23 +56,28 @@ class CrosswordDTO
 
     /**
      * QuestionDTO constructor.
-     * @param int $question
+     * @param int $lesson_id
      */
-    public function __construct(object $question){
-        $this->id = $question->id;
-        $this->title = $question->title;
-        $this->description = $question->description;
-        //$this->data = $question;
-        $this->find_user_answer();
-        $this->setAnswer($question->answer);
-        //$this->answer = $question->answer;
-        //$this->answer = $this->data->answer;
+    public function __construct(int $lesson_id){
+        $this->lesson_id = $lesson_id;
+        $this->find();
+        $this->setValue();
     }
 
     private function find(){
-        $data = Crossword::find($this->id);
-        $data->word;
+        $data = Crossword::with('word')->where(['lesson_id'=>$this->lesson_id])->get()->first();
         $this->data = $data;
+    }
+
+    private function setValue(){
+        $this->id = $this->data->id;
+        $this->title = $this->data->title;
+        $this->description = $this->data->description;
+        $this->setQuestion($this->data->word);
+    }
+
+    private function max_characters(){
+
     }
 
     private function find_user_answer(){
@@ -81,23 +92,24 @@ class CrosswordDTO
        return $data->correct;
     }
 
-    private function setAnswer($answer){
-//        $data = collect($answer);
-//        $this->answer = $data;
-
+    private function setQuestion($word){
         $data = collect();
-        foreach ($answer as $value){
+        foreach ($word as $value){
             $datum = collect();
             $datum->put('id',$value->id);
-            $datum->put('question_id',$value->question_id);
-            $datum->put('text',$value->text);
+            $datum->put('question_text',$value->question);
+            $datum->put('shift',$value->bias);
+            $datum->put('characters',$value->cells);
+            $datum->put('answer',$value->word);
             $data->push($datum);
         }
-        $this->answer = $data;
+        $this->questions = $data;
     }
 
     public function object(){
-        return get_object_vars($this);
+        $data = get_object_vars($this);
+        unset($data['data']);
+        return $data;
     }
 
 

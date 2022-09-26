@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\API;
 
 use App\DTO\LessonDTO;
+use App\DTO\TestsDTO\CrosswordDTO;
 use App\DTO\TestsDTO\QuestionDTO;
 use App\DTO\TestsDTO\QuestionsDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Test\PairRequest;
 use App\Http\Requests\Test\QuestionRequest;
 use App\Models\Answer;
+use App\Models\Crossword;
 use App\Models\Question;
 use App\Models\QuestionLessonsAnswer;
 use App\Models\User;
@@ -81,8 +83,8 @@ class TestController extends Controller
     }
 
     public function crossword(){
-        $data = new QuestionsDTO(13);
-        return response($data->test());
+        $data = new CrosswordDTO(13);
+        return response($data->object());
     }
 
 
