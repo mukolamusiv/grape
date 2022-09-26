@@ -7,6 +7,7 @@ use App\DTO\TestsDTO\CrosswordDTO;
 use App\DTO\TestsDTO\QuestionDTO;
 use App\DTO\TestsDTO\QuestionsDTO;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Test\CrosswordRequest;
 use App\Http\Requests\Test\PairRequest;
 use App\Http\Requests\Test\QuestionRequest;
 use App\Models\Answer;
@@ -15,6 +16,7 @@ use App\Models\Question;
 use App\Models\QuestionLessonsAnswer;
 use App\Models\User;
 use App\Models\UserLessons;
+use App\Models\Word;
 use Illuminate\Http\Request;
 
 class TestController extends Controller
@@ -82,9 +84,15 @@ class TestController extends Controller
 
     }
 
-    public function crossword(){
-        $data = new CrosswordDTO(13);
-        return response($data->object());
+    public function crossword(CrosswordRequest $request, $lesson_id){
+        $data = Word::find($request->input('id'));
+        $answer = mb_strtolower($request->input('answer'), 'UTF-8');
+        $word = mb_strtolower($data->word, 'UTF-8');
+        if($answer == $word){
+            return response(['reply'=>true]);
+        }else{
+            return response(['reply'=>false]);
+        }
     }
 
 
