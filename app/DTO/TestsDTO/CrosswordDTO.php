@@ -102,7 +102,7 @@ class CrosswordDTO
             $datum->put('question_text',$value->question);
             $datum->put('shift',$value->bias);
             $datum->put('characters',$value->cells);
-            $datum->put('answer',$value->word);
+            $datum->put('answer','');
             $data->push($datum);
             $this->max_characters($value->cells+$value->bias);
         }
