@@ -97,10 +97,15 @@ class CrosswordDTO
     private function setQuestion($word){
         $data = collect();
         foreach ($word as $value){
+            if ($value->bias === null){
+                $bias = 0;
+            }else{
+                $bias = $value->bias;
+            }
             $datum = collect();
             $datum->put('id',$value->id);
             $datum->put('question_text',$value->question);
-            $datum->put('shift',$value->bias);
+            $datum->put('shift',$bias);
             $datum->put('characters',$value->cells);
             $datum->put('answer','');
             $data->push($datum);
