@@ -85,7 +85,7 @@ class TestController extends Controller
     }
 
     public function crossword(CrosswordRequest $request, $lesson_id){
-        $data = Word::find($request->input('id'));
+        $data = Word::findOrFail($request->input('id'));
         $answer = mb_strtolower($request->input('answer'), 'UTF-8');
         $word = mb_strtolower($data->word, 'UTF-8');
         if($answer == $word){
