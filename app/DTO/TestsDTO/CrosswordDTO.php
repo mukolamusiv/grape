@@ -29,7 +29,7 @@ class CrosswordDTO
     /**
      * @var int
      */
-    public int $max_characters;
+    public int $max_characters = 0;
     /**
      * @var bool
      */
@@ -76,8 +76,10 @@ class CrosswordDTO
         $this->setQuestion($this->data->word);
     }
 
-    private function max_characters(){
-
+    private function max_characters($characters){
+        if($characters > $this->max_characters){
+            $this->max_characters = $characters;
+        }
     }
 
     private function find_user_answer(){
@@ -102,6 +104,7 @@ class CrosswordDTO
             $datum->put('characters',$value->cells);
             $datum->put('answer',$value->word);
             $data->push($datum);
+            $this->max_characters($value->cells+$value->bias);
         }
         $this->questions = $data;
     }
