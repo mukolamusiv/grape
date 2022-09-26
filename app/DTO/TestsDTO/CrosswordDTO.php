@@ -30,6 +30,8 @@ class CrosswordDTO
      * @var int
      */
     public int $max_characters = 0;
+
+    public int $main_word_shift = 3;
     /**
      * @var bool
      */
