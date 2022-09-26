@@ -1,5 +1,5 @@
 <template>
-  <section class="wrap" v-if="data.crossWord.questions && !data.questionsEnd" @click="data.stateAnswer = false">
+  <section class="wrap" v-if="data.crossWord && !data.questionsEnd" @click="data.stateAnswer = false">
     <div class="test animate__animated animate__zoomIn" :class="{'opacity' : data.stateAnswer !== false}">
       <div class="close">
         <span class="material-icons c-pointer cancel" @click="store.ui.lessonTab = 'video'">disabled_by_default</span>
@@ -9,11 +9,17 @@
       </div>
       <div class="cross-word">
         <table>
-          <tr v-for="(question, indexTR ) in data.crossWord.questions" v-bind:key="question.id" :class="{'selected' : data.selectedIndex == indexTR}">
-            <div class="input-answer-form" v-if="question" @click="selectTR(indexTR)">
-              <input type="text" v-model="data.crossWord.questions[indexTR]['answer']" :maxlength="question.characters">
+          <tr v-for="(question, indexTR ) in data.crossWord.questions" v-bind:key="question.id" :class="{'selected' : data.selectedIndex == indexTR, 'right' : data.crossWord.questions[indexTR]['reply']}">
+            <div class="input-answer-form" v-if="question">
+              <input type="text"
+                v-if="!data.crossWord.questions[indexTR]['reply']"
+                v-model="data.crossWord.questions[indexTR]['answer']"
+                :maxlength="question.characters"
+                v-on:keyup.enter="sendAnswer(data.crossWord.questions[indexTR]['id'], data.crossWord.questions[indexTR]['answer'], indexTR)"
+                @click="selectTR(indexTR)"
+              >
             </div>
-            <td v-for="(n, indexTD ) in data.crossWord.max_characters" v-bind:key="n" :class="{ 'boreder-none': indexTD < question.shift || indexTD > (question.shift + question.characters -1)}">
+            <td v-for="(n, indexTD ) in data.crossWord.max_characters" v-bind:key="n" :class="{ 'boreder-none': indexTD < question.shift || indexTD > (question.shift + question.characters -1), 'main-word-bg': indexTD === data.crossWord.main_word_shift}">
               <span class="question-number" v-if="indexTD === question.shift">{{indexTR+1}}</span>
               <span v-if="data.crossWord.questions[indexTR]['answer'][indexTD - question.shift]">{{data.crossWord.questions[indexTR]['answer'][indexTD - question.shift]}}</span>
             </td>
@@ -24,7 +30,7 @@
             </td>
             <td class="boreder-none">
               <button class="btn" v-if="data.selectedIndex == indexTR">
-                <span class="material-icons" @click="sendAnswer(data.crossWord.questions[indexTR]['answer'])">published_with_changes</span>
+                <span class="material-icons" @click="sendAnswer(data.crossWord.questions[indexTR]['id'], data.crossWord.questions[indexTR]['answer'], indexTR)">published_with_changes</span>
               </button>
             </td>
           </tr>
@@ -47,52 +53,64 @@
 
 <script setup>
 import { reactive } from 'vue'
-// import { useRoute } from 'vue-router'
-// import axios from 'axios'
+import { useRoute } from 'vue-router'
+import axios from 'axios'
 import { useStore } from '@/store'
 
 const { store } = useStore()
-// const route = useRoute()
+const route = useRoute()
 
 const data = reactive({
   answer: null,
-  crossWord: {
-    id: 1,
-    lesson_id: 7,
-    title: "Тестовий кросворд",
-    description: "Опис",
-    max_characters: 8,
-    questions: [
-      { id: 1,
-        question_text: 'Перше тайїнство?',
-        shift: 0,
-        characters: 8,
-        answer: ''
-      },
-      { id: 2,
-        question_text: 'Як називають три Божі особи?',
-        shift: 2,
-        characters: 6,
-        answer: ''
-      }
-    ],
-  },
-
+  crossWord: null,
   selectedIndex: null,
   stateAnswer: false
 })
 
 const selectTR = function (index) {
-  data.selectedIndex = index
+  if(!data.crossWord.questions[index]['reply']){
+    data.selectedIndex = index
+  }
 }
 const deleteAnswer = function (index){
   data.crossWord.questions[index]['answer'] = ''
   data.selectedIndex = null
 }
-const sendAnswer = function (answer) {
-  data.selectedIndex = null
+const getCrossWord = function () {
+  axios({
+    method: 'GET',
+    url: `api/lesson-crossword/${route.params.id}`,
+    data: {}
+ }).then(function (response) {
+   data.crossWord = response.data
+   console.log(response.data)
+ })
+}
+const sendAnswer = function (id, answer, index) {
+  console.log('response.data')
+  if(answer){
+    axios({
+      method: 'POST',
+      url: `api/test-crossword/${route.params.id}`,
+      data: {id: id, answer: answer}
+   }).then(function (response) {
+     data.selectedIndex = null
+     console.log(response.data)
+     if(response.data.reply === true){
+       data.stateAnswer = 'right',
+       data.crossWord.questions[index]['reply'] = true
+      }
+     else {
+       data.stateAnswer = 'wrong'
+       data.crossWord.questions[index]['answer'] = ''
+    }
+  })
+  }
+  // data.selectedIndex = null
+
   console.log(answer, data.selectedIndex)
 }
+getCrossWord()
 </script>
 
 <style scoped lang="scss">
@@ -114,6 +132,9 @@ const sendAnswer = function (answer) {
 .delete{
   font-size: 1.5rem!important;
 }
+.main-word-bg{
+  background: #e6e5e5;
+}
 .cross-word{
   display: flex;
   justify-content: center;
@@ -122,6 +143,10 @@ const sendAnswer = function (answer) {
   font-size: 1.5rem;
   table{
     border-collapse: collapse;
+    tr{
+      max-width: 100%;
+      overflow: scroll;
+    }
     td{
       border: 1px solid black;
       padding: 4px;
@@ -148,6 +173,11 @@ const sendAnswer = function (answer) {
   .selected{
     td{
       border: 1px solid #5186FF;
+    }
+  }
+  .right{
+    td{
+      color: green;
     }
   }
 }
@@ -198,22 +228,7 @@ const sendAnswer = function (answer) {
     color: #6f40fe;
     margin: 32px 0;
   }
-  form{
-    padding: 0 16px 16px 16px;
-    .form-item{
-      margin-bottom: 32px;
-      padding-bottom: 0;
-      flex-direction: row;
-      justify-content: center;
-      label{
-        max-width: 420px!important;
-      }
-      input{
-        text-align: center;
-      }
-    }
-  }
-  .img{
+    .img{
     margin-bottom: 32px;
     display: flex;
     justify-content: center;
@@ -224,9 +239,6 @@ const sendAnswer = function (answer) {
 }
 .submit-panel{
   justify-content: flex-end;
-}
-.selected{
-  outline-color: #5186FF;
 }
 .message-answer{
   bottom: 20px;

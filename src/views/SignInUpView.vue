@@ -12,13 +12,13 @@
           <div class="form-item">
             <label>
               <span class="material-icons">person</span>
-              <input type="email" placeholder="email" v-model="data.email">
+              <input type="email" placeholder="email" v-model="data.email" required>
             </label>
           </div>
           <div class="form-item">
             <label>
               <span class="material-icons">lock</span>
-              <input placeholder="password" :type="data.inputType" v-model="data.password">
+              <input placeholder="password" :type="data.inputType" v-model="data.password" required>
               <span class="material-icons show" @click="changeInputType">{{data.inputIcon}}</span>
             </label>
           </div>
@@ -35,25 +35,31 @@
           <div class="form-item">
             <span class="input-name">Ім'я</span>
             <label>
-              <input type="text" v-model="data.name">
+              <input type="text" v-model="data.name" required>
             </label>
           </div>
           <div class="form-item">
             <span class="input-name">Прізвище</span>
             <label>
-              <input type="text" v-model="data.surname">
+              <input type="text" v-model="data.surname" required>
+            </label>
+          </div>
+          <div class="form-item">
+            <span class="input-name">Дата народження</span>
+            <label>
+              <input type="date" v-model="data.birthday" required>
             </label>
           </div>
           <div class="form-item">
             <label>
               <span class="material-icons">alternate_email</span>
-              <input type="email" placeholder="email" v-model="data.email">
+              <input type="email" placeholder="email" v-model="data.email" required>
             </label>
           </div>
           <div class="form-item">
             <label>
               <span class="material-icons">lock</span>
-              <input placeholder="password" type="text" v-model="data.password">
+              <input placeholder="password" type="text" v-model="data.password" minlength="8" required>
             </label>
           </div>
           <div class="login-error" v-if="data.errorMessage">
@@ -79,7 +85,6 @@ const router = useRouter()
 const { store } = useStore()
 
 const data = reactive({
-  error: false,
   errorMessage: null,
   inputType: 'password',
   inputIcon: 'visibility',
@@ -123,8 +128,7 @@ const login = function () {
   }
 }
 const signUp = function () {
-  if(data.email !==null && data.password !==null && data.name !==null && data.surname !==null && data.birthday !==null){
-   axios({
+  axios({
      method: 'POST',
      url: '/api/register-user',
      data: {
@@ -132,17 +136,14 @@ const signUp = function () {
        surname: data.surname,
        email: data.email,
        password: data.password,
+       birthday: data.birthday
     }
    }).then(function () {
      router.push(`/login`)
+     data.errorMessage = null
      }).catch(function () {
        data.errorMessage = 'Упс.. щось зламалось.'
        });
-
- }
- else{
-   data.errorMessage = 'необхідно заповнити всі поля форми!'
- }
 }
 </script>
 
