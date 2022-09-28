@@ -86,7 +86,7 @@ class TestController extends Controller
     }
 
     public function one_word($lesson_id){
-        $data = new OneWordDTO(13);
+        $data = new OneWordDTO($lesson_id);
         return response($data->object());
     }
 
