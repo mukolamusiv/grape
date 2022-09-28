@@ -9,10 +9,12 @@ use App\DTO\TestsDTO\QuestionDTO;
 use App\DTO\TestsDTO\QuestionsDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Test\CrosswordRequest;
+use App\Http\Requests\Test\OneWordRequest;
 use App\Http\Requests\Test\PairRequest;
 use App\Http\Requests\Test\QuestionRequest;
 use App\Models\Answer;
 use App\Models\Crossword;
+use App\Models\OneWordQuestion;
 use App\Models\Question;
 use App\Models\QuestionLessonsAnswer;
 use App\Models\User;
@@ -88,6 +90,17 @@ class TestController extends Controller
     public function one_word($lesson_id){
         $data = new OneWordDTO($lesson_id);
         return response($data->object());
+    }
+
+    public function one_word_answer(CrosswordRequest $request, $lesson_id){
+        $data = OneWordQuestion::findOrFail($request->input('id'));
+        $answer = mb_strtolower($request->input('answer'), 'UTF-8');
+        $word = mb_strtolower($data->word, 'UTF-8');
+        if($answer == $word){
+            return response(['reply'=>true]);
+        }else{
+            return response(['reply'=>false]);
+        }
     }
 
     public function crossword(CrosswordRequest $request, $lesson_id){

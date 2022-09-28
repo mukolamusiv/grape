@@ -100,6 +100,7 @@ Route::get('lesson-question-result/{lesson_id}','\App\Http\Controllers\API\TestC
 Route::get('lesson-one-word/{lesson_id}','\App\Http\Controllers\API\TestController@one_word');
 
 Route::post('test-crossword/{lesson_id}','\App\Http\Controllers\API\TestController@crossword');
+Route::post('test-one-word/{lesson_id}','\App\Http\Controllers\API\TestController@one_word_answer');
 Route::post('test-question/{question_id}','\App\Http\Controllers\API\TestController@question');
 
 Route::post('test-pair/{pair_id}','\App\Http\Controllers\API\TestController@pair');
