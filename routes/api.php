@@ -97,6 +97,7 @@ Route::put('lesson-check-video/{lesson_id}','\App\Http\Controllers\API\LessonCon
 //Route::get('lesson-list-tests/{lesson_id}','\App\Http\Controllers\API\LessonController@list_tests');
 Route::get('lesson-test/{lesson_id}','\App\Http\Controllers\API\TestController@crossword');
 Route::get('lesson-question-result/{lesson_id}','\App\Http\Controllers\API\TestController@question_result');
+Route::get('lesson-one-word/{lesson_id}','\App\Http\Controllers\API\TestController@one_word');
 
 Route::post('test-crossword/{lesson_id}','\App\Http\Controllers\API\TestController@crossword');
 Route::post('test-question/{question_id}','\App\Http\Controllers\API\TestController@question');

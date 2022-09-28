@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\DTO\LessonDTO;
 use App\DTO\TestsDTO\CrosswordDTO;
+use App\DTO\TestsDTO\OneWordDTO;
 use App\DTO\TestsDTO\QuestionDTO;
 use App\DTO\TestsDTO\QuestionsDTO;
 use App\Http\Controllers\Controller;
@@ -82,6 +83,11 @@ class TestController extends Controller
 
     public function pair(PairRequest $pairRequest){
 
+    }
+
+    public function one_word($lesson_id){
+        $data = new OneWordDTO(13);
+        return response($data->object());
     }
 
     public function crossword(CrosswordRequest $request, $lesson_id){
