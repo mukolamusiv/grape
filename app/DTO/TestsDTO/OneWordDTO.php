@@ -67,8 +67,8 @@ class OneWordDTO
                     return false;
                 }
             }
+            $this->completed = true;
         }
-        $this->completed = true;
     }
 
     public function object(){
