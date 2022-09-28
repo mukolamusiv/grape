@@ -2,7 +2,7 @@
   <section class="wrap" v-if="data.questions && !data.questionsEnd" @click="data.stateAnswer = false">
     <div class="test animate__animated animate__zoomIn" :class="{'opacity' : data.stateAnswer !== false}">
       <div class="close">
-        <span class="test-number" @click="data.questionNamber++">
+        <span class="test-number">
           Питання {{data.questionNamber + 1}} / {{data.questionsCount}}
         </span>
         <span class="material-icons c-pointer cancel" @click="store.ui.lessonTab = 'video'">disabled_by_default</span>
@@ -57,12 +57,12 @@ const route = useRoute()
 const data = reactive({
   questions: null,
   question: null,
+  answerID: null,
   questionNamber: 0,
   questionsCount: 0,
-  answerID: null,
-  questionsEnd: false,
   stateAnswer: false,
-  rightCount: 0
+  rightCount: 0,
+  questionsEnd: false
 })
 const getQuestion = function () {
   axios({

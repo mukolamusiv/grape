@@ -2,8 +2,8 @@
   <section class="wrap" v-if="data.question && !data.questionsEnd" @click="data.stateAnswer = false">
     <div class="test animate__animated animate__zoomIn" :class="{'opacity' : data.stateAnswer !== false}">
       <div class="close">
-        <span class="test-number" @click="data.questionNamber++">
-          Питання {{data.questionNamber + 1}} / {{data.questionsCount}}
+        <span class="test-number">
+          Слово {{data.questionNamber + 1}} / {{data.questionsCount}}
         </span>
         <span class="material-icons c-pointer cancel" @click="store.ui.lessonTab = 'video'">disabled_by_default</span>
       </div>
@@ -17,7 +17,7 @@
         <div class="form-item">
           <span class="input-name"></span>
           <label>
-            <input type="text" v-model="data.answer" required size="10">
+            <input type="text" v-model="data.answer" required v-on:keyup.enter="sendAnswer()">
           </label>
         </div>
         <div class="submit-panel">
@@ -37,40 +37,86 @@
       <img src="@/assets/img/right.png" alt="Grape">
     </div>
   </section>
+  <section class="wrap" v-if="data.questionsEnd">
+    <div class="test questions-end">
+      <div class="close">
+        <span class="material-icons c-pointer cancel" @click="store.ui.lessonTab = 'video'">disabled_by_default</span>
+      </div>
+      <div class="message">
+        "Одне слово" завершено!<br>
+        <span>Вірних слів: {{data.rightCount}} з {{data.questionsCount}}</span>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script setup>
-import { reactive } from 'vue'
-// import { useRoute } from 'vue-router'
-// import axios from 'axios'
+import { reactive, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import axios from 'axios'
 import { useStore } from '@/store'
 
 const { store } = useStore()
-// const route = useRoute()
+const route = useRoute()
 
 const data = reactive({
-  answer: null,
   questions: null,
-  question: {
-    id: 7,
-    description: "Яка емоція на зображенні?",
-    image_src: "https://ukrpublic.com/images/2021/06/15/s-96493e3985154d4ea607201fb550e5_large.jpg",
-  },
+  question: null,
+  answer: null,
+  questionNamber: 0,
+  questionsCount: 0,
+  rightCount: 0,
   stateAnswer: false,
+  questionsEnd: false
 })
 
 const sendAnswer = function () {
-
   if(data.answer){
-    console.log(
-      {
-        question: data.question.id,
-        ansver: data.answer
-      }
-
-    )
+    axios({
+      method: 'POST',
+      url: `/api/test-one-word/${route.params.id}`,
+      data: {id: data.question.id, answer: data.answer}
+   }).then(function (response) {
+     console.log(response.data)
+     if(response.data.reply === true){
+       data.stateAnswer = 'right'
+       data.rightCount = data.rightCount +1
+     }
+     else {
+       data.stateAnswer = 'wrong'
+    }
+    })
   }
 }
+const getQuestion = function () {
+  axios({
+    method: 'GET',
+    url: `/api/lesson-one-word/${route.params.id}`,
+    data: {}
+ }).then(function (response) {
+   console.log(response.data)
+   data.questions = response.data.questions
+   data.questionsCount = data.questions.length
+   data.question = data.questions[data.questionNamber]
+  })
+}
+
+watch( () => data.questionNamber, () => {
+    if(data.questions) {
+      data.question = data.questions[data.questionNamber]
+      data.answer = null
+    }
+})
+watch( () => data.stateAnswer, () => {
+    if(data.stateAnswer === false && data.questionNamber < (data.questionsCount -1 ) ) {
+      data.questionNamber = data.questionNamber +1
+      console.log(data.questionNamber)
+    }
+    else if(data.stateAnswer === false) {
+      data.questionsEnd = true
+    }
+})
+getQuestion()
 </script>
 
 <style scoped lang="scss">
