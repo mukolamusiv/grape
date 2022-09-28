@@ -60,10 +60,12 @@ class OneWordDTO
 
     private function completed_status(){
         $request = OneWordAnswerUser::where(['user_id'=>1,'lesson_id'=>$this->lesson_id])->get();
-        foreach ($this->data->qustion as $question){
-            if($request->firstWhere(['id' => $question->id]) != null){
-                $this->completed = false;
-                return false;
+        if($request->isNotNull()){
+            foreach ($this->data->qustion as $question){
+                if($request->firstWhere(['id' => $question->id]) != null){
+                    $this->completed = false;
+                    return false;
+                }
             }
         }
         $this->completed = true;
