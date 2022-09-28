@@ -22,7 +22,7 @@ class OneWordDTO
     /**
      * @var object
      */
-    public object $question;
+    public object $questions;
 
     /**
      * @var object
@@ -50,7 +50,7 @@ class OneWordDTO
             $dat->put('image_src',$question->image_src);
             $data->push($dat);
         }
-        $this->question = $data;
+        $this->questions = $data;
     }
 
     private function setData(){
