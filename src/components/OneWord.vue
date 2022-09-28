@@ -17,7 +17,7 @@
         <div class="form-item">
           <span class="input-name"></span>
           <label>
-            <input type="text" v-model="data.answer" required v-on:keyup.enter="sendAnswer()">
+            <input type="text" v-model="data.answer" v-on:keyup.enter="sendAnswer()">
           </label>
         </div>
         <div class="submit-panel">
