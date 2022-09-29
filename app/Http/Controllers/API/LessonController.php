@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\DTO\LessonDTO;
 use App\DTO\TestsDTO\CrosswordDTO;
+use App\DTO\TestsDTO\FindPairDTO;
 use App\DTO\TestsDTO\QuestionsDTO;
 use App\Http\Controllers\Controller;
 use App\Models\Crossword;
@@ -87,6 +88,15 @@ class LessonController extends Controller
     public function pair($lesson_id){
         $pair = Find_a_Pair::with('data')->where(['lesson_id'=>$lesson_id])->get();
         return response($pair);
+    }
+
+    /**
+     * @param $lesson_id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
+    public function find_pair($lesson_id){
+        $data = new FindPairDTO($lesson_id);
+        return response($data->object());
     }
 
     public function crossword($lesson_id){
