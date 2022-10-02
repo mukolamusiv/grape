@@ -14,6 +14,7 @@ use App\Http\Requests\Test\PairRequest;
 use App\Http\Requests\Test\QuestionRequest;
 use App\Models\Answer;
 use App\Models\Crossword;
+use App\Models\Find_a_Pair_Data;
 use App\Models\OneWordQuestion;
 use App\Models\Question;
 use App\Models\QuestionLessonsAnswer;
@@ -84,7 +85,15 @@ class TestController extends Controller
     }
 
     public function pair(PairRequest $pairRequest){
+        $pair_1 = Find_a_Pair_Data::find($pairRequest->input('answer')[0]);
+        $pair_2 = Find_a_Pair_Data::find($pairRequest->input('answer')[1]);
+        //$data = $pairRequest->input('answer');
 
+        if($pair_1->id === $pair_2->pair_id or $pair_2->id === $pair_1->pair_id ){
+            return response(true);
+        }else{
+            return response(false);
+        }
     }
 
     public function one_word($lesson_id){
