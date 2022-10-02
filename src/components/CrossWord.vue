@@ -252,11 +252,6 @@ input:focus ~   td{
   justify-content: center;
   align-items: center;
   z-index: 1;
-  .material-icons{
-    font-size: 200px;
-    color: red;
-    height: fit-content;
-  }
   img{
     max-height: 100%;
   }

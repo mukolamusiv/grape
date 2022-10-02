@@ -17,10 +17,10 @@
         <div class="form-item">
           <span class="input-name"></span>
           <label>
-            <input type="text" v-model="data.answer" v-on:keyup.enter="sendAnswer()">
+            <input type="text" v-model="data.answer">
           </label>
         </div>
-        <div class="submit-panel">
+        <div class="submit-panel" v-if="!data.stateAnswer && data.answer">
           <button type="submit" class="btn">
             <span class="material-icons">check</span>
             Надіслати відповідь
@@ -77,14 +77,13 @@ const sendAnswer = function () {
       url: `/api/test-one-word/${route.params.id}`,
       data: {id: data.question.id, answer: data.answer}
    }).then(function (response) {
-     console.log(response.data)
      if(response.data.reply === true){
        data.stateAnswer = 'right'
        data.rightCount = data.rightCount +1
-     }
+    }
      else {
        data.stateAnswer = 'wrong'
-    }
+    } console.log(data.rightCount)
     })
   }
 }
@@ -202,11 +201,6 @@ getQuestion()
   justify-content: center;
   align-items: center;
   z-index: 1;
-  .material-icons{
-    font-size: 200px;
-    color: red;
-    height: fit-content;
-  }
   img{
     max-height: 100%;
   }

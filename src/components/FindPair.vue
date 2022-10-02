@@ -1,27 +1,20 @@
 <template>
-  <section class="wrap" v-if="data.questions && !data.questionsEnd" @click="data.stateAnswer = false">
+  <section class="wrap" v-if="!data.questionsEnd && data.pairs" @click="data.stateAnswer = false">
     <div class="test animate__animated animate__zoomIn" :class="{'opacity' : data.stateAnswer !== false}">
       <div class="close">
-        <span class="test-number">
-          Питання {{data.questionNamber + 1}} / {{data.questionsCount}}
-        </span>
         <span class="material-icons c-pointer cancel" @click="store.ui.lessonTab = 'video'">disabled_by_default</span>
       </div>
       <div class="question">
-        {{data.question.description}}
+        Підбери пару
       </div>
-      <form v-if="data.question" @submit.prevent="sendAnswer()">
-        <label v-for="(answer) in data.question.answer" v-bind:key="answer.id" :class="{ selected: answer.id ===  data.answerID}">
-          <input type="radio" name="answer" :value="answer.id" v-model="data.answerID">
-          <span>{{answer.text}}</span>
-        </label>
-        <div class="submit-panel" v-if="!data.stateAnswer && data.answerID">
-          <button type="submit" class="btn">
-            <span class="material-icons">check</span>
-            Надіслати відповідь
-          </button>
+      <div class="pairs">
+        <div class="pairs-item"  v-for="(pair, index) in data.pairs" v-bind:key="pair.id" :class="{'selected' : pair.selected }" @click="selectItem(index)" v-show="!pair.hidden">
+          <img :src="pair.image_src"  v-if="pair.image_src">
+          <div class="text">
+            {{pair.text}}
+          </div>
         </div>
-      </form>
+      </div>
     </div>
     <div class="message-answer wrong-answer animate__animated animate__bounceIn" v-if="data.stateAnswer === 'wrong'">
       <div class="message">:( Нажаль відповідь невірна!</div>
@@ -38,8 +31,7 @@
         <span class="material-icons c-pointer cancel" @click="store.ui.lessonTab = 'video'">disabled_by_default</span>
       </div>
       <div class="message">
-        Тест завершено!<br>
-        <span>Вірних відповідей: {{data.rightCount}} з {{data.questionsCount}} питань</span>
+        "Підбери пару" завершено!<br>
       </div>
     </div>
   </section>
@@ -50,70 +42,90 @@ import { reactive, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
 import { useStore } from '@/store'
-
+//
 const { store } = useStore()
 const route = useRoute()
 
 const data = reactive({
-  questions: null,
+  pairs: null,
   question: null,
-  answerID: null,
-  questionNamber: 0,
-  questionsCount: 0,
-  stateAnswer: false,
+  answer: [],
+  pairsCount: 0,
   rightCount: 0,
+  stateAnswer: false,
   questionsEnd: false
 })
-const getQuestion = function () {
+
+const getPairs = function () {
   axios({
     method: 'GET',
-    url: `/api/lesson-question/${route.params.id}`,
+    url: `/api/lesson-find-pair/${route.params.id}`,
     data: {}
  }).then(function (response) {
    console.log(response.data)
-   data.questions = response.data.questionsDTO
-   data.questionsCount = data.questions.length
-   data.question = data.questions[data.questionNamber]
+   data.pairs = response.data.data
+   data.pairsCount = data.pairs.length
   })
 }
+
 const sendAnswer = function () {
-  if(data.answerID){
+  if(data.answer){
     axios({
       method: 'POST',
-      url: `api/test-question/${data.question.id}`,
-      data: {answer_id: data.answerID}
+      url: `/api/test-pair`,
+      data: {answer: [data.answer[0].id, data.answer[1].id]}
    }).then(function (response) {
      console.log(response.data)
-     if(response.data.reply === true){
+     if(response.data === 1){
        data.stateAnswer = 'right'
        data.rightCount = data.rightCount +1
      }
-     else {
+     else if(response.data == 'Не вірна пара') {
        data.stateAnswer = 'wrong'
-    }
-     // else if (response.data === 'true'){
-     //   data.stateAnswer = 'right'
-     //   data.rightCount = data.rightCount +1
-     // }
+     }
    })
   }
 }
-watch( () => data.questionNamber, () => {
-    if(data.questions) {
-      data.question = data.questions[data.questionNamber]
+
+const selectItem = function (index) {
+  if(!data.stateAnswer){
+    if (data.pairs[index].selected === true) {
+      data.pairs[index].selected = false
+      data.answer = []
     }
-})
-watch( () => data.stateAnswer, () => {
-    if(data.stateAnswer === false && data.questionNamber < (data.questionsCount -1 ) ) {
-      data.questionNamber = data.questionNamber +1
-      console.log(data.questionNamber)
+    else {
+      data.pairs[index]['selected'] = true
+      data.answer.push(
+        {
+          id: data.pairs[index].id,
+          index: index
+        }
+      )
     }
-    else if(data.stateAnswer === false) {
-      data.questionsEnd = true
+  }
+}
+
+watch( () =>   data.answer.length, () => {
+    if(data.answer.length === 2){
+      sendAnswer()
     }
 })
 
-getQuestion()
+watch( () => data.stateAnswer, (newValue, oldValue) => {
+    if(oldValue == 'right'){
+      data.pairs[data.answer[0].index].hidden = true
+      data.pairs[data.answer[1].index].hidden = true
+    }
+    if(newValue === false) {
+      data.pairs[data.answer[0].index].selected = false
+      data.pairs[data.answer[1].index].selected = false
+      data.answer = []
+      if(data.rightCount == (data.pairsCount/2)) {
+        data.questionsEnd = true
+      }
+    }
+})
+getPairs()
 </script>
 
 <style scoped lang="scss">
@@ -159,34 +171,46 @@ getQuestion()
     font-size: 1.5rem;
     font-weight: 600;
     color: #6f40fe;
-    margin: 32px 0;
+    margin: 32px 0 16px 0;
+  }
+  .pairs{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #6f40fe;
+    .pairs-item{
+      cursor: pointer;
+      width: calc(33.33% - 16px);
+      min-height: 140px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 8px;
+      margin: 8px;
+      outline: 2px solid #e1e3e5;
+      border-radius: 3px;
+      img{
+        margin-bottom: 8px;
+      }
+      .text{
+        text-align: center;
+      }
+    }
   }
 }
-form{
-  display: flex;
-  flex-direction: column;
-  padding: 0 16px 16px 16px;
-  input[type="radio"] {
-    display: none;
-    transform: scale(1.2);
-    margin: 0 8px;
-  }
-  label{
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    outline: 2px solid #e6e6e6;
-    margin-bottom: 32px;
-    padding: 8px;
-    border-radius: 5px;
-    font-size: 1.2rem;
-  }
-  .submit-panel{
-    justify-content: flex-end;
-  }
+.submit-panel{
+  justify-content: flex-end;
 }
 .selected{
-  outline-color: #5186FF;
+  outline-color: #5186FF!important;
+  // background: #5186FF;
 }
 .message-answer{
   bottom: 20px;
@@ -230,12 +254,6 @@ form{
   }
 }
 @media (max-width: 575.98px) {
-  .btn{
-    width: 100%;
-  }
-  form label{
-    font-size: 1rem;
-  }
   .message-answer{
     .message {
       font-size: 1.8rem;
@@ -244,6 +262,9 @@ form{
     img{
       max-height: 40vh;
     }
+  }
+  .pairs-item{
+    width: calc(50% - 16px)!important;
   }
 }
 </style>
