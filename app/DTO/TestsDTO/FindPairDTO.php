@@ -38,13 +38,12 @@ class FindPairDTO
         $return = collect();
         foreach ($data as $question){
             $dat = collect();
-
             $dat->put('id',$question->id);
             //$dat->put('title',$question->title);
             //$dat->put('description',$question->description);
             $dat->put('image_src',$question->image_src);
             $dat->put('text',$question->text);
-            $return->push($dat);
+            $return->push($dat->shuffle());
         }
         $this->data = $return;
     }
