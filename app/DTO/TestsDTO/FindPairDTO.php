@@ -41,7 +41,7 @@ class FindPairDTO
             $dat->put('id',$question->id);
             //$dat->put('title',$question->title);
             //$dat->put('description',$question->description);
-            $dat->put('image_src',$question->image_src);
+            $dat->put('image_src',$question->image);
             $dat->put('text',$question->text);
             $return->push($dat);
         }
