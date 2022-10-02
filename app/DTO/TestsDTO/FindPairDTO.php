@@ -36,13 +36,14 @@ class FindPairDTO
 
     private function setData($data){
         $return = collect();
-        foreach ($data as $question){
+        foreach ($data->shuffle() as $question){
             $dat = collect();
             $dat->put('id',$question->id);
             //$dat->put('title',$question->title);
             //$dat->put('description',$question->description);
             $dat->put('image_src',$question->image);
             $dat->put('text',$question->text);
+            //$dat = $dat->shuffle();
             $return->push($dat);
         }
         $this->data = $return;
