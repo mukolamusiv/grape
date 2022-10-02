@@ -92,7 +92,7 @@ class TestController extends Controller
         if($pair_1->id === $pair_2->pair_id or $pair_2->id === $pair_1->pair_id ){
             return response(true);
         }else{
-            return response(false);
+            return response("Не вірна пара");
         }
     }
 
