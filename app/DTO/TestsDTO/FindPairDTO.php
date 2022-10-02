@@ -43,7 +43,7 @@ class FindPairDTO
             //$dat->put('description',$question->description);
             $dat->put('image_src',$question->image_src);
             $dat->put('text',$question->text);
-            $return->push($dat->shuffle());
+            $return->push($dat);
         }
         $this->data = $return;
     }
