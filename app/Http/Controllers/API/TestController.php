@@ -85,8 +85,8 @@ class TestController extends Controller
         return response(['all'=>$answers->count(),'true'=>$i]);
     }
 
-    public function pair(PairRequest $pairRequest,$lesson_id){
-        $data = new FindPairDTO($lesson_id);
+    public function pair(PairRequest $pairRequest){
+        $data = new FindPairDTO(7);
         return response($data->setCompleted($pairRequest->input('answer')));
 
 //        $pair_1 = Find_a_Pair_Data::find($pairRequest->input('answer')[0]);
