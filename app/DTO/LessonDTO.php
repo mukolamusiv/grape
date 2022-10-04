@@ -4,6 +4,9 @@
 namespace App\DTO;
 
 
+use App\DTO\TestsDTO\CrosswordDTO;
+use App\DTO\TestsDTO\FindPairDTO;
+use App\DTO\TestsDTO\OneWordDTO;
 use App\DTO\TestsDTO\QuestionsDTO;
 use App\Models\Lessons;
 use App\Models\UserLessons;
@@ -24,6 +27,8 @@ class LessonDTO
     public bool $crossword_completed = false;
     public bool $coloring_page_completed = false;
     public bool $find_couple_completed = false;
+    public bool $open_question = false;
+    public bool $one_word = false;
     ///////////////////////////////////////////
 
     /**
@@ -44,6 +49,9 @@ class LessonDTO
         $this->active_lesson = $this->setActiveLesson($lesson_id);
         $this->setVars();
         $this->setQuestions();
+        $this->setPair();
+        $this->setOneWord();
+        $this->setCrossword();
     }
 
     /**
@@ -95,5 +103,20 @@ class LessonDTO
     private function setQuestions(){
         $data = new QuestionsDTO($this->id);
         $this->question_completed = $data->completed;
+    }
+
+    private function setPair(){
+        $data = new FindPairDTO($this->id);
+        $this->find_couple_completed = $data->completed;
+    }
+
+    private function setOneWord(){
+        $data = new OneWordDTO($this->id);
+        $this->one_word = $data->completed;
+    }
+
+    private function setCrossword(){
+        $data = new CrosswordDTO($this->id);
+        $this->crossword_completed = $data->completed;
     }
 }

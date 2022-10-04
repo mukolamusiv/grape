@@ -35,7 +35,7 @@ class CrosswordDTO
     /**
      * @var bool
      */
-    //public bool $completed = false;
+    public bool $completed = false;
     /**
      * @var object
      */
@@ -64,6 +64,7 @@ class CrosswordDTO
         $this->lesson_id = $lesson_id;
         $this->find();
         $this->setValue();
+        $this->find_user_answer();
     }
 
     private function find(){

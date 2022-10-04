@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\DTO\LessonDTO;
 use App\DTO\TestsDTO\CrosswordDTO;
+use App\DTO\TestsDTO\FindPairDTO;
 use App\DTO\TestsDTO\OneWordDTO;
 use App\DTO\TestsDTO\QuestionDTO;
 use App\DTO\TestsDTO\QuestionsDTO;
@@ -31,10 +32,10 @@ class TestController extends Controller
         $DTO =  new QuestionDTO($DTO);
         if($DTO->audit_answer($questionRequest->input('answer_id'))){
             $this->add_question_answer($questionRequest->input('answer_id'),$question_id,true);
-            return response(['water'=>5,'reply'=>true]);
+            return response(['reply'=>true]);
         }else{
             $this->add_question_answer($questionRequest->input('answer_id'),$question_id);
-            return response(['water'=>0,'reply'=>false]);
+            return response(['reply'=>false]);
         }
 //        return response($DTO->object());
 //        $question = Question::findOrFail($question_id);
@@ -84,16 +85,18 @@ class TestController extends Controller
         return response(['all'=>$answers->count(),'true'=>$i]);
     }
 
-    public function pair(PairRequest $pairRequest){
-        $pair_1 = Find_a_Pair_Data::find($pairRequest->input('answer')[0]);
-        $pair_2 = Find_a_Pair_Data::find($pairRequest->input('answer')[1]);
-        //$data = $pairRequest->input('answer');
+    public function pair(PairRequest $pairRequest,$lesson_id){
+        $data = new FindPairDTO($lesson_id);
+        return response($data->setCompleted($pairRequest->input('answer')));
 
-        if($pair_1->id === $pair_2->pair_id or $pair_2->id === $pair_1->pair_id ){
-            return response(true);
-        }else{
-            return response("Не вірна пара");
-        }
+//        $pair_1 = Find_a_Pair_Data::find($pairRequest->input('answer')[0]);
+//        $pair_2 = Find_a_Pair_Data::find($pairRequest->input('answer')[1]);
+//        //$data = $pairRequest->input('answer');
+//        if($pair_1->id === $pair_2->pair_id or $pair_2->id === $pair_1->pair_id ){
+//            return response(true);
+//        }else{
+//            return response("Не вірна пара");
+//        }
     }
 
     public function one_word($lesson_id){
@@ -102,14 +105,16 @@ class TestController extends Controller
     }
 
     public function one_word_answer(CrosswordRequest $request, $lesson_id){
-        $data = OneWordQuestion::findOrFail($request->input('id'));
-        $answer = mb_strtolower($request->input('answer'), 'UTF-8');
-        $word = mb_strtolower($data->word, 'UTF-8');
-        if($answer == $word){
-            return response(['reply'=>true]);
-        }else{
-            return response(['reply'=>false]);
-        }
+        $data = new OneWordDTO($lesson_id);
+        return response(['reply'=>$data->answer($request->input('id'),$request->input('answer'))]);
+//        $data = OneWordQuestion::findOrFail($request->input('id'));
+//        $answer = mb_strtolower($request->input('answer'), 'UTF-8');
+//        $word = mb_strtolower($data->word, 'UTF-8');
+//        if($answer == $word){
+//            return response(['reply'=>true]);
+//        }else{
+//            return response(['reply'=>false]);
+//        }
     }
 
     public function crossword(CrosswordRequest $request, $lesson_id){

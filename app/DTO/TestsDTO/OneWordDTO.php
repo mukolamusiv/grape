@@ -6,6 +6,7 @@ namespace App\DTO\TestsDTO;
 
 use App\Models\OneWord;
 use App\Models\OneWordAnswerUser;
+use App\Models\OneWordQuestion;
 
 class OneWordDTO
 {
@@ -58,16 +59,44 @@ class OneWordDTO
         $this->data = $data->first();
     }
 
+    /**
+     * @return false
+     */
     private function completed_status(){
         $request = OneWordAnswerUser::where(['user_id'=>1,'lesson_id'=>$this->lesson_id])->get();
         if($request->isNotEmpty()){
-            foreach ($this->data->qustion as $question){
+            foreach ($this->data->question as $question){
                 if($request->firstWhere(['id' => $question->id]) != null){
                     $this->completed = false;
                     return false;
                 }
             }
             $this->completed = true;
+        }
+    }
+
+    public function answer(int $id,string $answer){
+        $data = OneWordQuestion::findOrFail($id);
+        $answer = mb_strtolower($answer, 'UTF-8');
+        $word = mb_strtolower($data->word, 'UTF-8');
+        if($answer == $word){
+            $data = new OneWordAnswerUser();
+            $data->user_id = 1;
+            $data->lesson_id = $this->lesson_id;
+            $data->one_word_id = $this->data->id;
+            $data->one_word_question_id = $id;
+            $data->reply = true;
+            $data->save();
+            return true;
+        }else{
+            $data = new OneWordAnswerUser();
+            $data->user_id = 1;
+            $data->lesson_id = $this->lesson_id;
+            $data->one_word_id = $this->data->id;
+            $data->one_word_question_id = $id;
+            $data->reply = false;
+            $data->save();
+            return false;
         }
     }
 

@@ -104,5 +104,5 @@ Route::post('test-crossword/{lesson_id}','\App\Http\Controllers\API\TestControll
 Route::post('test-one-word/{lesson_id}','\App\Http\Controllers\API\TestController@one_word_answer');
 Route::post('test-question/{question_id}','\App\Http\Controllers\API\TestController@question');
 
-Route::post('test-pair','\App\Http\Controllers\API\TestController@pair');
+Route::post('test-pair/{lesson_id}','\App\Http\Controllers\API\TestController@pair');
 //Auth::routes();
