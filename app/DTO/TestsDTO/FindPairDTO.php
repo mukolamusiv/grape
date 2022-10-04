@@ -90,7 +90,7 @@ class FindPairDTO
 
     private function check_completed(){
         $this->answer = PairLessonsAnswer::where(['user_id'=>1,'find_a_pair_id'=>$this->object->id,'reply'=>true])->get();
-        if($this->count_dat >= $this->answer->count()){
+        if($this->count_dat <= $this->answer->count()){
             $this->completed = true;
         }
     }

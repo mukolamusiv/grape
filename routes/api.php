@@ -88,21 +88,23 @@ Route::put('stop-topic/{id}','\App\Http\Controllers\API\LessonsController@stop_t
 
 Route::get('lesson/{lesson_id}','\App\Http\Controllers\API\LessonController@lesson');
 //Route::get('lesson-video/{lesson_id}','\App\Http\Controllers\API\LessonController@video');
-Route::get('lesson-question/{lesson_id}','\App\Http\Controllers\API\LessonController@question');
-Route::get('lesson-pair/{lesson_id}','\App\Http\Controllers\API\LessonController@pair');
-Route::get('lesson-crossword/{lesson_id}','\App\Http\Controllers\API\LessonController@crossword');
-Route::get('lesson-tests/{lesson_id}','\App\Http\Controllers\API\LessonController@list_tests');
+
+//Route::get('lesson-tests/{lesson_id}','\App\Http\Controllers\API\LessonController@list_tests');
 Route::put('lesson-check-video/{lesson_id}','\App\Http\Controllers\API\LessonController@check_video');
 //Route::get('lesson-status-video/{lesson_id}','\App\Http\Controllers\API\LessonController@status_video');
 //Route::get('lesson-list-tests/{lesson_id}','\App\Http\Controllers\API\LessonController@list_tests');
-Route::get('lesson-test/{lesson_id}','\App\Http\Controllers\API\TestController@crossword');
-Route::get('lesson-question-result/{lesson_id}','\App\Http\Controllers\API\TestController@question_result');
+
+//Route::get('lesson-question-result/{lesson_id}','\App\Http\Controllers\API\TestController@question_result');
 Route::get('lesson-one-word/{lesson_id}','\App\Http\Controllers\API\TestController@one_word');
 Route::get('lesson-find-pair/{lesson_id}','\App\Http\Controllers\API\LessonController@find_pair');
+Route::get('lesson-question/{lesson_id}','\App\Http\Controllers\API\LessonController@question');
+Route::get('lesson-crossword/{lesson_id}','\App\Http\Controllers\API\LessonController@crossword');
 
-Route::post('test-crossword/{lesson_id}','\App\Http\Controllers\API\TestController@crossword');
-Route::post('test-one-word/{lesson_id}','\App\Http\Controllers\API\TestController@one_word_answer');
-Route::post('test-question/{question_id}','\App\Http\Controllers\API\TestController@question');
-
-Route::post('test-pair','\App\Http\Controllers\API\TestController@pair');
+/////////////
+Route::post('lesson-crossword/{lesson_id}','\App\Http\Controllers\API\TestController@crossword');
+Route::post('lesson-one-word/{lesson_id}','\App\Http\Controllers\API\TestController@one_word_answer');
+Route::post('lesson-question/{lesson_id}','\App\Http\Controllers\API\TestController@question');
+Route::post('lesson-pair/{lesson_id}','\App\Http\Controllers\API\TestController@pair');
 //Auth::routes();
+
+//Route::get('lesson-test','\App\Http\Controllers\API\TestController@test');
