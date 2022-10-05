@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 
 //////////////////////////////////////////////
+Route::post('register-user/{hes}','\App\Http\Controllers\API\AuthController@register');
 Route::post('register-user','\App\Http\Controllers\API\AuthController@register');
 Route::post('login-user','\App\Http\Controllers\API\AuthController@login');
 Route::post('logout-user','\App\Http\Controllers\API\AuthController@logout');//->middleware(['auth']);
@@ -106,6 +107,7 @@ Route::post('lesson-crossword/{lesson_id}','\App\Http\Controllers\API\TestContro
 Route::post('lesson-one-word/{lesson_id}','\App\Http\Controllers\API\TestController@one_word_answer');
 Route::post('lesson-question/{lesson_id}','\App\Http\Controllers\API\TestController@question');
 Route::post('lesson-pair/{lesson_id}','\App\Http\Controllers\API\TestController@pair');
+Route::post('lesson-open-question/{lesson_id}','\App\Http\Controllers\API\TestController@open_question');
 //Auth::routes();
 
 //Route::get('lesson-test','\App\Http\Controllers\API\TestController@test');
