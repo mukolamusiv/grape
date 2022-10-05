@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\DTO\LessonDTO;
 use App\DTO\TestsDTO\CrosswordDTO;
 use App\DTO\TestsDTO\FindPairDTO;
+use App\DTO\TestsDTO\OpenQuestionDTO;
 use App\DTO\TestsDTO\QuestionsDTO;
 use App\Http\Controllers\Controller;
 use App\Models\Crossword;
@@ -151,6 +152,16 @@ class LessonController extends Controller
         $data->put('question',$lesson->question->count());
         $data->put('find_to_pair',$lesson->find_to_pair->count());
         return response($data);
+    }
+
+    public function test(){
+        $data = new OpenQuestionDTO(13);
+        return response($data->object());
+    }
+
+    public function open_question($lesson_id){
+        $data = new OpenQuestionDTO($lesson_id);
+        return response($data->object());
     }
 
 

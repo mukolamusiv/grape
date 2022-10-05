@@ -89,16 +89,17 @@ Route::put('stop-topic/{id}','\App\Http\Controllers\API\LessonsController@stop_t
 Route::get('lesson/{lesson_id}','\App\Http\Controllers\API\LessonController@lesson');
 //Route::get('lesson-video/{lesson_id}','\App\Http\Controllers\API\LessonController@video');
 
-//Route::get('lesson-tests/{lesson_id}','\App\Http\Controllers\API\LessonController@list_tests');
+Route::get('lesson-tests/{lesson_id}','\App\Http\Controllers\API\LessonController@test');
 Route::put('lesson-check-video/{lesson_id}','\App\Http\Controllers\API\LessonController@check_video');
 //Route::get('lesson-status-video/{lesson_id}','\App\Http\Controllers\API\LessonController@status_video');
 //Route::get('lesson-list-tests/{lesson_id}','\App\Http\Controllers\API\LessonController@list_tests');
 
 //Route::get('lesson-question-result/{lesson_id}','\App\Http\Controllers\API\TestController@question_result');
 Route::get('lesson-one-word/{lesson_id}','\App\Http\Controllers\API\TestController@one_word');
-Route::get('lesson-find-pair/{lesson_id}','\App\Http\Controllers\API\LessonController@find_pair');
+Route::get('lesson-pair/{lesson_id}','\App\Http\Controllers\API\LessonController@find_pair');
 Route::get('lesson-question/{lesson_id}','\App\Http\Controllers\API\LessonController@question');
 Route::get('lesson-crossword/{lesson_id}','\App\Http\Controllers\API\LessonController@crossword');
+Route::get('lesson-open-question/{lesson_id}','\App\Http\Controllers\API\LessonController@open_question');
 
 /////////////
 Route::post('lesson-crossword/{lesson_id}','\App\Http\Controllers\API\TestController@crossword');

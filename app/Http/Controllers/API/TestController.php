@@ -11,12 +11,14 @@ use App\DTO\TestsDTO\QuestionsDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Test\CrosswordRequest;
 use App\Http\Requests\Test\OneWordRequest;
+use App\Http\Requests\Test\OpenQuestionRequest;
 use App\Http\Requests\Test\PairRequest;
 use App\Http\Requests\Test\QuestionRequest;
 use App\Models\Answer;
 use App\Models\Crossword;
 use App\Models\Find_a_Pair_Data;
 use App\Models\OneWordQuestion;
+use App\Models\OpenQuestionAnswerUser;
 use App\Models\Question;
 use App\Models\QuestionLessonsAnswer;
 use App\Models\User;
@@ -119,5 +121,16 @@ class TestController extends Controller
 
     public function test(){
         $data = new FindPairDTO(13);
+    }
+
+    public function open_question(OpenQuestionRequest $request, $lesson_id){
+        $data = new OpenQuestionAnswerUser();
+        $data->user_id = 1;
+        $data->open_question_id = $request->input('id');
+        $data->audit = false;
+        $data->audit_user_id = 1;
+        $data->reply = false;
+        $data->save();
+        return response('success');
     }
 }
