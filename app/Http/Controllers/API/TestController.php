@@ -130,6 +130,7 @@ class TestController extends Controller
         $data->audit = false;
         $data->audit_user_id = 1;
         $data->reply = false;
+        $data->answer = $request->input('answer');
         $data->save();
         return response('success');
     }
