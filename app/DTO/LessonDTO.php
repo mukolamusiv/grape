@@ -7,6 +7,7 @@ namespace App\DTO;
 use App\DTO\TestsDTO\CrosswordDTO;
 use App\DTO\TestsDTO\FindPairDTO;
 use App\DTO\TestsDTO\OneWordDTO;
+use App\DTO\TestsDTO\OpenQuestionDTO;
 use App\DTO\TestsDTO\QuestionsDTO;
 use App\Models\Lessons;
 use App\Models\UserLessons;
@@ -52,6 +53,7 @@ class LessonDTO
         $this->setPair();
         $this->setOneWord();
         $this->setCrossword();
+        $this->setOpenQuestion();
     }
 
     /**
@@ -118,5 +120,10 @@ class LessonDTO
     private function setCrossword(){
         $data = new CrosswordDTO($this->id);
         $this->crossword_completed = $data->completed;
+    }
+
+    private function setOpenQuestion(){
+        $data = new OpenQuestionDTO($this->id);
+        $this->open_question = $data->completed;
     }
 }
