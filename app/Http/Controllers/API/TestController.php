@@ -65,7 +65,7 @@ class TestController extends Controller
      */
     public function pair(PairRequest $pairRequest,$lesson_id){
         $data = new FindPairDTO($lesson_id);
-        return response($data->setCompleted($pairRequest->input('answer')));
+        return response(['reply'=> $data->setCompleted($pairRequest->input('answer'))]);
     }
 
     /**
