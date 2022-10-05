@@ -39,7 +39,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/SignInUpView.vue')
   },
   {
-    path: '/signup',
+    path: '/signup/:catechist?',
     name: 'SignUp',
     component: () => import(/* webpackChunkName: "about" */ '../views/SignInUpView.vue')
   },

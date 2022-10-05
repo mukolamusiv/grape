@@ -59,7 +59,7 @@ const data = reactive({
 const getPairs = function () {
   axios({
     method: 'GET',
-    url: `/api/lesson-find-pair/${route.params.id}`,
+    url: `/api/lesson-pair/${route.params.id}`,
     data: {}
  }).then(function (response) {
    console.log(response.data)
@@ -72,15 +72,15 @@ const sendAnswer = function () {
   if(data.answer){
     axios({
       method: 'POST',
-      url: `/api/test-pair`,
+      url: `/api/lesson-pair/${route.params.id}`,
       data: {answer: [data.answer[0].id, data.answer[1].id]}
    }).then(function (response) {
      console.log(response.data)
-     if(response.data === 1){
+     if(response.data.reply === true){
        data.stateAnswer = 'right'
        data.rightCount = data.rightCount +1
      }
-     else if(response.data == 'Не вірна пара') {
+     else {
        data.stateAnswer = 'wrong'
      }
    })

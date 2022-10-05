@@ -78,10 +78,12 @@
 <script setup>
 import { reactive } from 'vue'
 import { useRouter} from 'vue-router'
+import { useRoute } from 'vue-router'
 import axios from 'axios'
 import { useStore } from '@/store'
 
 const router = useRouter()
+const route = useRoute()
 const { store } = useStore()
 
 const data = reactive({
@@ -136,7 +138,8 @@ const signUp = function () {
        surname: data.surname,
        email: data.email,
        password: data.password,
-       birthday: data.birthday
+       birthday: data.birthday,
+       catechist: route.params.catechist
     }
    }).then(function () {
      router.push(`/login`)

@@ -17,7 +17,6 @@ body{
   height: 100vh;
   // font-family: e-Ukraine!important;
   font-family: Montserrat, sans-serif;
-  // background: #fbf9f6;
 }
 *, ::after, ::before {
     box-sizing: border-box;
@@ -130,7 +129,7 @@ button{
     justify-content: flex-start;
     outline: 1px solid #92919c69;
     border-radius: 8px;
-    input{
+    input, textarea{
       flex-grow: 1;
       width: inherit;
       padding: 8px;

@@ -92,7 +92,7 @@ const sendAnswer = function (id, answer, index) {
   if(answer){
     axios({
       method: 'POST',
-      url: `api/test-crossword/${route.params.id}`,
+      url: `api/lesson-crossword/${route.params.id}`,
       data: {id: id, answer: answer}
    }).then(function (response) {
      data.selectedIndex = null

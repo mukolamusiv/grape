@@ -36,7 +36,7 @@
             <span class="material-icons crossword">border_all</span>Кросворд
             <span class="material-icons accept"  v-if="data.lesson.crossword_completed">task_alt</span>
           </a>
-          <a class="lesson-structure-item" href="#" @click="store.ui.lessonTab = 'crossWord'">
+          <a class="lesson-structure-item" href="#" @click="store.ui.lessonTab = 'openQuestion'">
             <span class="material-icons full-answer">article</span>Повна відповідь
             <span class="material-icons accept"  v-if="data.lesson.crossword_completed">task_alt</span>
           </a>
@@ -73,6 +73,7 @@
     <one-word v-if="store.ui.lessonTab === 'oneWord'"/>
     <cross-word v-if="store.ui.lessonTab === 'crossWord'"/>
     <find-pair v-if="store.ui.lessonTab === 'findPair'"/>
+    <open-question v-if="store.ui.lessonTab === 'openQuestion'"/>
   </main>
 </template>
 
@@ -85,6 +86,7 @@ import Test from '@/components/Test.vue'
 import OneWord from '@/components/OneWord.vue'
 import CrossWord from '@/components/CrossWord.vue'
 import FindPair from '@/components/FindPair.vue'
+import OpenQuestion from '@/components/OpenQuestion.vue'
 
 const { store } = useStore()
 const route = useRoute()

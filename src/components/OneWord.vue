@@ -74,7 +74,7 @@ const sendAnswer = function () {
   if(data.answer){
     axios({
       method: 'POST',
-      url: `/api/test-one-word/${route.params.id}`,
+      url: `/api/lesson-one-word/${route.params.id}`,
       data: {id: data.question.id, answer: data.answer}
    }).then(function (response) {
      if(response.data.reply === true){
