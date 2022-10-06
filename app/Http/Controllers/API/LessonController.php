@@ -8,6 +8,7 @@ use App\DTO\TestsDTO\FindPairDTO;
 use App\DTO\TestsDTO\OpenQuestionDTO;
 use App\DTO\TestsDTO\QuestionsDTO;
 use App\Http\Controllers\Controller;
+use App\Models\Coloring_Page;
 use App\Models\Crossword;
 use App\Models\Find_a_Pair;
 use App\Models\Lessons;
@@ -176,4 +177,9 @@ class LessonController extends Controller
         //$count_tests = $question->answer->count();
         return true;
     }
+
+    public function coloring_page($lesson_id){
+        return response(ColoringPage::find(1));
+    }
+
 }

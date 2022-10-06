@@ -15,6 +15,7 @@ use App\Http\Requests\Test\OpenQuestionRequest;
 use App\Http\Requests\Test\PairRequest;
 use App\Http\Requests\Test\QuestionRequest;
 use App\Models\Answer;
+use App\Models\ColoringPageAnswer;
 use App\Models\Crossword;
 use App\Models\Find_a_Pair_Data;
 use App\Models\OneWordQuestion;
@@ -133,5 +134,10 @@ class TestController extends Controller
         $data->answer = $request->input('answer');
         $data->save();
         return response('success');
+    }
+
+    public function coloring_page(Request $request, $lesson_id){
+        $data = new ColoringPageAnswer();
+        //$data->
     }
 }

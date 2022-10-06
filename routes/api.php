@@ -102,6 +102,7 @@ Route::get('lesson-pair/{lesson_id}','\App\Http\Controllers\API\LessonController
 Route::get('lesson-question/{lesson_id}','\App\Http\Controllers\API\LessonController@question');
 Route::get('lesson-crossword/{lesson_id}','\App\Http\Controllers\API\LessonController@crossword');
 Route::get('lesson-open-question/{lesson_id}','\App\Http\Controllers\API\LessonController@open_question');
+Route::get('lesson-coloring-page/{lesson_id}','\App\Http\Controllers\API\LessonController@coloring_page');
 
 /////////////
 Route::post('lesson-crossword/{lesson_id}','\App\Http\Controllers\API\TestController@crossword');
@@ -109,6 +110,7 @@ Route::post('lesson-one-word/{lesson_id}','\App\Http\Controllers\API\TestControl
 Route::post('lesson-question/{lesson_id}','\App\Http\Controllers\API\TestController@question');
 Route::post('lesson-pair/{lesson_id}','\App\Http\Controllers\API\TestController@pair');
 Route::post('lesson-open-question/{lesson_id}','\App\Http\Controllers\API\TestController@open_question');
+Route::post('lesson-coloring-page/{lesson_id}','\App\Http\Controllers\API\TestController@coloring_page');
 //Auth::routes();
 
 //Route::get('lesson-test','\App\Http\Controllers\API\TestController@test');
