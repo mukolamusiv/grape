@@ -138,6 +138,11 @@ class TestController extends Controller
 
     public function coloring_page(Request $request, $lesson_id){
         $data = new ColoringPageAnswer();
-        //$data->
+        $data->user_id = 1;
+        $data->lesson_id = $lesson_id;
+        $data->title = 'Розмальовка користувача';
+        $data->svg = $request->input('svg');
+        $data->save();
+        return response($data);
     }
 }
