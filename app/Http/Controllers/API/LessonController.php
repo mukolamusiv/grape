@@ -9,6 +9,7 @@ use App\DTO\TestsDTO\OpenQuestionDTO;
 use App\DTO\TestsDTO\QuestionsDTO;
 use App\Http\Controllers\Controller;
 use App\Models\Coloring_Page;
+use App\Models\ColoringPage;
 use App\Models\Crossword;
 use App\Models\Find_a_Pair;
 use App\Models\Lessons;
