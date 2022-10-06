@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserPasswordRequest;
 use App\Mail\SendEmail;
 use App\Models\Topic;
 use App\Models\User;
@@ -183,5 +184,21 @@ class UserController extends Controller
         $request->validate([
             'email'=>'required|unique:users,email'
         ]);
+    }
+
+    /**
+     * @param UserPasswordRequest $request
+     * @param $user_id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
+    public function update_password(UserPasswordRequest $request, $user_id){
+        $user = User::find($user_id);
+        if(Hash::check($request->input('old_password'), $user->password)){
+            $user->password = $request->input('password');
+            $user->save();
+            return response('Пароль змінено');
+        }else{
+            return response('Пароль не вірний');
+        }
     }
 }

@@ -75,6 +75,7 @@ Route::put('stop-topic/{id}','\App\Http\Controllers\API\LessonsController@stop_t
 //Route::put('start-lesson/{id}','\App\Http\Controllers\API\LessonsController@stop_lesson');
 
 
+Route::put('update-password/{user_id}','\App\Http\Controllers\API\UserController@update_password');
 
 //Route::put('audit_answer/{question_id}','\App\Http\Controllers\API\LessonsController@audit_answer');
 //Route::put('audit_pair/{pair_id}','\App\Http\Controllers\API\LessonsController@audit_answer');
