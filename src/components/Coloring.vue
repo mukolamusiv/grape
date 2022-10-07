@@ -15,6 +15,9 @@
           </div>
           <div class="primary-colors">
             <div class="color-picker-primary-color" v-for="(color, index) in data.colorPicker.primary" v-bind:key="color" :style="{background: color}" @click="colorPickerSelect(index, color)"></div>
+            <div class="color-picker-primary-color" style="{background: white}" @click="data.color = '#ffffff'">
+              <span class="material-icons c-pointer erase cancel">cancel_presentation</span>
+            </div>
           </div>
         </div>
       </div>
@@ -47,7 +50,6 @@ const data = reactive({
       'rgb(61, 118, 255)',
       'rgb(100, 20, 179)',
       'rgb(47, 114, 52)',
-      'rgb(138, 138, 138)',
       'rgb(151, 85, 25)',
       'rgb(53, 53, 53)'
     ],
@@ -173,14 +175,6 @@ const data = reactive({
         'rgb(247, 255, 252)'
       ],
       [
-        'rgb(138, 138, 138)',
-        'rgb(158, 158, 158)',
-        'rgb(178, 178, 178)',
-        'rgb(198, 198, 198)',
-        'rgb(218, 218, 218)',
-        'rgb(238, 238, 238)'
-      ],
-      [
         'rgb(151, 85, 25)',
         'rgb(171, 105, 45)',
         'rgb(191, 125, 65)',
@@ -202,7 +196,7 @@ const data = reactive({
         'rgb(193, 193, 193)',
         'rgb(213, 213, 213)',
         'rgb(233, 233, 233)',
-        'rgb(253, 253, 253)'
+        'rgb(253, 253, 253)',
       ]
     ]
   },
@@ -251,6 +245,9 @@ onUnmounted(() => {document.removeEventListener('click', clickColoringPage)})
 .selected{
   outline: 2px solid gray;
   margin: 3px;
+}
+.erase{
+  font-size: 50px;
 }
 .main{
   background: #19273678!important;
