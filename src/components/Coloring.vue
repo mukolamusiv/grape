@@ -7,15 +7,15 @@
       <div class="coloring-page">
         <inline-svg id="coloringPage" :src="data.coloringPage.svg"/>
         <div class="coloring-page-panel">
-          <div class="primary-colors">
-            <div class="color-picker-primary-color" v-for="(color, index) in data.colorPicker.primary" v-bind:key="color" :style="{background: color}" @click="colorPickerSelect(index)"></div>
+          <div class="colors">
+            <label v-for="(color) in data.colorSelected" v-bind:key="color" :style="{background: color}">
+              <div class="color-picker-color" :class="{'selected' : color == data.color}"></div>
+              <input type="radio" name="colorPicker" v-model="data.color" :value="color">
+            </label>
           </div>
-        </div>
-        <div class="colors">
-          <label v-for="(color) in data.colorSelected" v-bind:key="color" :style="{background: color}">
-            <div class="color-picker-color"></div>
-            <input type="radio" name="colorPicker" v-model="data.color" :value="color">
-          </label>
+          <div class="primary-colors">
+            <div class="color-picker-primary-color" v-for="(color, index) in data.colorPicker.primary" v-bind:key="color" :style="{background: color}" @click="colorPickerSelect(index, color)"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -35,6 +35,7 @@ const route = useRoute()
 const data = reactive({
   coloringPage: null,
   colorSelected: null,
+  color: 'green',
   colorPicker: {
     primary: [
       'rgb(255, 20, 20)',
@@ -52,18 +53,18 @@ const data = reactive({
     ],
     color: [
       [
-        'rgb(255 20 20)',
-        'rgb(255 40 40)',
-        'rgb(255 60 60)',
-        'rgb(255 80 80)',
-        'rgb(255 100 100)',
-        'rgb(255 120 120)',
-        'rgb(255 140 140',
-        'rgb(255 160 160)',
-        'rgb(255 180 180)',
-        'rgb(255 200 200)',
-        'rgb(255 220 220)',
-        'rgb(255 240 240)',
+        'rgb(255, 20, 20)',
+        'rgb(255, 40, 40)',
+        'rgb(255, 60, 60)',
+        'rgb(255, 80, 80)',
+        'rgb(255, 100, 100)',
+        'rgb(255, 120, 120)',
+        'rgb(255, 140, 140',
+        'rgb(255, 160, 160)',
+        'rgb(255, 180, 180)',
+        'rgb(255, 200, 200)',
+        'rgb(255, 220, 220)',
+        'rgb(255, 240, 240)',
       ],
       [
         'rgb(255, 145, 20)',
@@ -92,14 +93,124 @@ const data = reactive({
         'rgb(255, 255, 201)',
         'rgb(255, 255, 221)',
         'rgb(255, 255, 241)',
+      ],
+      [
+        'rgb(255, 20, 146)',
+        'rgb(255, 40, 166)',
+        'rgb(255, 60, 186)',
+        'rgb(255, 80, 206)',
+        'rgb(255, 100, 226)',
+        'rgb(255, 120, 246)',
+        'rgb(255, 140, 255)',
+        'rgb(255, 160, 255)',
+        'rgb(255, 180, 255)',
+        'rgb(255, 200, 255)',
+        'rgb(255, 220, 255)',
+        'rgb(255, 240, 255)'
+      ],
+      [
+        'rgb(255, 158, 148)',
+        'rgb(255, 168, 158)',
+        'rgb(255, 178, 168)',
+        'rgb(255, 188, 178)',
+        'rgb(255, 198, 188)',
+        'rgb(255, 208, 198)',
+        'rgb(255, 218, 208)',
+        'rgb(255, 228, 208)',
+        'rgb(255, 238, 218)',
+      ],
+      [
+        'rgb(20, 196, 255)',
+        'rgb(40, 216, 255)',
+        'rgb(60, 236, 255)',
+        'rgb(80, 255, 255)',
+        'rgb(100, 255, 255)',
+        'rgb(120, 255, 255)',
+        'rgb(140, 255, 255)',
+        'rgb(160, 255, 255)',
+        'rgb(180, 255, 255)',
+        'rgb(200, 255, 255)',
+        'rgb(220, 255, 255)',
+        'rgb(240, 255, 255)'
+      ],
+      [
+        'rgb(61, 118, 255)',
+        'rgb(81, 138, 255)',
+        'rgb(101, 158, 255)',
+        'rgb(121, 178, 255)',
+        'rgb(141, 198, 255)',
+        'rgb(161, 218, 255)',
+        'rgb(181, 238, 255)',
+        'rgb(201, 255, 255)',
+        'rgb(221, 255, 255)',
+        'rgb(241, 255, 255)',
+      ],
+      [
+        'rgb(100, 20, 179)',
+        'rgb(120, 40, 199)',
+        'rgb(140, 60, 219)',
+        'rgb(160, 80, 239)',
+        'rgb(180, 100, 255)',
+        'rgb(200, 120, 255)',
+        'rgb(220, 140, 255)',
+        'rgb(240, 160, 255)',
+        'rgb(255, 180, 255)',
+        'rgb(255, 200, 255)',
+        'rgb(255, 220, 255)',
+        'rgb(255, 240, 255)',
+      ],
+      [
+        'rgb(47, 114, 52)',
+        'rgb(67, 134, 72)',
+        'rgb(87, 154, 92)',
+        'rgb(107, 174, 112)',
+        'rgb(127, 194, 132)',
+        'rgb(147, 214, 152)',
+        'rgb(167, 234, 172)',
+        'rgb(187, 254, 192)',
+        'rgb(207, 255, 212)',
+        'rgb(227, 255, 232)',
+        'rgb(247, 255, 252)'
+      ],
+      [
+        'rgb(138, 138, 138)',
+        'rgb(158, 158, 158)',
+        'rgb(178, 178, 178)',
+        'rgb(198, 198, 198)',
+        'rgb(218, 218, 218)',
+        'rgb(238, 238, 238)'
+      ],
+      [
+        'rgb(151, 85, 25)',
+        'rgb(171, 105, 45)',
+        'rgb(191, 125, 65)',
+        'rgb(211, 145, 85)',
+        'rgb(231, 165, 105)',
+        'rgb(251, 185, 125)',
+        'rgb(255, 205, 145)',
+        'rgb(255, 225, 165)',
+        'rgb(255, 245, 185)'
+      ],
+      [
+        'rgb(53, 53, 53)',
+        'rgb(73, 73, 73)',
+        'rgb(93, 93, 93)',
+        'rgb(113, 113, 113)',
+        'rgb(133, 133, 133)',
+        'rgb(153, 153, 153)',
+        'rgb(173, 173, 173)',
+        'rgb(193, 193, 193)',
+        'rgb(213, 213, 213)',
+        'rgb(233, 233, 233)',
+        'rgb(253, 253, 253)'
       ]
     ]
   },
-  color: 'green'
 })
 data.colorSelected = data.colorPicker.color[0]
-const colorPickerSelect = function (index) {
+const colorPickerSelect = function (index, color) {
   data.colorSelected = data.colorPicker.color[index]
+  data.color = color
 }
 const getColoringPage = function () {
   axios({
@@ -109,18 +220,24 @@ const getColoringPage = function () {
  }).then(function (response) {
    console.log(response.data)
    data.coloringPage = response.data
-   // data.questionsCount = data.questions.length
-   // data.question = data.questions[data.questionNamber]
   })
 }
 function updateColoringPage() {
   const elem = document.getElementById('coloringPage');
   console.log(elem)
+  axios({
+    method: 'POST',
+    url: `/api/lesson-coloring-page/${route.params.id}`,
+    data: {id: data.coloringPage.id, svg: elem}
+ }).then(function () {})
 }
 function clickColoringPage(e) {
-  console.log(e.target)
-    e.target.style.fill = data.color
-    updateColoringPage()
+  if(e.target.id){
+    if(e.target.id != 'Fill-550'){
+      e.target.style.fill = data.color
+      updateColoringPage()
+    }
+  }
 }
 
 getColoringPage()
@@ -131,8 +248,9 @@ onUnmounted(() => {document.removeEventListener('click', clickColoringPage)})
 
 <style scoped lang="scss">
 @import '@/assets/styles/color-style.scss';
-.opacity {
-  opacity: 0.5;
+.selected{
+  outline: 2px solid gray;
+  margin: 3px;
 }
 .main{
   background: #19273678!important;
@@ -171,21 +289,36 @@ onUnmounted(() => {document.removeEventListener('click', clickColoringPage)})
   display: flex;
   flex-direction: column;
   align-items: center;
-  .color-picker-color{
-    width: 40px;
-    height: 40px;
-  }
-  input{
-    display: none;
-  }
   svg{
-    max-height: 70vh;
+    max-height: 600px;
     max-width: 100%;
+    fill: none!important;
   }
-  .color-picker-primary-color{
-    width: 50px;
-    height: 50px;
-    display: inline-block;
+  .coloring-page-panel{
+    .colors{
+      .color-picker-color{
+        width: 40px;
+        height: 40px;
+      }
+      input{
+        display: none;
+      }
+    }
+    .primary-colors{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      .color-picker-primary-color{
+        width: 50px;
+        height: 50px;
+        display: inline-block;
+      }
+    }
+  }
+}
+@media (max-width: 575.98px) {
+  .coloring-page svg{
+    max-height: 45vh;
   }
 }
 </style>
