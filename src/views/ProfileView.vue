@@ -29,7 +29,7 @@
           </div>
         </div>
       </div>
-      <div class="user-about" v-if="!data.edit">
+      <div class="user-about" v-if="!data.edit && !data.editPassword">
         <div class="name">
         <h2>
           {{store.user.name}} {{store.user.surname}}
@@ -58,6 +58,10 @@
           </div>
         </div>
         <hr>
+        <span class="btn " @click="data.editPassword = true">
+          <span class="material-icons">password</span>
+          Змінити пароль
+        </span>
       </div>
       <form class="edit-profile" v-if="data.edit" @submit.prevent="updateProfile()">
         <div class="form-item">
@@ -91,6 +95,32 @@
           </span>
         </div>
       </form>
+      <form class="edit-profile" v-if="data.editPassword" @submit.prevent="updatePassword()">
+        <div class="form-item">
+          <span class="input-name">Старий пароль</span>
+          <label>
+            <input type="text" v-model="data.oldPassword" required>
+          </label>
+        </div>
+        <div class="form-item">
+          <span class="input-name">Новий пароль</span>
+          <label>
+            <input type="text" v-model="data.newPassword" required>
+          </label>
+        </div>
+        <div class="submit-panel">
+          <button type="submit">
+            <span class="btn  accept">
+              <span class="material-icons">check</span>
+              Зберегти
+            </span>
+          </button>
+          <span class="btn  cancel" @click="data.editPassword = false">
+            <span class="material-icons">backspace</span>
+            Відмінити
+          </span>
+        </div>
+      </form>
     </section>
   </main>
 </template>
@@ -110,7 +140,9 @@ const data = reactive({
     name: null,
     surname: null,
     birthday: null
-  }
+  },
+  oldPassword: null,
+  newPassword: null
 })
 const startEdit = function () {
   data.edit = true
@@ -146,6 +178,19 @@ const updateProfile = function () {
       name: data.updateProfile.name,
       surname: data.updateProfile.surname,
       birthday: data.updateProfile.birthday,
+    }
+    }).then(function () {
+      data.editPassword = false
+    })
+}
+const updatePassword = function () {
+  axios({
+    method: 'PUT',
+    url: `api/update-password/${store.user.id}`,
+    data: {
+      old_password: data.oldPassword,
+      password: data.newPassword,
+      password_confirmation: data.newPassword,
     }
     }).then(function () {
       store.getUser()
@@ -220,10 +265,6 @@ hr{
     font-size: 1.3rem;
     font-weight: bold;
   }
-  .form-item-label{
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
 }
 .avatar-uploade{
   display: flex;
@@ -248,5 +289,6 @@ hr{
 }
 .form-item{
   font-size: 1.2rem;
+  z-index: 0;
 }
 </style>
