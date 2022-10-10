@@ -216,11 +216,10 @@ class UserController extends Controller
         $return = collect();
         foreach ($all as $award){
             $demo = collect($award);
+            $demo->put('completed',false);
             foreach ($data as $datum){
                 if($datum->award_id == $award->id){
                     $demo->put('completed',true);
-                }else{
-                    $demo->put('completed',false);
                 }
             }
             $return->push($demo);
