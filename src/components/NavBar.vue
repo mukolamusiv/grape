@@ -10,52 +10,75 @@
       <div class="name-role-block">
         <div class="user-name">
           {{store.user.name}} {{store.user.surname}}
-
         </div>
-        <div  class="role">учень <span class="material-icons">manage_accounts</span></div>
+        <div  class="role">
+          <span v-if="store.user.role_user != 'katehyt'">учень</span>
+          <span v-if="store.user.role_user === 'katehyt'">катехит</span>
+          <span class="material-icons">manage_accounts</span>
+        </div>
       </div>
     </router-link>
     <hr>
-    <div class="get">
-      <div class="get-items sun">
-          <span class="material-icons">brightness_5</span>
-          <span>{{store.user.lumen}}</span>
+    <div class="get-wrap" v-if="store.user.role_user != 'katehyt'">
+      <div class="get">
+        <div class="get-items sun">
+            <span class="material-icons">brightness_5</span>
+            <span>{{store.user.lumen}}</span>
+        </div>
+        <div class="get-items water">
+            <span class="material-icons">water_drop</span>
+            <span>{{store.user.water}}</span>
+        </div>
+        <div class="get-items energy">
+            <span class="material-icons">electric_bolt</span>
+            <span>{{store.user.energy}}</span>
+        </div>
       </div>
-      <div class="get-items water">
-          <span class="material-icons">water_drop</span>
-          <span>{{store.user.water}}</span>
-      </div>
-      <div class="get-items energy">
-          <span class="material-icons">electric_bolt</span>
-          <span>{{store.user.energy}}</span>
-      </div>
+      <hr>
     </div>
-    <hr>
     <h4>Навігація</h4>
     <hr>
-    <div class="grape-links-wrap">
+    <!-- Навігація учня -->
+    <div class="grape-links-wrap" v-if="store.user.role_user != 'katehyt'">
       <div class="grape-link">
         <router-link to="/"><span class="material-icons">home</span><span>Головна</span></router-link>
       </div>
       <div class="grape-link">
-        <router-link to="/#topics-active"><span class="material-icons cl-green">electric_bolt</span>Активні теми</router-link>
+        <router-link to="/#topics-active"><span class="material-icons">electric_bolt</span>Активні теми</router-link>
       </div>
       <div class="grape-link">
-        <router-link to="/#topics-done"><span class="material-icons cl-gray">done_outline</span>Пройдені теми</router-link>
+        <router-link to="/#topics-done"><span class="material-icons">done_outline</span>Пройдені теми</router-link>
       </div>
       <div class="grape-link">
-        <router-link to="/#topics"><span class="material-icons cl-blue">search</span>Доступні теми</router-link>
+        <router-link to="/#topics"><span class="material-icons">search</span>Доступні теми</router-link>
       </div>
       <div class="grape-link" @click="store.logout()">
         <a href="#">
-          <span class="material-icons cl-blue">exit_to_app</span>
+          <span class="material-icons">exit_to_app</span>
           Вихід
         </a>
       </div>
     </div>
-    <hr>
-    <h4>Нагороди</h4>
-    <hr>
+    <!-- Навігація катехита -->
+    <div class="grape-links-wrap" v-if="store.user.role_user === 'katehyt'">
+      <div class="grape-link">
+        <router-link to="/"><span class="material-icons">home</span><span>Список учнів</span></router-link>
+      </div>
+      <div class="grape-link" @click="store.logout()">
+        <a href="#">
+          <span class="material-icons">exit_to_app</span>
+          Вихід
+        </a>
+      </div>
+    </div>
+    <hr v-if="store.user.role_user != 'katehyt'">
+    <div class="wrap-rewards" v-if="store.user.role_user != 'katehyt'">
+      <h4>Нагороди</h4>
+      <hr>
+      <div class="awards">
+
+      </div>
+    </div>
   </nav>
 </template>
 
@@ -136,19 +159,16 @@ nav{
       }
       .role{
         color: #747d86;
-        // opacity: 0.6;
         font-size:1rem;
         display: flex;
-        span{
-          margin-left: 8px;
-          color: #ffad00;
-          display: flex;
-          opacity: 0.6;
-        }
         .material-icons{
           display: flex;
           align-items: center;
           font-size: 1.5rem;
+          margin-left: 8px;
+          color: #ffad00;
+          display: flex;
+          opacity: 0.6;
         }
       }
     }

@@ -31,16 +31,21 @@
       </div>
       <div class="user-about" v-if="!data.edit && !data.editPassword">
         <div class="name">
-        <h2>
-          {{store.user.name}} {{store.user.surname}}
-          <span class="material-icons c-pointer" @click="startEdit()">settings</span>
-        </h2>
+          <h2>
+            {{store.user.name}} {{store.user.surname}}
+            <span class="material-icons c-pointer" @click="startEdit()">settings</span>
+          </h2>
         </div>
         <div class="role">
-          учень
+          <span v-if="store.user.role_user != 'katehyt'">учень</span>
+          <span v-if="store.user.role_user === 'katehyt'">катехит</span>
         </div>
         <div class="birthday">
           {{store.user.birthday.split('-').reverse().join('.')}}
+        </div>
+        <div class="email">
+          <span class="material-icons">mail</span>
+          {{store.user.email}}
         </div>
         <hr>
         <div class="get">
@@ -204,6 +209,9 @@ const updatePassword = function () {
 hr{
   width: 100%;
 }
+.get{
+  margin: 0;
+}
 .Profile{
   width: 100%;
   display: flex;
@@ -264,6 +272,16 @@ hr{
   .birthday{
     font-size: 1.3rem;
     font-weight: bold;
+  }
+  .email{
+    display: flex;
+    align-items: center;
+    color: #174c9a;
+    font-weight: bold;
+    margin-top: 8px;
+    .material-icons{
+      padding-right: 4px;
+    }
   }
 }
 .avatar-uploade{

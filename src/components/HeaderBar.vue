@@ -6,7 +6,7 @@
     </div>
     <div class="nav-btn c-pointer toggle-btn">
         <span class="material-icons toggle-btn" v-if="!store.ui.navOpen" @click="store.ui.navOpen = !store.ui.navOpen">menu</span>
-        <span class="material-icons" v-if="store.ui.navOpen" >menu_open</span>
+        <span class="material-icons" v-if="store.ui.navOpen">menu_open</span>
     </div>
   </header>
 </template>

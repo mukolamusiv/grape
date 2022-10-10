@@ -18,6 +18,7 @@ const store = reactive({
       data: {}
     }).then(function (response) {
       store.user = response.data
+      console.log(store.user)
     })
   },
   lodlocal: function () {
