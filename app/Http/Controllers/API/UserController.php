@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserPasswordRequest;
 use App\Mail\SendEmail;
+use App\Models\Awards;
+use App\Models\AwardUser;
 use App\Models\Topic;
 use App\Models\User;
 use App\Models\Water;
@@ -205,5 +207,24 @@ class UserController extends Controller
 
     public function getUserClassroom($user_id){
         return response(User::where(['katehyt_id'=>$user_id])->get());
+    }
+
+    public function Awards($user_id){
+        $all = Awards::all();
+        $data = AwardUser::with('Awards')->where(['user_id'=>$user_id])->get();
+
+        $return = collect();
+        foreach ($all as $award){
+            $demo = collect($award);
+            foreach ($data as $datum){
+                if($datum->award_id === $award->id){
+                    $demo->put('completed',true);
+                }else{
+                    $demo->put('completed',false);
+                }
+            }
+            $return->push($demo);
+        }
+        return response($return);
     }
 }
