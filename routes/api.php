@@ -55,6 +55,8 @@ Route::delete('user/{id}','\App\Http\Controllers\API\UserController@destroy');//
 
 Route::post('check-email','\App\Http\Controllers\API\UserController@check');
 
+Route::get('classroom','\App\Http\Controllers\API\UserController@getUserClassroom');
+
 
 /*
  * Роути уроків

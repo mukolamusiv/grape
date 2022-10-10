@@ -201,4 +201,9 @@ class UserController extends Controller
             return response('Пароль не вірний');
         }
     }
+
+
+    public function getUserClassroom($user_id){
+        return response(User::where(['katehyt_id'=>$user_id])->get());
+    }
 }
