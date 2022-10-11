@@ -181,8 +181,8 @@ class UserController extends Controller
     }
 
     public function get_user(){
-        $data = User::find(1);
-        $data->push($this->AwardUser(1));
+        $data = collect(User::find(1));
+        $data->put('awards',$this->AwardUser(1));
         return response($data);
     }
 
@@ -220,7 +220,6 @@ class UserController extends Controller
     private function AwardUser($user_id){
         $all = Awards::all();
         $data = AwardUser::with('Awards')->where(['user_id'=>$user_id])->get();
-
         $return = collect();
         foreach ($all as $award){
             $demo = collect($award);
@@ -232,6 +231,7 @@ class UserController extends Controller
             }
             $return->push($demo);
         }
+
         return $return;
     }
 }
