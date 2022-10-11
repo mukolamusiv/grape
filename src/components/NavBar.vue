@@ -61,7 +61,7 @@
       <h4>Нагороди</h4>
       <hr>
       <div class="awards" v-if="store.user.awards">
-        <div class="awards-item c-pointer" v-for="(award) in store.user.awards" v-bind:key="award.id" :title="award.description">
+        <div class="awards-item c-pointer" v-for="(award) in store.user.awards" v-bind:key="award.id" :title="award.title">
           <div class="wrap-award-img" :class="{'received' : award.completed}" >
             <span class="award-img" :style="{ 'background-image': `url(${award.icon})` }"></span>
           </div>
