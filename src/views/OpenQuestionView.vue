@@ -1,29 +1,7 @@
 <template>
   <main>
     <div class="title-page">
-      Мій клас
-    </div>
-    <div class="classroom">
-      <router-link :to="{ path: `/profile-student/${user.id}`}" class="classroom-item" v-for="(user, index) in data.classroom" v-bind:key="user.id">
-        <div>{{index+1}})</div>
-        <div class="name">{{user.surname}} {{user.name}}</div>
-        <div>{{user.birthday.split('-').reverse().join('.')}}</div>
-        <div>{{user.email}}</div>
-        <div class="get">
-          <div class="get-items sun" v-if="user.lumen">
-              <span class="material-icons">brightness_5</span>
-              <span>{{user.lumen}}</span>
-          </div>
-          <div class="get-items water">
-              <span class="material-icons">water_drop</span>
-              <span>{{user.water}}</span>
-          </div>
-          <div class="get-items energy">
-              <span class="material-icons">electric_bolt</span>
-              <span>{{user.energy}}</span>
-          </div>
-        </div>
-      </router-link>
+      Повні відповіді
     </div>
   </main>
 </template>
@@ -38,7 +16,7 @@ const data = reactive({
 const getClassroom = function () {
   axios({
     method: 'GET',
-    url: `/api/classroom/1`,
+    url: `/api/user-open-question-completed/2`,
     data: {}
  }).then(function (response) {
    data.classroom = response.data

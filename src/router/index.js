@@ -59,6 +59,14 @@ const routes = [
     },
     component: () => import(/* webpackChunkName: "about" */ '../views/ProfileStudentView.vue')
   },
+  {
+    path: '/open-question',
+    name: 'OpenQuestionView',
+    meta: {
+      forAuthorized: true,
+    },
+    component: () => import(/* webpackChunkName: "about" */ '../views/OpenQuestionView.vue')
+  },
   { path: '/:pathMatch(.*)*', component: () => import(/* webpackChunkName: "about" */ '../views/404View.vue') }
 ]
 

@@ -1,6 +1,6 @@
 <template>
   <main v-if="data.user">
-    <section class="Profile">
+    <section class="Profile p-0">
       <div class="avatar-block">
         <div class="avatar-img">
         <div class="img" v-if="!data.user.photo">
@@ -40,7 +40,7 @@
         </div>
       </div>
     </section>
-    <hr class="mr-t0">
+    <hr class="mr-0">
     <section class="section-topics">
       <div id="topics-active" class="topics">
         <div class="title">
@@ -90,14 +90,14 @@ getClassroom()
 
 <style lang="scss" scoped>
 @import '@/assets/styles/color-style.scss';
-section{
+.p-0{
   padding: 0;
 }
 hr{
   width: 100%;
 }
-.mr-t0{
-  margin-top: 0;
+.mr-0{
+  margin: 0;
 }
 .get{
   margin: 0;
