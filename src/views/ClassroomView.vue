@@ -1,16 +1,8 @@
 <template>
-  <section>
+  <main>
     <div class="title-page">
-      Мої учні
+      Мій клас
     </div>
-    <!-- <div class="classroom">
-      <div class="classroom-item" v-for="(user, index) in data.classroom" v-bind:key="user.id">
-      <div class="index">{{index+1}}</div>
-      <div>{{user.surname}} {{user.name}}</div>
-      <div>{{user.birthday}}</div>
-      <div>{{user.email}}</div>
-      </div>
-    </div> -->
     <div class="classroom">
       <router-link :to="{ path: `/profile-student/${user.id}`}" class="classroom-item" v-for="(user, index) in data.classroom" v-bind:key="user.id">
         <div>{{index+1}})</div>
@@ -33,7 +25,7 @@
         </div>
       </router-link>
     </div>
-  </section>
+  </main>
 </template>
 
 <script setup>

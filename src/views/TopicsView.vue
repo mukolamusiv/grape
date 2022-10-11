@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <main>
     <section class="current-courses" id="topics-active" v-if="data.topicsActive">
       <div class="section-title">
         <h2>Активні: {{data.topicsActive.length}}</h2>
@@ -18,7 +18,7 @@
       </div>
       <topic-cards :topics="data.topics" :linkTitle="`Розпочати`"/>
     </section>
-  </div>
+  </main>
 </template>
 
 <script setup>

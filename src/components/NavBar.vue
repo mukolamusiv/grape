@@ -19,7 +19,7 @@
       </div>
     </router-link>
     <hr>
-    <div class="get-wrap" v-if="store.user.role_user != 'katehyt'">
+    <div class="get-wrap">
       <div class="get">
         <div class="get-items sun">
             <span class="material-icons">brightness_5</span>
@@ -39,18 +39,15 @@
     <h4>Навігація</h4>
     <hr>
     <!-- Навігація учня -->
-    <div class="grape-links-wrap" v-if="store.user.role_user != 'katehyt'">
+    <div class="grape-links-wrap">
       <div class="grape-link">
-        <router-link to="/"><span class="material-icons">home</span><span>Головна</span></router-link>
+        <router-link to="/"><span class="material-icons">topic</span><span>Теми</span></router-link>
+      </div>
+      <div class="grape-link" v-if="store.user.role_user === 'katehyt'">
+        <router-link to="/classroom"><span class="material-icons">group</span><span>Мій клас</span></router-link>
       </div>
       <div class="grape-link">
-        <router-link to="/#topics-active"><span class="material-icons">electric_bolt</span>Активні теми</router-link>
-      </div>
-      <div class="grape-link">
-        <router-link to="/#topics-done"><span class="material-icons">done_outline</span>Пройдені теми</router-link>
-      </div>
-      <div class="grape-link">
-        <router-link to="/#topics"><span class="material-icons">search</span>Доступні теми</router-link>
+        <router-link to="/profile"><span class="material-icons">badge</span><span>Мій профіль</span></router-link>
       </div>
       <div class="grape-link" @click="store.logout()">
         <a href="#">
@@ -59,25 +56,18 @@
         </a>
       </div>
     </div>
-    <!-- Навігація катехита -->
-    <div class="grape-links-wrap" v-if="store.user.role_user === 'katehyt'">
-      <div class="grape-link">
-        <router-link to="/"><span class="material-icons">home</span><span>Список учнів</span></router-link>
-      </div>
-      <div class="grape-link" @click="store.logout()">
-        <a href="#">
-          <span class="material-icons">exit_to_app</span>
-          Вихід
-        </a>
-      </div>
-    </div>
-    <hr v-if="store.user.role_user != 'katehyt'">
-    <div class="wrap-rewards" v-if="store.user.role_user != 'katehyt'">
+    <hr>
+    <div class="wrap-rewards">
       <h4>Нагороди</h4>
       <hr>
-      <div class="awards">
-
+      <div class="awards" v-if="store.user.awards">
+        <div class="awards-item c-pointer" v-for="(award) in store.user.awards" v-bind:key="award.id" :title="award.description">
+          <div class="wrap-award-img" :class="{'received' : award.completed}" >
+            <span class="award-img" :style="{ 'background-image': `url(${award.icon})` }"></span>
+          </div>
+        </div>
       </div>
+      <hr class="mrt-8">
     </div>
   </nav>
 </template>
@@ -102,9 +92,13 @@ onUnmounted(() => {document.removeEventListener('click', menuCloseClickOutside)}
 hr{
   background-color: #ffffff!important;
 }
+.mrt-8{
+  margin-top: 8px;
+}
 nav{
   position: fixed;
   min-width: 280px;
+  width: 280px;
   max-width: 100%;
   height: calc(100vh - 60px);
   overflow-y: scroll;
@@ -182,7 +176,7 @@ nav{
     padding: 8px 16px;
     margin-bottom: 8px;
     a{
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       display: flex;
       align-items: center;
       // justify-content: center;
@@ -203,9 +197,38 @@ nav{
     font-size: 1.2rem;
   }
 }
-@media (min-width: 1200px) {
-
+.awards{
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 100%;
+  padding: 8px;
+  .awards-item{
+    padding: 0 8px;
+    margin-bottom: 16px;
+  }
+  .wrap-award-img{
+    width: 95px;
+    height: 95px;
+    padding: 3px;
+    border-radius: 50px;
+    border: 5px solid gray;
+    overflow: hidden;
+    opacity: 0.2;
+  }
+  .award-img{
+    width: 100%;
+    height: 100%;
+    display: block;
+    background-size: cover;
+    border-radius: 50px;
+  }
+  .received{
+    border-color: green;
+    opacity: 1;
+  }
 }
+
+
 
 .animate__animated {
   animation-duration: 0.5s;

@@ -7,7 +7,7 @@ const routes = [
     meta: {
       forAuthorized: true,
     },
-    component: () => import(/* webpackChunkName: "about" */ '../views/HomeView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/TopicsView.vue')
   },
   {
     path: '/topic/:id',
@@ -42,6 +42,14 @@ const routes = [
     path: '/signup/:catechist?',
     name: 'SignUp',
     component: () => import(/* webpackChunkName: "about" */ '../views/SignInUpView.vue')
+  },
+  {
+    path: '/classroom',
+    name: 'Classroom',
+    meta: {
+      forAuthorized: true,
+    },
+    component: () => import(/* webpackChunkName: "about" */ '../views/ClassroomView.vue')
   },
   {
     path: '/profile-student/:id',
