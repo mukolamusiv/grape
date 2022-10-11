@@ -94,7 +94,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return response(User::find($id));
+        $data = collect(User::find($id));
+        $data->put('awards',$this->AwardUser($id));
+        return response($data);
     }
 
     /**
@@ -179,7 +181,9 @@ class UserController extends Controller
     }
 
     public function get_user(){
-        return response(User::find(1));
+        $data = User::find(1);
+        $data->push($this->AwardUser(1));
+        return response($data);
     }
 
     public function check(Request $request){
@@ -210,6 +214,10 @@ class UserController extends Controller
     }
 
     public function Awards($user_id){
+        return response($this->AwardUser($user_id));
+    }
+
+    private function AwardUser($user_id){
         $all = Awards::all();
         $data = AwardUser::with('Awards')->where(['user_id'=>$user_id])->get();
 
@@ -224,6 +232,6 @@ class UserController extends Controller
             }
             $return->push($demo);
         }
-        return response($return);
+        return $return;
     }
 }
