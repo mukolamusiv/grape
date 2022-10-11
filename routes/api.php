@@ -53,6 +53,9 @@ Route::put('user/{id}','\App\Http\Controllers\API\UserController@update');//->mi
 Route::post('user-photo/{id}','\App\Http\Controllers\API\UserController@photo');//->middleware(['auth']);
 Route::delete('user/{id}','\App\Http\Controllers\API\UserController@destroy');//->middleware(['auth']);
 
+Route::get('user-open-question/{user_id}','\App\Http\Controllers\API\UserController@NonAuditOpenQuestions');
+Route::get('user-open-question-completed/{user_id}','\App\Http\Controllers\API\UserController@AuditOpenQuestions');
+
 Route::post('check-email','\App\Http\Controllers\API\UserController@check');
 
 Route::get('classroom/{user_id}','\App\Http\Controllers\API\UserController@getUserClassroom');
@@ -64,6 +67,13 @@ Route::get('awards/{user_id}','\App\Http\Controllers\API\UserController@Awards')
 Route::get('topics-active','\App\Http\Controllers\API\LessonsController@topics_active');
 Route::get('topics','\App\Http\Controllers\API\LessonsController@topics');
 Route::get('topics-done','\App\Http\Controllers\API\LessonsController@topics_done');
+
+
+//Route::get('user-topics-active/{user_id}','\App\Http\Controllers\API\LessonsController@topics_active');
+//Route::get('user-topics/{user_id}','\App\Http\Controllers\API\LessonsController@topics');
+//Route::get('user-topics-done/{user_id}','\App\Http\Controllers\API\LessonsController@topics_done');
+
+
 //Route::get('lesson/{id}','\App\Http\Controllers\API\LessonsController@lesson');
 Route::get('topic/{id}','\App\Http\Controllers\API\LessonsController@topic');
 

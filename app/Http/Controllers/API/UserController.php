@@ -7,6 +7,7 @@ use App\Http\Requests\UserPasswordRequest;
 use App\Mail\SendEmail;
 use App\Models\Awards;
 use App\Models\AwardUser;
+use App\Models\OpenQuestionAnswerUser;
 use App\Models\Topic;
 use App\Models\User;
 use App\Models\Water;
@@ -233,5 +234,14 @@ class UserController extends Controller
         }
 
         return $return;
+    }
+
+
+    public function NonAuditOpenQuestions($user_id){
+        return response(OpenQuestionAnswerUser::where(['user_id'=>$user_id,'audit'=>false])->get());
+    }
+
+    public function AuditOpenQuestions($user_id){
+        return response(OpenQuestionAnswerUser::where(['user_id'=>$user_id,'audit'=>true])->get());
     }
 }
