@@ -238,10 +238,10 @@ class UserController extends Controller
 
 
     public function NonAuditOpenQuestions($user_id){
-        return response(OpenQuestionAnswerUser::where(['user_id'=>$user_id,'audit'=>false])->get());
+        return response(OpenQuestionAnswerUser::with('OpenQuestion')->where(['user_id'=>$user_id,'audit'=>false])->get());
     }
 
     public function AuditOpenQuestions($user_id){
-        return response(OpenQuestionAnswerUser::where(['user_id'=>$user_id,'audit'=>true])->get());
+        return response(OpenQuestionAnswerUser::with('OpenQuestion')->where(['user_id'=>$user_id,'audit'=>true])->get());
     }
 }
