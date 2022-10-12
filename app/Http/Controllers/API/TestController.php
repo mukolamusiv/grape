@@ -19,6 +19,7 @@ use App\Models\ColoringPageAnswer;
 use App\Models\Crossword;
 use App\Models\Find_a_Pair_Data;
 use App\Models\OneWordQuestion;
+use App\Models\OpenQuestion;
 use App\Models\OpenQuestionAnswerUser;
 use App\Models\Question;
 use App\Models\QuestionLessonsAnswer;
@@ -144,5 +145,12 @@ class TestController extends Controller
 //        $data->svg = $request->input('svg');
 //        $data->save();
         return response($request);
+    }
+
+
+    public function openQuestionAudit(OpenQuestionRequest $questionRequest, $question_id){
+        $data = OpenQuestionAnswerUser::find($question_id);
+        $data->reply = $questionRequest->answer;
+        return response($data->save());
     }
 }
