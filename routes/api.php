@@ -54,8 +54,10 @@ Route::post('user-photo/{id}','\App\Http\Controllers\API\UserController@photo');
 Route::delete('user/{id}','\App\Http\Controllers\API\UserController@destroy');//->middleware(['auth']);
 
 Route::get('user-open-question/{user_id}','\App\Http\Controllers\API\UserController@NonAuditOpenQuestions');
+Route::get('audit-open-question','\App\Http\Controllers\API\UserController@NonOpenQuestions');
 Route::post('user-open-question/{question_id}','\App\Http\Controllers\API\TestController@openQuestionAudit');
 Route::get('user-open-question-completed/{user_id}','\App\Http\Controllers\API\UserController@AuditOpenQuestions');
+Route::get('audit-open-question-completed','\App\Http\Controllers\API\UserController@OpenQuestions');
 
 Route::post('check-email','\App\Http\Controllers\API\UserController@check');
 
