@@ -14,7 +14,7 @@
           <h2>{{data.user.name}} {{data.user.surname}}</h2>
         </div>
         <div  class="role">
-          <span v-if="data.user.role_user != 'katehyt'">учень</span>
+          <span v-if="data.user.role_user !== 'katehyt'">учень</span>
           <span v-if="data.user.role_user === 'katehyt'">катехит</span>
         </div>
         <div class="birthday">

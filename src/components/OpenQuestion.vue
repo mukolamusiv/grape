@@ -14,7 +14,7 @@
         <div class="form-item">
           <span class="input-name"></span>
           <label>
-            <textarea rows="12" v-model="data.answer"></textarea>
+            <textarea rows="12" maxlength="255" v-model="data.answer"></textarea>
           </label>
         </div>
         <div class="submit-panel" v-if="!data.stateAnswer && data.answer">
