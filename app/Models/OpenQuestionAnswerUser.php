@@ -10,6 +10,6 @@ class OpenQuestionAnswerUser extends Model
     use HasFactory;
 
     public function OpenQuestion(){
-        return $this->belongsTo(OpenQuestion::class,'id');
+        return $this->belongsTo(OpenQuestion::class,'open_question_id');
     }
 }
