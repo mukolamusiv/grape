@@ -24,7 +24,7 @@ class OpenQuestionRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id'=>'required|integer',
+            'question_id'=>'required|integer',
             'answer'=>'required|string'
         ];
     }
