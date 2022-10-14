@@ -71,7 +71,7 @@ const sendAnswer = function () {
     axios({
       method: 'POST',
       url: `api/lesson-open-question/${route.params.id}`,
-      data: {id: data.question.id, answer: data.answer}
+      data: {question_id: data.question.id, answer: data.answer}
    }).then(function () {
      data.questionsEnd = true
     })

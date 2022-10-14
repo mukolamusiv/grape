@@ -3,12 +3,22 @@
     <div class="title-page">
       Нові відповіді
     </div>
-    <section class="OpenQuestions" v-if="data.notCheked">
-      <div class="open-question" v-for="(notCheked, index) in data.notCheked" v-bind:key="notCheked.id">
-        <div class="question">{{index+1}}.{{notCheked.open_question.question}}</div>
-        <div class="answer">{{notCheked.open_question.answer}} Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui. Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis</div>
+    <section v-if="data.answers">
+      <div class="open-question" v-for="(answer, index) in data.answers" v-bind:key="answer.id">
+        <div class="question">{{index+1}}.{{answer.open_question.question}}</div>
+
+        <div class="answer">
+          <div class="answer-about">
+            <router-link class="student-name" :to="{ path: `/profile-student/${answer.user.id}`}">
+              {{answer.user.surname}} {{answer.user.name}}
+            </router-link>
+            <div class="date-time" v-if="answer.created_at">
+              {{answer.created_at.substring(0, 10).split('-').reverse().join('.')}} о {{answer.created_at.substring(11, 19)}}
+            </div>
+          </div>
+          {{answer.open_question.answer}}</div>
         <div class="submit-panel">
-          <div class="btn">
+          <div class="btn" @click="sendAnswerChecked(answer.id)">
             <span class="material-icons">check</span>
             Перевірив
           </div>
@@ -23,7 +33,7 @@ import { reactive } from 'vue'
 import axios from 'axios'
 
 const data = reactive({
-  notCheked: null,
+  answers: null,
 })
 const getClassroom = function () {
   axios({
@@ -31,8 +41,18 @@ const getClassroom = function () {
     url: `api/audit-open-question`,
     data: {}
  }).then(function (response) {
-   data.notCheked = response.data
-   console.log(data.notCheked)
+   data.answers = response.data
+   console.log(data.answers)
+
+  })
+}
+const sendAnswerChecked = function (question_id) {
+  axios({
+    method: 'POST',
+    url: `api/user-open-question/${question_id}`,
+    data: {answer: true, }
+ }).then(function (response) {
+   console.log(response)
 
   })
 }
@@ -42,6 +62,10 @@ getClassroom()
 <style lang="scss" scoped>
 main{
   padding: 16px;
+  background: #f0f2f5;
+}
+section{
+  padding-top: 0;
 }
 .title-page{
   width: 100%;
@@ -52,19 +76,25 @@ main{
   font-size: 2.5rem;
   font-weight: 600;
   color: #6f40fe;
-  margin-bottom: 16px;
 }
 .open-question{
   display: flex;
   flex-direction: column;
-  background: #f0f1f2;
-  padding: 24px;
+  padding: 16px;
   border-radius: 8px;
   .question{
     width: 100%;
     font-size: 1.5rem;
     color: #6f40fe;
     margin-bottom: 8px;
+  }
+  .answer-about{
+    .student-name{
+      font-size: 1.2rem;
+    }
+    .date-time{
+      color: #737373;
+    }
   }
   .answer{
     flex-grow: 1;

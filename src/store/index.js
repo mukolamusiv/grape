@@ -7,7 +7,6 @@ const store = reactive({
   router: null,
   ui: {
     navOpen: false,
-    loding: false,
     lessonTab: 'video'
   },
   user: null,
