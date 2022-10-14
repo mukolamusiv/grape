@@ -128,7 +128,7 @@ class TestController extends Controller
     public function open_question(OpenQuestionRequest $request, $lesson_id){
         $data = new OpenQuestionAnswerUser();
         $data->user_id = 1;
-        $data->open_question_id = $request->input('id');
+        $data->open_question_id = $request->input('question_id');
         $data->audit = false;
         $data->audit_user_id = 1;
         $data->reply = false;
