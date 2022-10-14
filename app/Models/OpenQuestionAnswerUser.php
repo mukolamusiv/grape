@@ -12,4 +12,9 @@ class OpenQuestionAnswerUser extends Model
     public function OpenQuestion(){
         return $this->belongsTo(OpenQuestion::class,'open_question_id');
     }
+
+
+    public function User(){
+        return $this->belongsTo(User::class,'user_id');
+    }
 }

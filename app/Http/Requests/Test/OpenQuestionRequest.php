@@ -25,7 +25,7 @@ class OpenQuestionRequest extends FormRequest
     {
         return [
             'user_id'=>'required|integer',
-            'answer'=>'required|bool'
+            'answer'=>'required|string'
         ];
     }
 }
