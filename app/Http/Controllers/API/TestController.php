@@ -9,6 +9,7 @@ use App\DTO\TestsDTO\OneWordDTO;
 use App\DTO\TestsDTO\QuestionDTO;
 use App\DTO\TestsDTO\QuestionsDTO;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\OpenQuestionAnswerRequest;
 use App\Http\Requests\Test\CrosswordRequest;
 use App\Http\Requests\Test\OneWordRequest;
 use App\Http\Requests\Test\OpenQuestionRequest;
@@ -148,7 +149,7 @@ class TestController extends Controller
     }
 
 
-    public function openQuestionAudit(OpenQuestionRequest $questionRequest, $question_id){
+    public function openQuestionAudit(OpenQuestionAnswerRequest $questionRequest, $question_id){
         $data = OpenQuestionAnswerUser::find($question_id);
         $data->reply = $questionRequest->answer;
         return response($data->save());
