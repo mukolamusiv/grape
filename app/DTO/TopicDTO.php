@@ -69,6 +69,9 @@ class TopicDTO
     public function getTopic(){
         $data = get_object_vars($this);
         unset($data['topic']);
+//        if($this->status == 0){
+//            unset($data['status']);
+//        }
         return $data;
     }
 }

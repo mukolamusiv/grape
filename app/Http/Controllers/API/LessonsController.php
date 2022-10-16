@@ -49,7 +49,7 @@ class LessonsController extends Controller
 
     public function user_all($user_id){
         $data = new TopicsDTO($user_id);
-        return response($data->getTopic());
+        return response($data->getTopics());
     }
 
     public function DTO(){
