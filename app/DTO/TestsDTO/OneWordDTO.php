@@ -30,6 +30,7 @@ class OneWordDTO
      */
     private object $data;
 
+    public bool $empty = false;
     /**
      * OneWordDTO constructor.
      * @param int $lesson_id
@@ -38,8 +39,6 @@ class OneWordDTO
     {
         $this->lesson_id = $lesson_id;
         $this->setData();
-        $this->setQuestion($this->data->question);
-        $this->completed_status();
     }
 
     private function setQuestion($questions){
@@ -56,7 +55,13 @@ class OneWordDTO
 
     private function setData(){
         $data = OneWord::with('question')->where(['lesson_id'=>$this->lesson_id])->get();
-        $this->data = $data->first();
+        if(count($data) != 0){
+            $this->data = $data->first();
+            $this->setQuestion($this->data->question);
+            $this->completed_status();
+        }else{
+            $this->empty = true;
+        }
     }
 
     /**

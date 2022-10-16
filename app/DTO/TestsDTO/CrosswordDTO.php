@@ -53,7 +53,7 @@ class CrosswordDTO
     private object $correct;
 
 
-
+    public bool $empty = false;
 
 
     /**
@@ -63,13 +63,17 @@ class CrosswordDTO
     public function __construct(int $lesson_id){
         $this->lesson_id = $lesson_id;
         $this->find();
-        $this->setValue();
-        $this->find_user_answer();
     }
 
     private function find(){
         $data = Crossword::with('word')->where(['lesson_id'=>$this->lesson_id])->get()->first();
-        $this->data = $data;
+        if(is_null($data)){
+            $this->empty = true;
+        }else{
+            $this->data = $data;
+            $this->setValue();
+            $this->find_user_answer();
+        }
     }
 
     private function setValue(){

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\API;
 
+use App\DTO\TopicDTO;
+use App\DTO\TopicsDTO;
 use App\Http\Controllers\Controller;
 use App\Models\Lessons;
 use App\Models\Question;
@@ -17,6 +19,44 @@ use Illuminate\Support\Facades\DB;
 
 class LessonsController extends Controller
 {
+
+
+    public function done(){
+        $data = new TopicsDTO(1);
+        return response($data->getDone());
+    }
+
+    public function active(){
+        $data = new TopicsDTO(1);
+        return response($data->getActive());
+    }
+
+    public function all(){
+        $data = new TopicsDTO(1);
+        return response($data->getTopics());
+    }
+
+
+    public function user_done($user_id){
+        $data = new TopicsDTO($user_id);
+        return response($data->getDone());
+    }
+
+    public function user_active($user_id){
+        $data = new TopicsDTO($user_id);
+        return response($data->getActive());
+    }
+
+    public function user_all($user_id){
+        $data = new TopicsDTO($user_id);
+        return response($data->getTopic());
+    }
+
+    public function DTO(){
+        $data = new TopicsDTO(1);
+        return response($data->getTopic());
+    }
+
     public function lesson($id){
 //        $lesson = Lessons::with('topic','attachment')->find($id);
         $lesson = UserLessons::with('lessons')->where('lesson_id','=',$id)->get();
@@ -86,8 +126,12 @@ class LessonsController extends Controller
 
     }
 
-    public function topics(){
-        $user = User::find(1);
+    public function topics($user_id = null){
+        if($user_id === null){
+            $user = User::find(1);
+        }else{
+            $user = User::find($user_id);
+        }
         $topics = $user->topic;
         $array = [];
         foreach ($topics as $topic){
@@ -248,7 +292,12 @@ class LessonsController extends Controller
 
 
 
-    public function topics_active(){
+    public function topics_active($user_id = null){
+        if($user_id === null){
+            $user = User::find(1);
+        }else{
+            $user = User::find($user_id);
+        }
         $topics = User::find(1)->topic_active;
         $data = collect();
         foreach ($topics as $topic){
@@ -257,8 +306,12 @@ class LessonsController extends Controller
         return response($data);
     }
 
-    public function topics_done(){
-        $topic = User::find(1);
+    public function topics_done($user_id = null){
+        if($user_id === null){
+            $user = User::find(1);
+        }else{
+            $user = User::find($user_id);
+        }
         //$data = collect($topic->topic_done);
 
         $return = collect();

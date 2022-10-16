@@ -35,6 +35,8 @@ class QuestionsDTO
      */
     public object $questionsDTO;
 
+    public bool $empty = false;
+
     /**
      * QuestionDTO constructor.
      * @param int $lesson_id
@@ -47,11 +49,19 @@ class QuestionsDTO
         $this->getQuestions();
         $this->setCountCompletedQuestion();
         $this->completed();
+        $this->setEmpty();
     }
 
     private function completed(){
         if($this->count_question === $this->count_completed_question){
             $this->completed = true;
+        }
+    }
+
+    private function setEmpty(){
+        if($this->count_question < 1){
+            $this->empty = true;
+            $this->completed = false;
         }
     }
 

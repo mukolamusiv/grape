@@ -20,15 +20,21 @@ class OpenQuestionDTO
 
     private object $answer;
 
+    public bool $empty = false;
+
     public function __construct(int $lesson_id){
         $this->find($lesson_id);
-        $this->setVars();
-        $this->setStatus($this->id);
     }
 
     private function find(int $lesson_id){
         $data = OpenQuestion::where(['lesson_id'=>$lesson_id])->get();
-        $this->data = $data->first();
+        if(count($data) != 0){
+            $this->data = $data->first();
+            $this->setVars();
+            $this->setStatus($this->id);
+        }else{
+            $this->empty = true;
+        }
     }
 
     private function setVars(){

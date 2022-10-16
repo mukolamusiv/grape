@@ -67,10 +67,13 @@ Route::get('awards/{user_id}','\App\Http\Controllers\API\UserController@Awards')
 /*
  * Роути уроків
  * */
-Route::get('topics-active','\App\Http\Controllers\API\LessonsController@topics_active');
-Route::get('topics','\App\Http\Controllers\API\LessonsController@topics');
-Route::get('topics-done','\App\Http\Controllers\API\LessonsController@topics_done');
+Route::get('topics-active','\App\Http\Controllers\API\LessonsController@active');
+Route::get('topics','\App\Http\Controllers\API\LessonsController@all');
+Route::get('topics-done','\App\Http\Controllers\API\LessonsController@done');
 
+Route::get('user-topics-active/{user_id}','\App\Http\Controllers\API\LessonsController@user_active');
+Route::get('user-topics/{user_id}','\App\Http\Controllers\API\LessonsController@user_all');
+Route::get('user-topics-done/{user_id}','\App\Http\Controllers\API\LessonsController@user_done');
 
 //Route::get('user-topics-active/{user_id}','\App\Http\Controllers\API\LessonsController@topics_active');
 //Route::get('user-topics/{user_id}','\App\Http\Controllers\API\LessonsController@topics');
@@ -118,6 +121,9 @@ Route::get('lesson-question/{lesson_id}','\App\Http\Controllers\API\LessonContro
 Route::get('lesson-crossword/{lesson_id}','\App\Http\Controllers\API\LessonController@crossword');
 Route::get('lesson-open-question/{lesson_id}','\App\Http\Controllers\API\LessonController@open_question');
 Route::get('lesson-coloring-page/{lesson_id}','\App\Http\Controllers\API\LessonController@coloring_page');
+
+
+Route::get('test','\App\Http\Controllers\API\LessonsController@DTO');
 
 /////////////
 Route::post('lesson-crossword/{lesson_id}','\App\Http\Controllers\API\TestController@crossword');

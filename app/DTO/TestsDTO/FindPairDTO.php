@@ -35,6 +35,8 @@ class FindPairDTO
 
     private int $count_dat;
 
+    public bool $empty = false;
+
     public function __construct(int $lesson_id){
         $this->lesson_id = $lesson_id;
         $this->setFindPair();
@@ -42,8 +44,12 @@ class FindPairDTO
 
     private function setFindPair(){
         $data = Find_a_Pair::with('data')->where(['lesson_id'=>$this->lesson_id])->get();
-        $this->object = $data->first();
-        $this->setData($this->object->data);
+        if(count($data) != 0 ){
+            $this->object = $data->first();
+            $this->setData($this->object->data);
+        }else{
+            $this->empty = true;
+        }
     }
 
     private function setData($data){
