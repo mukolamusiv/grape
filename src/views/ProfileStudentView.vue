@@ -287,4 +287,9 @@ hr{
     }
   }
 }
+@media (max-width: 575.98px) {
+  .topic{
+    width: 100%;
+  }
+}
 </style>
