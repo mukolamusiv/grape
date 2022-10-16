@@ -28,8 +28,8 @@ class LessonDTO
     public bool $crossword_completed = false;
     public bool $coloring_page_completed = false;
     public bool $find_couple_completed = false;
-    public bool $open_question = false;
-    public bool $one_word = false;
+    public bool $open_question_complited = false;
+    public bool $one_word_complited = false;
     ///////////////////////////////////////////
 
     /**
@@ -77,7 +77,7 @@ class LessonDTO
         }
 
         if($this->emptyOneWord){
-            unset($data['one_word']);
+            unset($data['one_word_complited']);
         }
 
         if($this->emptyCrossword){
@@ -85,7 +85,7 @@ class LessonDTO
         }
 
         if($this->emptyOpenQuestion){
-            unset($data['open_question']);
+            unset($data['open_question_complited']);
         }
 
         unset($data['lesson']);
@@ -165,7 +165,7 @@ class LessonDTO
     private function setOneWord(){
         $data = new OneWordDTO($this->id);
         $this->emptyOneWord = $data->empty;
-        $this->one_word = $data->completed;
+        $this->one_word_complited = $data->completed;
     }
 
     private function setCrossword(){
@@ -177,6 +177,6 @@ class LessonDTO
     private function setOpenQuestion(){
         $data = new OpenQuestionDTO($this->id);
         $this->emptyOpenQuestion = $data->empty;
-        $this->open_question = $data->completed;
+        $this->open_question_complited = $data->completed;
     }
 }
