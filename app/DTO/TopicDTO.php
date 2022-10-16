@@ -10,25 +10,29 @@ use App\Models\User;
 class TopicDTO
 {
 
-public int $topic_id;
-public int $id;
-public string $title;
-public string $description;
-public $photo;
-public int $water;
-public int $lumen;
-public int $status = 0;
-public object $lessons_DTO;
+    public int $topic_id;
+    public int $id;
+    public string $title;
+    public string $description;
+    public $photo;
+    public int $water;
+    public int $lumen;
+    public int $status = 0;
+    public object $lessons_DTO;
 
-private object $topic;
+    private object $topic;
 
-
+    /**
+     * TopicDTO constructor.
+     * @param int $topic_id
+     */
     public function __construct(int $topic_id)
     {
         $this->topic = Topic::find($topic_id);
         $this->id = $topic_id;
         $this->setLessons();
         $this->setVars();
+        $this->setStatus();
     }
 
     public function setVars(){
@@ -49,8 +53,20 @@ private object $topic;
         $this->lessons_DTO = $data;
     }
 
+    private function setStatus(){
+        $true = 0;
+        $lessons = $this->lessons_DTO;
+        foreach ($lessons as $lesson){
+            if($lesson['lesson_completed']){
+                $true++;
+            }
+        }
+        $this->status = $true*100/count($this->lessons_DTO);
+    }
+
     public function getTopic(){
         $data = get_object_vars($this);
+        unset($data['topic']);
         return $data;
     }
 }

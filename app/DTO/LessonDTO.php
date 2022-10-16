@@ -21,7 +21,7 @@ class LessonDTO
     public string $text;
     public int $topic_id;
     public string $topic_title;
-    public bool $lesson_completed;
+    public bool $lesson_completed = false;
     public string $video_url;
     public bool $video_completed = false;
     public bool $question_completed = false;
@@ -113,9 +113,8 @@ class LessonDTO
     }
 
     private function setActive(){
-        if(!$this->active_lesson->complete){
-            $this->lesson_completed = $this->active_lesson->complete;
-        }
+        //dd($this->active_lesson->complete);
+        $this->lesson_completed = $this->active_lesson->complete;
     }
 
     private function setVideo(){
@@ -139,7 +138,7 @@ class LessonDTO
             $lesson->lesson_id = $lesson_id;
             $lesson->topic_id = $data_lesson->topic_id;
             $lesson->user_id = 1;
-            $lesson->check_video = true;
+            $lesson->check_video = false;
             $lesson->water = 50;
             $lesson->lumen = 70;
             $lesson->save();
