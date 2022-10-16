@@ -152,6 +152,7 @@ class TestController extends Controller
     public function openQuestionAudit(OpenQuestionAnswerRequest $questionRequest, $question_id){
         $data = OpenQuestionAnswerUser::find($question_id);
         $data->reply = $questionRequest->answer;
+        $data->audit = true;
         return response($data->save());
     }
 }
