@@ -32,7 +32,7 @@ private object $topic;
     }
 
     public function setVars(){
-        $this->topic_id = $this->id;
+        $this->topic_id = $this->topic->id;
         $this->title = $this->topic->title;
         $this->description = $this->topic->description;
         $this->photo = $this->topic->photo;
