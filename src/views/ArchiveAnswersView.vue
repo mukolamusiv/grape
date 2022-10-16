@@ -93,4 +93,9 @@ section{
     justify-content: flex-end;
   }
 }
+@media (max-width: 575.98px) {
+  section{
+    padding: 0;
+  }
+}
 </style>
