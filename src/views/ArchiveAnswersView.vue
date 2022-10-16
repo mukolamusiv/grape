@@ -1,12 +1,11 @@
 <template>
   <main>
     <div class="title-page">
-      Нові відповіді
+      Архів відповідей
     </div>
     <section v-if="data.answers">
       <div class="open-question" v-for="(answer, index) in data.answers" v-bind:key="answer.id">
-        <div class="question">{{index+1}}.{{answer.open_question.question}}</div>
-
+        <div class="question">{{index+1}}. {{answer.open_question.question}}</div>
         <div class="answer">
           <div class="answer-about">
             <router-link class="student-name" :to="{ path: `/profile-student/${answer.user.id}`}">
@@ -16,12 +15,7 @@
               {{answer.created_at.substring(0, 10).split('-').reverse().join('.')}} о {{answer.created_at.substring(11, 19)}}
             </div>
           </div>
-          {{answer.open_question.answer}}</div>
-        <div class="submit-panel">
-          <div class="btn" @click="sendAnswerChecked(answer.id)">
-            <span class="material-icons">check</span>
-            Перевірив
-          </div>
+          {{answer.answer}}
         </div>
       </div>
     </section>
@@ -35,10 +29,10 @@ import axios from 'axios'
 const data = reactive({
   answers: null,
 })
-const getClassroom = function () {
+const getAnswers = function () {
   axios({
     method: 'GET',
-    url: `api/audit-open-question`,
+    url: `api/audit-open-question-completed`,
     data: {}
  }).then(function (response) {
    data.answers = response.data
@@ -46,17 +40,8 @@ const getClassroom = function () {
 
   })
 }
-const sendAnswerChecked = function (question_id) {
-  axios({
-    method: 'POST',
-    url: `api/user-open-question/${question_id}`,
-    data: {answer: true, }
- }).then(function (response) {
-   console.log(response)
 
-  })
-}
-getClassroom()
+getAnswers()
 </script>
 
 <style lang="scss" scoped>
@@ -75,7 +60,7 @@ section{
   align-items: center;
   font-size: 2.5rem;
   font-weight: 600;
-  color: #6f40fe;
+  color: #736797;
 }
 .open-question{
   display: flex;

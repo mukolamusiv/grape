@@ -42,8 +42,6 @@ const getClassroom = function () {
     data: {}
  }).then(function (response) {
    data.classroom = response.data
-   console.log(response.data)
-
   })
 }
 getClassroom()

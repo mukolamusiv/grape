@@ -60,12 +60,20 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/ProfileStudentView.vue')
   },
   {
-    path: '/open-question',
-    name: 'OpenQuestionView',
+    path: '/new-answers',
+    name: 'NewAnswers',
     meta: {
       forAuthorized: true,
     },
-    component: () => import(/* webpackChunkName: "about" */ '../views/OpenQuestionView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/NewAnswersView.vue')
+  },
+  {
+    path: '/archive-answers',
+    name: 'ArchiveAnswers',
+    meta: {
+      forAuthorized: true,
+    },
+    component: () => import(/* webpackChunkName: "about" */ '../views/ArchiveAnswersView.vue')
   },
   { path: '/:pathMatch(.*)*', component: () => import(/* webpackChunkName: "about" */ '../views/404View.vue') }
 ]

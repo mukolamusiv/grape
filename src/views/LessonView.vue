@@ -17,30 +17,30 @@
             Відео-лекція
             <span class="material-icons accept" v-if="data.lesson.video_completed">task_alt</span>
           </a>
-          <a class="lesson-structure-item" href="#" @click="store.ui.lessonTab = 'test'">
+          <a class="lesson-structure-item" href="#" @click="store.ui.lessonTab = 'test'" v-if="data.lesson.question_completed !== undefined">
             <span class="material-icons test">quiz</span>
             Тест
             <span class="material-icons accept"  v-if="data.lesson.question_completed">task_alt</span>
           </a>
-          <a class="lesson-structure-item" href="#" @click="store.ui.lessonTab = 'oneWord'">
+          <a class="lesson-structure-item" href="#" @click="store.ui.lessonTab = 'oneWord'" v-if="data.lesson.one_word_complited !== undefined">
             <span class="material-icons test">history_edu</span>
             Одне слово
-            <span class="material-icons accept"  v-if="data.lesson.question_completed">task_alt</span>
+            <span class="material-icons accept"  v-if="data.lesson.one_word_complited">task_alt</span>
           </a>
-          <a class="lesson-structure-item" href="#" @click="store.ui.lessonTab = 'findPair'">
+          <a class="lesson-structure-item" href="#" @click="store.ui.lessonTab = 'findPair'" v-if="data.lesson.find_couple_completed !== undefined">
             <span class="material-icons find-couple">gesture</span>
             Підбери пару
             <span class="material-icons accept"  v-if="data.lesson.find_couple_completed">task_alt</span>
           </a>
-          <a class="lesson-structure-item" href="#" @click="store.ui.lessonTab = 'crossWord'">
+          <a class="lesson-structure-item" href="#" @click="store.ui.lessonTab = 'crossWord'" v-if="data.lesson.crossword_completed !== undefined">
             <span class="material-icons crossword">border_all</span>Кросворд
             <span class="material-icons accept"  v-if="data.lesson.crossword_completed">task_alt</span>
           </a>
-          <a class="lesson-structure-item" href="#" @click="store.ui.lessonTab = 'openQuestion'">
+          <a class="lesson-structure-item" href="#" @click="store.ui.lessonTab = 'openQuestion'" v-if="data.lesson.open_question_complited !== undefined">
             <span class="material-icons full-answer">article</span>Повна відповідь
-            <span class="material-icons accept"  v-if="data.lesson.crossword_completed">task_alt</span>
+            <span class="material-icons accept"  v-if="data.lesson.open_question_complited">task_alt</span>
           </a>
-          <a class="lesson-structure-item" href="#"  @click="store.ui.lessonTab = 'coloring'">
+          <a class="lesson-structure-item" href="#"  @click="store.ui.lessonTab = 'coloring'" v-if="data.lesson.coloring_page_completed !== undefined">
             <span class="material-icons coloring">palette</span>
             Розмальовка
             <span class="material-icons accept"  v-if="data.lesson.coloring_page_completed">task_alt</span>

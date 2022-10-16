@@ -42,19 +42,43 @@
     </section>
     <hr class="mr-0">
     <section class="section-topics">
-      <div id="topics-active" class="topics">
+      <div id="topics-active" class="topics" v-if="data.topicsActive">
         <div class="title">
-          <h2>Активні: </h2>
+          <h2>Активні: {{data.topicsActive.length}}</h2>
+        </div>
+        <div class="topic" v-for="(topic) in data.topicsActive" v-bind:key="topic.id">
+          <router-link class="topic-title" :to="{ path: `/topic/${topic.id}`}">
+            {{topic.title}}
+          </router-link>
+          <div class="lessons-wrap">
+            <div class="wrap-lesson-card" v-if="topic.lessons_DTO">
+              <div class="lesson-card" :class="{'lesson-completed' : lesson.completed}"  v-for="(lesson, index) in topic.lessons_DTO" v-bind:key="lesson.lesson_id">
+                <div class="lesson-title">
+                  <span>{{index+1}}. {{lesson.title}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div id="topics-done" class="topics">
+      <div id="topics-done" class="topics" v-if="data.topicsDone">
         <div class="title">
-          <h2 class="cl-gray">Пройдені:</h2>
+          <h2 class="cl-gray">Пройдені: {{data.topicsDone.length}}</h2>
+        </div>
+        <div v-for="(topic) in data.topicsDone" v-bind:key="topic.id">
+          <router-link class="topic-title" :to="{ path: `/topic/${topic.id}`}">
+            {{topic.title}}; &nbsp;
+          </router-link>
         </div>
       </div>
       <div id="topics" class="topics">
         <div class="title">
-          <h2 class="cl-blue">Доступні:</h2>
+          <h2 class="cl-blue">Доступні: {{data.topics.length}}</h2>
+        </div>
+        <div v-for="(topic) in data.topics" v-bind:key="topic.id">
+          <router-link class="topic-title" :to="{ path: `/topic/${topic.id}`}">
+            {{topic.title}}; &nbsp;
+          </router-link>
         </div>
       </div>
     </section>
@@ -71,10 +95,13 @@ const { store } = useStore()
 const route = useRoute()
 
 const data = reactive({
-  user: null
+  user: null,
+  topicsActive: [],
+  topicsDone: [],
+  topics: [],
 })
 
-const getClassroom = function () {
+const getUser = function () {
   axios({
     method: 'GET',
     url: `/api/user/${route.params.id}`,
@@ -85,7 +112,22 @@ const getClassroom = function () {
 
   })
 }
-getClassroom()
+
+const getTopics = function (url, saveTo) {
+  axios({
+    method: 'GET',
+    url: `/api/${url}/${route.params.id}`,
+    data: {}
+ }).then(function (response) {
+   console.log(saveTo, response.data)
+   data[saveTo] = response.data
+ })
+}
+getTopics('user-topics-active', 'topicsActive')
+getTopics('user-topics-done', 'topicsDone')
+getTopics('user-topics', 'topics')
+
+getUser()
 </script>
 
 <style lang="scss" scoped>
@@ -177,8 +219,11 @@ hr{
 .section-topics{
   display: flex;
   flex-direction: column;
+  padding: 0;
   .topics{
     padding: 16px;
+    display: flex;
+    flex-wrap: wrap;
   }
   .title{
     width: 100%;
@@ -206,5 +251,40 @@ hr{
     color: white;
   }
   background: #5186ff1a;
+}
+
+.topic{
+  width: 50%;
+  padding: 8px;
+  .topic-title{
+    display: block;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  .lessons-wrap{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 16px;
+    padding-top: 0;
+    .lesson-card{
+      margin: 8px 0;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      color: #192736;
+      background: #1927361f;
+      border-radius: 5px;
+      .lesson-title{
+        display: flex;
+        align-items: center;
+        font-size: 0.8rem;
+        .material-icons{
+          margin-right: 8px;
+        }
+      }
+    }
+  }
 }
 </style>

@@ -47,10 +47,10 @@
         <router-link to="/classroom"><span class="material-icons">group</span><span>Мій клас</span></router-link>
       </div>
       <div class="grape-link" v-if="store.user.role_user === 'katehyt'">
-        <router-link to="/open-question"><span class="material-icons">warning</span><span>Нові відповіді</span></router-link>
+        <router-link to="/new-answers"><span class="material-icons">warning</span><span>Нові відповіді</span></router-link>
       </div>
       <div class="grape-link" v-if="store.user.role_user === 'katehyt'">
-        <router-link to="/open-question"><span class="material-icons">inventory</span><span>Архів відповідей</span></router-link>
+        <router-link to="/archive-answers"><span class="material-icons">inventory</span><span>Архів відповідей</span></router-link>
       </div>
       <div class="grape-link">
         <router-link to="/profile"><span class="material-icons">badge</span><span>Мій профіль</span></router-link>
