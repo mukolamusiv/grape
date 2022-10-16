@@ -11,6 +11,7 @@ class TopicDTO
 {
 
 public int $topic_id;
+public int $id;
 public string $title;
 public string $description;
 public $photo;
@@ -25,6 +26,7 @@ private object $topic;
     public function __construct(int $topic_id)
     {
         $this->topic = Topic::find($topic_id);
+        $this->id = $topic_id;
         $this->setLessons();
         $this->setVars();
     }
