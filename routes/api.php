@@ -55,7 +55,7 @@ Route::delete('user/{id}','\App\Http\Controllers\API\UserController@destroy');//
 
 
 Route::post('user-award/{user_id}','\App\Http\Controllers\API\UserController@addAwards');
-Route::get('user-award/{user_id}','\App\Http\Controllers\API\UserController@AwardsAll');
+Route::get('user-award-available/{user_id}','\App\Http\Controllers\API\UserController@AwardsAll');
 
 Route::get('user-open-question/{user_id}','\App\Http\Controllers\API\UserController@NonAuditOpenQuestions');
 Route::get('audit-open-question','\App\Http\Controllers\API\UserController@NonOpenQuestions');
