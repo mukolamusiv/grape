@@ -1,7 +1,8 @@
 <template>
   <main>
     <div class="title-page">
-      Нові відповіді
+      Нові відповіді:&nbsp;
+      <span class="count-answers" v-if="data.answers">{{data.answers.length}}</span>
     </div>
     <section v-if="data.answers">
       <div class="open-question" v-for="(answer, index) in data.answers" v-bind:key="answer.id">
@@ -18,9 +19,13 @@
           {{answer.answer}}
         </div>
         <div class="submit-panel">
-          <div class="btn" @click="sendAnswerChecked(answer.id)">
+          <div class="btn accept" @click="sendAnswerChecked(answer.id, true)">
             <span class="material-icons">check</span>
-            Перевірив
+            Правильно
+          </div>
+          <div class="btn  cancel" @click="sendAnswerChecked(answer.id, false)">
+            <span class="material-icons">backspace</span>
+            Не правильно
           </div>
         </div>
       </div>
@@ -46,11 +51,11 @@ const getAnswers = function () {
 
   })
 }
-const sendAnswerChecked = function (question_id) {
+const sendAnswerChecked = function (question_id, state) {
   axios({
     method: 'POST',
     url: `api/user-open-question/${question_id}`,
-    data: {answer: true, }
+    data: {answer: state }
  }).then(function () {
    getAnswers()
   })

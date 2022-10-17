@@ -6,7 +6,7 @@
     <section v-if="data.answers">
       <div class="open-question" v-for="(answer, index) in data.answers" v-bind:key="answer.id">
         <div class="question">{{index+1}}. {{answer.open_question.question}}</div>
-        <div class="answer">
+        <div class="answer" :class="{'answer-true' : answer.reply, 'answer-false' : !answer.reply,}">
           <div class="answer-about">
             <router-link class="student-name" :to="{ path: `/profile-student/${answer.user.id}`}">
               {{answer.user.surname}} {{answer.user.name}}
@@ -92,6 +92,12 @@ section{
   .submit-panel {
     justify-content: flex-end;
   }
+}
+.answer-true{
+  outline-color: #45d800!important;
+}
+.answer-false{
+  outline-color: #c62f2f!important;
 }
 @media (max-width: 575.98px) {
   section{

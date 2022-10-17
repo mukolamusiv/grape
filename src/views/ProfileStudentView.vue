@@ -41,6 +41,18 @@
       </div>
     </section>
     <hr class="mr-0">
+    <section class="wrap-awards" v-if="data.user.awards">
+      <div class="awards">
+        <div class="awards-item c-pointer" v-for="(award) in data.user.awards" v-bind:key="award.id" :title="award.title" @click="giveAward(award)">
+          <div class="wrap-award-img" :class="{'received' : award.completed}" >
+            <div class="award-img" :style="{ 'background-image': `url(${award.icon})` }">
+            </div>
+          </div>
+          <div class="give-award" v-if="!award.completed">нагородити</div>
+        </div>
+      </div>
+    </section>
+    <hr class="mr-0">
     <section class="section-topics">
       <div id="topics-active" class="topics" v-if="data.topicsActive">
         <div class="title">
@@ -100,7 +112,6 @@ const data = reactive({
   topicsDone: [],
   topics: [],
 })
-
 const getUser = function () {
   axios({
     method: 'GET',
@@ -109,8 +120,7 @@ const getUser = function () {
  }).then(function (response) {
    data.user = response.data
    console.log(response.data)
-
-  })
+ })
 }
 
 const getTopics = function (url, saveTo) {
@@ -119,15 +129,28 @@ const getTopics = function (url, saveTo) {
     url: `/api/${url}/${route.params.id}`,
     data: {}
  }).then(function (response) {
-   console.log(saveTo, response.data)
    data[saveTo] = response.data
  })
 }
+
+const giveAward = function (award) {
+  if(!award.completed){
+    console.log(award)
+    axios({
+      method: 'POST',
+      url: `/api/user-award/${route.params.id}`,
+      data: {'award_id': award.id}
+   }).then(function () {
+     getUser()
+   })
+  }
+}
+
+getUser()
+
 getTopics('user-topics-active', 'topicsActive')
 getTopics('user-topics-done', 'topicsDone')
 getTopics('user-topics', 'topics')
-
-getUser()
 </script>
 
 <style lang="scss" scoped>
@@ -143,6 +166,7 @@ hr{
 }
 .get{
   margin: 0;
+  margin-bottom: 16px;
 }
 .Profile{
   width: 100%;
@@ -213,6 +237,58 @@ hr{
     margin-top: 8px;
     .material-icons{
       padding-right: 4px;
+    }
+  }
+}
+.wrap-awards{
+  width: 100%;
+  overflow-x: scroll;
+  padding: 16px;
+  .awards{
+    display: flex;
+    max-width: 100%;
+    .awards-item{
+      padding: 0 8px;
+      margin-bottom: 8px;
+      margin-top: 8px;
+      height: 95px;
+      overflow: hidden;
+      .give-award{
+        width: 100%;
+        font-size: 0.95rem;
+        font-weight: bold;
+        text-align: center;
+        top: -59px;
+        position: relative;
+        display: block;
+        color: #ffffff;
+        background: #5186ff;
+      }
+    }
+    .wrap-award-img{
+      width: 95px;
+      height: 95px;
+      padding: 3px;
+      border-radius: 50px;
+      border: 5px solid gray;
+      overflow: hidden;
+      opacity: 0.5;
+    }
+    .wrap-award-img:hover{
+      opacity: 1;
+    }
+    .award-img{
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-size: cover;
+      border-radius: 50px;
+    }
+    .received{
+      border-color: green;
+      opacity: 1;
     }
   }
 }
