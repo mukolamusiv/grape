@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AwardRequest;
 use App\Http\Requests\UserPasswordRequest;
 use App\Mail\SendEmail;
 use App\Models\Awards;
@@ -232,7 +233,6 @@ class UserController extends Controller
             }
             $return->push($demo);
         }
-
         return $return;
     }
 
@@ -252,5 +252,32 @@ class UserController extends Controller
 
     public function OpenQuestions(){
         return response(OpenQuestionAnswerUser::with('OpenQuestion','User')->where(['audit_user_id'=>1,'audit'=>true])->get());
+    }
+
+    public function AwardsAll($user_id){
+        $data = AwardUser::with('Awards')->where(['user_id'=>$user_id])->get()->toArray();
+        $user_award = array();
+        foreach ($data as $datum){
+            $user_award[] = $datum['awards'][0]['id'];
+        }
+        $awards = Awards::whereNotIn('id',$user_award)->get();
+        return response($awards);
+    }
+
+    public function addAwards(AwardRequest $request, $user_id){
+        $award_id = $request->input('award_id');
+        if(AwardUser::where(['user_id'=>$user_id,'award_id'=>$award_id])->get()->isEmpty() ){
+            if(is_null(Awards::find($award_id))){
+                return response(['error'=>'Такої нагороди не існує']);
+            }else {
+            $award = new AwardUser();
+            $award->award_id = $request->input('award_id');
+            $award->user_id = $user_id;
+            $award->save();
+            }
+            return response('success');
+        }else{
+            return response(['error'=>'Уже нагорода додана']);
+        }
     }
 }

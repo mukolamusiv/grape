@@ -53,6 +53,10 @@ Route::put('user/{id}','\App\Http\Controllers\API\UserController@update');//->mi
 Route::post('user-photo/{id}','\App\Http\Controllers\API\UserController@photo');//->middleware(['auth']);
 Route::delete('user/{id}','\App\Http\Controllers\API\UserController@destroy');//->middleware(['auth']);
 
+
+Route::post('user-award/{user_id}','\App\Http\Controllers\API\UserController@addAwards');
+Route::get('user-award/{user_id}','\App\Http\Controllers\API\UserController@AwardsAll');
+
 Route::get('user-open-question/{user_id}','\App\Http\Controllers\API\UserController@NonAuditOpenQuestions');
 Route::get('audit-open-question','\App\Http\Controllers\API\UserController@NonOpenQuestions');
 Route::post('user-open-question/{question_id}','\App\Http\Controllers\API\TestController@openQuestionAudit');
