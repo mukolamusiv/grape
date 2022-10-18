@@ -27,7 +27,7 @@ class LessonsController extends Controller
     }
 
     public function active(){
-        dd(Auth::user());
+        dd(Auth::id());
         $data = new TopicsDTO(Auth::id());
         return response($data->getActive());
     }
