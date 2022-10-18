@@ -105,6 +105,7 @@
           <span class="input-name">Старий пароль</span>
           <label>
             <input type="text" v-model="data.oldPassword" required>
+            <span class="material-icons show" @click="changeInputType">{{data.inputIcon}}</span>
           </label>
         </div>
         <div class="form-item">
@@ -147,7 +148,8 @@ const data = reactive({
     birthday: null
   },
   oldPassword: null,
-  newPassword: null
+  newPassword: null,
+  inputIcon: 'visibility',
 })
 const startEdit = function () {
   data.edit = true
@@ -202,6 +204,16 @@ const updatePassword = function () {
       data.edit = false
     })
 }
+const changeInputType = function () {
+  if(data.inputType == 'password') {
+    data.inputType = 'text'
+    data.inputIcon = 'visibility_off'
+  }
+  else {
+    data.inputType = 'password'
+    data.inputIcon = 'visibility'
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -240,7 +252,6 @@ hr{
     font-size: 18px;
     padding: 4px 8px;
     color: inhetir;
-    // border-radius: 150px;
     background-position: center;
     background-size: cover;
     }
@@ -308,5 +319,10 @@ hr{
 .form-item{
   font-size: 1.2rem;
   z-index: 0;
+}
+.show{
+  margin: 0!important;
+  background: none!important;
+  color: #c3c3c3!important;
 }
 </style>
