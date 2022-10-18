@@ -119,7 +119,11 @@ class LessonDTO
 
     private function setActive(){
         //dd($this->active_lesson->complete);
-        $this->lesson_completed = $this->active_lesson->complete;
+        if(isset($this->active_lesson->complete)){
+            $this->lesson_completed = $this->active_lesson->complete;
+        }else{
+            $this->lesson_completed = false;
+        }
     }
 
     private function setVideo(){
