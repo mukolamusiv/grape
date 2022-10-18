@@ -40,7 +40,7 @@ class TestController extends Controller
     public function question(QuestionRequest $questionRequest, $question_id){
         $DTO = Question::find($question_id);
         $DTO->answer;
-        $DTO = new QuestionDTO($DTO);
+        $DTO = new QuestionDTO($DTO,Auth::id());
         if($DTO->audit_answer($questionRequest->input('answer_id'))){
             $this->add_question_answer($questionRequest->input('answer_id'),$question_id,true);
             return response(['reply'=>true]);
@@ -68,7 +68,7 @@ class TestController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
     public function pair(PairRequest $pairRequest,$lesson_id){
-        $data = new FindPairDTO($lesson_id);
+        $data = new FindPairDTO($lesson_id,Auth::id());
         return response(['reply'=> $data->setCompleted($pairRequest->input('answer'))]);
     }
 
@@ -77,7 +77,7 @@ class TestController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
     public function one_word($lesson_id){
-        $data = new OneWordDTO($lesson_id);
+        $data = new OneWordDTO($lesson_id,Auth::id());
         return response($data->object());
     }
 
@@ -87,7 +87,7 @@ class TestController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
     public function one_word_answer(CrosswordRequest $request, $lesson_id){
-        $data = new OneWordDTO($lesson_id);
+        $data = new OneWordDTO($lesson_id,Auth::id());
         return response(['reply'=>$data->answer($request->input('id'),$request->input('answer'))]);
     }
 
@@ -124,7 +124,7 @@ class TestController extends Controller
     }
 
     public function test(){
-        $data = new FindPairDTO(13);
+        $data = new FindPairDTO(13,1);
     }
 
     public function open_question(OpenQuestionRequest $request, $lesson_id){
