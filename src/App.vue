@@ -25,6 +25,7 @@ const { store } = useStore()
 
 store.router = router
 axios.defaults.baseURL = store.homeUrl
+// axios.defaults.widthCredentials = true
 store.lodlocal()
 
 

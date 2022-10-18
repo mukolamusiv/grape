@@ -2,7 +2,7 @@ import { reactive } from 'vue'
 import axios from 'axios'
 
 const store = reactive({
-  homeUrl: 'http://grape.chasoslov.info',
+  homeUrl: 'https://grape.chasoslov.info',
   token: null,
   router: null,
   ui: {
@@ -18,7 +18,7 @@ const store = reactive({
     }).then(function (response) {
       store.user = response.data
     }).catch(function () {
-      store.logout()
+      // store.logout()
       });
   },
   lodlocal: function () {
