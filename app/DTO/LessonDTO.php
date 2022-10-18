@@ -11,6 +11,7 @@ use App\DTO\TestsDTO\OpenQuestionDTO;
 use App\DTO\TestsDTO\QuestionsDTO;
 use App\Models\Lessons;
 use App\Models\UserLessons;
+use Illuminate\Support\Facades\Auth;
 
 class LessonDTO
 {
@@ -131,13 +132,13 @@ class LessonDTO
      * @return UserLessons
      */
     private function setActiveLesson($lesson_id){
-        $data = UserLessons::where(['lesson_id'=>$lesson_id, 'user_id'=>1])->get();
+        $data = UserLessons::where(['lesson_id'=>$lesson_id, 'user_id'=>Auth::id()])->get();
         if($data->isEmpty()){
             $data_lesson = Lessons::find($lesson_id);
             $lesson = new UserLessons();
             $lesson->lesson_id = $lesson_id;
             $lesson->topic_id = $data_lesson->topic_id;
-            $lesson->user_id = 1;
+            $lesson->user_id = Auth::id();
             $lesson->check_video = false;
             $lesson->water = 50;
             $lesson->lumen = 70;

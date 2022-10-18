@@ -7,6 +7,7 @@ namespace App\DTO\TestsDTO;
 use App\Models\Find_a_Pair;
 use App\Models\Find_a_Pair_Data;
 use App\Models\PairLessonsAnswer;
+use Illuminate\Support\Facades\Auth;
 
 class FindPairDTO
 {
@@ -84,7 +85,7 @@ class FindPairDTO
             return true;
         }else{
             $answer = new PairLessonsAnswer();
-            $answer->user_id = 1;
+            $answer->user_id = Auth::id();
             $answer->find_a_pair_id = $this->object->id;
             $answer->answer_pair_id_first = $pair_1->id;
             $answer->answer_pair_id_second = $pair_2->id;
@@ -95,7 +96,7 @@ class FindPairDTO
     }
 
     private function check_completed(){
-        $this->answer = PairLessonsAnswer::where(['user_id'=>1,'find_a_pair_id'=>$this->object->id,'reply'=>true])->get();
+        $this->answer = PairLessonsAnswer::where(['user_id'=>Auth::id(),'find_a_pair_id'=>$this->object->id,'reply'=>true])->get();
         if($this->count_dat <= $this->answer->count()){
             $this->completed = true;
         }

@@ -8,6 +8,7 @@ use App\Models\Answer;
 use App\Models\Lessons;
 use App\Models\Question;
 use App\Models\QuestionLessonsAnswer;
+use Illuminate\Support\Facades\Auth;
 
 class QuestionDTO
 {
@@ -63,7 +64,7 @@ class QuestionDTO
     }
 
     private function find_user_answer(){
-        $data = QuestionLessonsAnswer::where(['question_id'=>$this->id,'user_id'=>1,'reply'=>true])->get();
+        $data = QuestionLessonsAnswer::where(['question_id'=>$this->id,'user_id'=>Auth::id(),'reply'=>true])->get();
         if($data->isNotEmpty()){
             $this->completed = true;
         }

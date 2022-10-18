@@ -7,6 +7,7 @@ namespace App\DTO\TestsDTO;
 use App\Models\OneWord;
 use App\Models\OneWordAnswerUser;
 use App\Models\OneWordQuestion;
+use Illuminate\Support\Facades\Auth;
 
 class OneWordDTO
 {
@@ -68,7 +69,7 @@ class OneWordDTO
      * @return false
      */
     private function completed_status(){
-        $request = OneWordAnswerUser::where(['user_id'=>1,'lesson_id'=>$this->lesson_id])->get();
+        $request = OneWordAnswerUser::where(['user_id'=>Auth::id(),'lesson_id'=>$this->lesson_id])->get();
         if($request->isNotEmpty()){
             foreach ($this->data->question as $question){
                 if($request->firstWhere(['id' => $question->id]) != null){

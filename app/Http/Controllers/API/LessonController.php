@@ -18,6 +18,7 @@ use App\Models\QuestionLessonsAnswer;
 use App\Models\User;
 use App\Models\UserLessons;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LessonController extends Controller
 {
@@ -108,18 +109,18 @@ class LessonController extends Controller
     }
 
     public function check_video($lesson_id){
-        $lesson = UserLessons::where(['lesson_id'=>$lesson_id,'user_id'=>1])->get();
+        $lesson = UserLessons::where(['lesson_id'=>$lesson_id,'user_id'=>Auth::id()])->get();
         if($lesson->isEmpty()){
             $data_lesson = Lessons::find($lesson_id);
             $lesson = new UserLessons();
             $lesson->lesson_id = $lesson_id;
             $lesson->topic_id = $data_lesson->topic_id;
-            $lesson->user_id = 1;
+            $lesson->user_id = Auth::id();
             $lesson->check_video = true;
             $lesson->water = 50;
             $lesson->lumen = 70;
             $lesson->save();
-            $user = User::find(1);
+            $user = User::find(Auth::id());
             $user->water = $user->water+5;
             $user->lumen = $user->lumen+6;
             $user->save();
@@ -127,7 +128,7 @@ class LessonController extends Controller
             $lesson = $lesson->first();
             $lesson->check_video = true;
             $lesson->save();
-            $user = User::find(1);
+            $user = User::find(Auth::id());
             $user->water = $user->water+5;
             $user->lumen = $user->lumen+6;
             $user->save();
@@ -136,7 +137,7 @@ class LessonController extends Controller
     }
 
     public function status_video($lesson_id){
-        $lesson = UserLessons::where(['lesson_id'=>$lesson_id,'user_id'=>1])->get();
+        $lesson = UserLessons::where(['lesson_id'=>$lesson_id,'user_id'=>Auth::id()])->get();
         if($lesson->isEmpty()){
             return response('Ще не переглядали');
         }
@@ -170,7 +171,7 @@ class LessonController extends Controller
     private function question_check($question){
         //$lesson_id = $question;
         foreach ($question as $qu){
-            $answer = collect(QuestionLessonsAnswer::where(['question_id'=>$qu->id,'user_id'=>1,'reply'=>true])->get());
+            $answer = collect(QuestionLessonsAnswer::where(['question_id'=>$qu->id,'user_id'=>Auth::id(),'reply'=>true])->get());
             if($answer->count() < $question->count()){
                 return false;
             }
