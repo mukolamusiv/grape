@@ -154,7 +154,7 @@ class LessonDTO
     }
 
     private function setQuestions(){
-        $data = new QuestionsDTO($this->id);
+        $data = new QuestionsDTO($this->id,$this->user_id);
         if($data->empty){
             $this->emptyQuestion = true;
         }
@@ -162,25 +162,25 @@ class LessonDTO
     }
 
     private function setPair(){
-        $data = new FindPairDTO($this->id);
+        $data = new FindPairDTO($this->id,$this->user_id);
         $this->emptyFindPair = $data->empty;
         $this->find_couple_completed = $data->completed;
     }
 
     private function setOneWord(){
-        $data = new OneWordDTO($this->id);
+        $data = new OneWordDTO($this->id,$this->user_id);
         $this->emptyOneWord = $data->empty;
         $this->one_word_complited = $data->completed;
     }
 
     private function setCrossword(){
-        $data = new CrosswordDTO($this->id);
+        $data = new CrosswordDTO($this->id,$this->user_id);
         $this->emptyCrossword = $data->empty;
         $this->crossword_completed = $data->completed;
     }
 
     private function setOpenQuestion(){
-        $data = new OpenQuestionDTO($this->id);
+        $data = new OpenQuestionDTO($this->id,$this->user_id);
         $this->emptyOpenQuestion = $data->empty;
         $this->open_question_complited = $data->completed;
     }
