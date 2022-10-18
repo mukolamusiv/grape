@@ -41,7 +41,7 @@ class TopicsDTO
         $topics = $this->user->topic_active;
         $data = collect();
         foreach ($topics as $topic){
-            $top = new TopicDTO($topic->topic_id);
+            $top = new TopicDTO($topic->topic_id,$this->user->id);
             $data->push($top->getTopic());
         }
         $this->active = $data;
@@ -50,7 +50,7 @@ class TopicsDTO
     private function setDone(){
         $data = collect();
         foreach ($this->user->topic_done as $topic){
-            $top = new TopicDTO($topic->topic_id);
+            $top = new TopicDTO($topic->topic_id,$this->user->id);
             $data->push($top->getTopic());
         }
         $this->done = $data;
@@ -67,7 +67,7 @@ class TopicsDTO
 
         $data = collect();
         foreach ($topics as $topic){
-            $top = new TopicDTO($topic->id);
+            $top = new TopicDTO($topic->id,$this->user->id);
             $data->push($top->getTopic());
         }
         $this->topics = $data;

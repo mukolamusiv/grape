@@ -7,6 +7,7 @@ namespace App\DTO\TestsDTO;
 use App\Models\OneWordAnswerUser;
 use App\Models\OpenQuestion;
 use App\Models\OpenQuestionAnswerUser;
+use Illuminate\Support\Facades\Auth;
 
 class OpenQuestionDTO
 {
@@ -22,7 +23,10 @@ class OpenQuestionDTO
 
     public bool $empty = false;
 
-    public function __construct(int $lesson_id){
+    private int $user_id;
+
+    public function __construct(int $lesson_id,int $user_id){
+        $this->user_id = $user_id;
         $this->find($lesson_id);
     }
 
@@ -43,7 +47,7 @@ class OpenQuestionDTO
     }
 
     private function setStatus(int $OpenQuestionId){
-        $data = OpenQuestionAnswerUser::where(['user_id'=>1,'open_question_id'=>$OpenQuestionId,'reply'=>true])->get();
+        $data = OpenQuestionAnswerUser::where(['user_id'=>$this->user_id,'open_question_id'=>$OpenQuestionId,'reply'=>true])->get();
         if($data->count() > 0){
             $this->completed = true;
         }

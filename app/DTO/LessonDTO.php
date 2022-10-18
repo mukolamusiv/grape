@@ -11,6 +11,7 @@ use App\DTO\TestsDTO\OpenQuestionDTO;
 use App\DTO\TestsDTO\QuestionsDTO;
 use App\Models\Lessons;
 use App\Models\UserLessons;
+use Illuminate\Support\Facades\Auth;
 
 class LessonDTO
 {
@@ -30,6 +31,8 @@ class LessonDTO
     public bool $find_couple_completed = false;
     public bool $open_question_complited = false;
     public bool $one_word_complited = false;
+
+    private int $user_id;
     ///////////////////////////////////////////
 
     /**
@@ -50,8 +53,10 @@ class LessonDTO
     /**
      * LessonDTO constructor.
      * @param int $lesson_id
+     * @param int $user_id
      */
-    public function __construct(int $lesson_id){
+    public function __construct(int $lesson_id, int $user_id){
+        $this->user_id = $user_id;
         $this->lesson = Lessons::find($lesson_id);
         $this->active_lesson = $this->setActiveLesson($lesson_id);
         $this->setVars();
@@ -114,7 +119,11 @@ class LessonDTO
 
     private function setActive(){
         //dd($this->active_lesson->complete);
-        $this->lesson_completed = $this->active_lesson->complete;
+        if(isset($this->active_lesson->complete)){
+            $this->lesson_completed = $this->active_lesson->complete;
+        }else{
+            $this->lesson_completed = false;
+        }
     }
 
     private function setVideo(){
@@ -131,13 +140,13 @@ class LessonDTO
      * @return UserLessons
      */
     private function setActiveLesson($lesson_id){
-        $data = UserLessons::where(['lesson_id'=>$lesson_id, 'user_id'=>1])->get();
+        $data = UserLessons::where(['lesson_id'=>$lesson_id, 'user_id'=>$this->user_id])->get();
         if($data->isEmpty()){
             $data_lesson = Lessons::find($lesson_id);
             $lesson = new UserLessons();
             $lesson->lesson_id = $lesson_id;
             $lesson->topic_id = $data_lesson->topic_id;
-            $lesson->user_id = 1;
+            $lesson->user_id = $this->user_id;
             $lesson->check_video = false;
             $lesson->water = 50;
             $lesson->lumen = 70;
@@ -149,7 +158,7 @@ class LessonDTO
     }
 
     private function setQuestions(){
-        $data = new QuestionsDTO($this->id);
+        $data = new QuestionsDTO($this->id,$this->user_id);
         if($data->empty){
             $this->emptyQuestion = true;
         }
@@ -157,25 +166,25 @@ class LessonDTO
     }
 
     private function setPair(){
-        $data = new FindPairDTO($this->id);
+        $data = new FindPairDTO($this->id,$this->user_id);
         $this->emptyFindPair = $data->empty;
         $this->find_couple_completed = $data->completed;
     }
 
     private function setOneWord(){
-        $data = new OneWordDTO($this->id);
+        $data = new OneWordDTO($this->id,$this->user_id);
         $this->emptyOneWord = $data->empty;
         $this->one_word_complited = $data->completed;
     }
 
     private function setCrossword(){
-        $data = new CrosswordDTO($this->id);
+        $data = new CrosswordDTO($this->id,$this->user_id);
         $this->emptyCrossword = $data->empty;
         $this->crossword_completed = $data->completed;
     }
 
     private function setOpenQuestion(){
-        $data = new OpenQuestionDTO($this->id);
+        $data = new OpenQuestionDTO($this->id,$this->user_id);
         $this->emptyOpenQuestion = $data->empty;
         $this->open_question_complited = $data->completed;
     }

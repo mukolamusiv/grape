@@ -9,6 +9,7 @@ use App\Models\Crossword;
 use App\Models\Lessons;
 use App\Models\Question;
 use App\Models\QuestionLessonsAnswer;
+use Illuminate\Support\Facades\Auth;
 
 class CrosswordDTO
 {
@@ -55,12 +56,15 @@ class CrosswordDTO
 
     public bool $empty = false;
 
+    private int $user_id;
 
     /**
-     * QuestionDTO constructor.
+     * CrosswordDTO constructor.
      * @param int $lesson_id
+     * @param int $user_id
      */
-    public function __construct(int $lesson_id){
+    public function __construct(int $lesson_id,int $user_id){
+        $this->user_id = $user_id;
         $this->lesson_id = $lesson_id;
         $this->find();
     }
@@ -90,7 +94,7 @@ class CrosswordDTO
     }
 
     private function find_user_answer(){
-        $data = QuestionLessonsAnswer::where(['question_id'=>$this->id,'user_id'=>1,'reply'=>true])->get();
+        $data = QuestionLessonsAnswer::where(['question_id'=>$this->id,'user_id'=>$this->user_id,'reply'=>true])->get();
         if($data->isNotEmpty()){
             $this->completed = true;
         }

@@ -22,17 +22,17 @@ class LessonsController extends Controller
 
 
     public function done(){
-        $data = new TopicsDTO(1);
+        $data = new TopicsDTO(Auth::id());
         return response($data->getDone());
     }
 
     public function active(){
-        $data = new TopicsDTO(1);
+        $data = new TopicsDTO(Auth::id());
         return response($data->getActive());
     }
 
     public function all(){
-        $data = new TopicsDTO(1);
+        $data = new TopicsDTO(Auth::id());
         return response($data->getTopics());
     }
 
@@ -128,7 +128,7 @@ class LessonsController extends Controller
 
     public function topics($user_id = null){
         if($user_id === null){
-            $user = User::find(1);
+            $user = User::find(Auth::id());
         }else{
             $user = User::find($user_id);
         }
@@ -139,7 +139,7 @@ class LessonsController extends Controller
         }
         $topics = Topic::with('lessons')->whereNotIn('id',$array)->get();
 
-        $user_done = count(User::find(1)->topic_done);
+        $user_done = count(User::find(Auth::id())->topic_done);
 
         $data = collect();
         foreach ($topics as $topic){
@@ -153,7 +153,7 @@ class LessonsController extends Controller
         if(isset($topic->water)){
             return $topic->water;
         }else{
-            $user_done = count(User::find(1)->topic_done);
+            $user_done = count(User::find(Auth::id())->topic_done);
             if(empty($user_done)){
                 return 200;
             }else{
@@ -166,7 +166,7 @@ class LessonsController extends Controller
         if(isset($topic->water)){
             return $topic->water;
         }else{
-            $user_done = count(User::find(1)->topic_done);
+            $user_done = count(User::find(Auth::id())->topic_done);
             if(empty($user_done)){
                 return 200;
             }else{
@@ -294,11 +294,11 @@ class LessonsController extends Controller
 
     public function topics_active($user_id = null){
         if($user_id === null){
-            $user = User::find(1);
+            $user = User::find(Auth::id());
         }else{
             $user = User::find($user_id);
         }
-        $topics = User::find(1)->topic_active;
+        $topics = User::find(Auth::id())->topic_active;
         $data = collect();
         foreach ($topics as $topic){
             $data->push( $this->data_topic($topic));
@@ -308,7 +308,7 @@ class LessonsController extends Controller
 
     public function topics_done($user_id = null){
         if($user_id === null){
-            $user = User::find(1);
+            $user = User::find(Auth::id());
         }else{
             $user = User::find($user_id);
         }
@@ -332,7 +332,7 @@ class LessonsController extends Controller
     }
 
     public function topic($id){
-        $request = collect(UserTopic::with('topic')->where(['topic_id'=>$id,'user_id'=>1])->get());
+        $request = collect(UserTopic::with('topic')->where(['topic_id'=>$id,'user_id'=>Auth::id()])->get());
         if($request->isNotEmpty()){
             //$data = collect(UserTopic::with('topic')->find($request->first()->id));
             //$data->forget('id');
@@ -364,7 +364,7 @@ class LessonsController extends Controller
     }
 
     public function check_topic($id){
-        $topic = UserTopic::where(['user_id'=>1,'topic_id'=>$id])->get()->first();
+        $topic = UserTopic::where(['user_id'=>Auth::id(),'topic_id'=>$id])->get()->first();
         if($topic->complete){
             return response($topic->complete);
         }else{
@@ -377,7 +377,7 @@ class LessonsController extends Controller
     }
 
     public function start_topic($topic_id){
-        if(UserTopic::where(['user_id'=>1,'topic_id'=>$topic_id])->get()->isEmpty()){
+        if(UserTopic::where(['user_id'=>Auth::id(),'topic_id'=>$topic_id])->get()->isEmpty()){
             if(Topic::findOrFail($topic_id)){
                 $UserTopic = new UserTopic();
                 $UserTopic->user_id = 1;
@@ -393,7 +393,7 @@ class LessonsController extends Controller
     }
 
     public function stop_topic($topic_id){
-        $topic = UserTopic::where(['user_id'=>1,'topic_id'=>$topic_id])->get();
+        $topic = UserTopic::where(['user_id'=>Auth::id(),'topic_id'=>$topic_id])->get();
         if($topic->isNotEmpty()){
             return response(UserTopic::destroy($topic->first()->id));
         }else{
@@ -403,7 +403,7 @@ class LessonsController extends Controller
 
     public function start_lesson($lesson_id){
         $lesson = Lessons::find($lesson_id);
-        if(UserLessons::where(['user_id'=>1,'lesson_id'=>$lesson_id])->get()->isEmpty()){
+        if(UserLessons::where(['user_id'=>Auth::id(),'lesson_id'=>$lesson_id])->get()->isEmpty()){
             $UserTopic  = UserTopic::where(['user_id'=>1,'topic_id'=>$lesson->topic_id])->get();
             $UserTopic = $UserTopic->first();
             $UserLesson = new UserLessons();
@@ -439,7 +439,7 @@ class LessonsController extends Controller
     }
 
     public function check_video($lesson_id){
-         $lesson = UserLessons::where(['lesson_id'=>$lesson_id,'user_id'=>1])->get();
+         $lesson = UserLessons::where(['lesson_id'=>$lesson_id,'user_id'=>Auth::id()])->get();
          if($lesson->isEmpty()){
              $data_lesson = Lessons::find($lesson_id);
              $lesson = new UserLessons();
@@ -448,7 +448,7 @@ class LessonsController extends Controller
              $lesson->user_id = 1;
              $lesson->check_video = true;
              $lesson->save();
-             $user = User::find(1);
+             $user = User::find(Auth::id());
              $user->water = $user->water+5;
              $user->lumen = $user->lumen+6;
              $user->save();
@@ -456,7 +456,7 @@ class LessonsController extends Controller
              $lesson = $lesson->first();
              $lesson->check_video = true;
              $lesson->save();
-             $user = User::find(1);
+             $user = User::find(Auth::id());
              $user->water = $user->water+5;
              $user->lumen = $user->lumen+6;
              $user->save();
@@ -466,7 +466,7 @@ class LessonsController extends Controller
 
 
     public function check_video_false($lesson_id){
-        $lesson = UserLessons::where(['lesson_id'=>$lesson_id,'user_id'=>1])->get();
+        $lesson = UserLessons::where(['lesson_id'=>$lesson_id,'user_id'=>Auth::id()])->get();
         if($lesson->isEmpty()){
             $data_lesson = Lessons::find($lesson_id);
             $lesson = new UserLessons();
@@ -483,7 +483,7 @@ class LessonsController extends Controller
             $lesson = $lesson->first();
             $lesson->check_video = false;
             $lesson->save();
-            $user = User::find(1);
+            $user = User::find(Auth::id());
             $user->water = $user->water+5;
             $user->lumen = $user->lumen+6;
             $user->save();

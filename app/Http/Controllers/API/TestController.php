@@ -28,6 +28,7 @@ use App\Models\User;
 use App\Models\UserLessons;
 use App\Models\Word;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TestController extends Controller
 {
@@ -51,7 +52,7 @@ class TestController extends Controller
 
 
     public function question_result($lesson_id){
-        $answers = QuestionLessonsAnswer::where(['user_id'=>1,'question_id'=>$lesson_id])->get();
+        $answers = QuestionLessonsAnswer::where(['user_id'=>Auth::id(),'question_id'=>$lesson_id])->get();
         $i = 0;
         foreach ($answers as $answer){
             if(!$answer->reply){
@@ -116,7 +117,7 @@ class TestController extends Controller
     private function add_question_answer($answer_id,$question_id,$reply = false){
         $data = new QuestionLessonsAnswer();
         $data->question_id = $question_id;
-        $data->user_id = 1;
+        $data->user_id = Auth::id();
         $data->answer_id = $answer_id;
         $data->reply = $reply;
         return $data->save();
@@ -128,7 +129,7 @@ class TestController extends Controller
 
     public function open_question(OpenQuestionRequest $request, $lesson_id){
         $data = new OpenQuestionAnswerUser();
-        $data->user_id = 1;
+        $data->user_id = Auth::id();
         $data->open_question_id = $request->input('question_id');
         $data->audit = false;
         $data->audit_user_id = 1;

@@ -7,6 +7,7 @@ namespace App\DTO\TestsDTO;
 use App\Models\Find_a_Pair;
 use App\Models\Find_a_Pair_Data;
 use App\Models\PairLessonsAnswer;
+use Illuminate\Support\Facades\Auth;
 
 class FindPairDTO
 {
@@ -37,7 +38,10 @@ class FindPairDTO
 
     public bool $empty = false;
 
-    public function __construct(int $lesson_id){
+    private int $user_id;
+
+    public function __construct(int $lesson_id,int $user_id){
+        $this->user_id = $user_id;
         $this->lesson_id = $lesson_id;
         $this->setFindPair();
     }
@@ -75,7 +79,7 @@ class FindPairDTO
         $pair_2 = Find_a_Pair_Data::find($array[1]);
         if($pair_1->id === $pair_2->pair_id or $pair_2->id === $pair_1->pair_id ){
             $answer = new PairLessonsAnswer();
-            $answer->user_id = 1;
+            $answer->user_id = $this->user_id;
             $answer->find_a_pair_id = $this->object->id;
             $answer->answer_pair_id_first = $pair_1->id;
             $answer->answer_pair_id_second = $pair_2->id;
@@ -84,7 +88,7 @@ class FindPairDTO
             return true;
         }else{
             $answer = new PairLessonsAnswer();
-            $answer->user_id = 1;
+            $answer->user_id = $this->user_id;
             $answer->find_a_pair_id = $this->object->id;
             $answer->answer_pair_id_first = $pair_1->id;
             $answer->answer_pair_id_second = $pair_2->id;
@@ -95,7 +99,7 @@ class FindPairDTO
     }
 
     private function check_completed(){
-        $this->answer = PairLessonsAnswer::where(['user_id'=>1,'find_a_pair_id'=>$this->object->id,'reply'=>true])->get();
+        $this->answer = PairLessonsAnswer::where(['user_id'=>$this->user_id,'find_a_pair_id'=>$this->object->id,'reply'=>true])->get();
         if($this->count_dat <= $this->answer->count()){
             $this->completed = true;
         }

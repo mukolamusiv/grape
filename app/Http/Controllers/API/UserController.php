@@ -183,8 +183,8 @@ class UserController extends Controller
     }
 
     public function get_user(){
-        $data = collect(User::find(1));
-        $data->put('awards',$this->AwardUser(1));
+        $data = collect(User::find(Auth::id()));
+        $data->put('awards',$this->AwardUser(Auth::id()));
         return response($data);
     }
 
@@ -200,7 +200,7 @@ class UserController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
     public function update_password(UserPasswordRequest $request, $user_id){
-        $user = User::find($user_id);
+        $user = User::find(Auth::id());
         if(Hash::check($request->input('old_password'), $user->password)){
             $user->password = $request->input('password');
             $user->save();

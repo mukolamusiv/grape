@@ -37,11 +37,16 @@ class QuestionsDTO
 
     public bool $empty = false;
 
+
+    private int $user_id;
+
     /**
-     * QuestionDTO constructor.
+     * QuestionsDTO constructor.
      * @param int $lesson_id
+     * @param int $user_id
      */
-    public function __construct(int $lesson_id){
+    public function __construct(int $lesson_id, int $user_id){
+        $this->user_id = $user_id;
         $this->questionsDTO = collect();
         $this->lesson_id = $lesson_id;
         $this->questions = Question::with('answer')->where(['lesson_id'=>$lesson_id])->get();
@@ -86,7 +91,7 @@ class QuestionsDTO
      * @return mixed
      */
     private function getQuestion($question){
-        $data = new QuestionDTO($question);
+        $data = new QuestionDTO($question,$this->user_id);
         return $data->object();
     }
 
