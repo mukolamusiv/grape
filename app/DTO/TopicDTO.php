@@ -22,12 +22,16 @@ class TopicDTO
 
     private object $topic;
 
+    private int $user_id;
+
     /**
      * TopicDTO constructor.
      * @param int $topic_id
+     * @param int $user_id
      */
-    public function __construct(int $topic_id)
+    public function __construct(int $topic_id, int $user_id)
     {
+        $this->user_id = $user_id;
         $this->topic = Topic::find($topic_id);
         $this->id = $topic_id;
         $this->setLessons();
@@ -47,7 +51,7 @@ class TopicDTO
     private function setLessons(){
         $data = collect();
         foreach ($this->topic->lessons as $lesson){
-            $les = new LessonDTO($lesson->id);
+            $les = new LessonDTO($lesson->id,$this->user_id);
             $data->push($les->getLesson());
         }
         $this->lessons_DTO = $data;

@@ -46,13 +46,16 @@ class QuestionDTO
 
     private object $correct;
 
+    private int $user_id;
 
 
     /**
      * QuestionDTO constructor.
-     * @param int $question
+     * @param object $question
+     * @param int $user_id
      */
-    public function __construct(object $question){
+    public function __construct(object $question,int $user_id){
+        $this->user_id = $user_id;
         $this->id = $question->id;
         $this->title = $question->title;
         $this->description = $question->description;
@@ -64,7 +67,7 @@ class QuestionDTO
     }
 
     private function find_user_answer(){
-        $data = QuestionLessonsAnswer::where(['question_id'=>$this->id,'user_id'=>Auth::id(),'reply'=>true])->get();
+        $data = QuestionLessonsAnswer::where(['question_id'=>$this->id,'user_id'=>$this->user_id,'reply'=>true])->get();
         if($data->isNotEmpty()){
             $this->completed = true;
         }

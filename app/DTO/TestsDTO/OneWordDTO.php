@@ -32,12 +32,17 @@ class OneWordDTO
     private object $data;
 
     public bool $empty = false;
+
+    private int $user_id;
+
     /**
      * OneWordDTO constructor.
      * @param int $lesson_id
+     * @param int $user_id
      */
-    public function __construct(int $lesson_id)
+    public function __construct(int $lesson_id, int $user_id)
     {
+        $this->user_id = $user_id;
         $this->lesson_id = $lesson_id;
         $this->setData();
     }
@@ -69,7 +74,7 @@ class OneWordDTO
      * @return false
      */
     private function completed_status(){
-        $request = OneWordAnswerUser::where(['user_id'=>Auth::id(),'lesson_id'=>$this->lesson_id])->get();
+        $request = OneWordAnswerUser::where(['user_id'=>$this->user_id,'lesson_id'=>$this->lesson_id])->get();
         if($request->isNotEmpty()){
             foreach ($this->data->question as $question){
                 if($request->firstWhere(['id' => $question->id]) != null){
@@ -87,7 +92,7 @@ class OneWordDTO
         $word = mb_strtolower($data->word, 'UTF-8');
         if($answer == $word){
             $data = new OneWordAnswerUser();
-            $data->user_id = 1;
+            $data->user_id = $this->user_id;
             $data->lesson_id = $this->lesson_id;
             $data->one_word_id = $this->data->id;
             $data->one_word_question_id = $id;
@@ -96,7 +101,7 @@ class OneWordDTO
             return true;
         }else{
             $data = new OneWordAnswerUser();
-            $data->user_id = 1;
+            $data->user_id = $this->user_id;
             $data->lesson_id = $this->lesson_id;
             $data->one_word_id = $this->data->id;
             $data->one_word_question_id = $id;

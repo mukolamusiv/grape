@@ -31,6 +31,8 @@ class LessonDTO
     public bool $find_couple_completed = false;
     public bool $open_question_complited = false;
     public bool $one_word_complited = false;
+
+    private int $user_id;
     ///////////////////////////////////////////
 
     /**
@@ -51,8 +53,10 @@ class LessonDTO
     /**
      * LessonDTO constructor.
      * @param int $lesson_id
+     * @param int $user_id
      */
-    public function __construct(int $lesson_id){
+    public function __construct(int $lesson_id, int $user_id){
+        $this->user_id = $user_id;
         $this->lesson = Lessons::find($lesson_id);
         $this->active_lesson = $this->setActiveLesson($lesson_id);
         $this->setVars();
@@ -132,13 +136,13 @@ class LessonDTO
      * @return UserLessons
      */
     private function setActiveLesson($lesson_id){
-        $data = UserLessons::where(['lesson_id'=>$lesson_id, 'user_id'=>Auth::id()])->get();
+        $data = UserLessons::where(['lesson_id'=>$lesson_id, 'user_id'=>$this->user_id])->get();
         if($data->isEmpty()){
             $data_lesson = Lessons::find($lesson_id);
             $lesson = new UserLessons();
             $lesson->lesson_id = $lesson_id;
             $lesson->topic_id = $data_lesson->topic_id;
-            $lesson->user_id = Auth::id();
+            $lesson->user_id = $this->user_id;
             $lesson->check_video = false;
             $lesson->water = 50;
             $lesson->lumen = 70;
