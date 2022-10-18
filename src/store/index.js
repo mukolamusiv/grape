@@ -2,7 +2,7 @@ import { reactive } from 'vue'
 import axios from 'axios'
 
 const store = reactive({
-  homeUrl: 'http://grape.chasoslov.info',
+  homeUrl: 'https://grape.chasoslov.info',
   token: null,
   router: null,
   ui: {
