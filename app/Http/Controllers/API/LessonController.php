@@ -71,7 +71,7 @@ class LessonController extends Controller
 //            $lesson->forget('record_audio');
 //            $lesson->forget('question');
 //        }
-        $lesson = new LessonDTO($lesson_id);
+        $lesson = new LessonDTO($lesson_id,Auth::id());
         return response($lesson->getLesson());
     }
 
@@ -81,7 +81,7 @@ class LessonController extends Controller
     }
 
     public function question($lesson_id){
-        $data = new QuestionsDTO($lesson_id);
+        $data = new QuestionsDTO($lesson_id,Auth::id());
         return response($data->test());
     }
 
@@ -99,7 +99,7 @@ class LessonController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
     public function find_pair($lesson_id){
-        $data = new FindPairDTO($lesson_id);
+        $data = new FindPairDTO($lesson_id,Auth::id());
         return response($data->object());
     }
 
@@ -163,7 +163,7 @@ class LessonController extends Controller
     }
 
     public function open_question($lesson_id){
-        $data = new OpenQuestionDTO($lesson_id);
+        $data = new OpenQuestionDTO($lesson_id,Auth::id());
         return response($data->object());
     }
 
