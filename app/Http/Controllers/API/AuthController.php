@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\UserRequest;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -41,9 +42,27 @@ class AuthController extends Controller
                     'email' => $request->email,
                     'password' => $request->password
                 ];
-                if(auth()->attempt($data)){
-                    $token = \auth()->user()->createToken('Laravel Password Grant Client')->accessToken;
-                    $response = ['token' => $token,'user'=>$user];
+                if(Auth::attempt($data)){
+                    //$request->session()->regenerate();
+                    //shell_exec('php ../artisan passport:install');
+
+                    $token = Auth::user()->createToken(config('app.name'));
+                    //$token = Auth::user()->createToken('api_token')->accessToken;
+
+                    $token->token->expires_at = $request->remember_me ?
+                        Carbon::now()->addMonth() :
+                        Carbon::now()->addDay();
+
+                    $token->token->save();
+
+                    //$token = \auth()->user()->createToken('Laravel Password Grant Client')->accessToken;
+                    //session()->put('token', $token);
+
+                    $response = ['token_type' => 'Bearer',
+                        'token' => $token->accessToken,
+                        'expires_at' => Carbon::parse($token->token->expires_at)->toDateTimeString(),
+                        'user'=>Auth::user()
+                    ];
                     return response($response, 200);
                 }else{
                     return response(["message" => "error"],422);
@@ -61,6 +80,8 @@ class AuthController extends Controller
 
     public function passportlogout (Request $request) {
         $token = $request->user()->token();
+
+        //dd($token);
         $token->revoke();
         $response = ['message' => 'You have been successfully logged out!'];
         return response($response, 200);

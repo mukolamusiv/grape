@@ -21,10 +21,13 @@ use Illuminate\Support\Facades\Route;
 
 
 //////////////////////////////////////////////
-Route::post('register-user/{hes}','\App\Http\Controllers\API\AuthController@register');
-Route::post('register-user','\App\Http\Controllers\API\AuthController@register');
-Route::post('login-user','\App\Http\Controllers\API\AuthController@passportLogin');
-Route::post('logout-user','\App\Http\Controllers\API\AuthController@passportlogout')->middleware(['auth']);
+///
+
+//Route::middleware('','')
+    Route::post('register-user/{hes}','\App\Http\Controllers\API\AuthController@register');
+    Route::post('register-user','\App\Http\Controllers\API\AuthController@register');
+    Route::post('login-user','\App\Http\Controllers\API\AuthController@passportLogin');
+    Route::post('logout-user','\App\Http\Controllers\API\AuthController@passportlogout')->middleware(['auth:api']);
 
 
 /// /////////////////////////////////
@@ -44,40 +47,40 @@ Auth::routes();
 
 Route::get('mail','\App\Http\Controllers\API\UserController@test_email');
 
-Route::get('get-user','\App\Http\Controllers\API\UserController@get_user')->middleware(['auth']);
+Route::get('get-user','\App\Http\Controllers\API\UserController@get_user')->middleware(['auth:api']);
 
 //користувачі
-Route::get('user','\App\Http\Controllers\API\UserController@index')->middleware(['auth']);
-Route::get('user/{id}','\App\Http\Controllers\API\UserController@show')->middleware(['auth']);
-Route::put('user/{id}','\App\Http\Controllers\API\UserController@update')->middleware(['auth']);
-Route::post('user-photo/{id}','\App\Http\Controllers\API\UserController@photo')->middleware(['auth']);
-Route::delete('user/{id}','\App\Http\Controllers\API\UserController@destroy')->middleware(['auth']);
+Route::get('user','\App\Http\Controllers\API\UserController@index')->middleware(['auth:api']);
+Route::get('user/{id}','\App\Http\Controllers\API\UserController@show')->middleware(['auth:api']);
+Route::put('user/{id}','\App\Http\Controllers\API\UserController@update')->middleware(['auth:api']);
+Route::post('user-photo/{id}','\App\Http\Controllers\API\UserController@photo')->middleware(['auth:api']);
+Route::delete('user/{id}','\App\Http\Controllers\API\UserController@destroy')->middleware(['auth:api']);
 
 
-Route::post('user-award/{user_id}','\App\Http\Controllers\API\UserController@addAwards');
-Route::get('user-award-available/{user_id}','\App\Http\Controllers\API\UserController@AwardsAll');
+Route::post('user-award/{user_id}','\App\Http\Controllers\API\UserController@addAwards')->middleware(['auth:api']);
+Route::get('user-award-available/{user_id}','\App\Http\Controllers\API\UserController@AwardsAll')->middleware(['auth:api']);
 
-Route::get('user-open-question/{user_id}','\App\Http\Controllers\API\UserController@NonAuditOpenQuestions');
-Route::get('audit-open-question','\App\Http\Controllers\API\UserController@NonOpenQuestions');
-Route::post('user-open-question/{question_id}','\App\Http\Controllers\API\TestController@openQuestionAudit');
-Route::get('user-open-question-completed/{user_id}','\App\Http\Controllers\API\UserController@AuditOpenQuestions');
-Route::get('audit-open-question-completed','\App\Http\Controllers\API\UserController@OpenQuestions');
+Route::get('user-open-question/{user_id}','\App\Http\Controllers\API\UserController@NonAuditOpenQuestions')->middleware(['auth:api']);
+Route::get('audit-open-question','\App\Http\Controllers\API\UserController@NonOpenQuestions')->middleware(['auth:api']);
+Route::post('user-open-question/{question_id}','\App\Http\Controllers\API\TestController@openQuestionAudit')->middleware(['auth:api']);
+Route::get('user-open-question-completed/{user_id}','\App\Http\Controllers\API\UserController@AuditOpenQuestions')->middleware(['auth:api']);
+Route::get('audit-open-question-completed','\App\Http\Controllers\API\UserController@OpenQuestions')->middleware(['auth:api']);
 
-Route::post('check-email','\App\Http\Controllers\API\UserController@check');
+Route::post('check-email','\App\Http\Controllers\API\UserController@check')->middleware(['auth:api']);
 
-Route::get('classroom/{user_id}','\App\Http\Controllers\API\UserController@getUserClassroom');
-Route::get('awards/{user_id}','\App\Http\Controllers\API\UserController@Awards');
+Route::get('classroom/{user_id}','\App\Http\Controllers\API\UserController@getUserClassroom')->middleware(['auth:api']);
+Route::get('awards/{user_id}','\App\Http\Controllers\API\UserController@Awards')->middleware(['auth:api']);
 
 /*
  * Роути уроків
  * */
-Route::get('topics-active','\App\Http\Controllers\API\LessonsController@active');
-Route::get('topics','\App\Http\Controllers\API\LessonsController@all');
-Route::get('topics-done','\App\Http\Controllers\API\LessonsController@done');
+Route::get('topics-active','\App\Http\Controllers\API\LessonsController@active')->middleware(['auth:api']);
+Route::get('topics','\App\Http\Controllers\API\LessonsController@all')->middleware(['auth:api']);
+Route::get('topics-done','\App\Http\Controllers\API\LessonsController@done')->middleware(['auth:api']);
 
-Route::get('user-topics-active/{user_id}','\App\Http\Controllers\API\LessonsController@user_active');
-Route::get('user-topics/{user_id}','\App\Http\Controllers\API\LessonsController@user_all');
-Route::get('user-topics-done/{user_id}','\App\Http\Controllers\API\LessonsController@user_done');
+Route::get('user-topics-active/{user_id}','\App\Http\Controllers\API\LessonsController@user_active')->middleware(['auth:api']);
+Route::get('user-topics/{user_id}','\App\Http\Controllers\API\LessonsController@user_all')->middleware(['auth:api']);
+Route::get('user-topics-done/{user_id}','\App\Http\Controllers\API\LessonsController@user_done')->middleware(['auth:api']);
 
 //Route::get('user-topics-active/{user_id}','\App\Http\Controllers\API\LessonsController@topics_active');
 //Route::get('user-topics/{user_id}','\App\Http\Controllers\API\LessonsController@topics');
@@ -85,19 +88,19 @@ Route::get('user-topics-done/{user_id}','\App\Http\Controllers\API\LessonsContro
 
 
 //Route::get('lesson/{id}','\App\Http\Controllers\API\LessonsController@lesson');
-Route::get('topic/{id}','\App\Http\Controllers\API\LessonsController@topic');
+Route::get('topic/{id}','\App\Http\Controllers\API\LessonsController@topic')->middleware(['auth:api']);
 
 
-Route::get('check-topic/{id}','\App\Http\Controllers\API\LessonsController@check_topic');
+Route::get('check-topic/{id}','\App\Http\Controllers\API\LessonsController@check_topic')->middleware(['auth:api']);
 
 
-Route::put('start-topic/{id}','\App\Http\Controllers\API\LessonsController@start_topic');
-Route::put('stop-topic/{id}','\App\Http\Controllers\API\LessonsController@stop_topic');
+Route::put('start-topic/{id}','\App\Http\Controllers\API\LessonsController@start_topic')->middleware(['auth:api']);
+Route::put('stop-topic/{id}','\App\Http\Controllers\API\LessonsController@stop_topic')->middleware(['auth:api']);
 //Route::put('start-lesson/{id}','\App\Http\Controllers\API\LessonsController@start_lesson');
 //Route::put('start-lesson/{id}','\App\Http\Controllers\API\LessonsController@stop_lesson');
 
 
-Route::put('update-password/{user_id}','\App\Http\Controllers\API\UserController@update_password');
+Route::put('update-password/{user_id}','\App\Http\Controllers\API\UserController@update_password')->middleware(['auth:api']);
 
 //Route::put('audit_answer/{question_id}','\App\Http\Controllers\API\LessonsController@audit_answer');
 //Route::put('audit_pair/{pair_id}','\App\Http\Controllers\API\LessonsController@audit_answer');
@@ -110,32 +113,32 @@ Route::put('update-password/{user_id}','\App\Http\Controllers\API\UserController
 ////////////////////////////////////////////////////////////////////////////////////
 ///
 
-Route::get('lesson/{lesson_id}','\App\Http\Controllers\API\LessonController@lesson');
+Route::get('lesson/{lesson_id}','\App\Http\Controllers\API\LessonController@lesson')->middleware(['auth:api']);
 //Route::get('lesson-video/{lesson_id}','\App\Http\Controllers\API\LessonController@video');
 
 //Route::get('lesson-tests/{lesson_id}','\App\Http\Controllers\API\LessonController@test');
-Route::put('lesson-check-video/{lesson_id}','\App\Http\Controllers\API\LessonController@check_video');
+Route::put('lesson-check-video/{lesson_id}','\App\Http\Controllers\API\LessonController@check_video')->middleware(['auth:api']);
 //Route::get('lesson-status-video/{lesson_id}','\App\Http\Controllers\API\LessonController@status_video');
 //Route::get('lesson-list-tests/{lesson_id}','\App\Http\Controllers\API\LessonController@list_tests');
 
 //Route::get('lesson-question-result/{lesson_id}','\App\Http\Controllers\API\TestController@question_result');
-Route::get('lesson-one-word/{lesson_id}','\App\Http\Controllers\API\TestController@one_word');
-Route::get('lesson-pair/{lesson_id}','\App\Http\Controllers\API\LessonController@find_pair');
-Route::get('lesson-question/{lesson_id}','\App\Http\Controllers\API\LessonController@question');
-Route::get('lesson-crossword/{lesson_id}','\App\Http\Controllers\API\LessonController@crossword');
-Route::get('lesson-open-question/{lesson_id}','\App\Http\Controllers\API\LessonController@open_question');
-Route::get('lesson-coloring-page/{lesson_id}','\App\Http\Controllers\API\LessonController@coloring_page');
+Route::get('lesson-one-word/{lesson_id}','\App\Http\Controllers\API\TestController@one_word')->middleware(['auth:api']);
+Route::get('lesson-pair/{lesson_id}','\App\Http\Controllers\API\LessonController@find_pair')->middleware(['auth:api']);
+Route::get('lesson-question/{lesson_id}','\App\Http\Controllers\API\LessonController@question')->middleware(['auth:api']);
+Route::get('lesson-crossword/{lesson_id}','\App\Http\Controllers\API\LessonController@crossword')->middleware(['auth:api']);
+Route::get('lesson-open-question/{lesson_id}','\App\Http\Controllers\API\LessonController@open_question')->middleware(['auth:api']);
+Route::get('lesson-coloring-page/{lesson_id}','\App\Http\Controllers\API\LessonController@coloring_page')->middleware(['auth:api']);
 
 
-Route::get('test','\App\Http\Controllers\API\LessonsController@DTO');
+Route::get('test','\App\Http\Controllers\API\LessonsController@DTO')->middleware(['auth:api']);
 
 /////////////
-Route::post('lesson-crossword/{lesson_id}','\App\Http\Controllers\API\TestController@crossword');
-Route::post('lesson-one-word/{lesson_id}','\App\Http\Controllers\API\TestController@one_word_answer');
-Route::post('lesson-question/{lesson_id}','\App\Http\Controllers\API\TestController@question');
-Route::post('lesson-pair/{lesson_id}','\App\Http\Controllers\API\TestController@pair');
-Route::post('lesson-open-question/{lesson_id}','\App\Http\Controllers\API\TestController@open_question');
-Route::post('lesson-coloring-page/{lesson_id}','\App\Http\Controllers\API\TestController@coloring_page');
+Route::post('lesson-crossword/{lesson_id}','\App\Http\Controllers\API\TestController@crossword')->middleware(['auth:api']);
+Route::post('lesson-one-word/{lesson_id}','\App\Http\Controllers\API\TestController@one_word_answer')->middleware(['auth:api']);
+Route::post('lesson-question/{lesson_id}','\App\Http\Controllers\API\TestController@question')->middleware(['auth:api']);
+Route::post('lesson-pair/{lesson_id}','\App\Http\Controllers\API\TestController@pair')->middleware(['auth:api']);
+Route::post('lesson-open-question/{lesson_id}','\App\Http\Controllers\API\TestController@open_question')->middleware(['auth:api']);
+Route::post('lesson-coloring-page/{lesson_id}','\App\Http\Controllers\API\TestController@coloring_page')->middleware(['auth:api']);
 //Auth::routes();
 
 //Route::get('lesson-test','\App\Http\Controllers\API\TestController@test');

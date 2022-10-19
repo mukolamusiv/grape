@@ -46,6 +46,7 @@ return [
 //            \Illuminate\Routing\Middleware\SubstituteBindings::class,
             'driver' => 'passport',
             'provider' => 'users',
+            'hash' => false
         ],
     ],
 
