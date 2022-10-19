@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Route;
     Route::post('register-user/{hes}','\App\Http\Controllers\API\AuthController@register');
     Route::post('register-user','\App\Http\Controllers\API\AuthController@register');
     Route::post('login-user','\App\Http\Controllers\API\AuthController@passportLogin');
-    Route::post('logout-user','\App\Http\Controllers\API\AuthController@passportlogout')->middleware(['auth']);
+    Route::post('logout-user','\App\Http\Controllers\API\AuthController@passportlogout')->middleware(['auth:api']);
 
 
 /// /////////////////////////////////
