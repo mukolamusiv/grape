@@ -380,7 +380,7 @@ class LessonsController extends Controller
         if(UserTopic::where(['user_id'=>Auth::id(),'topic_id'=>$topic_id])->get()->isEmpty()){
             if(Topic::findOrFail($topic_id)){
                 $UserTopic = new UserTopic();
-                $UserTopic->user_id = 1;
+                $UserTopic->user_id = Auth::id();
                 $UserTopic->topic_id = $topic_id;
                 $UserTopic->water = 70;
                 $UserTopic->lumen = 70;
