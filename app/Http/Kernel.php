@@ -45,6 +45,7 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \Illuminate\Session\Middleware\StartSession::class,
             //\App\Http\Middleware\Cors::class,
+            //\Laravel\Passport\Http\Middleware\CreateFreshApiToken::class,
         ],
     ];
 

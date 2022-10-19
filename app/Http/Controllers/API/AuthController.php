@@ -21,6 +21,51 @@ class AuthController extends Controller
         //$this->middleware('auth');
     }
 
+
+
+
+
+    public function passportLogin(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|string|email|max:255',
+            'password' => 'required|string|min:6',
+        ]);
+        if ($validator->fails())
+        {
+            return response(['errors'=>$validator->errors()->all()], 422);
+        }
+        $user = User::where('email', $request->email)->first();
+        if ($user) {
+            if (Hash::check($request->password, $user->password)) {
+                $data = [
+                    'email' => $request->email,
+                    'password' => $request->password
+                ];
+                if(auth()->attempt($data)){
+                    $token = \auth()->user()->createToken('Laravel Password Grant Client')->accessToken;
+                    $response = ['token' => $token,'user'=>$user];
+                    return response($response, 200);
+                }else{
+                    return response(["message" => "error"],422);
+                }
+            } else {
+                $response = ["message" => "Password mismatch"];
+                return response($response, 422);
+            }
+        } else {
+            $response = ["message" =>'User does not exist'];
+            return response($response, 422);
+        }
+    }
+
+
+    public function passportlogout (Request $request) {
+        $token = $request->user()->token();
+        $token->revoke();
+        $response = ['message' => 'You have been successfully logged out!'];
+        return response($response, 200);
+    }
+
     /**
      * Create User
      * @param Request $request
