@@ -104,14 +104,15 @@
         <div class="form-item">
           <span class="input-name">Старий пароль</span>
           <label>
-            <input type="text" v-model="data.oldPassword" required>
-            <span class="material-icons show" @click="changeInputType">{{data.inputIcon}}</span>
+            <input :type="data.inputType" v-model="data.oldPassword" required>
+            <span class="material-icons show" @click="changeInputType()">{{data.inputIcon}}</span>
           </label>
         </div>
         <div class="form-item">
           <span class="input-name">Новий пароль</span>
           <label>
-            <input type="text" v-model="data.newPassword" required>
+            <input :type="data.inputType" v-model="data.newPassword" required>
+            <span class="material-icons show" @click="changeInputType()">{{data.inputIcon}}</span>
           </label>
         </div>
         <div class="submit-panel">
@@ -150,6 +151,7 @@ const data = reactive({
   oldPassword: null,
   newPassword: null,
   inputIcon: 'visibility',
+  inputType: 'password',
 })
 const startEdit = function () {
   data.edit = true
@@ -175,6 +177,8 @@ const updateAvatar = function () {
     }).then(function () {
       store.getUser()
       data.file = null
+    }).catch(function (error) {
+       store.error(error.request.status)
     })
 }
 const updateProfile = function () {
@@ -188,6 +192,8 @@ const updateProfile = function () {
     }
     }).then(function () {
       data.editPassword = false
+    }).catch(function (error) {
+       store.error(error.request.status)
     })
 }
 const updatePassword = function () {
@@ -202,6 +208,8 @@ const updatePassword = function () {
     }).then(function () {
       store.getUser()
       data.edit = false
+    }).catch(function (error) {
+       store.error(error.request.status)
     })
 }
 const changeInputType = function () {

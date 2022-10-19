@@ -95,6 +95,7 @@ const data = reactive({
   name: null,
   surname: null
 })
+
 const changeInputType = function () {
   if(data.inputType == 'password') {
     data.inputType = 'text'
@@ -105,6 +106,7 @@ const changeInputType = function () {
     data.inputIcon = 'visibility'
   }
 }
+
 const login = function () {
   if(data.email !=null && data.password !=null){
     axios({
@@ -115,7 +117,8 @@ const login = function () {
         password: data.password,
      }
     }).then(function (response) {
-      store.token = response.data.access_token
+      console.log(response.data)
+      store.token = response.data.token
       localStorage.token = store.token
       axios.defaults.headers.common['Authorization'] = `Bearer ${store.token}`
       store.getUser()
@@ -129,6 +132,7 @@ const login = function () {
     data.errorMessage = 'необхідно увести email та пароль!'
   }
 }
+
 const signUp = function () {
   axios({
      method: 'POST',
@@ -146,7 +150,7 @@ const signUp = function () {
      data.errorMessage = null
      }).catch(function () {
        data.errorMessage = 'Упс.. щось зламалось.'
-       });
+       })
 }
 </script>
 

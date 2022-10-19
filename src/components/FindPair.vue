@@ -65,6 +65,8 @@ const getPairs = function () {
    console.log(response.data)
    data.pairs = response.data.data
    data.pairsCount = data.pairs.length
+  }).catch(function (error) {
+     store.error(error.request.status)
   })
 }
 
@@ -75,7 +77,6 @@ const sendAnswer = function () {
       url: `/api/lesson-pair/${route.params.id}`,
       data: {answer: [data.answer[0].id, data.answer[1].id]}
    }).then(function (response) {
-     console.log(response.data)
      if(response.data.reply === true){
        data.stateAnswer = 'right'
        data.rightCount = data.rightCount +1
@@ -83,6 +84,8 @@ const sendAnswer = function () {
      else {
        data.stateAnswer = 'wrong'
      }
+   }).catch(function (error) {
+      store.error(error.request.status)
    })
   }
 }

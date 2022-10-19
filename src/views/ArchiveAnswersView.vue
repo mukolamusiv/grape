@@ -25,6 +25,8 @@
 <script setup>
 import { reactive } from 'vue'
 import axios from 'axios'
+import { useStore } from '@/store'
+const { store } = useStore()
 
 const data = reactive({
   answers: null,
@@ -36,8 +38,8 @@ const getAnswers = function () {
     data: {}
  }).then(function (response) {
    data.answers = response.data
-   console.log(data.answers)
-
+  }).catch(function (error) {
+     store.error(error.request.status)
   })
 }
 

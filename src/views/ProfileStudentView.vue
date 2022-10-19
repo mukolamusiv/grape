@@ -120,6 +120,8 @@ const getUser = function () {
  }).then(function (response) {
    data.user = response.data
    console.log(response.data)
+ }).catch(function (error) {
+    store.error(error.request.status)
  })
 }
 
@@ -130,6 +132,8 @@ const getTopics = function (url, saveTo) {
     data: {}
  }).then(function (response) {
    data[saveTo] = response.data
+ }).catch(function (error) {
+    store.error(error.request.status)
  })
 }
 
@@ -142,6 +146,8 @@ const giveAward = function (award) {
       data: {'award_id': award.id}
    }).then(function () {
      getUser()
+   }).catch(function (error) {
+      store.error(error.request.status)
    })
   }
 }

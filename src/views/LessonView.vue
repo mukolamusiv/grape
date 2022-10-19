@@ -104,7 +104,8 @@ const getLesson = function () {
     data: {}
  }).then(function (response) {
    data.lesson = response.data
-   console.log(response.data)
+ }).catch(function (error) {
+    store.error(error.request.status)
  })
 }
 const videoViewed = function () {
@@ -115,6 +116,8 @@ const videoViewed = function () {
       data: {}
     }).then(function () {
       getLesson()
+    }).catch(function (error) {
+       store.error(error.request.status)
     })
  }
 }

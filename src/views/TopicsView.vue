@@ -25,6 +25,8 @@
 import TopicCards from '@/components/TopicCards.vue'
 import { reactive } from 'vue'
 import axios from 'axios'
+import { useStore } from '@/store'
+const { store } = useStore()
 
 const data = reactive({
   topicsActive: null,
@@ -40,10 +42,12 @@ const getTopics = function (url, saveTo) {
     url: `/api/${url}`,
     data: {}
  }).then(function (response) {
-   console.log(saveTo, response.data)
    data[saveTo] = response.data
+ }).catch(function (error) {
+    store.error(error.request.status)
  })
 }
+
 getTopics('topics-active', 'topicsActive')
 getTopics('topics-done', 'topicsDone')
 getTopics('topics', 'topics')

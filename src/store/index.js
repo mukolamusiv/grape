@@ -17,9 +17,9 @@ const store = reactive({
       data: {}
     }).then(function (response) {
       store.user = response.data
-    }).catch(function () {
-      // store.logout()
-      });
+    }).catch(function (error) {
+       store.error(error.request.status)
+    })
   },
   lodlocal: function () {
     if (localStorage.token) {
@@ -33,7 +33,15 @@ const store = reactive({
     store.token = null
     store.user = null
     store.router.push('/login')
-  }
+  },
+  error: function (status) {
+    if(status >= 400 && status < 500){
+      store.logout()
+    }
+    if(status >= 500){
+    store.router.push('/')
+    }
+  },
 })
 
 export function useStore () {

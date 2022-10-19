@@ -206,6 +206,7 @@ const colorPickerSelect = function (index, color) {
   data.colorSelected = data.colorPicker.color[index]
   data.color = color
 }
+
 const getColoringPage = function () {
   axios({
     method: 'GET',
@@ -214,8 +215,11 @@ const getColoringPage = function () {
  }).then(function (response) {
    console.log(response.data)
    data.coloringPage = response.data
-  })
+ }).catch(function (error) {
+    store.error(error.request.status)
+ })
 }
+
 function updateColoringPage() {
   const elem = document.getElementById('coloringPage');
   console.log(elem)
@@ -223,8 +227,13 @@ function updateColoringPage() {
     method: 'POST',
     url: `/api/lesson-coloring-page/${route.params.id}`,
     data: {id: data.coloringPage.id, svg: elem}
- }).then(function () {})
+ }).then(function () {
+
+ }).catch(function (error) {
+    store.error(error.request.status)
+ })
 }
+
 function clickColoringPage(e) {
   if(e.target.id){
     if(e.target.id != 'Fill-550'){

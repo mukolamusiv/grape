@@ -73,10 +73,12 @@ const selectTR = function (index) {
     data.selectedIndex = index
   }
 }
+
 const deleteAnswer = function (index){
   data.crossWord.questions[index]['answer'] = ''
   data.selectedIndex = null
 }
+
 const getCrossWord = function () {
   axios({
     method: 'GET',
@@ -85,32 +87,34 @@ const getCrossWord = function () {
  }).then(function (response) {
    data.crossWord = response.data
    console.log(response.data)
+ }).catch(function (error) {
+    store.error(error.request.status)
  })
 }
+
 const sendAnswer = function (id, answer, index) {
-  console.log('response.data')
   if(answer){
     axios({
       method: 'POST',
       url: `api/lesson-crossword/${route.params.id}`,
       data: {id: id, answer: answer}
-   }).then(function (response) {
-     data.selectedIndex = null
-     console.log(response.data)
-     if(response.data.reply === true){
-       data.stateAnswer = 'right',
-       data.crossWord.questions[index]['reply'] = true
+     }).then(function (response) {
+       data.selectedIndex = null
+       console.log(response.data)
+       if(response.data.reply === true){
+         data.stateAnswer = 'right',
+         data.crossWord.questions[index]['reply'] = true
+        }
+       else {
+         data.stateAnswer = 'wrong'
+         data.crossWord.questions[index]['answer'] = ''
       }
-     else {
-       data.stateAnswer = 'wrong'
-       data.crossWord.questions[index]['answer'] = ''
-    }
-  })
+    }).catch(function (error) {
+       store.error(error.request.status)
+    })
   }
-  // data.selectedIndex = null
-
-  console.log(answer, data.selectedIndex)
 }
+
 getCrossWord()
 </script>
 

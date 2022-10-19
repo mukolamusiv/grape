@@ -50,7 +50,6 @@ const route = useRoute()
 const data = reactive({
   question: null,
   answer: null,
-
   stateAnswer: false,
   questionsEnd: false
 })
@@ -60,9 +59,10 @@ const getQuestion = function () {
     method: 'GET',
     url: `api/lesson-open-question/${route.params.id}`,
     data: {}
- }).then(function (response) {
-   console.log(response.data)
-   data.question = response.data
+  }).then(function (response) {
+    data.question = response.data
+  }).catch(function (error) {
+    store.error(error.request.status)
   })
 }
 
@@ -72,8 +72,10 @@ const sendAnswer = function () {
       method: 'POST',
       url: `api/lesson-open-question/${route.params.id}`,
       data: {question_id: data.question.id, answer: data.answer}
-   }).then(function () {
+    }).then(function () {
      data.questionsEnd = true
+    }).catch(function (error) {
+       store.error(error.request.status)
     })
   }
 }

@@ -76,14 +76,16 @@ const sendAnswer = function () {
       method: 'POST',
       url: `/api/lesson-one-word/${route.params.id}`,
       data: {id: data.question.id, answer: data.answer}
-   }).then(function (response) {
+    }).then(function (response) {
      if(response.data.reply === true){
        data.stateAnswer = 'right'
        data.rightCount = data.rightCount +1
     }
      else {
        data.stateAnswer = 'wrong'
-    } console.log(data.rightCount)
+     }
+    }).catch(function (error) {
+       store.error(error.request.status)
     })
   }
 }
@@ -92,11 +94,12 @@ const getQuestion = function () {
     method: 'GET',
     url: `/api/lesson-one-word/${route.params.id}`,
     data: {}
- }).then(function (response) {
-   console.log(response.data)
+  }).then(function (response) {
    data.questions = response.data.questions
    data.questionsCount = data.questions.length
    data.question = data.questions[data.questionNamber]
+  }).catch(function (error) {
+     store.error(error.request.status)
   })
 }
 

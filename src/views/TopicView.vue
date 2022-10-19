@@ -69,10 +69,10 @@ const { store } = useStore()
 
 const route = useRoute()
 
-
 const data = reactive({
   topic: null,
 })
+
 const getTopic = function () {
   axios({
     method: 'GET',
@@ -81,9 +81,11 @@ const getTopic = function () {
  }).then(function (response) {
    data.topic = response.data
    console.log(response.data)
-
-  })
+ }).catch(function (error) {
+    store.error(error.request.status)
+ })
 }
+
 const startTopic = function () {
   axios({
     method: 'PUT',
@@ -91,11 +93,12 @@ const startTopic = function () {
   }).then(function (response) {
    console.log(response.data)
    getTopic()
-
+  }).catch(function (error) {
+     store.error(error.request.status)
   })
 }
-getTopic()
 
+getTopic()
 </script>
 
 <style lang="scss" scoped>

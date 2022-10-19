@@ -36,6 +36,8 @@
 <script setup>
 import { reactive } from 'vue'
 import axios from 'axios'
+import { useStore } from '@/store'
+const { store } = useStore()
 
 const data = reactive({
   answers: null,
@@ -47,9 +49,10 @@ const getAnswers = function () {
     data: {}
  }).then(function (response) {
    data.answers = response.data
-   console.log(data.answers)
-
-  })
+   // console.log(response.status)
+ }).catch(function (error) {
+    store.error(error.request.status)
+ })
 }
 const sendAnswerChecked = function (question_id, state) {
   axios({
@@ -58,6 +61,8 @@ const sendAnswerChecked = function (question_id, state) {
     data: {answer: state }
  }).then(function () {
    getAnswers()
+  }).catch(function (error) {
+     store.error(error.request.status)
   })
 }
 getAnswers()

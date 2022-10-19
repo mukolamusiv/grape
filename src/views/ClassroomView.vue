@@ -31,6 +31,8 @@
 <script setup>
 import { reactive } from 'vue'
 import axios from 'axios'
+import { useStore } from '@/store'
+const { store } = useStore()
 
 const data = reactive({
   classroom: null,
@@ -42,6 +44,8 @@ const getClassroom = function () {
     data: {}
  }).then(function (response) {
    data.classroom = response.data
+  }).catch(function (error) {
+     store.error(error.request.status)
   })
 }
 getClassroom()

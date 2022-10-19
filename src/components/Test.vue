@@ -69,11 +69,12 @@ const getQuestion = function () {
     method: 'GET',
     url: `/api/lesson-question/${route.params.id}`,
     data: {}
- }).then(function (response) {
-   console.log(response.data)
-   data.questions = response.data.questionsDTO
-   data.questionsCount = data.questions.length
-   data.question = data.questions[data.questionNamber]
+  }).then(function (response) {
+    data.questions = response.data.questionsDTO
+    data.questionsCount = data.questions.length
+    data.question = data.questions[data.questionNamber]
+  }).catch(function (error) {
+     store.error(error.request.status)
   })
 }
 const sendAnswer = function () {
@@ -82,15 +83,16 @@ const sendAnswer = function () {
       method: 'POST',
       url: `/api/lesson-question/${data.question.id}`,
       data: {answer_id: data.answerID}
-   }).then(function (response) {
-     console.log(response.data)
-     if(response.data.reply === true){
-       data.stateAnswer = 'right'
-       data.rightCount = data.rightCount +1
-     }
-     else {
-       data.stateAnswer = 'wrong'
-     }
+    }).then(function (response) {
+      if(response.data.reply === true){
+        data.stateAnswer = 'right'
+        data.rightCount = data.rightCount +1
+      }
+      else {
+        data.stateAnswer = 'wrong'
+      }
+    }).catch(function (error) {
+       store.error(error.request.status)
     })
   }
 }
@@ -102,7 +104,6 @@ watch( () => data.questionNamber, () => {
 watch( () => data.stateAnswer, () => {
     if(data.stateAnswer === false && data.questionNamber < (data.questionsCount -1 ) ) {
       data.questionNamber = data.questionNamber +1
-      console.log(data.questionNamber)
     }
     else if(data.stateAnswer === false) {
       data.questionsEnd = true
