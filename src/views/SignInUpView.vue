@@ -117,7 +117,6 @@ const login = function () {
         password: data.password,
      }
     }).then(function (response) {
-      console.log(response.data)
       store.token = response.data.token
       localStorage.token = store.token
       axios.defaults.headers.common['Authorization'] = `Bearer ${store.token}`
