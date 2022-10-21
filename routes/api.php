@@ -23,6 +23,19 @@ use Illuminate\Support\Facades\Route;
 //////////////////////////////////////////////
 ///
 
+//Route::get('/forgot-password', function () {
+//    return view('auth.forgot-password');
+//})->middleware('guest')->name('password.request');
+
+Route::post('/forgot-passwords', '\App\Http\Controllers\API\AuthController@forget_password')->middleware('guest:api');
+
+Route::get('/reset-password/{token}', function ($token) {
+    return response(['token' => $token]);
+})->middleware('guest:api')->name('password.reset');
+
+Route::post('/reset-password', '\App\Http\Controllers\API\AuthController@reset_password')->middleware('guest:api')->name('password.update');
+
+
 //Route::middleware('','')
     Route::post('register-user/{hes}','\App\Http\Controllers\API\AuthController@register');
     Route::post('register-user','\App\Http\Controllers\API\AuthController@register');
@@ -31,7 +44,7 @@ use Illuminate\Support\Facades\Route;
 
 
 /// /////////////////////////////////
-Auth::routes();
+//Auth::routes();
 
 //Route::post('test',function (){
 //   return response('Привіт світ', 200);
