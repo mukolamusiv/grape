@@ -19,6 +19,11 @@ use Illuminate\Support\Facades\Route;
 //    Auth::routes();
 //});
 
+Route::get('/reset-password/{token}', function ($token) {
+    return view('auth.passwords.confirm', ['token' => $token]);
+})->middleware('guest')->name('password.reset');
+
+
 Route::get('/{any}', function () {
     return view('test');})->where('any', '.*');
 //Route::get('/app/{vue_capture?}', function () {
