@@ -39,6 +39,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/SignInUpView.vue')
   },
   {
+    path: '/forgot-password',
+    name: 'ForgotPassword',
+    component: () => import(/* webpackChunkName: "about" */ '../views/SignInUpView.vue')
+  },
+  {
     path: '/signup/:catechist?',
     name: 'SignUp',
     component: () => import(/* webpackChunkName: "about" */ '../views/SignInUpView.vue')

@@ -4,11 +4,12 @@
       <div class="form animate__animated animate__zoomIn">
         <div class="form-header">
           <img src="@/assets/img/logo.png" alt="">
-          <h3 v-if="router.currentRoute.value.name =='Login'">Вхід</h3>
-          <h3 v-if="router.currentRoute.value.name =='SignUp'">Реєстрація</h3>
+          <h3 v-if="router.currentRoute.value.name === 'Login'">Вхід</h3>
+          <h3 v-if="router.currentRoute.value.name === 'SignUp'">Реєстрація</h3>
+          <h3 v-if="router.currentRoute.value.name === 'ForgotPassword'">Відновлення</h3>
         </div>
 <!-- Форма авторизації -->
-        <form class="form-sign" v-if="router.currentRoute.value.name =='Login'" @submit.prevent="login()">
+        <form class="form-sign" v-if="router.currentRoute.value.name === 'Login'" @submit.prevent="login()">
           <div class="form-item">
             <label>
               <span class="material-icons">person</span>
@@ -28,10 +29,11 @@
           <button type="submit" class="form-item login-btn c-pointer">
             Увійти
           </button>
+          <router-link class="signup-link cancel" to="/forgot-password" v-if="data.errorMessage">Забув пароль?</router-link>
           <router-link class="signup-link" to="/signup">Зареєструватись</router-link>
         </form>
         <!-- Форма реєстрації -->
-        <form class="form-sign" v-if="router.currentRoute.value.name =='SignUp'" @submit.prevent="signUp()">
+        <form class="form-sign" v-if="router.currentRoute.value.name === 'SignUp'" @submit.prevent="signUp()">
           <div class="form-item">
             <span class="input-name">Ім'я</span>
             <label>
@@ -70,13 +72,30 @@
           </button>
           <router-link class="signup-link" to="/login">В мене вже є аккаунт</router-link>
         </form>
+        <!-- Форма відновлення -->
+        <form class="form-sign" v-if="router.currentRoute.value.name === 'ForgotPassword'" @submit.prevent="ForgotPassword()">
+          <div class="form-item">
+            <label>
+              <span class="material-icons">person</span>
+              <input type="email" placeholder="email" v-model="data.email" required>
+            </label>
+          </div>
+          <div class="login-error accept" v-if="data.errorMessage">
+            {{data.errorMessage}}
+          </div>
+          <button type="submit" class="form-item login-btn c-pointer">
+            Відновити
+          </button>
+          <router-link class="signup-link" to="/login">Повернутись до логіну</router-link>
+          <router-link class="signup-link" to="/signup">Зареєструватись</router-link>
+        </form>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { reactive, watch } from 'vue'
 import { useRouter} from 'vue-router'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
@@ -131,7 +150,17 @@ const login = function () {
     data.errorMessage = 'необхідно увести email та пароль!'
   }
 }
-
+const ForgotPassword = function () {
+  axios({
+    method: 'POST',
+    url: '/api/forgot-passwords',
+    data: { email: data.email }
+   }).then(function () {
+     data.errorMessage = 'Дані для входу успішно надіслано на Вашу поштову скриньку!'
+   }).catch(function () {
+       data.errorMessage = 'Упс.. щось зламалось.'
+     })
+}
 const signUp = function () {
   axios({
      method: 'POST',
@@ -147,10 +176,13 @@ const signUp = function () {
    }).then(function () {
      router.push(`/login`)
      data.errorMessage = null
-     }).catch(function () {
+   }).catch(function () {
        data.errorMessage = 'Упс.. щось зламалось.'
-       })
+     })
 }
+watch(route, () => {
+ data.errorMessage = null
+})
 </script>
 
 <style lang="scss" scoped>

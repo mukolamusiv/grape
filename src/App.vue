@@ -1,9 +1,9 @@
 <template>
   <div class="page-wrap">
-   <header-bar v-if="router.currentRoute.value.name!=='Login' && router.currentRoute.value.name!=='SignUp'"/>
+   <header-bar v-if="router.currentRoute.value.name!=='Login' && router.currentRoute.value.name!=='SignUp' && router.currentRoute.value.name!=='ForgotPassword'"/>
    <router-view/>
   </div>
- <nav-bar v-if="router.currentRoute.value.name!=='Login' && router.currentRoute.value.name!=='SignUp'"/>
+ <nav-bar v-if="router.currentRoute.value.name!=='Login' && router.currentRoute.value.name!=='SignUp' && router.currentRoute.value.name!=='ForgotPassword'"/>
 </template>
 
 <style lang="scss">
