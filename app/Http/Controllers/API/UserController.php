@@ -203,10 +203,13 @@ class UserController extends Controller
         $user = User::find(Auth::id());
         if(Hash::check($request->input('old_password'), $user->password)){
             $user->password = $request->input('password');
-            $user->save();
-            return response('Пароль змінено');
+            if($user->save()){
+                return response('Пароль змінено',200);
+            }else{
+                return response('Щось пішло не так',204);
+            }
         }else{
-            return response('Пароль не вірний');
+            return response('Пароль не вірний',422);
         }
     }
 
