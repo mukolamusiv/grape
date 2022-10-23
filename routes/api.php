@@ -27,13 +27,13 @@ use Illuminate\Support\Facades\Route;
 //    return view('auth.forgot-password');
 //})->middleware('guest')->name('password.request');
 
-Route::post('/forgot-passwords', '\App\Http\Controllers\API\AuthController@forget_password')->middleware('guest:api');
+Route::post('/forget-passwords', '\App\Http\Controllers\API\AuthController@forget_password');
 
-Route::get('/reset-password/{token}', function ($token) {
-    return response(['token' => $token]);
-})->middleware('guest:api')->name('password.reset');
-
-Route::post('/reset-password', '\App\Http\Controllers\API\AuthController@reset_password')->middleware('guest:api')->name('password.update');
+//Route::get('/reset-password/{token}', function ($token) {
+//    return response(['token' => $token]);
+//})->middleware('guest:api')->name('password.reset');
+//
+//Route::post('/reset-password', '\App\Http\Controllers\API\AuthController@reset_password')->middleware('guest:api')->name('password.update');
 
 
 //Route::middleware('','')
@@ -155,3 +155,10 @@ Route::post('lesson-coloring-page/{lesson_id}','\App\Http\Controllers\API\TestCo
 //Auth::routes();
 
 //Route::get('lesson-test','\App\Http\Controllers\API\TestController@test');
+
+
+
+
+Route::get('topics-teacher','\App\Http\Controllers\API\TeacherController@getTopics');
+Route::get('lessons-teacher/{topic_id}','\App\Http\Controllers\API\TeacherController@getLessons');
+Route::get('lesson-teacher/{lesson_id}','\App\Http\Controllers\API\TeacherController@getLesson');

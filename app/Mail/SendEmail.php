@@ -16,11 +16,14 @@ class SendEmail extends Mailable
      *
      * @return void
      */
-    protected $data;
-    public function __construct($data)
+    public $user;
+    public $password;
+    public function __construct($user,$password)
     {
-        $this->data = $data;
+        $this->user = $user;
+        $this->password = $password;
     }
+
 
     /**
      * Build the message.
@@ -29,6 +32,6 @@ class SendEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('mail');
+        return $this->subject('Оновлення паролю GRAPE UGCC!')->view('mail',['password'=>$this->password]);
     }
 }

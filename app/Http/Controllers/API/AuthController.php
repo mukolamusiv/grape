@@ -7,14 +7,20 @@ use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\PasswordForgetRequest;
 use App\Http\Requests\PasswordResetRequest;
 use App\Http\Requests\UserRequest;
+use App\Mail\SendEmail;
 use Carbon\Carbon;
+use Faker\Extension\Helper;
+use Faker\Provider\Text;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
 use Egulias\EmailValidator\EmailValidator;
+use phpseclib3\Crypt\Random;
+use function PHPUnit\Framework\isEmpty;
 
 class AuthController extends Controller
 {
@@ -231,13 +237,32 @@ class AuthController extends Controller
     public function forget_password(PasswordForgetRequest $request){
         $request->validate(['email' => 'required|email']);
 
-        $status = \Illuminate\Support\Facades\Password::sendResetLink(
-            $request->only('email')
-        );
+        $user = User::where(['email'=>$request->input('email')])->get();
 
-        $status === Password::RESET_LINK_SENT
-            ? back()->with(['status' => __($status)])
-            : back()->withErrors(['email' => __($status)]);
+        $pass = '';
+        if($user->isNotEmpty()){
+            $user = $user->first();
+            $alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
+            for ($i = 0; $i < 8; $i++) {
+                $n = rand(0,59);
+                $pass .= $alphabet[$n];
+            }
+            $user->password = $pass;
+            $user->save();
+            Mail::to($request->input('email'))->send(new SendEmail($user,$pass));
+            $status = 'Новий пароль згенеровано та надіслано на пошту';
+        }else{
+            $status = ['error'=> 'Email is not isset'];
+        }
+//        $status = \Illuminate\Support\Facades\Password::sendResetLink(
+//            $request->only('email')
+//        );
+
+//        $status === Password::RESET_LINK_SENT
+//            ? back()->with(['status' => __($status)])
+//            : back()->withErrors(['email' => __($status)]);
+
+
 
         return response($status);
     }
