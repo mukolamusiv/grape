@@ -49,6 +49,22 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/SignInUpView.vue')
   },
   {
+    path: '/materials',
+    name: 'Materials',
+    meta: {
+      forAuthorized: true,
+    },
+    component: () => import(/* webpackChunkName: "about" */ '../views/MaterialsView.vue')
+  },
+  {
+    path: '/topic-materials/:id',
+    name: 'TopicMaterials',
+    meta: {
+      forAuthorized: true,
+    },
+    component: () => import(/* webpackChunkName: "about" */ '../views/TopicMaterialsView.vue')
+  },
+  {
     path: '/classroom',
     name: 'Classroom',
     meta: {

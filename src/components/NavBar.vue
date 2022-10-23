@@ -38,10 +38,12 @@
     </div>
     <h4>Навігація</h4>
     <hr>
-    <!-- Навігація учня -->
     <div class="grape-links-wrap">
       <div class="grape-link">
         <router-link to="/"><span class="material-icons">topic</span><span>Теми</span></router-link>
+      </div>
+      <div class="grape-link" v-if="store.user.role_user === 'katehyt'">
+        <router-link to="/materials"><span class="material-icons">auto_stories</span><span>Матеріали</span></router-link>
       </div>
       <div class="grape-link" v-if="store.user.role_user === 'katehyt'">
         <router-link to="/classroom"><span class="material-icons">group</span><span>Мій клас</span></router-link>
