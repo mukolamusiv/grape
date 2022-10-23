@@ -27,13 +27,13 @@ use Illuminate\Support\Facades\Route;
 //    return view('auth.forgot-password');
 //})->middleware('guest')->name('password.request');
 
-Route::post('/forget-passwords', '\App\Http\Controllers\API\AuthController@forget_password')->middleware('guest:api');
+Route::post('/forget-passwords', '\App\Http\Controllers\API\AuthController@forget_password');
 
-Route::get('/reset-password/{token}', function ($token) {
-    return response(['token' => $token]);
-})->middleware('guest:api')->name('password.reset');
-
-Route::post('/reset-password', '\App\Http\Controllers\API\AuthController@reset_password')->middleware('guest:api')->name('password.update');
+//Route::get('/reset-password/{token}', function ($token) {
+//    return response(['token' => $token]);
+//})->middleware('guest:api')->name('password.reset');
+//
+//Route::post('/reset-password', '\App\Http\Controllers\API\AuthController@reset_password')->middleware('guest:api')->name('password.update');
 
 
 //Route::middleware('','')
