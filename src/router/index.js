@@ -39,8 +39,8 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/SignInUpView.vue')
   },
   {
-    path: '/forgot-password',
-    name: 'ForgotPassword',
+    path: '/forget-password',
+    name: 'ForgetPassword',
     component: () => import(/* webpackChunkName: "about" */ '../views/SignInUpView.vue')
   },
   {
