@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Route;
 //    return view('auth.forgot-password');
 //})->middleware('guest')->name('password.request');
 
-Route::post('/forgot-passwords', '\App\Http\Controllers\API\AuthController@forget_password')->middleware('guest:api');
+Route::post('/forget-passwords', '\App\Http\Controllers\API\AuthController@forget_password')->middleware('guest:api');
 
 Route::get('/reset-password/{token}', function ($token) {
     return response(['token' => $token]);
