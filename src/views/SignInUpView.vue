@@ -29,7 +29,24 @@
           <button type="submit" class="form-item login-btn c-pointer">
             Увійти
           </button>
-          <router-link class="signup-link cancel" to="/forgot-password" v-if="data.errorMessage">Забув пароль?</router-link>
+          <router-link class="signup-link cancel" to="/forget-password" v-if="data.errorMessage">Забув пароль?</router-link>
+          <router-link class="signup-link" to="/signup">Зареєструватись</router-link>
+        </form>
+        <!-- Форма відновлення -->
+        <form class="form-sign" v-if="router.currentRoute.value.name === 'ForgetPassword'" @submit.prevent="ForgetPassword()">
+          <div class="form-item">
+            <label>
+              <span class="material-icons">person</span>
+              <input type="email" placeholder="email" v-model="data.email" required>
+            </label>
+          </div>
+          <div class="login-error accept" v-if="data.errorMessage">
+            {{data.errorMessage}}
+          </div>
+          <button type="submit" class="form-item login-btn c-pointer">
+            Відновити
+          </button>
+          <router-link class="signup-link" to="/login">Повернутись до логіну</router-link>
           <router-link class="signup-link" to="/signup">Зареєструватись</router-link>
         </form>
         <!-- Форма реєстрації -->
@@ -71,23 +88,6 @@
             Зареєструватись
           </button>
           <router-link class="signup-link" to="/login">В мене вже є аккаунт</router-link>
-        </form>
-        <!-- Форма відновлення -->
-        <form class="form-sign" v-if="router.currentRoute.value.name === 'ForgotPassword'" @submit.prevent="ForgotPassword()">
-          <div class="form-item">
-            <label>
-              <span class="material-icons">person</span>
-              <input type="email" placeholder="email" v-model="data.email" required>
-            </label>
-          </div>
-          <div class="login-error accept" v-if="data.errorMessage">
-            {{data.errorMessage}}
-          </div>
-          <button type="submit" class="form-item login-btn c-pointer">
-            Відновити
-          </button>
-          <router-link class="signup-link" to="/login">Повернутись до логіну</router-link>
-          <router-link class="signup-link" to="/signup">Зареєструватись</router-link>
         </form>
       </div>
     </div>
@@ -150,10 +150,10 @@ const login = function () {
     data.errorMessage = 'необхідно увести email та пароль!'
   }
 }
-const ForgotPassword = function () {
+const ForgetPassword = function () {
   axios({
     method: 'POST',
-    url: '/api/forgot-passwords',
+    url: '/api/forget-passwords',
     data: { email: data.email }
    }).then(function () {
      data.errorMessage = 'Дані для входу успішно надіслано на Вашу поштову скриньку!'

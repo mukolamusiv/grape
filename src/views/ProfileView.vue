@@ -100,7 +100,7 @@
           </span>
         </div>
       </form>
-      <form class="edit-profile" v-if="data.editPassword" @submit.prevent="updatePassword()">
+      <form class="edit-profile" v-if="data.editPassword" @submit.prevent="updatePassword(), data.errorMessage = false">
         <div class="form-item">
           <span class="input-name">Старий пароль</span>
           <label>
@@ -111,9 +111,12 @@
         <div class="form-item">
           <span class="input-name">Новий пароль</span>
           <label>
-            <input :type="data.inputType" v-model="data.newPassword" required>
+            <input :type="data.inputType" v-model="data.newPassword" minlength="8" required>
             <span class="material-icons show" @click="changeInputType()">{{data.inputIcon}}</span>
           </label>
+        </div>
+        <div class="error cancel" v-if="data.errorMessage">
+          невірний старий пароль!
         </div>
         <div class="submit-panel">
           <button type="submit">
@@ -152,6 +155,7 @@ const data = reactive({
   newPassword: null,
   inputIcon: 'visibility',
   inputType: 'password',
+  errorMessage: false
 })
 const startEdit = function () {
   data.edit = true
@@ -206,10 +210,12 @@ const updatePassword = function () {
       password_confirmation: data.newPassword,
     }
     }).then(function () {
-      store.getUser()
-      data.edit = false
-    }).catch(function (error) {
-       store.error(error.request.status)
+      store.logout()
+      // data.editPassword = false
+      // data.errorMessage = false
+    }).catch(function () {
+      // store.error(error.request.status)
+      data.errorMessage = true
     })
 }
 const changeInputType = function () {
@@ -226,6 +232,10 @@ const changeInputType = function () {
 
 <style lang="scss" scoped>
 @import '@/assets/styles/color-style.scss';
+.error{
+  width: 100%;
+  margin-bottom: 16px;
+}
 hr{
   width: 100%;
 }
