@@ -159,6 +159,6 @@ Route::post('lesson-coloring-page/{lesson_id}','\App\Http\Controllers\API\TestCo
 
 
 
-Route::get('topics-teacher','\App\Http\Controllers\API\TeacherController@getTopics');
-Route::get('lessons-teacher/{topic_id}','\App\Http\Controllers\API\TeacherController@getLessons');
-Route::get('lesson-teacher/{lesson_id}','\App\Http\Controllers\API\TeacherController@getLesson');
+Route::get('topics-teacher','\App\Http\Controllers\API\TeacherController@getTopics');//->middleware(['auth:api']);
+Route::get('lessons-teacher/{topic_id}','\App\Http\Controllers\API\TeacherController@getLessons');//->middleware(['auth:api']);
+Route::get('lesson-teacher/{lesson_id}','\App\Http\Controllers\API\TeacherController@getLesson');//->middleware(['auth:api']);
