@@ -332,7 +332,7 @@ class LessonsController extends Controller
     }
 
     public function topic($id){
-        $request = collect(UserTopic::with('topic')->where(['topic_id'=>$id,'user_id'=> \auth()->id()])->get());
+        $request = collect(UserTopic::with('topic')->where(['topic_id'=>$id,'user_id'=> Auth::id()])->get());
         if($request->isNotEmpty()){
             //$data = collect(UserTopic::with('topic')->find($request->first()->id));
             //$data->forget('id');

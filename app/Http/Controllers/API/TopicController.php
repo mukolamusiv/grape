@@ -40,7 +40,7 @@ class TopicController extends Controller
     }
 
     public function getTopic($topic_id){
-        $data = new TopicDTO($topic_id,\auth()->id());
+        $data = new TopicDTO($topic_id,Auth::id());
         return response($data->getTopic());
     }
 
