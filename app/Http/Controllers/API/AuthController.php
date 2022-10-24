@@ -127,7 +127,7 @@ class AuthController extends Controller
                 'password' => $request->password,
                 'birthday' => $request->birthday
             ]);
-        if(Auth::attempt($user)){
+        if(Auth::attempt($user)) {
             //$request->session()->regenerate();
             //shell_exec('php ../artisan passport:install');
 
@@ -146,10 +146,11 @@ class AuthController extends Controller
             $response = ['token_type' => 'Bearer',
                 'token' => $token->accessToken,
                 'expires_at' => Carbon::parse($token->token->expires_at)->toDateTimeString(),
-                'user'=>Auth::user()
+                'user' => Auth::user()
             ];
             return response($response, 200);
 //        }
+        }
     }
 
 
