@@ -87,6 +87,10 @@ Route::get('awards/{user_id}','\App\Http\Controllers\API\UserController@Awards')
 /*
  * Роути уроків
  * */
+Route::get('topic/{id}','\App\Http\Controllers\API\TopicController@getTopic')->middleware(['auth:api']);
+
+
+
 Route::get('topics-active','\App\Http\Controllers\API\TopicController@active')->middleware(['auth:api']);
 Route::get('topics','\App\Http\Controllers\API\TopicController@all')->middleware(['auth:api']);
 Route::get('topics-done','\App\Http\Controllers\API\TopicController@done')->middleware(['auth:api']);
@@ -101,7 +105,7 @@ Route::get('user-topics-done/{user_id}','\App\Http\Controllers\API\TopicControll
 
 
 //Route::get('lesson/{id}','\App\Http\Controllers\API\LessonsController@lesson');
-Route::get('topic/{id}','\App\Http\Controllers\API\TopicController@getTopic')->middleware(['auth:api']);
+
 
 
 Route::get('check-topic/{id}','\App\Http\Controllers\API\LessonsController@check_topic')->middleware(['auth:api']);
