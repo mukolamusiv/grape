@@ -86,9 +86,9 @@ Route::get('awards/{user_id}','\App\Http\Controllers\API\UserController@Awards')
 
 /*
  * Роути уроків
+ *
  * */
-Route::get('topic/{id}','\App\Http\Controllers\API\TopicController@getTopic')->middleware(['auth:api']);
-
+Route::get('topic/{id}','\App\Http\Controllers\API\LessonsController@topic')->middleware(['auth:api']);
 
 
 Route::get('topics-active','\App\Http\Controllers\API\TopicController@active')->middleware(['auth:api']);
