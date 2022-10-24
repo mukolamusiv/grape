@@ -343,6 +343,7 @@ class LessonsController extends Controller
             //$data->put('status',50);
 //            $data->put('complete',$request->first()->);
             //$data->put('topic_id',$data->id);
+            $d = new TopicDTO($id,Auth::id());
             return response(Auth::user());
             return response($this->data_topic(UserTopic::with('topic')->find($request->first()->id)));
         }else{
