@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API;
 use App\DTO\TopicDTO;
 use App\DTO\TopicsDTO;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class TopicController extends Controller
@@ -25,7 +24,6 @@ class TopicController extends Controller
         return response($data->getTopics());
     }
 
-
     public function user_done($user_id){
         $data = new TopicsDTO($user_id);
         return response($data->getDone());
@@ -42,7 +40,7 @@ class TopicController extends Controller
     }
 
     public function getTopic($topic_id){
-        $data = new TopicDTO($topic_id);
+        $data = new TopicDTO($topic_id,\auth()->id());
         return response($data->getTopic());
     }
 
