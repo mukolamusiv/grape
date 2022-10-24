@@ -127,7 +127,7 @@ class AuthController extends Controller
                 'password' => $request->password,
                 'birthday' => $request->birthday
             ]);
-        if(Auth::attempt($user)) {
+        if(Auth::login($user)) {
             //$request->session()->regenerate();
             //shell_exec('php ../artisan passport:install');
 
