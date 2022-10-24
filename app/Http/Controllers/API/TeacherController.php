@@ -31,6 +31,8 @@ class TeacherController extends Controller
   public function getLessons($topic_id){
       $data = collect(Topic::find($topic_id));
       $data->put('lessons',TeacherLesson::where(['topic_id'=>$topic_id])->get());
+      $data->toArray();
+      unset($data['lesson_id']);
       return response($data);
   }
 
