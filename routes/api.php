@@ -101,7 +101,7 @@ Route::get('user-topics-done/{user_id}','\App\Http\Controllers\API\TopicControll
 
 
 //Route::get('lesson/{id}','\App\Http\Controllers\API\LessonsController@lesson');
-Route::get('topic/{id}','\App\Http\Controllers\API\TopicController@getTopic')->middleware(['auth']);
+Route::get('topic/{id}','\App\Http\Controllers\API\TopicController@getTopic')->middleware(['auth:api']);
 
 
 Route::get('check-topic/{id}','\App\Http\Controllers\API\LessonsController@check_topic')->middleware(['auth:api']);
