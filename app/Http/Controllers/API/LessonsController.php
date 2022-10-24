@@ -332,24 +332,24 @@ class LessonsController extends Controller
     }
 
     public function topic($id){
-        //$user_id = Auth::id();
-        $data = new TopicDTO($id,1 );
-        return response($data->getTopic());
+//        $data = new TopicDTO($id,Auth::id());
+//        return response($data->getTopic());
         $request = collect(UserTopic::with('topic')->where(['topic_id'=>$id,'user_id'=> Auth::id()])->get());
-//        if($request->isNotEmpty()){
-//            //$data = collect(UserTopic::with('topic')->find($request->first()->id));
-//            //$data->forget('id');
-//            //$data = collect();
-//           // $data->push($request->first()->topic);
-//            //$data->put('status',50);
-////            $data->put('complete',$request->first()->);
-//            //$data->put('topic_id',$data->id);
-//            return response($this->data_topic(UserTopic::with('topic')->find($request->first()->id)));
-//        }else{
-//            $data = $this->data_topic_available(Topic::with('lessons')->findOrFail($id));
-//            $data->forget('status');
-//            return response($data);
-//        }
+        if($request->isNotEmpty()){
+            //$data = collect(UserTopic::with('topic')->find($request->first()->id));
+            //$data->forget('id');
+            //$data = collect();
+           // $data->push($request->first()->topic);
+            //$data->put('status',50);
+//            $data->put('complete',$request->first()->);
+            //$data->put('topic_id',$data->id);
+            return response($this->data_topic(UserTopic::with('topic')->find($request->first()->id)));
+        }else{
+            $data = $this->data_topic_available(Topic::with('lessons')->findOrFail($id));
+            $data->forget('status');
+            $data = Auth::user();
+            return response($data);
+        }
     }
 
 
