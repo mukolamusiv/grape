@@ -36,7 +36,7 @@ class TeacherController extends Controller
 
   public function getLesson($lesson_id){
       $data = TeacherLesson::findOrFail($lesson_id);
-      $data->topic();
+      $d = $data->topic();
       return response($data);
   }
 }
