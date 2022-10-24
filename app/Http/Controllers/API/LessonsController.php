@@ -332,7 +332,7 @@ class LessonsController extends Controller
     }
 
     public function topic($id){
-        $data = new TopicDTO($id,Auth::id());
+        $data = new TopicDTO($id, Auth::id());
         return response($data->getTopic());
         $request = collect(UserTopic::with('topic')->where(['topic_id'=>$id,'user_id'=> Auth::id()])->get());
         if($request->isNotEmpty()){
