@@ -333,10 +333,11 @@ class LessonsController extends Controller
 
     public function topic($id){
         $data = new TopicDTO($id, Auth::id());
-        $data = collect($data->getTopic());
-        $lessons = $data->lessons_DTO;
-        $data->put('lessons',$lessons);
-        return response();
+        $data = $data->getTopic();
+        $lessons = $data['lessons_DTO'];
+        $data['lessons'] = $lessons;
+        unset($data['lessons_DTO']);
+        return response($data);
 //        $request = collect(UserTopic::with('topic')->where(['topic_id'=>$id,'user_id'=> Auth::id()])->get());
 //        if($request->isNotEmpty()){
 //            //$data = collect(UserTopic::with('topic')->find($request->first()->id));
