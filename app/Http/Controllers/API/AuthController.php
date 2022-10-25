@@ -127,13 +127,30 @@ class AuthController extends Controller
                 'password' => $request->password,
                 'birthday' => $request->birthday
             ]);
-            $token = $user->createToken('auth_token')->plainTextToken;
+        if(Auth::login($user)) {
+            //$request->session()->regenerate();
+            //shell_exec('php ../artisan passport:install');
 
-            return response()->json([
-                'access_token' => $token,
-                'token_type' => 'Bearer',
-            ]);
+            $token = Auth::user()->createToken(config('app.name'));
+            //$token = Auth::user()->createToken('api_token')->accessToken;
+
+            $token->token->expires_at = $request->remember_me ?
+                Carbon::now()->addMonth() :
+                Carbon::now()->addDay();
+
+            $token->token->save();
+
+            //$token = \auth()->user()->createToken('Laravel Password Grant Client')->accessToken;
+            //session()->put('token', $token);
+
+            $response = ['token_type' => 'Bearer',
+                'token' => $token->accessToken,
+                'expires_at' => Carbon::parse($token->token->expires_at)->toDateTimeString(),
+                'user' => Auth::user()
+            ];
+            return response($response, 200);
 //        }
+        }
     }
 
 

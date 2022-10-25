@@ -29,10 +29,18 @@ class TeacherController extends Controller
   }
 
   public function getLessons($topic_id){
-      return response(TeacherLesson::where(['topic_id'=>$topic_id])->get());
+      $data = collect(Topic::find($topic_id));
+      $data->put('lessons',TeacherLesson::where(['topic_id'=>$topic_id])->get());
+      $data->toArray();
+      unset($data['lesson_id']);
+      return response($data);
   }
 
   public function getLesson($lesson_id){
-      return response(TeacherLesson::findOrFail($lesson_id));
+      $data = TeacherLesson::findOrFail($lesson_id);
+      $d = $data->topic;
+      $data->toArray();
+      unset($data['lesson_id']);
+      return response($data);
   }
 }

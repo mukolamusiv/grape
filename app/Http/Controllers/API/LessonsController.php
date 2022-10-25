@@ -332,7 +332,9 @@ class LessonsController extends Controller
     }
 
     public function topic($id){
-        $request = collect(UserTopic::with('topic')->where(['topic_id'=>$id,'user_id'=>Auth::id()])->get());
+        $data = new TopicDTO($id, Auth::id());
+        return response($data->getTopic());
+        $request = collect(UserTopic::with('topic')->where(['topic_id'=>$id,'user_id'=> Auth::id()])->get());
         if($request->isNotEmpty()){
             //$data = collect(UserTopic::with('topic')->find($request->first()->id));
             //$data->forget('id');
@@ -341,10 +343,13 @@ class LessonsController extends Controller
             //$data->put('status',50);
 //            $data->put('complete',$request->first()->);
             //$data->put('topic_id',$data->id);
+            //$d = new TopicDTO($id,Auth::id());
+            return response(Auth::user());
             return response($this->data_topic(UserTopic::with('topic')->find($request->first()->id)));
         }else{
             $data = $this->data_topic_available(Topic::with('lessons')->findOrFail($id));
             $data->forget('status');
+            $data = Auth::user();
             return response($data);
         }
     }

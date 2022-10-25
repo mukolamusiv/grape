@@ -86,14 +86,19 @@ Route::get('awards/{user_id}','\App\Http\Controllers\API\UserController@Awards')
 
 /*
  * Роути уроків
+ *
  * */
-Route::get('topics-active','\App\Http\Controllers\API\LessonsController@active')->middleware(['auth:api']);
-Route::get('topics','\App\Http\Controllers\API\LessonsController@all')->middleware(['auth:api']);
-Route::get('topics-done','\App\Http\Controllers\API\LessonsController@done')->middleware(['auth:api']);
+Route::get('topic/{id}','\App\Http\Controllers\API\LessonsController@topic')->middleware(['auth:api']);
+//Route::get('topic/{id}','\App\Http\Controllers\API\TopicController@getTopic')->middleware(['auth:api']);
 
-Route::get('user-topics-active/{user_id}','\App\Http\Controllers\API\LessonsController@user_active')->middleware(['auth:api']);
-Route::get('user-topics/{user_id}','\App\Http\Controllers\API\LessonsController@user_all')->middleware(['auth:api']);
-Route::get('user-topics-done/{user_id}','\App\Http\Controllers\API\LessonsController@user_done')->middleware(['auth:api']);
+
+Route::get('topics-active','\App\Http\Controllers\API\TopicController@active')->middleware(['auth:api']);
+Route::get('topics','\App\Http\Controllers\API\TopicController@all')->middleware(['auth:api']);
+Route::get('topics-done','\App\Http\Controllers\API\TopicController@done')->middleware(['auth:api']);
+
+Route::get('user-topics-active/{user_id}','\App\Http\Controllers\API\TopicController@user_active')->middleware(['auth:api']);
+Route::get('user-topics/{user_id}','\App\Http\Controllers\API\TopicController@user_all')->middleware(['auth:api']);
+Route::get('user-topics-done/{user_id}','\App\Http\Controllers\API\TopicController@user_done')->middleware(['auth:api']);
 
 //Route::get('user-topics-active/{user_id}','\App\Http\Controllers\API\LessonsController@topics_active');
 //Route::get('user-topics/{user_id}','\App\Http\Controllers\API\LessonsController@topics');
@@ -101,7 +106,7 @@ Route::get('user-topics-done/{user_id}','\App\Http\Controllers\API\LessonsContro
 
 
 //Route::get('lesson/{id}','\App\Http\Controllers\API\LessonsController@lesson');
-Route::get('topic/{id}','\App\Http\Controllers\API\LessonsController@topic')->middleware(['auth:api']);
+
 
 
 Route::get('check-topic/{id}','\App\Http\Controllers\API\LessonsController@check_topic')->middleware(['auth:api']);
