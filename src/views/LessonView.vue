@@ -163,9 +163,6 @@ watch( () => store.ui.lessonTab, () => {
     font-size: inherit;
     }
   }
-  .current-path{
-    color: #747d86;
-  }
 }
 .lesson-about{
   display: flex;
@@ -231,10 +228,6 @@ watch( () => store.ui.lessonTab, () => {
   justify-content: center;
   padding-top: 0;
   flex-wrap: wrap;
-  .lesson-content-text{
-    max-width: 100%;
-    font-size: 1.2rem;
-  }
 }
 .player{
   width: 100%;
@@ -314,11 +307,6 @@ watch( () => store.ui.lessonTab, () => {
   .description{
     font-size: 1.1rem!important;
     margin: 0!important;
-  }
-  .lesson-content{
-    .lesson-content-text{
-      font-size: 1rem;
-    }
   }
   .player{
     padding: 0;

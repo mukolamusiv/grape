@@ -18,7 +18,7 @@
         Матеріали теми:
       </div>
       <div class="wrap-lesson-card">
-        <router-link class="lesson-card" :to="{ path: `/lesson/${lesson.lesson_id}`}" v-for="(lesson, index) in data.topic.lessons" v-bind:key="lesson.lesson_id">
+        <router-link class="lesson-card" :to="{ path: `/lesson-materials/${lesson.id}`}" v-for="(lesson, index) in data.topic.lessons" v-bind:key="lesson.lesson_id">
           <div class="lesson-title">
             <span class="material-icons">auto_stories</span>
             <span>{{index+1}}. {{lesson.title}}</span>
@@ -45,7 +45,7 @@ const data = reactive({
 const getTopic = function () {
   axios({
     method: 'GET',
-    url: `/api/topic/${route.params.id}}`,
+    url: `/api/lessons-teacher/${route.params.id}`,
     data: {}
  }).then(function (response) {
    data.topic = response.data

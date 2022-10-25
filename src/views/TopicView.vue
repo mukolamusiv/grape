@@ -17,7 +17,7 @@
         </div>
         <div class="course-about">
             <div class="title">Тема: "{{data.topic.title}}"</div>
-          <div class="description">
+          <div class="description" v-if="data.topic.description">
             {{data.topic.description.substring(0, 255)}}
           </div>
         </div>
@@ -76,7 +76,7 @@ const data = reactive({
 const getTopic = function () {
   axios({
     method: 'GET',
-    url: `/api/topic/${route.params.id}}`,
+    url: `/api/topic/${route.params.id}`,
     data: {}
  }).then(function (response) {
    data.topic = response.data
@@ -129,6 +129,7 @@ getTopic()
     flex-direction: column;
     align-items: flex-end;
     padding: 16px;
+    margin-bottom: 8px;
     img, .img{
       display: block;
       border-radius: 5px;
