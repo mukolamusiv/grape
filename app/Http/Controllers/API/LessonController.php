@@ -104,7 +104,7 @@ class LessonController extends Controller
     }
 
     public function crossword($lesson_id){
-        $data = new CrosswordDTO($lesson_id);
+        $data = new CrosswordDTO($lesson_id,Auth::id());
         return response($data->object());
     }
 
