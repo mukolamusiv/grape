@@ -311,6 +311,7 @@ hr{
     width: 100%;
     display: flex;
     padding: 8px;
+    height: fit-content;
   }
 }
 #topics-active{
