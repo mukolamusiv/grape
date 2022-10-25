@@ -252,7 +252,6 @@ hr{
   padding: 16px;
   .awards{
     display: flex;
-    max-width: 100%;
     .awards-item{
       padding: 0 8px;
       margin-bottom: 8px;
