@@ -17,6 +17,7 @@ class LessonDTO
 {
     //публічні і доступні методи як передаються на зовні для frontend
     public int $id;
+    public int $lesson_id;
     public string $title;
     public string $description = '';
     public string $text;
@@ -109,6 +110,7 @@ class LessonDTO
      */
     private function setVars(){
         $this->id               = $this->lesson->id;
+        $this->lesson_id        = $this->lesson->id;
         $this->title            = $this->lesson->title;
         $this->description      = strval($this->lesson->description);
         $this->topic_id         = $this->lesson->topic_id;
