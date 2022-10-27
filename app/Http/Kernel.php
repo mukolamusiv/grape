@@ -23,7 +23,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         //\App\Http\Middleware\Cors::class,
-        ForseJsoneMiddleware::class
+//        ForseJsoneMiddleware::class
     ];
 
     /**
@@ -73,7 +73,7 @@ class Kernel extends HttpKernel
         'abilities' => \Laravel\Sanctum\Http\Middleware\CheckAbilities::class,
         'ability' => \Laravel\Sanctum\Http\Middleware\CheckForAnyAbility::class,
         //'cors' => \App\Http\Middleware\Cors::class,
-        'forse.json'=> ForseJsoneMiddleware::class
+        //'forse.json'=> ForseJsoneMiddleware::class
 
     ];
 }

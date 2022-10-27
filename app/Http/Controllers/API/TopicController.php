@@ -34,6 +34,10 @@ class TopicController extends Controller
         return response($data->getActive());
     }
 
+    /**
+     * @param $user_id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
     public function user_all($user_id){
         $data = new TopicsDTO($user_id);
         return response($data->getTopics());
