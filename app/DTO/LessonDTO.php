@@ -45,6 +45,9 @@ class LessonDTO
      */
     private object $active_lesson;
 
+    /**
+     * @var bool
+     */
     private bool $emptyQuestion = false;
     private bool $emptyFindPair = false;
     private bool $emptyOneWord = false;
@@ -119,6 +122,9 @@ class LessonDTO
         $this->setVideo();
     }
 
+    /**
+     *
+     */
     private function setActive(){
         //dd($this->active_lesson->complete);
         if(isset($this->active_lesson->complete)){

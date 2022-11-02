@@ -2,6 +2,14 @@
 
 namespace App\Orchid\Screens\Crossword;
 
+use App\Models\Crossword;
+use App\Orchid\Layouts\Crossword\CrosswordEditLayout;
+use App\Orchid\Layouts\Crossword\CrosswordTableLayout;
+use App\Orchid\Layouts\Crossword\WordEditLayout;
+use Illuminate\Http\Request;
+use Orchid\Support\Facades\Toast;
+use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Screen;
 
 class CrosswordScreen extends Screen
@@ -13,7 +21,9 @@ class CrosswordScreen extends Screen
      */
     public function query(): iterable
     {
-        return [];
+        return [
+            'crosswords' => Crossword::all(),
+        ];
     }
 
     /**
@@ -33,7 +43,14 @@ class CrosswordScreen extends Screen
      */
     public function commandBar(): iterable
     {
-        return [];
+        return [
+            ModalToggle::make('Додати кросворд')
+                ->modal('createCrossword')
+                ->modalTitle('Створення нового кросворду')
+                ->method('createCrossword')
+                //->parameters(['lesson_id'=>'crossword'])
+                ->icon('plus'),
+        ];
     }
 
     /**
@@ -43,6 +60,18 @@ class CrosswordScreen extends Screen
      */
     public function layout(): iterable
     {
-        return [];
+        return [
+            CrosswordTableLayout::class,
+            \Orchid\Support\Facades\Layout::modal('createCrossword',CrosswordEditLayout::class)
+        ];
+    }
+
+    public function createCrossword(Request $request){
+        $data = new Crossword($request->get('crossword'));
+        if($data->save()){
+            Toast::success('Новий кросворд додано');
+        }else{
+            Toast::error('Відбулась помилка');
+        }
     }
 }

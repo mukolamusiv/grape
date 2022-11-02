@@ -2,7 +2,16 @@
 
 namespace App\Orchid\Screens\Question;
 
+use App\Models\Answer;
+use App\Models\Question;
+use App\Orchid\Layouts\Question\AnswerEditLayout;
+use App\Orchid\Layouts\Question\AnswerTableLayout;
+use App\Orchid\Layouts\Question\QuestionEditLayout;
+use Illuminate\Http\Request;
+use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Screen;
+use Orchid\Support\Facades\Layout;
+use Orchid\Support\Facades\Toast;
 
 class QuestionEditScreen extends Screen
 {
@@ -11,9 +20,12 @@ class QuestionEditScreen extends Screen
      *
      * @return array
      */
-    public function query(): iterable
+    public function query(Question $question): iterable
     {
-        return [];
+        return [
+            'question' => $question,
+            'answer'=>$question->answer,
+        ];
     }
 
     /**
@@ -23,7 +35,7 @@ class QuestionEditScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'QuestionEditScreen';
+        return 'Редагування запитання';
     }
 
     /**
@@ -33,7 +45,13 @@ class QuestionEditScreen extends Screen
      */
     public function commandBar(): iterable
     {
-        return [];
+        return [
+            ModalToggle::make('Додати відповідь')
+                ->modal('createAnswer')
+                ->modalTitle('Додавання нової відповіді')
+                ->method('createAnswer')
+                ->icon('plus'),
+        ];
     }
 
     /**
@@ -43,6 +61,39 @@ class QuestionEditScreen extends Screen
      */
     public function layout(): iterable
     {
-        return [];
+        return [
+            QuestionEditLayout::class,
+            AnswerTableLayout::class,
+            Layout::modal('createAnswer',AnswerEditLayout::class),
+            Layout::modal('editAnswer',AnswerEditLayout::class)->async('asyncGetAnswer')
+        ];
+    }
+
+
+    public function asyncGetAnswer(Answer $answer){
+        return [
+          'answer'=>$answer
+        ];
+    }
+
+    /**
+     * @param Question $question
+     * @param Request $request
+     */
+    public function createAnswer(Question $question, Request $request){
+        $answer = new Answer($request->get('answer'));
+        $question->answer()->save($answer);
+        Toast::info('Додано нову відповідь на запитання');
+    }
+
+    public function editAnswer(Answer $answer, Request $request){
+        //dd($request->input('answer'));
+        $data = Answer::updateOrCreate(['id'=>$answer->id],$request->input('answer'));
+        Toast::info('Оновлено відповідь');
+    }
+
+    public function removeAnswer(Request $request){
+        Answer::destroy($request->get('id'));
+        Toast::success('Видалено відповідь');
     }
 }

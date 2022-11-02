@@ -3,9 +3,13 @@
 namespace App\Orchid\Screens\Question;
 
 use App\Models\Question;
+use App\Orchid\Layouts\Question\QuestionEditLayout;
 use App\Orchid\Layouts\Question\QuestionTableLayout;
+use Illuminate\Http\Request;
+use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Layout;
 use Orchid\Screen\Screen;
+use Orchid\Support\Facades\Toast;
 use function Termwind\ValueObjects\block;
 
 class QuestionScreen extends Screen
@@ -39,7 +43,13 @@ class QuestionScreen extends Screen
      */
     public function commandBar(): iterable
     {
-        return [];
+        return [
+            ModalToggle::make('Додати запитання')
+                ->modal('createQuestion')
+                ->modalTitle('Додавання нового запитання')
+                ->method('createQuestion')
+                ->icon('plus'),
+        ];
     }
 
     /**
@@ -50,12 +60,26 @@ class QuestionScreen extends Screen
     public function layout(): iterable
     {
         return [
-            \Orchid\Support\Facades\Layout::block(QuestionTableLayout::class)
-                ->title('Зпитання')
-            ->description('запитання до уроку'),
-            \Orchid\Support\Facades\Layout::block(QuestionTableLayout::class)
-                ->title('Відповіді')
-                ->description('Усі відповіді до запитань'),
+            QuestionTableLayout::class,
+            \Orchid\Support\Facades\Layout::modal('createQuestion',QuestionEditLayout::class),
+//            \Orchid\Support\Facades\Layout::block(QuestionTableLayout::class)
+//                ->title('Відповіді')
+//                ->description('Усі відповіді до запитань'),
         ];
+    }
+
+    public function createQuestion(Request $request){
+        $data = new Question($request->get('question'));
+        if($data->save()){
+            Toast::success('Додано нове запитання');
+        }else{
+            Toast::error('Щось пішло не так');
+        }
+        //Question::created($request->get(''));
+    }
+
+    public function removeQuestion(Request $request){
+        Question::destroy($request->get('id'));
+        Toast::success('Видалено запитання');
     }
 }

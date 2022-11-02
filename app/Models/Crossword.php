@@ -9,7 +9,18 @@ class Crossword extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'description',
+        'lesson_id',
+    ];
+
+
     public function word(){
         return $this->hasMany(Word::class,'crossword_id','id');
+    }
+
+    public function lesson(){
+        return $this->belongsTo(Lessons::class,'lesson_id')->with('topic');
     }
 }

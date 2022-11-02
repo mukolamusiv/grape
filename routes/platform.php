@@ -119,7 +119,7 @@ Route::screen('/lesson/{id}', \App\Orchid\Screens\Lessons\LessonsShowScreen::cla
  * */
 Route::screen('/question', \App\Orchid\Screens\Question\QuestionScreen::class)->name('question.list');
 Route::screen('/question/create', \App\Orchid\Screens\Question\QuestionScreen::class)->name('question.create');
-Route::screen('/question/{id}/edit', \App\Orchid\Screens\Question\QuestionScreen::class)->name('question.edit');
+Route::screen('/question/{id}/edit', \App\Orchid\Screens\Question\QuestionEditScreen::class)->name('question.edit');
 /* варіанти відповідей до тестів */
 Route::screen('/answer', \App\Orchid\Screens\Question\AnswerScreen::class)->name('answer.list');
 Route::screen('/answer/create', \App\Orchid\Screens\Question\AnswerScreen::class)->name('answer.create');
@@ -134,7 +134,7 @@ Route::screen('/answer/{id}/edit', \App\Orchid\Screens\Question\AnswerScreen::cl
  * */
 Route::screen('/crossword', \App\Orchid\Screens\Crossword\CrosswordScreen::class)->name('crossword.list');
 Route::screen('/crossword/create', \App\Orchid\Screens\Crossword\CrosswordScreen::class)->name('crossword.create');
-Route::screen('/crossword/{id}/edit', \App\Orchid\Screens\Crossword\CrosswordScreen::class)->name('crossword.edit');
+Route::screen('/crossword/{id}/edit', \App\Orchid\Screens\Crossword\WordScreen::class)->name('crossword.edit');
 
 
 Route::screen('/topic', \App\Orchid\Screens\Topic\TopicScreen::class)->name('topic.list');
