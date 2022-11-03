@@ -84,16 +84,19 @@ class QuestionEditScreen extends Screen
         $answer = new Answer($request->get('answer'));
         $question->answer()->save($answer);
         Toast::info('Додано нову відповідь на запитання');
+        return redirect(route('question.edit',$question->id));
     }
 
     public function editAnswer(Answer $answer, Request $request){
         //dd($request->input('answer'));
         $data = Answer::updateOrCreate(['id'=>$answer->id],$request->input('answer'));
         Toast::info('Оновлено відповідь');
+        return redirect(route('question.edit',$answer->question_id));
     }
 
     public function removeAnswer(Request $request){
         Answer::destroy($request->get('id'));
         Toast::success('Видалено відповідь');
+        return redirect(route('question.list'));
     }
 }

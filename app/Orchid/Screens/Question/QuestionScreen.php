@@ -72,8 +72,10 @@ class QuestionScreen extends Screen
         $data = new Question($request->get('question'));
         if($data->save()){
             Toast::success('Додано нове запитання');
+            return redirect(route('question.edit',$data->id));
         }else{
             Toast::error('Щось пішло не так');
+            return redirect(route('question.list'));
         }
         //Question::created($request->get(''));
     }
@@ -81,5 +83,6 @@ class QuestionScreen extends Screen
     public function removeQuestion(Request $request){
         Question::destroy($request->get('id'));
         Toast::success('Видалено запитання');
+        return redirect(route('question.list'));
     }
 }
