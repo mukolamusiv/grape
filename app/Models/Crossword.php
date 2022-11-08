@@ -20,6 +20,10 @@ class Crossword extends Model
         return $this->hasMany(Word::class,'crossword_id','id');
     }
 
+    public function answerUser(){
+        return $this->hasMany(CrosswordLessonsAnswer::class,'crossword_id','id');
+    }
+
     public function lesson(){
         return $this->belongsTo(Lessons::class,'lesson_id')->with('topic');
     }

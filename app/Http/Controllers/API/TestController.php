@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
+use App\DTO\BuildDTO\ComponentLessonDTO\ComponentFinPairDTO;
+use App\DTO\BuildDTO\ComponetntDTO\ComponentTopicDTO;
+use App\DTO\BuildDTO\LessonBuilderDTO;
+use App\DTO\BuildDTO\TopicBuilderDTO;
 use App\DTO\LessonDTO;
 use App\DTO\TestsDTO\CrosswordDTO;
 use App\DTO\TestsDTO\FindPairDTO;
@@ -19,11 +23,13 @@ use App\Models\Answer;
 use App\Models\ColoringPageAnswer;
 use App\Models\Crossword;
 use App\Models\Find_a_Pair_Data;
+use App\Models\Lessons;
 use App\Models\OneWordQuestion;
 use App\Models\OpenQuestion;
 use App\Models\OpenQuestionAnswerUser;
 use App\Models\Question;
 use App\Models\QuestionLessonsAnswer;
+use App\Models\Topic;
 use App\Models\User;
 use App\Models\UserLessons;
 use App\Models\Word;
@@ -32,6 +38,31 @@ use Illuminate\Support\Facades\Auth;
 
 class TestController extends Controller
 {
+
+    public function test(){
+//        $data = new TopicBuilderDTO(1);
+//        return $data->buildTopics(1);
+
+//        $data = Topic::find(1);
+//        $data->lessons;
+//        $data = new ComponentTopicDTO(collect($data),1);
+
+
+
+
+        $lesson = Lessons::find(13);
+        //'UserLesson','question', 'find_to_pair','crossword','topic'
+        $lesson->UserLesson;
+        $lesson->question;
+        $lesson->find_to_pair;
+        //$lesson->crossword;
+        $lesson->topic;
+        $data = new LessonBuilderDTO(collect($lesson),1);
+        //$data = new ComponentFinPairDTO(collect($lesson),1);
+        return $data->getLesson();
+    }
+
+
     /**
      * @param QuestionRequest $questionRequest
      * @param $question_id
@@ -123,10 +154,6 @@ class TestController extends Controller
         return $data->save();
     }
 
-    public function test(){
-        $data = new FindPairDTO(13,1);
-    }
-
     public function open_question(OpenQuestionRequest $request, $lesson_id){
         $data = new OpenQuestionAnswerUser();
         $data->user_id = Auth::id();
@@ -156,4 +183,11 @@ class TestController extends Controller
         $data->audit = true;
         return response($data->save());
     }
+
+
+
+
+
+
+
 }

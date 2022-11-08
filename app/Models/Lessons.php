@@ -60,16 +60,19 @@ class Lessons extends Model
     }
 
     public function question(){
-        return $this->hasMany(Question::class,'lesson_id')->with('answer');
+        return $this->hasMany(Question::class,'lesson_id')->with('answer','user_answer');
     }
 
     public function find_to_pair(){
-        return $this->hasMany(Find_a_Pair::class, 'lesson_id')->with('data');
+        return $this->hasMany(Find_a_Pair::class, 'lesson_id')->with('data','answer');
     }
 
+    public function UserLesson(){
+        return $this->hasMany(UserLessons::class,'lesson_id','id');
+    }
 
     public function crossword(){
-
+        return $this->hasMany(Crossword::class,'lesson_id','id')->with('word','answerUser');
     }
 //    public function audio()
 //    {

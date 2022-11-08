@@ -12,4 +12,8 @@ class Find_a_Pair extends Model
     public function data(){
         return $this->hasMany(Find_a_Pair_Data::class,'find_a_pair','id');
     }
+
+    public function answer(){
+        return $this->hasMany(PairLessonsAnswer::class,'find_a_pair_id','id');
+    }
 }

@@ -9,6 +9,7 @@ use App\Orchid\Layouts\Crossword\CrosswordEditLayout;
 use App\Orchid\Layouts\Crossword\WordEditLayout;
 use App\Orchid\Layouts\Crossword\WordsTableLayout;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Orchid\Screen\Actions\Button;
 use Orchid\Support\Facades\Toast;
 use Orchid\Screen\Actions\ModalToggle;
@@ -90,10 +91,11 @@ class WordScreen extends Screen
     }
 
 
-    public function update(Word $words, Request $request): void
+    public function update(Word $words, Request $request) :Redirect
     {
         $data = Word::updateOrCreate(['id'=>$words->id],$request->get('words'));
         Toast::info('Оновлено елемент кросворду');
+        return redirect(route('crossword.edit',$words->crossword_id));
     }
 
     public function createWord(Crossword $crossword, Request $request){
@@ -101,15 +103,18 @@ class WordScreen extends Screen
         $crossword->word()->save($words);
         //$data = Word::created(['crossword_id'=>$crossword->id],$request->get('words'));
         Toast::info('Оновлено елемент кросворду');
+        return redirect(route('crossword.list'));
     }
 
     public function saveCrossword(Crossword $crossword, Request $request){
         $data = Crossword::updateOrCreate(['id'=>$crossword->id], $request->get('crossword'));
         Toast::success('Зміни збережено');
+        return redirect(route('crossword.edit',$crossword->id));
     }
 
     public function removeWord(Request $request){
         Word::destroy($request->query('id'));
         Toast::success('Успішно видалено');
+        return redirect(route('crossword.list'));
     }
 }
