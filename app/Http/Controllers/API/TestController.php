@@ -43,7 +43,7 @@ class TestController extends Controller
 //        $data = new TopicBuilderDTO(1);
 //        return $data->buildTopics(1);
 
-        $data = Topic::find(3);
+        $data = Topic::find(1);
         $data->lessons;
         $data = new ComponentTopicDTO(collect($data),1);
         return $data->getTopic();

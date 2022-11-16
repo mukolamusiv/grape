@@ -2,36 +2,49 @@
 
 namespace App\Http\Controllers\API;
 
+use App\DTO\BuildDTO\ComponetntDTO\ComponentTopicDTO;
+use App\DTO\BuildDTO\TopicBuilderDTO;
 use App\DTO\TopicDTO;
 use App\DTO\TopicsDTO;
 use App\Http\Controllers\Controller;
+use App\Models\Topic;
 use Illuminate\Support\Facades\Auth;
 
 class TopicController extends Controller
 {
     public function done(){
-        $data = new TopicsDTO(Auth::id());
-        return response($data->getDone());
+        $data = new TopicBuilderDTO(Auth::id());
+        return response($data->buildDone(Auth::id()));
+//        $data = new TopicsDTO(Auth::id());
+//        return response($data->getDone());
     }
 
     public function active(){
-        $data = new TopicsDTO(Auth::id());
-        return response($data->getActive());
+        $data = new TopicBuilderDTO(Auth::id());
+        return response($data->buildActive(Auth::id()));
+//        $data = new TopicsDTO(Auth::id());
+//        return response($data->getActive());
     }
 
     public function all(){
-        $data = new TopicsDTO(Auth::id());
-        return response($data->getTopics());
+        $data = new TopicBuilderDTO(Auth::id());
+        return response($data->buildTopics(Auth::id()));
+//        $data = new TopicsDTO(Auth::id());
+//        return response($data->getTopics());
     }
 
     public function user_done($user_id){
-        $data = new TopicsDTO($user_id);
-        return response($data->getDone());
+        $data = new TopicBuilderDTO($user_id);
+        return response($data->buildDone($user_id));
+//        $data = new TopicsDTO($user_id);
+//        return response($data->getDone());
     }
 
     public function user_active($user_id){
-        $data = new TopicsDTO($user_id);
-        return response($data->getActive());
+        $data = new TopicBuilderDTO($user_id);
+        return response($data->buildActive($user_id));
+//        $data = new TopicsDTO($user_id);
+//        return response($data->getActive());
     }
 
     /**
@@ -39,13 +52,19 @@ class TopicController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
     public function user_all($user_id){
-        $data = new TopicsDTO($user_id);
-        return response($data->getTopics());
+        $data = new TopicBuilderDTO($user_id);
+        return response($data->buildTopics($user_id));
+//        $data = new TopicsDTO($user_id);
+//        return response($data->getTopics());
     }
 
     public function getTopic($id){
-        $data = new TopicDTO($id,Auth::id());
+        $data = Topic::find(1);
+        $data->lessons;
+        $data = new ComponentTopicDTO(collect($data),1);
         return response($data->getTopic());
+//        $data = new TopicDTO($id,Auth::id());
+//        return response($data->getTopic());
     }
 
 }
