@@ -3,6 +3,7 @@
 
 namespace App\DTO\BuildDTO;
 
+use App\DTO\BuildDTO\ComponetntDTO\ComponentTopicDTO;
 use App\Models\Topic;
 use Illuminate\Support\Collection;
 
@@ -75,9 +76,14 @@ class TopicBuilderDTO
         foreach ($this->data as $topic)
         {
             if($topic->UserTopic->where('user_id','=',$user_id)->count() == 0){
-                $this->topics->push($topic);
+                $this->topics->push($this->buildTopic($topic));
             }
         }
         return $this->topics;
+    }
+
+    private function buildTopic($topic){
+        $data = new ComponentTopicDTO($topic,$this->user_id);
+        return $data->getTopic();
     }
 }
