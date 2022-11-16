@@ -95,7 +95,7 @@ class ComponentQuestionDTO
      */
     public function setAnswer($request): bool
     {
-        // TODO: Implement setAnswer() method.
+
     }
 
     /**

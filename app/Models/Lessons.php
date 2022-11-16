@@ -74,6 +74,10 @@ class Lessons extends Model
     public function crossword(){
         return $this->hasMany(Crossword::class,'lesson_id','id')->with('word','answerUser');
     }
+
+    public function OneWord(){
+        return $this->hasMany(OneWord::class,'lesson_id','id')->with('question','answerUser');
+    }
 //    public function audio()
 //    {
 //        return $this->hasOne(Attachment::class, 'id', 'record_audio')->withDefault();

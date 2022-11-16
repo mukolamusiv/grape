@@ -12,4 +12,8 @@ class OneWord extends Model
     public function question(){
         return $this->hasMany(OneWordQuestion::class,'one_word_id','id');
     }
+
+    public function answerUser(){
+        return $this->hasMany(OneWordAnswerUser::class,'one_word_id','id');
+    }
 }

@@ -4,7 +4,9 @@
 namespace App\DTO\BuildDTO;
 
 
+use App\DTO\BuildDTO\ComponentLessonDTO\ComponentCrosswordDTO;
 use App\DTO\BuildDTO\ComponentLessonDTO\ComponentFinPairDTO;
+use App\DTO\BuildDTO\ComponentLessonDTO\ComponentOneWordDTO;
 use App\DTO\BuildDTO\ComponetntDTO\ComponentQuestionDTO;
 use Illuminate\Support\Collection;
 
@@ -76,9 +78,17 @@ class LessonBuilderDTO
     public function build(Collection $lesson, int $user_id){
         //ініціалізація тестів
         $this->QuestionDTO = new QuestionsBuilderDTO($lesson,$user_id);
+        $this->question_completed = $this->QuestionDTO->completed;
         //ініціалізація знайди пару
         $this->FindPairDTO = new ComponentFinPairDTO($lesson,$user_id);
         $this->find_couple_completed = $this->FindPairDTO->getCompleted();
+        //ініціалізація кросворду
+        $this->CrosswordDTO = new ComponentCrosswordDTO($lesson,$user_id);
+        $this->crossword_completed = $this->CrosswordDTO->getCompleted();
+        //ініціалізація одне слово
+        $this->OneWordDTO = new ComponentOneWordDTO($lesson,$user_id);
+        $this->one_word_complited = $this->OneWordDTO->getCompleted();
+
     }
 
     public function buildLesson(){
@@ -102,9 +112,25 @@ class LessonBuilderDTO
     public function getLesson(){
         $lesson = collect();
         //$lesson->push($this->FindPairDTO->object());
-        $lesson->push($this->QuestionDTO->build());
-        //$lesson->push($this->FindPairDTO->object());
-        return $lesson;
+        //$lesson->push($this->QuestionDTO->build());
+        //$lesson->push($this->CrosswordDTO->find());
+        $lesson->push($this->OneWordDTO->object());
+        return $lesson; //$this->QuestionDTO->build();
     }
 
+
+    /**
+     * @return mixed
+     */
+    public function getQuestion(){
+        return $this->QuestionDTO->build();
+    }
+
+    public function getFindPair(){
+        return $this->FindPairDTO->build();
+    }
+
+    public function getCrossword(){
+        return $this->CrosswordDTO->find();
+    }
 }

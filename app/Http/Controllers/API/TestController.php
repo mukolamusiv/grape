@@ -55,8 +55,9 @@ class TestController extends Controller
         $lesson->UserLesson;
         $lesson->question;
         $lesson->find_to_pair;
-        //$lesson->crossword;
+        $lesson->crossword;
         $lesson->topic;
+        $lesson->oneWord;
         $data = new LessonBuilderDTO(collect($lesson),1);
         //$data = new ComponentFinPairDTO(collect($lesson),1);
         return $data->getLesson();

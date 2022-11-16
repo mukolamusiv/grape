@@ -39,14 +39,15 @@ class QuestionsBuilderDTO
         $this->lesson = $lesson;
         $this->user_id = $user_id;
         $this->find();
-        $this->buildData();
-        //$this->build($lesson,$user_id);
     }
 
     private function find(){
         if(!empty($this->lesson['question'])){
             $this->questions = $this->lesson['question'];
+            $this->buildData();
         }else{
+            $this->lesson_id = $this->lesson['id'];
+            $this->questionDTO = collect();
             $this->empty = true;
         }
     }
@@ -86,7 +87,6 @@ class QuestionsBuilderDTO
         $data->put('count_question',$this->count_question);
         $data->put('count_completed_question',$this->count_completed_question);
         $data->put('empty',$this->empty);
-
         $data->put('questionDTO',$this->questionDTO);
         return $data;
     }
