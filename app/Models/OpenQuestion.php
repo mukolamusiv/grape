@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class OpenQuestion extends Model
 {
     use HasFactory;
+
+    public function answerUser(){
+        return $this->hasMany(OpenQuestionAnswerUser::class, 'open_question_id','id');
+    }
 }

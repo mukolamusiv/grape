@@ -20,6 +20,7 @@ class ComponentCrosswordDTO implements \App\DTO\BuildDTO\ComponentInterfaceDTO
     public int $main_word_shift = 3;
     public bool $completed = false;
     public Collection $questions;
+    public bool $empty = true;
 
     private $questionDTO;
     private Collection $lesson;
@@ -38,20 +39,20 @@ class ComponentCrosswordDTO implements \App\DTO\BuildDTO\ComponentInterfaceDTO
     "main_word_shift": 3,
     "completed": false,
     "questions": [
-    {
-    "id": 1,
-    "question_text": "Тест 1",
-    "shift": 4,
-    "characters": 6,
-    "answer": ""
-    },
-    {
-    "id": 3,
-    "question_text": "asdasd",
-    "shift": 5,
-    "characters": 4,
-    "answer": ""
-    }
+        {
+        "id": 1,
+        "question_text": "Тест 1",
+        "shift": 4,
+        "characters": 6,
+        "answer": ""
+        },
+        {
+        "id": 3,
+        "question_text": "asdasd",
+        "shift": 5,
+        "characters": 4,
+        "answer": ""
+        }
     ],
     "empty": false,
     "user_id": 1
@@ -69,6 +70,7 @@ class ComponentCrosswordDTO implements \App\DTO\BuildDTO\ComponentInterfaceDTO
     public function object(): array
     {
         $word = $this->buildWords($this->crosswordDTO['word']);
+        $this->setCompleted();
         $data = array();
         $data['id'] = $this->crosswordDTO['id'];
         $data['lesson_id'] = $this->crosswordDTO['lesson_id'];
@@ -90,8 +92,10 @@ class ComponentCrosswordDTO implements \App\DTO\BuildDTO\ComponentInterfaceDTO
             $this->crosswordDTO = collect($this->lesson['crossword'][0]);
             $this->answerUserDTO = collect($this->lesson['crossword'][0]['answer_user']);
             //return $this->crosswordDTO;
+            $this->empty = false;
             return $this->object();
         }else{
+            $this->empty = true;
             return null;
         }
     }
@@ -103,6 +107,7 @@ class ComponentCrosswordDTO implements \App\DTO\BuildDTO\ComponentInterfaceDTO
     {
         $this->user_id = $user_id;
         $this->lesson = $lesson;
+        $this->find();
     }
 
     /**
@@ -141,6 +146,12 @@ class ComponentCrosswordDTO implements \App\DTO\BuildDTO\ComponentInterfaceDTO
     }
 
     private function setCompleted(){
+        $answer = $this->answerUserDTO->where('user_id','=',$this->user_id)->where('crossword_id','=',$this->crosswordDTO['id'])->where('reply','=',true);
+        if(count($answer) >= count($this->questions)){
+            $this->completed = true;
+        }else{
+            $this->completed = false;
+        }
     }
 
     private function buildWords($words){
@@ -157,6 +168,7 @@ class ComponentCrosswordDTO implements \App\DTO\BuildDTO\ComponentInterfaceDTO
             $datum->put('answer',$word['word']);
             $data->push($datum);
         }
+        $this->questions = $data;
         return $data;
     }
 }

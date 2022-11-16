@@ -7,7 +7,9 @@ namespace App\DTO\BuildDTO;
 use App\DTO\BuildDTO\ComponentLessonDTO\ComponentCrosswordDTO;
 use App\DTO\BuildDTO\ComponentLessonDTO\ComponentFinPairDTO;
 use App\DTO\BuildDTO\ComponentLessonDTO\ComponentOneWordDTO;
+use App\DTO\BuildDTO\ComponentLessonDTO\ComponentOpenQuestionDTO;
 use App\DTO\BuildDTO\ComponetntDTO\ComponentQuestionDTO;
+use App\Models\UserLessons;
 use Illuminate\Support\Collection;
 
 class LessonBuilderDTO
@@ -24,12 +26,12 @@ class LessonBuilderDTO
 
     public bool     $lesson_completed = false;
     public bool     $video_completed = false;
-    public bool     $question_completed = false;
-    public bool     $crossword_completed = false;
-    public bool     $coloring_page_completed = false;
-    public bool     $find_couple_completed = false;
-    public bool     $open_question_complited = false;
-    public bool     $one_word_complited = false;
+    public bool     $question_completed;// = false;
+    public bool     $crossword_completed;// = false;
+    public bool     $coloring_page_completed;// = false;
+    public bool     $find_couple_completed;// = false;
+    public bool     $open_question_complited;// = false;
+    public bool     $one_word_complited;// = false;
 
     /**
      *
@@ -64,8 +66,9 @@ class LessonBuilderDTO
     private object $OneWordDTO;
     private object $OpenQuestionDTO;
     private object $CrosswordDTO;
+    private Collection $lessonUser;
 
-    public Collection $lesson;
+    private Collection $lesson;
 
     public function __construct(Collection $lesson, int $user_id)
     {
@@ -76,19 +79,60 @@ class LessonBuilderDTO
     }
 
     public function build(Collection $lesson, int $user_id){
+        $data = array();
         //ініціалізація тестів
         $this->QuestionDTO = new QuestionsBuilderDTO($lesson,$user_id);
-        $this->question_completed = $this->QuestionDTO->completed;
+        if(!$this->QuestionDTO->empty){
+            $this->question_completed = $this->QuestionDTO->completed;
+            $data[] = $this->QuestionDTO->completed;
+        }
         //ініціалізація знайди пару
         $this->FindPairDTO = new ComponentFinPairDTO($lesson,$user_id);
-        $this->find_couple_completed = $this->FindPairDTO->getCompleted();
+        if(!$this->FindPairDTO->empty){
+            $this->find_couple_completed = $this->FindPairDTO->getCompleted();
+            $data[] = $this->FindPairDTO->getCompleted();
+        }
         //ініціалізація кросворду
         $this->CrosswordDTO = new ComponentCrosswordDTO($lesson,$user_id);
-        $this->crossword_completed = $this->CrosswordDTO->getCompleted();
+        if(!$this->CrosswordDTO->empty){
+            $this->crossword_completed = $this->CrosswordDTO->getCompleted();
+            $data[] = $this->CrosswordDTO->getCompleted();
+        }
         //ініціалізація одне слово
         $this->OneWordDTO = new ComponentOneWordDTO($lesson,$user_id);
-        $this->one_word_complited = $this->OneWordDTO->getCompleted();
+        if(!$this->OneWordDTO->empty){
+            $this->one_word_complited = $this->OneWordDTO->getCompleted();
+            $data[] = $this->OneWordDTO->getCompleted();
+        }
+        //ініціалізація відкритого питання
+        $this->OpenQuestionDTO = new ComponentOpenQuestionDTO($lesson,$user_id);
+        if(!$this->OpenQuestionDTO->empty){
+            $this->open_question_complited = $this->OpenQuestionDTO->getCompleted();
+            $data[] = $this->OpenQuestionDTO->getCompleted();
+        }
 
+
+        //відмітка пройденого  уроку
+        $data = collect($data);
+        if(count($data) === count($data->filter(function ($value){
+                if($value){
+                    return $value;
+                }
+            }))){
+            if($this->video_completed){
+                $this->lesson_completed = true;
+                //dd($this->lessonUser['id']);
+                $data = UserLessons::find($this->lessonUser['id']);
+                $data->complete = true;
+            }
+        }
+    }
+
+    public function setVideo(){
+        $this->video_completed = true;
+        $data = UserLessons::find($this->lessonUser->first()['id']);
+        $data->check_video = true;
+        return $data->save();
     }
 
     public function buildLesson(){
@@ -99,10 +143,28 @@ class LessonBuilderDTO
         }
         $this->topic_id = $this->lesson['topic_id'];
         $this->topic_title = $this->lesson['topic']['title'];
-    }
 
-    private function setQuestion(){
+        if(!empty($this->lesson['user_lesson'])){
+            $this->lessonUser = collect($this->lesson['user_lesson']);
+            $this->lessonUser = collect($this->lessonUser->where('user_id','=',$this->user_id)->first());
+            $this->video_completed = $this->lessonUser['check_video'];
+        }else{
+            $data = new UserLessons();
+            $data->user_id = $this->user_id;
+            $data->lesson_id = $this->lesson_id;
+            $data->topic_id = $this->topic_id;
+            $data->check_video = false;
+            $data->save();
+            $this->lessonUser = collect($data);
+        }
 
+        if(isset($this->lesson['attachment'])){
+            if(count($this->lesson['attachment']) != 0){
+                $this->video_url = $this->lesson['attachment'][0]['url'];
+            }else{
+                $this->video_completed = true;
+            }
+        }
     }
 
     public function setAnswerQuestion(){
@@ -114,8 +176,9 @@ class LessonBuilderDTO
         //$lesson->push($this->FindPairDTO->object());
         //$lesson->push($this->QuestionDTO->build());
         //$lesson->push($this->CrosswordDTO->find());
-        $lesson->push($this->OneWordDTO->object());
-        return $lesson; //$this->QuestionDTO->build();
+        //$lesson->push($this->OneWordDTO->object());
+        //$lesson->push($this->OpenQuestionDTO->object());
+        return array($this); //$this->QuestionDTO->build();
     }
 
 
@@ -132,5 +195,9 @@ class LessonBuilderDTO
 
     public function getCrossword(){
         return $this->CrosswordDTO->find();
+    }
+
+    public function getOneWord(){
+        return $this->OneWordDTO->object();
     }
 }

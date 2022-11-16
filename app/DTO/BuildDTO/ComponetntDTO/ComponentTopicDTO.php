@@ -7,6 +7,7 @@ namespace App\DTO\BuildDTO\ComponetntDTO;
 use App\DTO\BuildDTO\LessonBuilderDTO;
 use App\Models\Lessons;
 use Illuminate\Support\Collection;
+use function Symfony\Component\Translation\t;
 
 class ComponentTopicDTO
 {
@@ -70,10 +71,22 @@ class ComponentTopicDTO
             //$this->lessonsDTO = $data;
             $this->lessons->push($data->getLesson());
         }
+        $this->setStatus();
     }
 
     private function setStatus(){
-
+        $true = 0;
+        $lessons = $this->lessons;
+        foreach ($lessons as $lesson){
+            if($lesson[0]->lesson_completed){
+                $true++;
+            }
+        }
+        if($true != 0 and count($this->lessons)){
+            $this->status = $true*100/count($this->lessons);
+        }else{
+            unset($this->status);
+        }
     }
 
     private function buildTopic(){

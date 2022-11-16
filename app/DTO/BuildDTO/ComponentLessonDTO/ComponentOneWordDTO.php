@@ -19,7 +19,7 @@ class ComponentOneWordDTO implements \App\DTO\BuildDTO\ComponentInterfaceDTO
 
     private $lessonDTO;
     private $questionDTO;
-    private $userAnswerDTO;
+    private Collection $userAnswerDTO;
 
 
     /**
@@ -53,7 +53,8 @@ class ComponentOneWordDTO implements \App\DTO\BuildDTO\ComponentInterfaceDTO
         $data ['questions'] = $this->questions;
         $data ['empty'] = $this->empty;
         $data ['user_id'] = $this->user_id;
-        return $data;// TODO: Implement object() method.
+        //$data['answer_user'] = $this->userAnswerDTO;
+        return $data;
     }
 
     /**
@@ -63,8 +64,10 @@ class ComponentOneWordDTO implements \App\DTO\BuildDTO\ComponentInterfaceDTO
     {
         if(!empty($this->lessonDTO['one_word'])){
             $this->lesson_id = $this->lessonDTO['id'];
-            $this->setObject();
+            $this->userAnswerDTO = collect($this->lessonDTO['one_word'][0]['answer_user']);
+            //$this->setObject();
             $this->setQuestions($this->lessonDTO['one_word'][0]['question']);
+            $this->setCompleted();
         }else{
             $this->empty = true;
             return null;
@@ -95,6 +98,15 @@ class ComponentOneWordDTO implements \App\DTO\BuildDTO\ComponentInterfaceDTO
     public function getCompleted(): bool
     {
         return $this->completed;// TODO: Implement getCompleted() method.
+    }
+
+    private function setCompleted(){
+        $data = $this->userAnswerDTO->where('user_id','=',$this->user_id)->where('reply','=',true);
+        if(count($data) === count($this->questions)){
+            $this->completed = true;
+        }else{
+            $this->completed = false;
+        }
     }
 
     private function setQuestions($questions){

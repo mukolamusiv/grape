@@ -45,6 +45,7 @@ class QuestionsBuilderDTO
         if(!empty($this->lesson['question'])){
             $this->questions = $this->lesson['question'];
             $this->buildData();
+            $this->setCompleted();
         }else{
             $this->lesson_id = $this->lesson['id'];
             $this->questionDTO = collect();
@@ -76,6 +77,8 @@ class QuestionsBuilderDTO
     private function setCompleted(){
         if($this->count_completed_question === $this->count_question){
             $this->completed = true;
+        }else{
+            $this->completed = false;
         }
         return $this->completed;
     }

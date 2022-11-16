@@ -78,6 +78,10 @@ class Lessons extends Model
     public function OneWord(){
         return $this->hasMany(OneWord::class,'lesson_id','id')->with('question','answerUser');
     }
+
+    public function openQustion(){
+        return $this->hasMany(OpenQuestion::class,'lesson_id','id')->with('answerUser');
+    }
 //    public function audio()
 //    {
 //        return $this->hasOne(Attachment::class, 'id', 'record_audio')->withDefault();

@@ -15,6 +15,7 @@ class ComponentQuestionDTO
     public string $description;
     public array $answer;
     public int $lesson_id;
+    public bool $completed = false;
 
     private $questions;
     private int $user_id;
@@ -106,8 +107,10 @@ class ComponentQuestionDTO
         $data = $this->user_answer;
         $data = $data->where('user_id','=',$this->user_id)->where('reply','=',true);
         if($data->isNotEmpty()){
+            $this->completed = true;
             return true;
         }else{
+            $this->completed = false;
             return false;
         }
     }

@@ -43,14 +43,14 @@ class TestController extends Controller
 //        $data = new TopicBuilderDTO(1);
 //        return $data->buildTopics(1);
 
-//        $data = Topic::find(1);
-//        $data->lessons;
-//        $data = new ComponentTopicDTO(collect($data),1);
+        $data = Topic::find(3);
+        $data->lessons;
+        $data = new ComponentTopicDTO(collect($data),1);
+        return $data->getTopic();
 
 
 
-
-        $lesson = Lessons::find(13);
+       /* $lesson = Lessons::find(12);
         //'UserLesson','question', 'find_to_pair','crossword','topic'
         $lesson->UserLesson;
         $lesson->question;
@@ -58,9 +58,11 @@ class TestController extends Controller
         $lesson->crossword;
         $lesson->topic;
         $lesson->oneWord;
+        $lesson->openQustion;
+        $lesson->attachment;
         $data = new LessonBuilderDTO(collect($lesson),1);
         //$data = new ComponentFinPairDTO(collect($lesson),1);
-        return $data->getLesson();
+        return $data->getLesson();*/
     }
 
 

@@ -43,7 +43,7 @@ class ComponentFinPairDTO implements \App\DTO\BuildDTO\ComponentInterfaceDTO
 
     public array $data;
 
-    public bool $empty = false;
+    public bool $empty = true;
 
     public int $user_id;
 
@@ -81,8 +81,10 @@ class ComponentFinPairDTO implements \App\DTO\BuildDTO\ComponentInterfaceDTO
         if(!empty($this->lesson['find_to_pair'])){
             $this->pairDTO = $this->lesson['find_to_pair'][0];
             $this->answer  = collect($this->pairDTO['answer']);
+            $this->empty = false;
+            $this->build();
         }else{
-            $this->data  = null;
+            $this->data  = array();
             $this->empty = true;
         }
     }
@@ -95,7 +97,6 @@ class ComponentFinPairDTO implements \App\DTO\BuildDTO\ComponentInterfaceDTO
         $this->lesson  = $lesson;
         $this->user_id = $user_id;
         $this->find();
-        $this->build();
     }
 
     /**
