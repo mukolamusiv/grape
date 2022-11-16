@@ -83,7 +83,7 @@ class TopicBuilderDTO
     }
 
     private function buildTopic($topic){
-        $data = new ComponentTopicDTO($topic,$this->user_id);
+        $data = new ComponentTopicDTO(collect($topic),$this->user_id);
         return $data->getTopic();
     }
 }
