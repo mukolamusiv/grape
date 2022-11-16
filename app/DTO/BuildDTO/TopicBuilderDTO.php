@@ -44,7 +44,7 @@ class TopicBuilderDTO
         foreach ($this->data as $topic)
         {
             if($topic->UserTopic->where('user_id','=',$user_id)->count() > 0){
-                $this->active->push($topic);
+                $this->active->push($this->buildTopic($topic));
             }
         }
         return $this->active;
@@ -60,7 +60,7 @@ class TopicBuilderDTO
         foreach ($this->data as $topic)
         {
             if($topic->UserTopic->where('user_id','=',$user_id)->where('complete','=',true)->count() > 0){
-                $this->done->push($topic);
+                $this->done->push($this->buildTopic($topic));
             }
         }
         return $this->done;
