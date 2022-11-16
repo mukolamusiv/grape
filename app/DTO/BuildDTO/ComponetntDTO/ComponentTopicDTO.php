@@ -91,6 +91,7 @@ class ComponentTopicDTO
 
     private function buildTopic(){
         $this->topic_id = $this->topic['id'];
+        $this->id = $this->topic_id;
         $this->title = $this->topic['title'];
         $this->description = $this->topic['description'];
         $this->photo = $this->topic['photo'];
