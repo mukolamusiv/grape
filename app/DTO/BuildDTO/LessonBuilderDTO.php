@@ -75,6 +75,7 @@ class LessonBuilderDTO
         $this->lesson = $lesson;
         $this->user_id = $user_id;
         $this->buildLesson();
+        $this->setCompleted();
         $this->build($lesson,$user_id);
     }
 
@@ -124,6 +125,7 @@ class LessonBuilderDTO
                 //dd($this->lessonUser['id']);
                 $data = UserLessons::find($this->lessonUser['id']);
                 $data->complete = true;
+                $data->save();
             }
         }
     }
@@ -173,12 +175,17 @@ class LessonBuilderDTO
 
     public function getLesson(){
         $lesson = collect();
+        //$lesson->push($this->lessonUser);
         //$lesson->push($this->FindPairDTO->object());
         //$lesson->push($this->QuestionDTO->build());
         //$lesson->push($this->CrosswordDTO->find());
         //$lesson->push($this->OneWordDTO->object());
         //$lesson->push($this->OpenQuestionDTO->object());
         return array($this); //$this->QuestionDTO->build();
+    }
+
+    private function setCompleted(){
+        $this->lesson_completed = $this->lessonUser['complete'];
     }
 
 
