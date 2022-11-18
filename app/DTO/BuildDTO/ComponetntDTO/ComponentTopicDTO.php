@@ -82,8 +82,12 @@ class ComponentTopicDTO
                 $true++;
             }
         }
-        if($true != 0 and count($this->lessons)){
+
+        if($true != 0){
             $this->status = $true*100/count($this->lessons);
+            if($this->status === 100){
+
+            }
         }else{
             unset($this->status);
         }
