@@ -89,7 +89,7 @@ class ComponentTopicDTO
 
             }
         }else{
-            unset($this->status);
+            //unset($this->status);
         }
     }
 
