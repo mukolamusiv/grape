@@ -59,7 +59,7 @@ class TopicBuilderDTO
         $this->done = collect();
         foreach ($this->data as $topic)
         {
-            if($topic->UserTopic->where('user_id','=',$user_id)->where('complete','=',true)->count() > 0){
+            if($topic->UserTopic->where('user_id','=',$user_id)->where('complete','=',true)->where('status','!=',100)->count() > 0){
                 $this->done->push($this->buildTopic($topic));
             }
         }
