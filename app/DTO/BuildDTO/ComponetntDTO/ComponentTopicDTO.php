@@ -76,7 +76,7 @@ class ComponentTopicDTO
 
     private function setStatus(){
         if($this->topic['user_topic']){
-            
+            exit('demo');
         }
 
         $true = 0;
