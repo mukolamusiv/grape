@@ -76,24 +76,24 @@ class ComponentTopicDTO
 
     private function setStatus(){
         if($this->topic['user_topic']){
-            exit('demo');
-        }
-
-        $true = 0;
-        $lessons = $this->lessons;
-        foreach ($lessons as $lesson){
-            if($lesson[0]->lesson_completed){
-                $true++;
+            $true = 0;
+            $lessons = $this->lessons;
+            foreach ($lessons as $lesson){
+                if($lesson[0]->lesson_completed){
+                    $true++;
+                }
             }
-        }
-        $this->status = $true;
-        if($true != 0){
-            $this->status = $true*100/count($this->lessons);
-            if($this->status === 100){
-                $this->setDone();
+            $this->status = $true;
+            if($true != 0){
+                $this->status = $true*100/count($this->lessons);
+                if($this->status === 100){
+                    $this->setDone();
+                }
+            }else{
+                //unset($this->status);
             }
         }else{
-            //unset($this->status);
+            $this->status = 0;
         }
     }
 
