@@ -75,6 +75,10 @@ class ComponentTopicDTO
     }
 
     private function setStatus(){
+        if($this->topic['user_topic']){
+            
+        }
+
         $true = 0;
         $lessons = $this->lessons;
         foreach ($lessons as $lesson){
@@ -108,7 +112,7 @@ class ComponentTopicDTO
         $topic->put('description',$this->description);
         $topic->put('photo',$this->photo);
         $topic->put('user_id',$this->user_id);
-        if(isset($this->status) and $this->status>0){
+        if(isset($this->status) and $this->status > 0){
             $topic->put('status',$this->status);
         }
         $topic->put('lessons',$this->lessons);

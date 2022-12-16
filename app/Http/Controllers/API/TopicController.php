@@ -59,9 +59,10 @@ class TopicController extends Controller
     }
 
     public function getTopic($id){
-        $data = Topic::find(1);
+        $data = Topic::find($id);
         $data->lessons;
-        $data = new ComponentTopicDTO(collect($data),1);
+        $data->UserTopic;
+        $data = new ComponentTopicDTO(collect($data),Auth::id());
         return response($data->getTopic());
 //        $data = new TopicDTO($id,Auth::id());
 //        return response($data->getTopic());
