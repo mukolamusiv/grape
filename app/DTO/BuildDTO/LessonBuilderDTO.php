@@ -75,7 +75,6 @@ class LessonBuilderDTO
         $this->lesson = $lesson;
         $this->user_id = $user_id;
         $this->buildLesson();
-        $this->setCompleted();
         $this->build($lesson,$user_id);
     }
 
@@ -150,6 +149,7 @@ class LessonBuilderDTO
             $this->lessonUser = collect($this->lesson['user_lesson']);
             $this->lessonUser = collect($this->lessonUser->where('user_id','=',$this->user_id)->first());
             $this->video_completed = $this->lessonUser['check_video'];
+            $this->setCompleted();
         }else{
             $data = new UserLessons();
             $data->user_id = $this->user_id;

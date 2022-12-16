@@ -86,7 +86,7 @@ class ComponentTopicDTO
         if($true != 0){
             $this->status = $true*100/count($this->lessons);
             if($this->status === 100){
-
+                $this->setDone();
             }
         }else{
             //unset($this->status);
@@ -108,11 +108,16 @@ class ComponentTopicDTO
         $topic->put('description',$this->description);
         $topic->put('photo',$this->photo);
         $topic->put('user_id',$this->user_id);
-        if(isset($this->status)){
+        if(isset($this->status) and $this->status>0){
             $topic->put('status',$this->status);
         }
         $topic->put('lessons',$this->lessons);
         return $topic;
+    }
+
+
+    private function setDone(){
+
     }
 
 }
