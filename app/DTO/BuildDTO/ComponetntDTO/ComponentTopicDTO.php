@@ -133,7 +133,9 @@ class ComponentTopicDTO
 
 
     private function setDone(){
-
+        $status = UserTopic::find($this->topic['user_topic'][0]['id']);
+        $status->complete = true;
+        $status->save();
     }
 
 }
