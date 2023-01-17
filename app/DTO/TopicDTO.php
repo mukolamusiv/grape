@@ -68,6 +68,7 @@ class TopicDTO
         if($true != 0 and count($this->lessons_DTO)){
             $this->status = $true*100/count($this->lessons_DTO);
         }
+
     }
 
     public function getTopic(){

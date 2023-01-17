@@ -6,6 +6,7 @@ namespace App\DTO\BuildDTO\ComponetntDTO;
 
 use App\DTO\BuildDTO\LessonBuilderDTO;
 use App\Models\Lessons;
+use App\Models\UserTopic;
 use Illuminate\Support\Collection;
 use function Symfony\Component\Translation\t;
 
@@ -88,9 +89,14 @@ class ComponentTopicDTO
                 $this->status = $true*100/count($this->lessons);
                 if($this->status === 100){
                     $this->setDone();
+                }else{
+                    $status = UserTopic::find($this->topic['user_topic'][0]['id']);
+                    $status->complete = false;
+                    $status->save();
+                    dd($status);
                 }
             }else{
-                //unset($this->status);
+
             }
         }else{
             $this->status = 0;
