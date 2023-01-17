@@ -28,7 +28,7 @@ class LessonBuilderDTO
     public bool     $video_completed = false;
     public bool     $question_completed;// = false;
     public bool     $crossword_completed;// = false;
-    public bool     $coloring_page_completed;// = false;
+    public bool     $coloring_page_completed = true;// = false;
     public bool     $find_couple_completed;// = false;
     public bool     $open_question_complited;// = false;
     public bool     $one_word_complited;// = false;
