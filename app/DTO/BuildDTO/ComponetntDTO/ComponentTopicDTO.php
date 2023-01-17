@@ -100,6 +100,9 @@ class ComponentTopicDTO
                 $status->complete = false;
                 $status->save();
             }
+            if(count($lessons) == 0){
+                $this->status = 0;
+            }
         }else{
             $this->status = 0;
         }
