@@ -89,16 +89,16 @@ class ComponentTopicDTO
                 $this->status = $true*100/count($this->lessons);
                 if($this->status === 100){
                     $this->setDone();
-                }else{
+                }elseif($this->status != 100){
                     $status = UserTopic::find($this->topic['user_topic'][0]['id']);
                     $status->complete = false;
                     $status->save();
                     //dd($status);
                 }
             }else{
-                $status = UserTopic::find($this->topic['user_topic'][0]['id']);
-                $status->complete = false;
-                $status->save();
+//                $status = UserTopic::find($this->topic['user_topic'][0]['id']);
+//                $status->complete = false;
+//                $status->save();
             }
         }else{
             $this->status = 0;
