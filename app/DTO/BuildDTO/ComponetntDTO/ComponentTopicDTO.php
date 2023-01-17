@@ -93,10 +93,12 @@ class ComponentTopicDTO
                     $status = UserTopic::find($this->topic['user_topic'][0]['id']);
                     $status->complete = false;
                     $status->save();
-                    dd($status);
+                    //dd($status);
                 }
             }else{
-
+                $status = UserTopic::find($this->topic['user_topic'][0]['id']);
+                $status->complete = false;
+                $status->save();
             }
         }else{
             $this->status = 0;
