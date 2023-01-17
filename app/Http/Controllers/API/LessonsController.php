@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\API;
 
+use App\DTO\BuildDTO\ComponetntDTO\ComponentTopicDTO;
+use App\DTO\BuildDTO\TopicBuilderDTO;
 use App\DTO\TopicDTO;
 use App\DTO\TopicsDTO;
 use App\Http\Controllers\Controller;
@@ -332,12 +334,20 @@ class LessonsController extends Controller
     }
 
     public function topic($id){
-        $data = new TopicDTO($id, Auth::id());
-        $data = $data->getTopic();
-        $lessons = $data['lessons_DTO'];
-        $data['lessons'] = $lessons;
-        unset($data['lessons_DTO']);
-        return response($data);
+        $data = Topic::find($id);
+        $data->lessons;
+        $data->UserTopic;
+        $data = new ComponentTopicDTO(collect($data),Auth::id());
+        return $data->getTopic();
+
+
+
+//        $data = new TopicDTO($id, Auth::id());
+//        $data = $data->getTopic();
+//        $lessons = $data['lessons_DTO'];
+//        $data['lessons'] = $lessons;
+//        unset($data['lessons_DTO']);
+//        return response($data);
 //        $request = collect(UserTopic::with('topic')->where(['topic_id'=>$id,'user_id'=> Auth::id()])->get());
 //        if($request->isNotEmpty()){
 //            //$data = collect(UserTopic::with('topic')->find($request->first()->id));

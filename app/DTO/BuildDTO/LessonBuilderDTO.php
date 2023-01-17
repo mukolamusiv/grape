@@ -72,7 +72,6 @@ class LessonBuilderDTO
 
     public function __construct(Collection $lesson, int $user_id)
     {
-        $this->coloring_page_completed = true;
         $this->lesson = $lesson;
         $this->user_id = $user_id;
         $this->buildLesson();
