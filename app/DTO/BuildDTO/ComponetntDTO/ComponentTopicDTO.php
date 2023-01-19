@@ -72,6 +72,7 @@ class ComponentTopicDTO
             //$this->lessonsDTO = $data;
             $this->lessons->push($data->getLesson());
         }
+        //dd($this->lessonsDTO,$this->lessons);
         $this->setStatus();
     }
 
@@ -126,7 +127,7 @@ class ComponentTopicDTO
         if(isset($this->status) and $this->status > 0){
             $topic->put('status',$this->status);
         }
-        $topic->put('lessons',$this->lessons);
+        $topic->put('lessons',$this->lessonsDTO);
         $this->setStatus();
         return $topic;
     }
