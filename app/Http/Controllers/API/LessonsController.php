@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\API;
 
-use App\DTO\BuildDTO\ComponetntDTO\ComponentTopicDTO;
-use App\DTO\BuildDTO\TopicBuilderDTO;
 use App\DTO\TopicDTO;
 use App\DTO\TopicsDTO;
 use App\Http\Controllers\Controller;
@@ -334,20 +332,31 @@ class LessonsController extends Controller
     }
 
     public function topic($id){
-        $data = Topic::find($id);
-        $data->lessons;
-        $data->UserTopic;
-        $data = new ComponentTopicDTO(collect($data),Auth::id());
-        return $data->getTopic();
+        $data = new TopicDTO($id, Auth::id());
+        $data = $data->getTopic();
+        $lessons = $data['lessons_DTO'];
+        $data['lessons'] = $lessons;
+        unset($data['lessons_DTO']);
+        return response($data);
 
-
-
-//        $data = new TopicDTO($id, Auth::id());
-//        $data = $data->getTopic();
-//        $lessons = $data['lessons_DTO'];
-//        $data['lessons'] = $lessons;
-//        unset($data['lessons_DTO']);
-//        return response($data);
+//        {
+//      "id": 7,
+//      "lesson_id": 7,
+//      "title": "Головний тестовий урок",
+//      "description": "Опис уроку",
+//      "topic_id": 1,
+//      "topic_title": "Готуємося до сповіді",
+//      "lesson_completed": true,
+//      "video_url": "https://grape.chasoslov.info/storage/2022/09/12/0340ca0cc6c58b23410bbe4f96a1274143dfa30b.mp4",
+//      "video_completed": true,
+//      "question_completed": true,
+//      "crossword_completed": true,
+//      "coloring_page_completed": false,
+//      "find_couple_completed": true,
+//      "open_question_complited": true,
+//      "one_word_complited": true,
+//      "user_id": 1
+//    }
 //        $request = collect(UserTopic::with('topic')->where(['topic_id'=>$id,'user_id'=> Auth::id()])->get());
 //        if($request->isNotEmpty()){
 //            //$data = collect(UserTopic::with('topic')->find($request->first()->id));
