@@ -16,6 +16,7 @@ class LessonBuilderDTO
 {
     public int      $user_id;
 
+    public bool     $completed;
     public int      $id;
     public int      $lesson_id;
     public string   $title;
@@ -186,6 +187,7 @@ class LessonBuilderDTO
 
     private function setCompleted(){
         $this->lesson_completed = $this->lessonUser['complete'];
+        $this->completed = $this->lessonUser['complete'];
     }
 
 
