@@ -13,6 +13,7 @@ use function Symfony\Component\Translation\t;
 class ComponentTopicDTO
 {
 
+    private bool $start;
     /**
      * Те що потрібно повернути
      */
@@ -78,6 +79,7 @@ class ComponentTopicDTO
 
     private function setStatus(){
         if($this->topic['user_topic']){
+            $this->start = true;
             $true = 0;
             $lessons = $this->lessons;
             foreach ($lessons as $lesson){
@@ -105,6 +107,7 @@ class ComponentTopicDTO
                 $this->status = 0;
             }
         }else{
+            $this->start = false;
             $this->status = 0;
         }
     }
@@ -125,6 +128,8 @@ class ComponentTopicDTO
         $topic->put('photo',$this->photo);
         $topic->put('user_id',$this->user_id);
         if(isset($this->status) and $this->status > 0){
+            $topic->put('status',$this->status);
+        }else if($this->start) {
             $topic->put('status',$this->status);
         }
         $topic->put('lessons',$this->lessonsDTO);
