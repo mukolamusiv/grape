@@ -105,7 +105,7 @@ class ComponentTopicDTO
                 $this->status = 0;
             }
         }else{
-            $this->status = 10;
+            $this->status = 0;
         }
     }
 
