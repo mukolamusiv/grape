@@ -58,6 +58,22 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('table')
                 ->route('crossword.list'),
 
+            Menu::make('Знайди пару')
+                ->icon('table')
+                ->route('crossword.list'),
+
+            Menu::make('Одне слово')
+                ->icon('table')
+                ->route('crossword.list'),
+
+            Menu::make('Відкрите питання')
+                ->icon('table')
+                ->route('crossword.list'),
+
+            Menu::make('Розмальовка')
+                ->icon('table')
+                ->route('crossword.list'),
+
 //            Menu::make('Dropdown menu')
 //                ->icon('code')
 //                ->list([
