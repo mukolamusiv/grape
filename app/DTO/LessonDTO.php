@@ -136,7 +136,7 @@ class LessonDTO
 
     private function setVideo(){
         if(count($this->lesson->attachment) != 0){
-            //dd($this->lesson->attachment);
+            dd($this->lesson->attachment->first()->url);
             $this->video_url = $this->lesson->attachment->first()->url;
             $this->video_completed  = $this->active_lesson->check_video;
         }else{
