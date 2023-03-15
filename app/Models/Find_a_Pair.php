@@ -9,6 +9,11 @@ class Find_a_Pair extends Model
 {
     use HasFactory;
 
+
+    public function lesson(){
+        return $this->hasOne(Lessons::class,'id','lesson_id');
+    }
+
     public function data(){
         return $this->hasMany(Find_a_Pair_Data::class,'find_a_pair','id');
     }

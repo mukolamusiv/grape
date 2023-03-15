@@ -2,7 +2,13 @@
 
 namespace App\Orchid\Screens\FindPair;
 
+use App\Models\Find_a_Pair;
+use App\Orchid\Layouts\FindPair\FindPairEditLayouts;
+use App\Orchid\Layouts\Topic\TopicEditLayout;
+use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Screen;
+use Orchid\Support\Color;
+use Orchid\Support\Facades\Layout;
 
 class FindPairEdit extends Screen
 {
@@ -11,9 +17,11 @@ class FindPairEdit extends Screen
      *
      * @return array
      */
-    public function query(): iterable
+    public function query(Find_a_Pair $find_a_Pair): iterable
     {
-        return [];
+        return [
+            'find_a_pair'=>$find_a_Pair
+        ];
     }
 
     /**
@@ -23,7 +31,7 @@ class FindPairEdit extends Screen
      */
     public function name(): ?string
     {
-        return 'FindPairEdit';
+        return 'Редагування/створення нового завдання знайди пару';
     }
 
     /**
@@ -43,6 +51,17 @@ class FindPairEdit extends Screen
      */
     public function layout(): iterable
     {
-        return [];
+        return [
+            Layout::block(FindPairEditLayouts::class)
+                ->title(__('Інформація про завдання знайди пару'))
+                ->description(__('Тут можна редагувати завдання'))
+                ->commands(
+                    Button::make(__('Зберегти'))
+                        ->type(Color::DEFAULT())
+                        ->icon('check')
+                        //->canSee($this->user->exists)
+                        ->method('save')
+                ),
+        ];
     }
 }

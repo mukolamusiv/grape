@@ -143,6 +143,15 @@ Route::screen('/topic/{id}/edit', \App\Orchid\Screens\Topic\TopicEditScreen::cla
 Route::screen('/topic/{id}', \App\Orchid\Screens\Topic\TopicShowScreen::class)->name('topic.show');
 
 
+
+Route::screen('/fin-pair', \App\Orchid\Screens\FindPair\FindPairList::class)->name('find-pair.list');
+Route::screen('/fin-pair/create', \App\Orchid\Screens\FindPair\FindPairEdit::class)->name('find-pair.create');
+Route::screen('/fin-pair/{id}', \App\Orchid\Screens\FindPair\FindPairEdit::class)->name('find-pair.edit');
+Route::screen('/fin-pair/{id}', \App\Orchid\Screens\FindPair\FindPairShow::class)->name('find-pair.show');
+
+
+
+
 Route::screen('example-fields', ExampleFieldsScreen::class)->name('platform.example.fields');
 Route::screen('example-layouts', ExampleLayoutsScreen::class)->name('platform.example.layouts');
 Route::screen('example-charts', ExampleChartsScreen::class)->name('platform.example.charts');

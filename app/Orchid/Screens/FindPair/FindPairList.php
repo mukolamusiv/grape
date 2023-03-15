@@ -2,6 +2,11 @@
 
 namespace App\Orchid\Screens\FindPair;
 
+use App\Models\Find_a_Pair;
+use App\Orchid\Layouts\FindPair\AllFindPairTable;
+use Orchid\Screen\Actions\Button;
+use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Screen;
 
 class FindPairList extends Screen
@@ -13,7 +18,9 @@ class FindPairList extends Screen
      */
     public function query(): iterable
     {
-        return [];
+        return [
+            'find_a_pair' => Find_a_Pair::all()
+        ];
     }
 
     /**
@@ -23,7 +30,7 @@ class FindPairList extends Screen
      */
     public function name(): ?string
     {
-        return 'FindPairList';
+        return 'Завдання "Знайди пару"';
     }
 
     /**
@@ -33,7 +40,11 @@ class FindPairList extends Screen
      */
     public function commandBar(): iterable
     {
-        return [];
+        return [
+            Link::make('Додати нове завдання')
+                ->icon('pencil')
+                ->route('find-pair.create')
+        ];
     }
 
     /**
@@ -43,6 +54,8 @@ class FindPairList extends Screen
      */
     public function layout(): iterable
     {
-        return [];
+        return [
+            AllFindPairTable::class,
+        ];
     }
 }
