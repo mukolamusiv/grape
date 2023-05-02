@@ -148,7 +148,7 @@ class LessonBuilderDTO
 
         if(!empty($this->lesson['user_lesson'])){
             $this->lessonUser = collect($this->lesson['user_lesson']);
-            $this->lessonUser = collect($this->lessonUser->where('user_id','=',$this->user_id)->first());
+            //$this->lessonUser = collect($this->lessonUser->where('user_id','=',$this->user_id)->first());
             if(isset($this->lessonUser['check_video'])){
                 $this->video_completed = $this->lessonUser['check_video'];
             }
