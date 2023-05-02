@@ -152,7 +152,7 @@ class LessonBuilderDTO
             if(isset($this->lessonUser['check_video'])){
                 $this->video_completed = $this->lessonUser['check_video'];
             }
-            dd($this->lesson['user_lesson']);
+            dd($this->lessonUser);
             $this->setCompleted();
         }else{
             $data = new UserLessons();
