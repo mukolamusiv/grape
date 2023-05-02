@@ -188,6 +188,7 @@ class LessonBuilderDTO
     }
 
     private function setCompleted(){
+        dd($this->lessonUser);
         $this->lesson_completed = $this->lessonUser['complete'];
         $this->completed = $this->lessonUser['complete'];
     }
