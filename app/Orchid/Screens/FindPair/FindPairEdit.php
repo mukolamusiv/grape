@@ -121,8 +121,8 @@ class FindPairEdit extends Screen
     public function createPair(Find_a_Pair $find_a_Pair, Request $request){
         //$data = new Find_a_Pair_Data($request->get('dataPair'));
         $ddd = $request->get('data_first');
-        //$ddd = $ddd['file'];
-        $p = Attachment::find(64);
+        $ddd = $ddd['file'];
+        $p = Attachment::find($ddd[0]);
         echo 'http://grapes/'.$p->path.$p->name.'.'.$p->extension;
         exit();
 
