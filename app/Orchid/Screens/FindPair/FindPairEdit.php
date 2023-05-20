@@ -123,10 +123,10 @@ class FindPairEdit extends Screen
         $ddd = $request->get('data_first');
         $ddd = $ddd['file'];
         $p = Attachment::find($ddd[0]);
-        echo 'http://grapes/'.$p->path.$p->name.'.'.$p->extension;
-        exit();
+        $dd = 'http://grapes/'.$p->path.$p->name.'.'.$p->extension;
+        //exit();
 
-        dd($request,$ddd,$p);
+        dd($request,$ddd,$p,$dd);
         //$find_a_Pair->data()->save($data);
         //$data = Word::created(['crossword_id'=>$crossword->id],$request->get('words'));
         Toast::info('Оновлено пару');
