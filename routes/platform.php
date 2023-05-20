@@ -147,7 +147,7 @@ Route::screen('/topic/{id}', \App\Orchid\Screens\Topic\TopicShowScreen::class)->
 Route::screen('/fin-pair', \App\Orchid\Screens\FindPair\FindPairList::class)->name('find-pair.list');
 Route::screen('/fin-pair/create', \App\Orchid\Screens\FindPair\FindPairEdit::class)->name('find-pair.create');
 Route::screen('/fin-pair/{id}', \App\Orchid\Screens\FindPair\FindPairEdit::class)->name('find-pair.edit');
-Route::screen('/fin-pair/{id}', \App\Orchid\Screens\FindPair\FindPairShow::class)->name('find-pair.show');
+Route::screen('/fin-pair/{id}', \App\Orchid\Screens\FindPair\FindPairEdit::class)->name('find-pair.show');
 
 
 
