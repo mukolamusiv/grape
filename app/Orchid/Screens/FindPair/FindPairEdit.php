@@ -120,13 +120,38 @@ class FindPairEdit extends Screen
 
     public function createPair(Find_a_Pair $find_a_Pair, Request $request){
         //$data = new Find_a_Pair_Data($request->get('dataPair'));
-        $ddd = $request->get('data_first');
-        $ddd = $ddd['file'];
-        $p = Attachment::find($ddd[0]);
-        $dd = 'http://grapes/'.$p->path.$p->name.'.'.$p->extension;
+        $first_request = $request->get('data_first');
+        $file1 = Attachment::find($first_request['file'][0]);
+        $second_request = $request->get('data_second');
+        $file2 = Attachment::find($second_request['file'][0]);
+        //$dd = 'http://grapes/'.$p->path.$p->name.'.'.$p->extension;
+
+        $data = Find_a_Pair_Data::all()->last();
+
+        $first = new Find_a_Pair_Data([
+            'title'=>$first_request['title'],
+            'description'=>$first_request['description'],
+            'text'=>$first_request['text'],
+            'image'=>null,//$file1,
+            'pair_id'=>$find_a_Pair->id,
+            'find_a_pair'=>$data->id+1,
+        ]);
+        $first->save();
+
+        $second = new Find_a_Pair_Data([
+            'title'=>$first_request['title'],
+            'description'=>$first_request['description'],
+            'text'=>$first_request['text'],
+            'image'=>null,//$file2,
+            'pair_id'=>$find_a_Pair->id,
+            'find_a_pair'=>$data->id+2,
+        ]);
+        $second->save();
+        //$p = Attachment::find($ddd[0]);
+
         //exit();
 
-        dd($request,$ddd,$p,$dd);
+        //dd($find_a_Pair,$request,$ddd,$p,$dd);
         //$find_a_Pair->data()->save($data);
         //$data = Word::created(['crossword_id'=>$crossword->id],$request->get('words'));
         Toast::info('Оновлено пару');
