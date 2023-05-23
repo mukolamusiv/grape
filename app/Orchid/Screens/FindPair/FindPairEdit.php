@@ -132,9 +132,9 @@ class FindPairEdit extends Screen
             'title'=>$first_request['title'],
             'description'=>$first_request['description'],
             'text'=>$first_request['text'],
-            'image'=>null,//$file1,
-            'pair_id'=>$find_a_Pair->id,
-            'find_a_pair'=>$data->id+1,
+            'image'=>'asd',//$file1,
+            //'pair_id'=>$data->id+1,
+            'find_a_pair'=>$find_a_Pair->id,
         ]);
         $first->save();
 
@@ -142,9 +142,9 @@ class FindPairEdit extends Screen
             'title'=>$first_request['title'],
             'description'=>$first_request['description'],
             'text'=>$first_request['text'],
-            'image'=>null,//$file2,
-            'pair_id'=>$find_a_Pair->id,
-            'find_a_pair'=>$data->id+2,
+            'image'=>'asdasd',//$file2,
+            //'pair_id'=>$data->id+2,
+            'find_a_pair'=>$find_a_Pair->id,
         ]);
         $second->save();
         //$p = Attachment::find($ddd[0]);
