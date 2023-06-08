@@ -124,15 +124,17 @@ class FindPairEdit extends Screen
         $file1 = Attachment::find($first_request['file'][0]);
         $second_request = $request->get('data_second');
         $file2 = Attachment::find($second_request['file'][0]);
-        //$dd = 'http://grapes/'.$p->path.$p->name.'.'.$p->extension;
+        $dd1 = 'http://grapes/'.$file1->path.$file1->name.'.'.$file1->extension;
+        $dd2 = 'http://grapes/'.$file2->path.$file2->name.'.'.$file2->extension;
 
         $data = Find_a_Pair_Data::all()->last();
 
+        //dd($dd);
         $first = new Find_a_Pair_Data([
             'title'=>$first_request['title'],
             'description'=>$first_request['description'],
             'text'=>$first_request['text'],
-            'image'=>'asd',//$file1,
+            'image'=>$dd1,
             //'pair_id'=>$data->id+1,
             'find_a_pair'=>$find_a_Pair->id,
         ]);
@@ -142,7 +144,7 @@ class FindPairEdit extends Screen
             'title'=>$first_request['title'],
             'description'=>$first_request['description'],
             'text'=>$first_request['text'],
-            'image'=>'asdasd',//$file2,
+            'image'=>$dd2,
             //'pair_id'=>$data->id+2,
             'find_a_pair'=>$find_a_Pair->id,
         ]);
