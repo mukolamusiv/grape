@@ -2,6 +2,9 @@
 
 namespace App\Orchid\Screens\OneWord;
 
+use App\Models\OneWord;
+use App\Orchid\Layouts\OneWord\OneWordTableAll;
+use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
 
 class OneWordList extends Screen
@@ -13,7 +16,9 @@ class OneWordList extends Screen
      */
     public function query(): iterable
     {
-        return [];
+        return [
+            'one_word'=>OneWord::all()
+        ];
     }
 
     /**
@@ -23,7 +28,7 @@ class OneWordList extends Screen
      */
     public function name(): ?string
     {
-        return 'OneWordList';
+        return 'Завдання одне слово';
     }
 
     /**
@@ -33,7 +38,11 @@ class OneWordList extends Screen
      */
     public function commandBar(): iterable
     {
-        return [];
+        return [
+            Link::make('Додати нове завдання')
+                ->icon('pencil')
+                ->route('one-word.create')
+        ];
     }
 
     /**
@@ -43,6 +52,8 @@ class OneWordList extends Screen
      */
     public function layout(): iterable
     {
-        return [];
+        return [
+            OneWordTableAll::class
+        ];
     }
 }

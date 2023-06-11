@@ -149,6 +149,12 @@ class FindPairEdit extends Screen
             'find_a_pair'=>$find_a_Pair->id,
         ]);
         $second->save();
+
+        $first->pair_id = $second->id;
+        $first->save();
+
+        $second->pair_id = $first->id;
+        $second->save();
         //$p = Attachment::find($ddd[0]);
 
         //exit();

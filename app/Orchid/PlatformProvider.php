@@ -64,7 +64,7 @@ class PlatformProvider extends OrchidServiceProvider
 
             Menu::make('Одне слово')
                 ->icon('social-twitter')
-                ->route('crossword.list'),
+                ->route('one-word.list'),
 
             Menu::make('Відкрите питання')
                 ->icon('speech')
