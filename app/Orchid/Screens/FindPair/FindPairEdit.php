@@ -165,4 +165,20 @@ class FindPairEdit extends Screen
         Toast::info('Оновлено пару');
         return redirect(route('find-pair.show',$find_a_Pair->id));
     }
+
+    public function save(Find_a_Pair $find_a_Pair, Request $request){
+        $request->validate([
+            'find_a_pair.title' => [
+                'required'
+            ],
+            'find_a_pair.description'=>[
+                'required'
+            ]
+        ]);
+
+        $find_a_Pair->fill($request->get('find_a_pair'))->save();
+        //dd($request);
+        //exit();
+        return redirect()->route('find-pair.show',$find_a_Pair->id);
+    }
 }

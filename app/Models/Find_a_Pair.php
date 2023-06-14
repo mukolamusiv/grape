@@ -9,6 +9,12 @@ class Find_a_Pair extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'description',
+       'lesson_id'
+    ];
+
 
     public function lesson(){
         return $this->hasOne(Lessons::class,'id','lesson_id');
