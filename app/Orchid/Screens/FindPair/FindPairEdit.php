@@ -124,8 +124,8 @@ class FindPairEdit extends Screen
         $file1 = Attachment::find($first_request['file'][0]);
         $second_request = $request->get('data_second');
         $file2 = Attachment::find($second_request['file'][0]);
-        $dd1 = 'https://walkingwithgod.ugcc.ua/'.$file1->path.$file1->name.'.'.$file1->extension;
-        $dd2 = 'https://walkingwithgod.ugcc.ua/'.$file2->path.$file2->name.'.'.$file2->extension;
+        $dd1 = 'https://walkingwithgod.ugcc.ua/storage/'.$file1->path.$file1->name.'.'.$file1->extension;
+        $dd2 = 'https://walkingwithgod.ugcc.ua/storage/'.$file2->path.$file2->name.'.'.$file2->extension;
 
         $data = Find_a_Pair_Data::all()->last();
 
