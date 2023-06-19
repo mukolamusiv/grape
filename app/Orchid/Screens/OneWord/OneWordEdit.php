@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Select;
+use Orchid\Screen\Fields\Upload;
 use Orchid\Screen\Layout;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Toast;
@@ -71,37 +72,62 @@ class OneWordEdit extends Screen
                     ->fromModel(Lessons::class,'title')
                     ->title(__('Назва уроку'))
                     ->help('Оберіть урок для кого належить кросворд'),
+
+                Input::make('one_word.data.text')
+                    ->type('text')
+                    ->max(255)
+                    ->required()
+                    ->title(__('Текст завдання')),
+
+                Input::make('one_word.data.word')
+                    ->type('text')
+                    ->max(255)
+                    ->required()
+                    ->title(__('Слово-відповідь')),
+
+                Upload::make('one_word.data.file')
+                    ->targetRelativeUrl()
+                    ->title('Зображення'),
+
+
+
                 Button::make('Зберегти зміни')
                     ->method('save')
                     ->icon('save')
             ]),
 
-            \Orchid\Support\Facades\Layout::rows([
-                Input::make('one_word.title')
-                    ->type('text')
-                    ->max(255)
-                    ->required()
-                    ->title(__('Назва завдання')),
-
-                Input::make('one_word.description')
-                    ->type('text')
-                    ->max(255)
-                    ->required()
-                    ->title(__('Опис завдання'))
-                    ->placeholder(__('Про що це завдання')),
-                Select::make('one_word.lesson_id')
-                    ->fromModel(Lessons::class,'title')
-                    ->title(__('Назва уроку'))
-                    ->help('Оберіть урок для кого належить кросворд'),
-                Button::make('Зберегти зміни')
-                    ->method('save')
-                    ->icon('save')
-            ]),
-
-
+//            \Orchid\Support\Facades\Layout::rows([
+//                Input::make('one_word.title')
+//                    ->type('text')
+//                    ->max(255)
+//                    ->required()
+//                    ->title(__('Назва завдання')),
+//
+//                Input::make('one_word.description')
+//                    ->type('text')
+//                    ->max(255)
+//                    ->required()
+//                    ->title(__('Опис завдання'))
+//                    ->placeholder(__('Про що це завдання')),
+//                Select::make('one_word.lesson_id')
+//                    ->fromModel(Lessons::class,'title')
+//                    ->title(__('Назва уроку'))
+//                    ->help('Оберіть урок для кого належить кросворд'),
+//                Button::make('Зберегти зміни')
+//                    ->method('save')
+//                    ->icon('save')
+//            ]),
 
         ];
     }
+
+
+
+//         $table->string('description');
+//            $table->string('title');
+//            $table->string('image_src')->nullable();
+//            $table->string('text')->nullable();
+//            $table->string('word');
 
     public function save(OneWord $oneWord, Request $request){
         $request->validate([
