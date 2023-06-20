@@ -5,8 +5,11 @@ namespace App\Orchid\Screens\OneWord;
 use App\Models\Lessons;
 use App\Models\OneWord;
 use App\Models\OneWordQuestion;
+use App\Orchid\Layouts\OneWord\OneWordCreateWord;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
+use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Fields\Upload;
@@ -45,7 +48,14 @@ class OneWordEdit extends Screen
      */
     public function commandBar(): iterable
     {
-        return [];
+        return [
+            ModalToggle::make('Додати нове слово')
+                ->modal('createOneWord')
+                ->modalTitle('Додати слово')
+                ->method('createOneWord')
+                ->parameters(['one_word'=>'one_word'])
+                ->icon('plus'),
+        ];
     }
 
     /**
@@ -56,6 +66,9 @@ class OneWordEdit extends Screen
     public function layout(): iterable
     {
         return [
+
+            \Orchid\Support\Facades\Layout::modal('createOneWord',OneWordCreateWord::class),
+
             \Orchid\Support\Facades\Layout::rows([
                 Input::make('one_word.title')
                     ->type('text')
@@ -73,22 +86,22 @@ class OneWordEdit extends Screen
                     ->fromModel(Lessons::class,'title')
                     ->title(__('Назва уроку'))
                     ->help('Оберіть урок для кого належить кросворд'),
-
-                Input::make('one_word.data.text')
-                    ->type('text')
-                    ->max(255)
-                    ->required()
-                    ->title(__('Текст завдання')),
-
-                Input::make('one_word.data.word')
-                    ->type('text')
-                    ->max(255)
-                    ->required()
-                    ->title(__('Слово-відповідь')),
-
-                Upload::make('one_word.data.file')
-                    ->targetRelativeUrl()
-                    ->title('Зображення'),
+//
+//                Input::make('one_word.data.text')
+//                    ->type('text')
+//                    ->max(255)
+//                    ->required()
+//                    ->title(__('Текст завдання')),
+//
+//                Input::make('one_word.data.word')
+//                    ->type('text')
+//                    ->max(255)
+//                    ->required()
+//                    ->title(__('Слово-відповідь')),
+//
+//                Upload::make('one_word.data.file')
+//                    ->targetRelativeUrl()
+//                    ->title('Зображення'),
 
 
 
@@ -130,6 +143,38 @@ class OneWordEdit extends Screen
 //            $table->string('text')->nullable();
 //            $table->string('word');
 
+
+
+public function createOneWord(OneWord $oneWord, Request $request){
+    $request->validate([
+        'word.title' => [
+            'required'
+        ],
+        'word.description'=>[
+            'required'
+        ],
+        'word.text'=>[
+            'required'
+        ],
+        'word.word'=>[
+            'required'
+        ]
+    ]);
+
+        //dd($oneWord);
+        $word = new OneWordQuestion();
+    $word->one_word_id = $oneWord->id;
+        $word->title = $request->input('word.title');
+        $word->description = $request->input('word.description');
+        $word->text = $request->input('word.text');
+        $word->word = $request->input('word.word');
+
+        //dd($word);
+        $word->save();
+    Toast::success(__('Додано нове слово!'));
+    return redirect()->route('one-word.edit',$oneWord->id);
+}
+
     public function save(OneWord $oneWord, Request $request){
         $request->validate([
             'one_word.title' => [
@@ -142,13 +187,13 @@ class OneWordEdit extends Screen
 
         $oneWord->fill($request->get('one_word'))->save();
 
-        $oneWordData = new OneWordQuestion();
-        $oneWordData->title = $request->input('one_word.title');
-        $oneWordData->one_word_id = $oneWord->id;
-        $oneWordData->description = $request->input('one_word.description');
-        $oneWordData->word = $request->input('one_word.data.word');
-        $oneWordData->save();
-        dd($oneWordData);
+//        $oneWordData = new OneWordQuestion();
+//        $oneWordData->title = $request->input('one_word.title');
+//        $oneWordData->one_word_id = $oneWord->id;
+//        $oneWordData->description = $request->input('one_word.description');
+//        $oneWordData->word = $request->input('one_word.data.word');
+//        $oneWordData->save();
+
 //        if($request->file('topic.photo')){
 //
 //        }

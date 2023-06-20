@@ -153,7 +153,7 @@ Route::screen('/fin-pair/{id}', \App\Orchid\Screens\FindPair\FindPairEdit::class
 
 Route::screen('/one-word', App\Orchid\Screens\OneWord\OneWordList::class)->name('one-word.list');
 Route::screen('/one-word/create', App\Orchid\Screens\OneWord\OneWordEdit::class)->name('one-word.create');
-Route::screen('/one-word/{id}', App\Orchid\Screens\OneWord\OneWordList::class)->name('one-word.edit');
+Route::screen('/one-word/{id}', App\Orchid\Screens\OneWord\OneWordEdit::class)->name('one-word.edit');
 
 
 

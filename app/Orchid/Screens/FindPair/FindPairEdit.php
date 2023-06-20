@@ -60,7 +60,7 @@ class FindPairEdit extends Screen
                 ->modal('createPair')
                 ->modalTitle('Додати пару')
                 ->method('createPair')
-                ->parameters(['findPair_id'=>'find_a_pair'])
+                //->parameters(['findPair_id'=>'find_a_pair'])
                 ->icon('plus'),
         ];
     }
