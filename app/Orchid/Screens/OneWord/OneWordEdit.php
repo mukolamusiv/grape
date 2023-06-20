@@ -4,6 +4,7 @@ namespace App\Orchid\Screens\OneWord;
 
 use App\Models\Lessons;
 use App\Models\OneWord;
+use App\Models\OneWordQuestion;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Fields\Input;
@@ -140,6 +141,14 @@ class OneWordEdit extends Screen
         ]);
 
         $oneWord->fill($request->get('one_word'))->save();
+
+        $oneWordData = new OneWordQuestion();
+        $oneWordData->title = $request->input('one_word.title');
+        $oneWordData->one_word_id = $oneWord->id;
+        $oneWordData->description = $request->input('one_word.description');
+        $oneWordData->word = $request->input('one_word.data.word');
+        $oneWordData->save();
+        dd($oneWordData);
 //        if($request->file('topic.photo')){
 //
 //        }
