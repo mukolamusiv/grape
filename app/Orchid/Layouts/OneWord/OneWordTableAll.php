@@ -64,7 +64,7 @@ class OneWordTableAll extends Table
 //                                ->icon('pen'),
 
                             Link::make(__('Редагувати'))
-                                ->route('find-pair.show', $oneWord->id)
+                                ->route('one-word.edit', $oneWord->id)
                                 ->icon('pencil'),
 
                             Button::make(__('Видалити'))
