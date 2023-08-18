@@ -5,6 +5,7 @@ namespace App\Orchid\Screens\OneWord;
 use App\Models\Lessons;
 use App\Models\OneWord;
 use App\Models\OneWordQuestion;
+use App\Models\Question;
 use App\Orchid\Layouts\OneWord\OneWordCreateWord;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
@@ -14,7 +15,9 @@ use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Fields\Upload;
 use Orchid\Screen\Layout;
+use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\Screen;
+use Orchid\Screen\TD;
 use Orchid\Support\Facades\Toast;
 
 class OneWordEdit extends Screen
@@ -27,7 +30,8 @@ class OneWordEdit extends Screen
     public function query(OneWord $oneWord): iterable
     {
         return [
-            'one_word'=>$oneWord
+            'one_word'=>$oneWord,
+            'questions'=>$oneWord->question
         ];
     }
 
@@ -108,6 +112,37 @@ class OneWordEdit extends Screen
                 Button::make('Зберегти зміни')
                     ->method('save')
                     ->icon('save')
+            ]),
+
+            \Orchid\Support\Facades\Layout::table('questions',[
+                TD::make('title', __('Назва'))
+                    ->sort()
+                    ->cantHide()
+                    ->filter(Input::make())
+                    ->render(function (OneWordQuestion $questions) {
+                        return $questions->title;
+                    }),
+                TD::make('description', __('Опис'))
+                    ->sort()
+                    ->cantHide()
+                    ->filter(Input::make())
+                    ->render(function (OneWordQuestion $questions) {
+                        return $questions->description;
+                    }),
+                TD::make('text', __('Текст'))
+                    ->sort()
+                    ->cantHide()
+                    ->filter(Input::make())
+                    ->render(function (OneWordQuestion $questions) {
+                        return $questions->text;
+                    }),
+//                TD::make('image', __('Фото'))
+//                    ->sort()
+//                    ->cantHide()
+//                    ->filter(Input::make())
+//                    ->render(function (OneWord $data) {
+//                        return $data->image;
+//                    }),
             ]),
 
 //            \Orchid\Support\Facades\Layout::rows([
