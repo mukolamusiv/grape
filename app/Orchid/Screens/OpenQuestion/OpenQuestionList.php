@@ -2,6 +2,8 @@
 
 namespace App\Orchid\Screens\OpenQuestion;
 
+use App\Models\OpenQuestion;
+use App\Orchid\Layouts\OpenQuestion\OpenQuestionAll;
 use Orchid\Screen\Screen;
 
 class OpenQuestionList extends Screen
@@ -13,7 +15,9 @@ class OpenQuestionList extends Screen
      */
     public function query(): iterable
     {
-        return [];
+        return [
+            'open_question'=>OpenQuestion::all()
+        ];
     }
 
     /**
@@ -23,7 +27,7 @@ class OpenQuestionList extends Screen
      */
     public function name(): ?string
     {
-        return 'OpenQuestionList';
+        return 'Завдання відкрите питання';
     }
 
     /**
@@ -43,6 +47,8 @@ class OpenQuestionList extends Screen
      */
     public function layout(): iterable
     {
-        return [];
+        return [
+            OpenQuestionAll::class
+        ];
     }
 }

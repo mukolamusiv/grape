@@ -12,4 +12,8 @@ class OpenQuestion extends Model
     public function answerUser(){
         return $this->hasMany(OpenQuestionAnswerUser::class, 'open_question_id','id');
     }
+
+    public function lesson(){
+        return$this->hasOne(Lessons::class,'id','lesson_id');
+    }
 }
