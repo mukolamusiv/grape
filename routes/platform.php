@@ -157,6 +157,11 @@ Route::screen('/one-word/{id}', App\Orchid\Screens\OneWord\OneWordEdit::class)->
 
 
 
+Route::screen('/open-question', App\Orchid\Screens\OpenQuestion\OpenQuestionList::class)->name('open-question.list');
+Route::screen('/open-question/create', App\Orchid\Screens\OpenQuestion\OpenQuestionEdit::class)->name('open-question.create');
+Route::screen('/open-question/{id}', App\Orchid\Screens\OpenQuestion\OpenQuestionEdit::class)->name('open-question.edit');
+
+
 
 Route::screen('example-fields', ExampleFieldsScreen::class)->name('platform.example.fields');
 Route::screen('example-layouts', ExampleLayoutsScreen::class)->name('platform.example.layouts');
