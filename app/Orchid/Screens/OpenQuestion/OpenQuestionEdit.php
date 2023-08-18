@@ -92,7 +92,7 @@ class OpenQuestionEdit extends Screen
                     ->cantHide()
                     ->filter(Input::make())
                     ->render(function (OpenQuestionAnswerUser $answers) {
-                        return $answers->user->name;
+                        return $answers->user->name.' '.$answers->user->surname;
                     }),
                 TD::make('answer', __('Відповідь'))
                     ->sort()
