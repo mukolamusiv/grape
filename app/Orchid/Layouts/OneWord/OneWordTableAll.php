@@ -75,6 +75,7 @@ class OneWordTableAll extends Table
                                 ]),
                         ]);
                 }),
+
         ];
     }
 }
