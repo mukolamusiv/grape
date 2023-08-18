@@ -68,7 +68,7 @@ class PlatformProvider extends OrchidServiceProvider
 
             Menu::make('Відкрите питання')
                 ->icon('speech')
-                ->route('OpenQuestion\OpenQuestionEdit.list'),
+                ->route('open-questionEdit.list'),
 
             Menu::make('Розмальовка')
                 ->icon('note')
