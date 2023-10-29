@@ -184,7 +184,7 @@ Route::get('upload',function (){
 
     $output=null;
     $retval=null;
-    execCmd();
+    shell_exec('git pull');
     //exec('git pull', $output, $retval);
     echo "Вернёт статус $retval и значение:\n";
     print_r($output);
