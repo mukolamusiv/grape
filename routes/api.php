@@ -178,12 +178,14 @@ Route::get('lesson-teacher/{lesson_id}','\App\Http\Controllers\API\TeacherContro
 
 Route::get('upload',function (){
    //\Illuminate\Support\Facades\Artisan::call('make:model DDD');
-   $url = __DIR__;
-   $url =str_replace('routes','',$url);
+  // $url = __DIR__;
+   //$url =str_replace('routes','',$url);
+
 
     $output=null;
     $retval=null;
-    exec('git pull', $output, $retval);
+    execCmd();
+    //exec('git pull', $output, $retval);
     echo "Вернёт статус $retval и значение:\n";
     print_r($output);
 
