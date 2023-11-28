@@ -141,9 +141,14 @@ class LessonBuilderDTO
                 }
             }else{
                 $this->lesson_completed = true;
-                $data = UserLessons::find($this->lessonUser['id']);
-                $data->complete = true;
-                $data->save();
+                if($this->lessonUser->isNotEmpty()){
+                    $data = UserLessons::find($this->lessonUser['id']);
+                    $data->complete = true;
+                    $data->save();
+                }
+//                $data = UserLessons::find($this->lessonUser['id']);
+//                $data->complete = true;
+//                $data->save();
             }
         }
     }
