@@ -74,4 +74,10 @@ class CrosswordScreen extends Screen
             Toast::error('Відбулась помилка');
         }
     }
+
+    public function removeCrossword(Request $request){
+        Crossword::destroy($request->get('id'));
+        Toast::success('Видалено кросворд');
+        return redirect(route('crossword.list'));
+    }
 }
