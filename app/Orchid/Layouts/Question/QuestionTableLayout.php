@@ -57,6 +57,13 @@ class QuestionTableLayout extends Table
                     return $question->point;
                 })->width('150px'),
 
+            TD::make('lesson_id', __('Урок'))
+                ->sort()
+                ->filter(Input::make())
+                ->render(function (Question $question) {
+                    return $question->lesson_id;
+                })->width('150px'),
+
             TD::make(__('Actions'))
                 ->align(TD::ALIGN_CENTER)
                 ->width('100px')
