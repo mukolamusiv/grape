@@ -134,12 +134,13 @@ class LessonBuilderDTO
             if($this->video_completed){
                 $this->lesson_completed = true;
                 //dd($this->lessonUser['id']);
-                $data = UserLessons::find($this->lessonUser['id']);
-                $data->complete = true;
-                $data->save();
+                if(!$this->lessonUser){
+                    $data = UserLessons::find($this->lessonUser['id']);
+                    $data->complete = true;
+                    $data->save();
+                }
             }else{
                 $this->lesson_completed = true;
-                dd($this->lessonUser);
                 $data = UserLessons::find($this->lessonUser['id']);
                 $data->complete = true;
                 $data->save();
