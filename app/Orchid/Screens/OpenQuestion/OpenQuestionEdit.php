@@ -131,4 +131,5 @@ class OpenQuestionEdit extends Screen
         Toast::success(__('Зміни збережено'));
         return redirect()->route('open-question.edit',$openQuestion->id);
     }
+    
 }
