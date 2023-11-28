@@ -115,7 +115,7 @@ class LessonBuilderDTO
 
         //відмітка пройденого  уроку
         $data = collect($data);
-        dd($data);
+        //dd($data);
         if(count($data) === count($data->filter(function ($value){
                 if($value){
                     return $value;
