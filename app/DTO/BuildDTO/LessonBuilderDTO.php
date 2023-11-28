@@ -134,7 +134,7 @@ class LessonBuilderDTO
             if($this->video_completed){
                 $this->lesson_completed = true;
                 //dd($this->lessonUser['id']);
-                if(!$this->lessonUser){
+                if($this->lessonUser->isNotEmpty()){
                     $data = UserLessons::find($this->lessonUser['id']);
                     $data->complete = true;
                     $data->save();
