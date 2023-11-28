@@ -113,6 +113,8 @@ class LessonBuilderDTO
         }
 
 
+        dd($this->OpenQuestionDTO->empty,$this->OneWordDTO->empty,$this->CrosswordDTO);
+
         //відмітка пройденого  уроку
         $data = collect($data);
         //dd($data);
