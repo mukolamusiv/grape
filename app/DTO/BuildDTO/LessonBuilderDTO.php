@@ -139,6 +139,7 @@ class LessonBuilderDTO
                 $data->save();
             }else{
                 $this->lesson_completed = true;
+                dd(UserLessons::find($this->lessonUser['id']));
                 $data = UserLessons::find($this->lessonUser['id']);
                 $data->complete = true;
                 $data->save();
