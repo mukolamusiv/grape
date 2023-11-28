@@ -124,7 +124,7 @@ class LessonBuilderDTO
             }
         }));
 
-        dd(count($data));
+        dd($ss);
         if(count($data) === count($data->filter(function ($value){
                 if($value){
                     //dd($value);
