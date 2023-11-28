@@ -119,12 +119,12 @@ class LessonBuilderDTO
         $data = collect($data);
         $ss = count($data->filter(function ($value){
             if($value){
-                dd($value);
+                //dd($value);
                 return $value;
             }
         }));
 
-        dd($ss);
+        dd($ss,count($data));
         if(count($data) === count($data->filter(function ($value){
                 if($value){
                     //dd($value);
