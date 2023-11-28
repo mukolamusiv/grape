@@ -117,14 +117,14 @@ class LessonBuilderDTO
         //dd($data);
         //відмітка пройденого  уроку
         $data = collect($data);
-        $ss = count($data->filter(function ($value){
-            if($value){
-                //dd($value);
-                return $value;
-            }
-        }));
-
-        dd($ss,count($data));
+//        $ss = count($data->filter(function ($value){
+//            if($value){
+//                //dd($value);
+//                return $value;
+//            }
+//        }));
+//
+//        dd($ss,count($data));
         if(count($data) === count($data->filter(function ($value){
                 if($value){
                     //dd($value);
@@ -134,6 +134,10 @@ class LessonBuilderDTO
             if($this->video_completed){
                 $this->lesson_completed = true;
                 //dd($this->lessonUser['id']);
+                $data = UserLessons::find($this->lessonUser['id']);
+                $data->complete = true;
+                $data->save();
+            }else{
                 $data = UserLessons::find($this->lessonUser['id']);
                 $data->complete = true;
                 $data->save();
