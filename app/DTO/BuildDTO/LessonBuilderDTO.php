@@ -114,9 +114,10 @@ class LessonBuilderDTO
 
 
         //dd($this->OpenQuestionDTO->empty,$this->OneWordDTO->empty,$this->CrosswordDTO);
-        dd($data);
+        //dd($data);
         //відмітка пройденого  уроку
         $data = collect($data);
+        dd($data);
         if(count($data) === count($data->filter(function ($value){
                 if($value){
                     return $value;
