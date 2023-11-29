@@ -71,7 +71,7 @@ class CrosswordTableLayout extends Table
                             Button::make(__('Видалити'))
                                 ->icon('trash')
                                 ->confirm(__('Чи впевнені '))
-                                ->method('remove', [
+                                ->method('removeCrossword', [
                                     'id' => $crossword->id,
                                 ]),
                         ]);
