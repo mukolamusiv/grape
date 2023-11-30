@@ -99,8 +99,8 @@ class CrosswordDTO
         if($data->isNotEmpty()){
             $this->completed = true;
         }else{
-            //dd($data);
             $this->completed = false;
+            dd($this->completed);
         }
     }
 
