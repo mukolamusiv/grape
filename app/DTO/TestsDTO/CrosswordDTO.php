@@ -96,7 +96,7 @@ class CrosswordDTO
     }
 
     private function find_user_answer(){
-        $data = CrosswordLessonsAnswer::where(['question_id'=>$this->id,'user_id'=>$this->user_id,'reply'=>true])->get();
+        $data = CrosswordLessonsAnswer::where(['crossword_id'=>$this->id,'user_id'=>$this->user_id,'reply'=>true])->get();
         //$data = QuestionLessonsAnswer::where(['question_id'=>$this->id,'user_id'=>$this->user_id,'reply'=>true])->get();
         if($data->isNotEmpty()){
             $this->completed = true;
