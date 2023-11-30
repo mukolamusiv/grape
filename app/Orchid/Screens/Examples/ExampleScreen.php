@@ -3,8 +3,13 @@
 namespace App\Orchid\Screens\Examples;
 
 use App\Models\Crossword;
+use App\Models\CrosswordLessonsAnswer;
 use App\Models\Lessons;
+use App\Models\OneWordAnswerUser;
+use App\Models\OpenQuestionAnswerUser;
+use App\Models\PairLessonsAnswer;
 use App\Models\Question;
+use App\Models\QuestionLessonsAnswer;
 use App\Models\Topic;
 use App\Models\User;
 use App\Models\Water;
@@ -51,15 +56,17 @@ class ExampleScreen extends Screen
             ];
         }
 
+        $crossoword = CrosswordLessonsAnswer::all();
+        $question = QuestionLessonsAnswer::all();
+        $findPair = PairLessonsAnswer::all();
+        $oneWord = OneWordAnswerUser::all();
+        $openQuestion = OpenQuestionAnswerUser::all();
+
         return [
-
-
-
-
             'charts'  => [
                 [
                     'name'   => 'Кросворд',
-                    'values' => [25, 40],
+                    'values' => [collect($crossoword)->where('reply','=',true), 40],
                     'labels' => ['Правильні відповіді', 'Неправильні спроби'],
                 ],
                 [
@@ -70,6 +77,16 @@ class ExampleScreen extends Screen
                 [
                     'name'   => 'Тести',
                     'values' => [15, 80],
+                    'labels' => ['Правильні відповіді', 'Неправильні спроби'],
+                ],
+                [
+                    'name'   => 'Одне слово',
+                    'values' => [25, 40],
+                    'labels' => ['Правильні відповіді', 'Неправильні спроби'],
+                ],
+                [
+                    'name'   => 'Відкрите питання',
+                    'values' => [25, 40],
                     'labels' => ['Правильні відповіді', 'Неправильні спроби'],
                 ],
 //                [
