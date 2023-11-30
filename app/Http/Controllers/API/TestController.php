@@ -135,12 +135,20 @@ class TestController extends Controller
         $data = Word::findOrFail($request->input('id'));
         $answer = mb_strtolower($request->input('answer'), 'UTF-8');
         $word = mb_strtolower($data->word, 'UTF-8');
+        $add = new CrosswordLessonsAnswer();
+        $add->crossword_id = $data->crossword_id;
+        $add->user_id = Auth::id();
+        $add->words_id = $request->input('id');
         if($answer == $word){
-            dd($data);
+            $add->reply = true;
+            $add->save();
+            //dd($data);
             //$data = CrosswordLessonsAnswer();
             return response(['reply'=>true]);
         }else{
-            dd($data);
+            $add->reply = false;
+            $add->save();
+           // dd($data);
             return response(['reply'=>false]);
         }
     }
