@@ -140,6 +140,7 @@ class TestController extends Controller
             //$data = CrosswordLessonsAnswer();
             return response(['reply'=>true]);
         }else{
+            dd($data);
             return response(['reply'=>false]);
         }
     }
