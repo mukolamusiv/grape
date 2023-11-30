@@ -69,8 +69,8 @@ class AllFindPairTable extends Table
 
                             Button::make(__('Видалити'))
                                 ->icon('trash')
-                                ->confirm(__('Чи впевнені '))
-                                ->method('remove', [
+                                ->confirm(__('Чи впевнені що хочете видалити? '))
+                                ->method('removeFindPair', [
                                     'id' => $find_a_Pair->id,
                                 ]),
                         ]);

@@ -71,7 +71,7 @@ class CrosswordScreen extends Screen
         if($data->save()){
             Toast::success('Новий кросворд додано');
         }else{
-            Toast::error('Відбулась помилка'); 
+            Toast::error('Відбулась помилка');
         }
     }
 

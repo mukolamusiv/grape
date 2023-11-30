@@ -181,4 +181,10 @@ class FindPairEdit extends Screen
         //exit();
         return redirect()->route('find-pair.show',$find_a_Pair->id);
     }
+
+    public function removeFindPair(Request $request){
+        Find_a_Pair::destroy($request->get('id'));
+        Toast::success('Видалено знайди пару');
+        return redirect(route('find-pair.list'));
+    }
 }
