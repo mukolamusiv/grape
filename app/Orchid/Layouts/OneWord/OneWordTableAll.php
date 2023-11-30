@@ -70,7 +70,7 @@ class OneWordTableAll extends Table
                             Button::make(__('Видалити'))
                                 ->icon('trash')
                                 ->confirm(__('Чи впевнені '))
-                                ->method('remove', [
+                                ->method('removeOneWord', [
                                     'id' => $oneWord->id,
                                 ]),
                         ]);

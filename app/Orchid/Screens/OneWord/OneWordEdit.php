@@ -2,6 +2,7 @@
 
 namespace App\Orchid\Screens\OneWord;
 
+use App\Models\Find_a_Pair;
 use App\Models\Lessons;
 use App\Models\OneWord;
 use App\Models\OneWordQuestion;
@@ -239,5 +240,11 @@ public function createOneWord(OneWord $oneWord, Request $request){
         //Toast::success(__('Фото додано!'));
         Toast::success(__('Додано нове завдання!'));
         return redirect()->route('one-word.list');
+    }
+
+    public function removeOneWord(Request $request){
+        OneWord::destroy($request->get('id'));
+        Toast::success('Видалено одне слово');
+        return redirect(route('find-pair.list'));
     }
 }
