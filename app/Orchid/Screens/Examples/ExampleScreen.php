@@ -2,7 +2,10 @@
 
 namespace App\Orchid\Screens\Examples;
 
+use App\Models\Crossword;
 use App\Models\Lessons;
+use App\Models\Question;
+use App\Models\Topic;
 use App\Models\User;
 use App\Models\Water;
 use App\Orchid\Layouts\Chart\WaterChart;
@@ -80,10 +83,11 @@ class ExampleScreen extends Screen
 
             ],
             'metrics' => [
-                'crosswords'    => ['value' => number_format(6851), 'diff' => 10.08],
-                'tests' => ['value' => number_format(24668), 'diff' => -30.76],
-                'lessons'   => ['value' => number_format(count(Lessons::all())), 'diff' => 0],
+                'crosswords'    => number_format(count(Crossword::all())),
+                'tests' => number_format(count(Question::all())),
+                'lessons'   =>number_format(count(Lessons::all())),
                 'users'    => number_format(count(User::all())),
+                'topic'    => number_format(count(Topic::all())),
             ],
             'water' => $data
         ];
@@ -175,7 +179,7 @@ class ExampleScreen extends Screen
                 'Кількість тестів'          => 'metrics.tests',
                 'Кількість уроків'          => 'metrics.lessons',
                 'Кількість користувачів'    => 'metrics.users',
-                'Кількість курсів'          => 'metrics.users',
+                'Кількість курсів'          => 'metrics.topic',
             ]),
 
             Layout::columns([
