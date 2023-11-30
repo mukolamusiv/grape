@@ -66,7 +66,7 @@ class ExampleScreen extends Screen
             'charts'  => [
                 [
                     'name'   => 'Кросворд',
-                    'values' => [collect($crossoword)->where('reply','=',true), 40],
+                    'values' => [collect($crossoword)->where('reply','=',true)->count(), 40],
                     'labels' => ['Правильні відповіді', 'Неправильні спроби'],
                 ],
                 [
