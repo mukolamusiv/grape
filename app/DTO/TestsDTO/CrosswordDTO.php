@@ -100,7 +100,7 @@ class CrosswordDTO
             $this->completed = true;
         }else{
             $this->completed = false;
-            dd($data);
+            dd($data,QuestionLessonsAnswer::all());
         }
     }
 
