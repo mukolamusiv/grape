@@ -72,7 +72,7 @@ class CrosswordDTO
     private function find(){
         $data = Crossword::with('word')->where(['lesson_id'=>$this->lesson_id])->get()->first();
         if(is_null($data)){
-            dd($data);
+            dd($data,$this->lesson_id, Crossword::all());
             $this->empty = true;
         }else{
             $this->data = $data;
