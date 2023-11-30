@@ -52,11 +52,15 @@ class ExampleScreen extends Screen
         }
 
         return [
+
+
+
+
             'charts'  => [
                 [
-                    'name'   => 'Some Data',
-                    'values' => [25, 40, 30, 35, 8, 52, 17],
-                    'labels' => ['12am-3am', '3am-6am', '6am-9am', '9am-12pm', '12pm-3pm', '3pm-6pm', '6pm-9pm'],
+                    'name'   => 'Кросворд',
+                    'values' => [25, 40],
+                    'labels' => ['Правильні відповіді', 'Неправильні спроби'],
                 ],
                 [
                     'name'   => 'Another Set',
