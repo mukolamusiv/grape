@@ -97,6 +97,9 @@ class CrosswordDTO
         $data = QuestionLessonsAnswer::where(['question_id'=>$this->id,'user_id'=>$this->user_id,'reply'=>true])->get();
         if($data->isNotEmpty()){
             $this->completed = true;
+        }else{
+            dd($data);
+            $this->completed = false;
         }
     }
 
