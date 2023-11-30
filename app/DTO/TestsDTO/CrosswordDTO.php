@@ -6,6 +6,7 @@ namespace App\DTO\TestsDTO;
 
 use App\Models\Answer;
 use App\Models\Crossword;
+use App\Models\CrosswordLessonsAnswer;
 use App\Models\Lessons;
 use App\Models\Question;
 use App\Models\QuestionLessonsAnswer;
@@ -95,12 +96,13 @@ class CrosswordDTO
     }
 
     private function find_user_answer(){
-        $data = QuestionLessonsAnswer::where(['question_id'=>$this->id,'user_id'=>$this->user_id,'reply'=>true])->get();
+        $data = CrosswordLessonsAnswer::where(['question_id'=>$this->id,'user_id'=>$this->user_id,'reply'=>true])->get();
+        //$data = QuestionLessonsAnswer::where(['question_id'=>$this->id,'user_id'=>$this->user_id,'reply'=>true])->get();
         if($data->isNotEmpty()){
             $this->completed = true;
         }else{
             $this->completed = false;
-            dd($data,$this->id,QuestionLessonsAnswer::all());
+            //dd($data,$this->id,CrosswordLessonsAnswer::all());
         }
     }
 

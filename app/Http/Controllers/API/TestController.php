@@ -22,6 +22,7 @@ use App\Http\Requests\Test\QuestionRequest;
 use App\Models\Answer;
 use App\Models\ColoringPageAnswer;
 use App\Models\Crossword;
+use App\Models\CrosswordLessonsAnswer;
 use App\Models\Find_a_Pair_Data;
 use App\Models\Lessons;
 use App\Models\OneWordQuestion;
@@ -135,6 +136,8 @@ class TestController extends Controller
         $answer = mb_strtolower($request->input('answer'), 'UTF-8');
         $word = mb_strtolower($data->word, 'UTF-8');
         if($answer == $word){
+            dd($data);
+            //$data = CrosswordLessonsAnswer();
             return response(['reply'=>true]);
         }else{
             return response(['reply'=>false]);
