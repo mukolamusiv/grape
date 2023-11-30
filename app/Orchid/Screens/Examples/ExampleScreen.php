@@ -66,27 +66,27 @@ class ExampleScreen extends Screen
             'charts'  => [
                 [
                     'name'   => 'Кросворд',
-                    'values' => [collect($crossoword)->where('reply','=',true)->count(), 40],
+                    'values' => [collect($crossoword)->where('reply','=',true)->count(), collect($crossoword)->where('reply','=',false)->count()],
                     'labels' => ['Правильні відповіді', 'Неправильні спроби'],
                 ],
                 [
                     'name'   => 'Знайди пару',
-                    'values' => [28, 90],
+                    'values' => [collect($findPair)->where('reply','=',true)->count(), collect($findPair)->where('reply','=',false)->count()],
                     'labels' => ['Правильні відповіді', 'Неправильні спроби'],
                 ],
                 [
                     'name'   => 'Тести',
-                    'values' => [15, 80],
+                    'values' => [collect($question)->where('reply','=',true)->count(), collect($question)->where('reply','=',false)->count()],
                     'labels' => ['Правильні відповіді', 'Неправильні спроби'],
                 ],
                 [
                     'name'   => 'Одне слово',
-                    'values' => [25, 40],
+                    'values' => [collect($oneWord)->where('reply','=',true)->count(), collect($oneWord)->where('reply','=',false)->count()],
                     'labels' => ['Правильні відповіді', 'Неправильні спроби'],
                 ],
                 [
                     'name'   => 'Відкрите питання',
-                    'values' => [25, 40],
+                    'values' => [collect($openQuestion)->where('reply','=',true)->count(), collect($openQuestion)->where('reply','=',false)->count()],
                     'labels' => ['Правильні відповіді', 'Неправильні спроби'],
                 ],
 //                [
