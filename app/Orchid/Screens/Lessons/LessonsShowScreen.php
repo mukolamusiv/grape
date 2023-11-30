@@ -2,11 +2,14 @@
 
 namespace App\Orchid\Screens\Lessons;
 
+use App\Models\Crossword;
 use App\Models\Lessons;
 use App\Orchid\Layouts\Lessons\LessonsEditLayout;
 use App\Orchid\Layouts\Topic\TopicEditLayout;
+use Illuminate\Http\Request;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Layout;
+use Orchid\Support\Facades\Toast;
 
 class LessonsShowScreen extends Screen
 {
@@ -54,5 +57,12 @@ class LessonsShowScreen extends Screen
                 ->title('Інформація про курс')
                 ->description('Вся доступна інформація про курс'),
         ];
+    }
+
+
+    public function removeLessons(Request $request){
+        Lessons::destroy($request->get('id'));
+        Toast::success('Видалено урок');
+        return redirect(route('lessons.list'));
     }
 }
